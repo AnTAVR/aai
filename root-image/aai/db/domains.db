@@ -1,0 +1,250 @@
+AD	Andorra	Europe/Andorra
+AE	United Arab Emirates	Asia/Dubai
+AF	Afghanistan	Asia/Kabul
+AG	Antigua & Barbuda	America/Antigua
+AI	Anguilla	America/Anguilla
+AL	Albania	Europe/Tirane
+AM	Armenia	Asia/Yerevan
+AN		
+AO	Angola	Africa/Luanda
+AQ	Antarctica	Antarctica/Vostok
+AR	Argentina	America/Argentina/Buenos_Aires
+AS	Samoa (American)	Pacific/Pago_Pago
+AT	Austria	Europe/Vienna
+AU	Australia	Australia/Brisbane
+AW	Aruba	America/Aruba
+AX	Aaland Islands	Europe/Mariehamn
+AZ	Azerbaijan	Asia/Baku
+BA	Bosnia & Herzegovina	Europe/Sarajevo
+BB	Barbados	America/Barbados
+BD	Bangladesh	Asia/Dhaka
+BE	Belgium	Europe/Brussels
+BF	Burkina Faso	Africa/Ouagadougou
+BG	Bulgaria	Europe/Sofia
+BH	Bahrain	Asia/Bahrain
+BI	Burundi	Africa/Bujumbura
+BJ	Benin	Africa/Porto-Novo
+BL	St Barthelemy	America/St_Barthelemy
+BM	Bermuda	Atlantic/Bermuda
+BN	Brunei	Asia/Brunei
+BO	Bolivia	America/La_Paz
+BQ	Bonaire Sint Eustatius & Saba	America/Kralendijk
+BR	Brazil	America/Belem
+BS	Bahamas	America/Nassau
+BT	Bhutan	Asia/Thimphu
+BV	Bouvet Island	
+BW	Botswana	Africa/Gaborone
+BY	Belarus	Europe/Minsk
+BZ	Belize	America/Belize
+CA	Canada	America/Goose_Bay
+CC	Cocos (Keeling) Islands	Indian/Cocos
+CD	Congo (Dem. Rep.)	Africa/Kinshasa
+CF	Central African Rep.	Africa/Bangui
+CG	Congo (Rep.)	Africa/Brazzaville
+CH	Switzerland	Europe/Zurich
+CI	Cote d'Ivoire	Africa/Abidjan
+CK	Cook Islands	Pacific/Rarotonga
+CL	Chile	America/Santiago
+CM	Cameroon	Africa/Douala
+CN	China	Asia/Chongqing
+CO	Colombia	America/Bogota
+CR	Costa Rica	America/Costa_Rica
+CU	Cuba	America/Havana
+CV	Cape Verde	Atlantic/Cape_Verde
+CW	Curacao	America/Curacao
+CX	Christmas Island	Indian/Christmas
+CY	Cyprus	Asia/Nicosia
+CZ	Czech Republic	Europe/Prague
+DE	Germany	Europe/Berlin
+DJ	Djibouti	Africa/Djibouti
+DK	Denmark	Europe/Copenhagen
+DM	Dominica	America/Dominica
+DO	Dominican Republic	America/Santo_Domingo
+DZ	Algeria	Africa/Algiers
+EC	Ecuador	America/Guayaquil
+EE	Estonia	Europe/Tallinn
+EG	Egypt	Africa/Cairo
+EH	Western Sahara	Africa/El_Aaiun
+ER	Eritrea	Africa/Asmara
+ES	Spain	Europe/Madrid
+ET	Ethiopia	Africa/Addis_Ababa
+FI	Finland	Europe/Helsinki
+FJ	Fiji	Pacific/Fiji
+FK	Falkland Islands	Atlantic/Stanley
+FM	Micronesia	Pacific/Pohnpei
+FO	Faroe Islands	Atlantic/Faroe
+FR	France	Europe/Paris
+GA	Gabon	Africa/Libreville
+GB	Britain (UK)	Europe/London
+GD	Grenada	America/Grenada
+GE	Georgia	Asia/Tbilisi
+GF	French Guiana	America/Cayenne
+GG	Guernsey	Europe/Guernsey
+GH	Ghana	Africa/Accra
+GI	Gibraltar	Europe/Gibraltar
+GL	Greenland	America/Godthab
+GM	Gambia	Africa/Banjul
+GN	Guinea	Africa/Conakry
+GP	Guadeloupe	America/Guadeloupe
+GQ	Equatorial Guinea	Africa/Malabo
+GR	Greece	Europe/Athens
+GS	South Georgia & the South Sandwich Islands	Atlantic/South_Georgia
+GT	Guatemala	America/Guatemala
+GU	Guam	Pacific/Guam
+GW	Guinea-Bissau	Africa/Bissau
+GY	Guyana	America/Guyana
+HK	Hong Kong	Asia/Hong_Kong
+HM	Heard Island & McDonald Islands	
+HN	Honduras	America/Tegucigalpa
+HR	Croatia	Europe/Zagreb
+HT	Haiti	America/Port-au-Prince
+HU	Hungary	Europe/Budapest
+ID	Indonesia	Asia/Jakarta
+IE	Ireland	Europe/Dublin
+IL	Israel	Asia/Jerusalem
+IM	Isle of Man	Europe/Isle_of_Man
+IN	India	Asia/Kolkata
+IO	British Indian Ocean Territory	Indian/Chagos
+IQ	Iraq	Asia/Baghdad
+IR	Iran	Asia/Tehran
+IS	Iceland	Atlantic/Reykjavik
+IT	Italy	Europe/Rome
+JE	Jersey	Europe/Jersey
+JM	Jamaica	America/Jamaica
+JO	Jordan	Asia/Amman
+JP	Japan	Asia/Tokyo
+KE	Kenya	Africa/Nairobi
+KG	Kyrgyzstan	Asia/Bishkek
+KH	Cambodia	Asia/Phnom_Penh
+KI	Kiribati	Pacific/Tarawa
+KM	Comoros	Indian/Comoro
+KN	St Kitts & Nevis	America/St_Kitts
+KP	Korea (North)	Asia/Pyongyang
+KR	Korea (South)	Asia/Seoul
+KW	Kuwait	Asia/Kuwait
+KY	Cayman Islands	America/Cayman
+KZ	Kazakhstan	Asia/Almaty
+LA	Laos	Asia/Vientiane
+LB	Lebanon	Asia/Beirut
+LC	St Lucia	America/St_Lucia
+LI	Liechtenstein	Europe/Vaduz
+LK	Sri Lanka	Asia/Colombo
+LR	Liberia	Africa/Monrovia
+LS	Lesotho	Africa/Maseru
+LT	Lithuania	Europe/Vilnius
+LU	Luxembourg	Europe/Luxembourg
+LV	Latvia	Europe/Riga
+LY	Libya	Africa/Tripoli
+MA	Morocco	Africa/Casablanca
+MC	Monaco	Europe/Monaco
+MD	Moldova	Europe/Chisinau
+ME	Montenegro	Europe/Podgorica
+MF	St Martin (French part)	America/Marigot
+MG	Madagascar	Indian/Antananarivo
+MH	Marshall Islands	Pacific/Majuro
+MK	Macedonia	Europe/Skopje
+ML	Mali	Africa/Bamako
+MM	Myanmar (Burma)	Asia/Rangoon
+MN	Mongolia	Asia/Ulaanbaatar
+MO	Macau	Asia/Macau
+MP	Northern Mariana Islands	Pacific/Saipan
+MQ	Martinique	America/Martinique
+MR	Mauritania	Africa/Nouakchott
+MS	Montserrat	America/Montserrat
+MT	Malta	Europe/Malta
+MU	Mauritius	Indian/Mauritius
+MV	Maldives	Indian/Maldives
+MW	Malawi	Africa/Blantyre
+MX	Mexico	America/Mexico_City
+MY	Malaysia	Asia/Kuala_Lumpur
+MZ	Mozambique	Africa/Maputo
+NA	Namibia	Africa/Windhoek
+NC	New Caledonia	Pacific/Noumea
+NE	Niger	Africa/Niamey
+NF	Norfolk Island	Pacific/Norfolk
+NG	Nigeria	Africa/Lagos
+NI	Nicaragua	America/Managua
+NL	Netherlands	Europe/Amsterdam
+NO	Norway	Europe/Oslo
+NP	Nepal	Asia/Kathmandu
+NR	Nauru	Pacific/Nauru
+NU	Niue	Pacific/Niue
+NZ	New Zealand	Pacific/Auckland
+OM	Oman	Asia/Muscat
+PA	Panama	America/Panama
+PE	Peru	America/Lima
+PF	French Polynesia	Pacific/Marquesas
+PG	Papua New Guinea	Pacific/Port_Moresby
+PH	Philippines	Asia/Manila
+PK	Pakistan	Asia/Karachi
+PL	Poland	Europe/Warsaw
+PM	St Pierre & Miquelon	America/Miquelon
+PN	Pitcairn	Pacific/Pitcairn
+PR	Puerto Rico	America/Puerto_Rico
+PS	Palestine	Asia/Gaza
+PT	Portugal	Europe/Lisbon
+PW	Palau	Pacific/Palau
+PY	Paraguay	America/Asuncion
+QA	Qatar	Asia/Qatar
+RE	Reunion	Indian/Reunion
+RO	Romania	Europe/Bucharest
+RS	Serbia	Europe/Belgrade
+RU	Russia	Europe/Moscow
+RW	Rwanda	Africa/Kigali
+SA	Saudi Arabia	Asia/Riyadh
+SB	Solomon Islands	Pacific/Guadalcanal
+SC	Seychelles	Indian/Mahe
+SD	Sudan	Africa/Khartoum
+SE	Sweden	Europe/Stockholm
+SG	Singapore	Asia/Singapore
+SH	St Helena	Atlantic/St_Helena
+SI	Slovenia	Europe/Ljubljana
+SJ	Svalbard & Jan Mayen	Arctic/Longyearbyen
+SK	Slovakia	Europe/Bratislava
+SL	Sierra Leone	Africa/Freetown
+SM	San Marino	Europe/San_Marino
+SN	Senegal	Africa/Dakar
+SO	Somalia	Africa/Mogadishu
+SR	Suriname	America/Paramaribo
+SS	South Sudan	Africa/Juba
+ST	Sao Tome & Principe	Africa/Sao_Tome
+SV	El Salvador	America/El_Salvador
+SX	Sint Maarten	America/Lower_Princes
+SY	Syria	Asia/Damascus
+SZ	Swaziland	Africa/Mbabane
+TC	Turks & Caicos Is	America/Grand_Turk
+TD	Chad	Africa/Ndjamena
+TF	French Southern & Antarctic Lands	Indian/Kerguelen
+TG	Togo	Africa/Lome
+TH	Thailand	Asia/Bangkok
+TJ	Tajikistan	Asia/Dushanbe
+TK	Tokelau	Pacific/Fakaofo
+TL	East Timor	Asia/Dili
+TM	Turkmenistan	Asia/Ashgabat
+TN	Tunisia	Africa/Tunis
+TO	Tonga	Pacific/Tongatapu
+TR	Turkey	Europe/Istanbul
+TT	Trinidad & Tobago	America/Port_of_Spain
+TV	Tuvalu	Pacific/Funafuti
+TW	Taiwan	Asia/Taipei
+TZ	Tanzania	Africa/Dar_es_Salaam
+UA	Ukraine	Europe/Kiev
+UG	Uganda	Africa/Kampala
+UM	US minor outlying islands	Pacific/Midway
+US	United States	America/Los_Angeles
+UY	Uruguay	America/Montevideo
+UZ	Uzbekistan	Asia/Tashkent
+VA	Vatican City	Europe/Vatican
+VC	St Vincent	America/St_Vincent
+VE	Venezuela	America/Caracas
+VG	Virgin Islands (UK)	America/Tortola
+VI	Virgin Islands (US)	America/St_Thomas
+VN	Vietnam	Asia/Ho_Chi_Minh
+VU	Vanuatu	Pacific/Efate
+WF	Wallis & Futuna	Pacific/Wallis
+WS	Samoa (western)	Pacific/Apia
+YE	Yemen	Asia/Aden
+YT	Mayotte	Indian/Mayotte
+ZA	South Africa	Africa/Johannesburg
+ZM	Zambia	Africa/Lusaka
+ZW	Zimbabwe	Africa/Harare

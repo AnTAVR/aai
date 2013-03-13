@@ -1,0 +1,10 @@
+[Unit]
+Description=Intrusion Database System: SNORT
+After=syslog.target
+
+[Service]
+EnvironmentFile=/etc/conf.d/snort
+ExecStart=/usr/bin/snort $SNORT_OPTIONS -u snort -g snort -c /etc/snort/snort.conf
+
+[Install]
+WantedBy=multi-user.target

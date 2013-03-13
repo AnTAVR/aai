@@ -1,0 +1,28 @@
+own_window yes
+own_window_transparent yes
+own_window_type desktop
+double_buffer yes
+use_xft yes
+alignment bottom_right
+gap_x 5
+gap_y 5
+out_to_console no
+update_interval 4
+maximum_width 350
+draw_shades yes
+default_shade_color black
+default_outline_color white
+uppercase no
+font Sans:size=10:weight=bold
+override_utf8_locale yes
+cpu_avg_samples 2
+net_avg_samples 2
+
+template0 ${color orange}\1 $color(\2)\n$color${fs_used \1} / ${fs_size \1} ${fs_bar \1}
+
+TEXT
+${tab 400}
+${color green}File systems $hr
+
+${execpi 12 bash ~/.config/conky/conkyrc3.sh}
+

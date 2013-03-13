@@ -1,0 +1,64 @@
+own_window yes
+own_window_transparent yes
+own_window_type desktop
+double_buffer yes
+use_xft yes
+alignment top_left
+gap_x 5
+gap_y 5
+out_to_console no
+update_interval 3
+maximum_width 350
+draw_shades yes
+default_shade_color black
+default_outline_color white
+uppercase no
+font Sans:size=10:weight=bold
+override_utf8_locale yes
+cpu_avg_samples 2
+net_avg_samples 2
+
+template0 ${color \2} ${top name \1} ${tab 70} ${top pid \1} ${tab 30} ${top cpu \1} ${tab 30} ${top mem \1}
+template1 ${color \2} ${top_mem name \1} ${tab 70} ${top_mem pid \1} ${tab 30} ${top_mem cpu \1} ${tab 30} ${top_mem mem \1}
+template2 ${color lightgrey}CPU \1 $color ${cpu cpu\1}% $alignr${freq \1}MHz ${exec sensors | grep "Core\2 Temp" | cut -d ":" -f2}
+
+TEXT
+${tab 400}
+${color green}System $hr
+
+$color$sysname $kernel $machine
+${execi 88888 cat /proc/cpuinfo | grep "model name" -m1 | cut -d ":" -f2 | cut -d " " -f2- | sed "s#Processor ##"}
+${color lightgrey}Uptime:$color $uptime ${color lightgrey}- Load:$color $loadavg
+
+${color green}CPU $hr
+
+${color orange}${font Sans:size=10}CPU ${execi 3 sensors | grep "CPU Temperature" | cut -d " " -f5-}
+MB ${execi 3 sensors | grep "MB Temperature" | cut -d " " -f6-}$font
+\
+${execpi 88888 bash ~/.config/conky/conkyrc1.sh}
+${cpu}% ${cpubar}
+
+${color green}Memory $hr
+
+${color lightgrey}RAM Usage:$color $mem/$memmax
+$memperc% $membar
+${color lightgrey}Swap Usage:$color $swap/$swapmax
+$swapperc% $swapbar
+
+${color green}Processes $hr
+
+${color lightgrey}All: ${color red} $processes ${color lightgrey} Running: ${color blue} $running_processes
+\
+${color}Name ${tab 70} PID ${tab 70} CPU% ${tab 30} MEM%
+${template0 1 orange}
+${template0 2 lightgrey}
+${template0 3 lightgrey}
+${template0 4 lightgrey}
+${template0 5 lightgrey}
+\
+${color}Mem usage
+${template1 1 orange}
+${template1 2 lightgrey}
+${template1 3 lightgrey}
+${template1 4 lightgrey}
+${template1 5 lightgrey}

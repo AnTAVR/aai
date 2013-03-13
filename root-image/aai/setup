@@ -1,0 +1,183 @@
+#!/bin/sh
+#
+#
+#
+#   Copyright (c) 2012-2013 Anthony Lyappiev <archlinux@antavr.ru>
+#   http://archlinux.antavr.ru
+#
+#   This program is free software; you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation; either version 2 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+#set -e
+#set -u
+set -o pipefail
+shopt -s extglob
+
+LOG_FILE='/aai-install.log'
+VAR_FILE='/aai-var.log'
+
+{
+    NO_DEBUG=1
+
+# Для локализации
+# @todo Нужно доделать!!!
+AAI_VER='Arch AnTAVR Installer ver. 2.8'
+setfont 'cyr-sun16'
+#systemctl start gpm
+
+# Цвет и вид текста сообщений
+BLDRED='\e[1;31m' # Red
+BLDGRN='\e[1;32m' # Green
+BLDYLW='\e[1;33m' # Yellow
+BLDBLU='\e[1;34m' # Blue
+BLDWHT='\e[1;37m' # White
+TXTRST='\e[0m'    # Text Reset
+
+# Имя текущего скрипта
+SCRNAME="$(basename ${0})"
+# Путь к папке со скриптом
+SCRDIR="$(dirname ${0})"
+
+# /usr/share/locale
+LOCALEDIR="${SCRDIR}/locale"
+# /usr/lib/aa-install/modules
+LIBDIR="${SCRDIR}/modules"
+# /usr/share/aa-install/db/
+DBDIR="${SCRDIR}/db/"
+
+
+export TEXTDOMAIN="${SCRNAME}"
+export TEXTDOMAINDIR="${LOCALEDIR}"
+
+source "${LIBDIR}/functions.sh"
+source "${LIBDIR}/dialogs.sh"
+
+
+msg_log "${AAI_VER}"
+# Если не root то выход
+[[ ${EUID} -ne 0 ]] && msg_error "$(gettext 'This script must be run as root.')" 1
+
+
+echo_help()
+{
+    echo -e "${BLDYLW}$(gettext "Использование: ${SCRNAME} <опции> [...]")${TXTRST}"
+    echo -e "${BLDWHT}$(gettext 'ОПЦИИ'):${TXTRST}"
+    echo ''
+    echo -e "\t${BLDWHT}-h${TXTRST}"
+    echo -e "\t\t$(gettext 'вывод помощи')"
+    echo ''
+    echo -e "\t${BLDWHT}-g${TXTRST}"
+    echo -e "\t\t$(gettext 'включение графического режима')"
+    echo -e "\t\t\t$(gettext 'по умолчанию'): $(gettext 'консольный режим')"
+    echo ''
+    echo -e "\t${BLDWHT}-p${TXTRST}"
+    echo -e "\t\t$(gettext 'путь к .')"
+    echo -e "\t\t\t$(gettext 'по умолчанию'): ${NS_PATH}"
+    echo ''
+    echo -e "\t${BLDWHT}-d${TXTRST}"
+    echo -e "\t\t$(gettext 'режим без проверок выполненных пунктов')"
+    echo ''
+}
+
+
+while getopts hgp:d OPTION
+do
+    case "${OPTION}" in
+	'h')
+	    echo_help
+	    exit 0
+	    ;;
+	'g')
+	    [[ ! -z "${DISPLAY}" ]] && DIALOG='Xdialog --clear --colors'
+	    ;;
+	'p')
+	    NS_PATH="${OPTARG}"
+	    ;;
+	'd')
+	    NO_DEBUG=
+	    ;;
+	'?')
+	    echo_help
+	    exit 1
+	    ;;
+    esac
+done
+
+
+# Переменные для главного меню
+DEFAULT_MENU=
+
+# Строки для главного меню
+MAIN_MENU=
+# Функции для главного меню
+declare -a MAIN_CASE
+
+# Подключаем скрипты/модули
+source "${LIBDIR}/net.sh"
+source "${LIBDIR}/part.sh"
+source "${LIBDIR}/base.sh"
+source "${LIBDIR}/base_plus.sh"
+source "${LIBDIR}/bootloader.sh"
+source "${LIBDIR}/de.sh"
+source "${LIBDIR}/video.sh"
+source "${LIBDIR}/print.sh"
+source "${LIBDIR}/pkgs.sh"
+source "${LIBDIR}/webserver.sh"
+source "${LIBDIR}/user.sh"
+source "${LIBDIR}/donate.sh"
+source "${LIBDIR}/exit.sh"
+
+
+# Временные переменные
+TEMP=
+TEMP2=
+
+if [[ ! "${NO_DEBUG}" ]]
+then
+    [[ -f "${VAR_FILE}" ]] && source "${VAR_FILE}"
+#else
+#    [[ -f "${VAR_FILE}" ]] && rm "${VAR_FILE}"
+fi
+
+
+TXT_MAIN_MENU="$(gettext 'Главное меню')"
+# Цикл обработки главного меню
+while true
+do
+# Преобразуем строку главного меню в массив
+    TEMP=
+    MAIN_MENU=
+    for TEMP in ${MAIN_CASE[@]}
+    do
+	MAIN_MENU+="'${TEMP}' '$(str_${TEMP})' "
+    done
+# Показываем главное меню
+    dialog_menu \
+	"$(gettext 'Инсталлятор Arch Linux для новичков')" \
+	"${DEFAULT_MENU}" \
+	"\n${TXT_MAIN_MENU}\n" \
+	"${MAIN_MENU}" \
+	"--cancel-label '${TXT_EXIT_MAIN}'" \
+	2> "${TEMPFILE}"
+
+    DEFAULT_MENU="$(cat "${TEMPFILE}")"
+
+# Если меню выбрано то исполняем соответствующую функцию, в противном случае выход
+    if [[ -n "${DEFAULT_MENU}" ]]
+    then
+	run_${DEFAULT_MENU}
+    else
+	run_exit
+    fi
+done
+} 2> "${LOG_FILE}"

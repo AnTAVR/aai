@@ -1,0 +1,210 @@
+amiga	amiga-de				
+amiga	amiga-us				
+atari	atari-de				
+atari	atari-se				
+atari	atari-uk-falcon				
+atari	atari-us				
+i386/azerty	azerty				
+i386/azerty	be-latin1	be	pc105	-	terminate:ctrl_alt_bksp
+i386/azerty	fr	fr	pc105	-	terminate:ctrl_alt_bksp
+i386/azerty	fr-latin1	fr	pc105	-	terminate:ctrl_alt_bksp
+i386/azerty	fr-latin9	fr	pc105	latin9	terminate:ctrl_alt_bksp
+i386/azerty	fr-pc	fr	pc105	-	terminate:ctrl_alt_bksp
+i386/azerty	wangbe				
+i386/azerty	wangbe2				
+i386/colemak	colemak				
+i386/dvorak	ANSI-dvorak				
+i386/dvorak	dvorak	us	pc105	dvorak	terminate:ctrl_alt_bksp
+i386/dvorak	dvorak-ca-fr				
+i386/dvorak	dvorak-es				
+i386/dvorak	dvorak-fr				
+i386/dvorak	dvorak-l				
+i386/dvorak	dvorak-r				
+i386/dvorak	dvorak-ru				
+i386/dvorak	dvorak-sv-a1				
+i386/dvorak	dvorak-sv-a5				
+i386/dvorak	dvorak-uk				
+i386/dvorak	no-dvorak				
+i386/fgGIod	trf-fgGIod				
+i386/fgGIod	tr_f-latin5				
+i386/include	applkey				
+i386/include	backspace				
+i386/include	ctrl				
+i386/include	euro				
+i386/include	euro1				
+i386/include	euro2				
+i386/include	keypad				
+i386/include	unicode				
+i386/include	windowkeys				
+i386/olpc	es-olpc				
+i386/olpc	pt-olpc				
+i386/qwerty	bashkir				
+i386/qwerty	bg-cp1251				
+i386/qwerty	bg-cp855				
+i386/qwerty	bg_bds-cp1251				
+i386/qwerty	bg_bds-utf8	us,bg	pc105	-	terminate:ctrl_alt_bksp,grp:alt_shift_toggle,grp_led:scroll
+i386/qwerty	bg_pho-cp1251				
+i386/qwerty	bg_pho-utf8	us,bg	pc105	,phonetic	terminate:ctrl_alt_bksp,grp:alt_shift_toggle,grp_led:scroll
+i386/qwerty	br-abnt				
+i386/qwerty	br-abnt2	br	abnt2	-	terminate:ctrl_alt_bksp
+i386/qwerty	br-latin1-abnt2				
+i386/qwerty	br-latin1-us				
+i386/qwerty	by	us,by	pc105	-	terminate:ctrl_alt_bksp,grp:alt_shift_toggle,grp_led:scroll
+i386/qwerty	by-cp1251				
+i386/qwerty	bywin-cp1251				
+i386/qwerty	cf	ca	pc105	-	terminate:ctrl_alt_bksp
+i386/qwerty	cz				
+i386/qwerty	cz-cp1250				
+i386/qwerty	cz-lat2	cz	pc105	qwerty	terminate:ctrl_alt_bksp
+i386/qwerty	cz-lat2-prog				
+i386/qwerty	defkeymap				
+i386/qwerty	defkeymap_V1.0				
+i386/qwerty	dk	dk	pc105	-	terminate:ctrl_alt_bksp
+i386/qwerty	dk-latin1	dk	pc105	-	terminate:ctrl_alt_bksp
+i386/qwerty	emacs				
+i386/qwerty	emacs2				
+i386/qwerty	es	es	pc105	-	terminate:ctrl_alt_bksp
+i386/qwerty	es-cp850				
+i386/qwerty	et	ee	pc105	-	terminate:ctrl_alt_bksp
+i386/qwerty	et-nodeadkeys				
+i386/qwerty	fi	fi	pc105	-	terminate:ctrl_alt_bksp
+i386/qwerty	fi-latin1	fi	pc105	-	terminate:ctrl_alt_bksp
+i386/qwerty	fi-latin9				
+i386/qwerty	gr	us,gr	pc105	-	terminate:ctrl_alt_bksp,grp:alt_shift_toggle,grp_led:scroll
+i386/qwerty	gr-pc				
+i386/qwerty	hu101	hu	pc105	qwerty	terminate:ctrl_alt_bksp
+i386/qwerty	il	il	pc105	-	terminate:ctrl_alt_bksp
+i386/qwerty	il-heb				
+i386/qwerty	il-phonetic				
+i386/qwerty	is-latin1	is	pc105	-	terminate:ctrl_alt_bksp
+i386/qwerty	is-latin1-us				
+i386/qwerty	it	it	pc105	-	terminate:ctrl_alt_bksp
+i386/qwerty	it-ibm	it	pc105	-	terminate:ctrl_alt_bksp
+i386/qwerty	it2	it	pc105	-	terminate:ctrl_alt_bksp
+i386/qwerty	jp106	jp	jp106	-	terminate:ctrl_alt_bksp
+i386/qwerty	kazakh	us,kz	pc105	-	terminate:ctrl_alt_bksp,grp:alt_shift_toggle,grp_led:scroll
+i386/qwerty	kyrgyz				
+i386/qwerty	ky_alt_sh-UTF-8				
+i386/qwerty	la-latin1	latam	pc105	-	terminate:ctrl_alt_bksp
+i386/qwerty	lt	lt	pc105	-	terminate:ctrl_alt_bksp
+i386/qwerty	lt.baltic				
+i386/qwerty	lt.l4				
+i386/qwerty	mk				
+i386/qwerty	mk-cp1251				
+i386/qwerty	mk-utf	us,mk	pc105	-	terminate:ctrl_alt_bksp,grp:alt_shift_toggle,grp_led:scroll
+i386/qwerty	mk0				
+i386/qwerty	nl	nl	pc105	-	terminate:ctrl_alt_bksp
+i386/qwerty	nl2				
+i386/qwerty	no	no	pc105	-	terminate:ctrl_alt_bksp
+i386/qwerty	no-latin1				
+i386/qwerty	pc110				
+i386/qwerty	pl				
+i386/qwerty	pl1				
+i386/qwerty	pl2	pl	pc105	-	terminate:ctrl_alt_bksp
+i386/qwerty	pl3				
+i386/qwerty	pl4				
+i386/qwerty	pt-latin1	pt	pc105	-	terminate:ctrl_alt_bksp
+i386/qwerty	pt-latin9				
+i386/qwerty	ro	ro	pc105	-	terminate:ctrl_alt_bksp
+i386/qwerty	ro_std				
+i386/qwerty	ro_win				
+i386/qwerty	ru	us,ru	pc105	-	terminate:ctrl_alt_bksp,grp:alt_shift_toggle,grp_led:scroll
+i386/qwerty	ru-cp1251				
+i386/qwerty	ru-ms				
+i386/qwerty	ru-yawerty				
+i386/qwerty	ru1				
+i386/qwerty	ru2				
+i386/qwerty	ru3				
+i386/qwerty	ru4				
+i386/qwerty	ruwin_alt-CP1251				
+i386/qwerty	ruwin_alt-KOI8-R				
+i386/qwerty	ruwin_alt-UTF-8				
+i386/qwerty	ruwin_alt_sh-UTF-8				
+i386/qwerty	ruwin_cplk-CP1251				
+i386/qwerty	ruwin_cplk-KOI8-R				
+i386/qwerty	ruwin_cplk-UTF-8				
+i386/qwerty	ruwin_ctrl-CP1251				
+i386/qwerty	ruwin_ctrl-KOI8-R				
+i386/qwerty	ruwin_ctrl-UTF-8				
+i386/qwerty	ruwin_ct_sh-CP1251				
+i386/qwerty	ruwin_ct_sh-KOI8-R				
+i386/qwerty	ruwin_ct_sh-UTF-8				
+i386/qwerty	ru_win				
+i386/qwerty	se-fi-ir209				
+i386/qwerty	se-fi-lat6				
+i386/qwerty	se-ir209				
+i386/qwerty	se-lat6				
+i386/qwerty	sk-prog-qwerty				
+i386/qwerty	sk-qwerty	sk	pc105	-	terminate:ctrl_alt_bksp,qwerty
+i386/qwerty	sr-cy	rs	pc105	-	terminate:ctrl_alt_bksp
+i386/qwerty	sv-latin1	se	pc105	-	terminate:ctrl_alt_bksp
+i386/qwerty	tj_alt-UTF8				
+i386/qwerty	tralt				
+i386/qwerty	trf				
+i386/qwerty	trq	tr	pc105	-	terminate:ctrl_alt_bksp
+i386/qwerty	tr_q-latin5				
+i386/qwerty	ttwin_alt-UTF-8				
+i386/qwerty	ttwin_cplk-UTF-8				
+i386/qwerty	ttwin_ctrl-UTF-8				
+i386/qwerty	ttwin_ct_sh-UTF-8				
+i386/qwerty	ua				
+i386/qwerty	ua-cp1251				
+i386/qwerty	ua-utf	us,ua	pc105	-	terminate:ctrl_alt_bksp,grp:alt_shift_toggle,grp_led:scroll
+i386/qwerty	ua-utf-ws				
+i386/qwerty	ua-ws				
+i386/qwerty	uk	gb	pc105	-	terminate:ctrl_alt_bksp
+i386/qwerty	us	us	pc105+inet	-	terminate:ctrl_alt_bksp
+i386/qwerty	us-acentos	us	pc105	intl	terminate:ctrl_alt_bksp
+i386/qwertz	croat	hr	pc105	-	terminate:ctrl_alt_bksp
+i386/qwertz	cz-qwertz				
+i386/qwertz	cz-us-qwertz	us,cz	pc105	-	terminate:ctrl_alt_bksp,grp:alt_shift_toggle,grp_led:scroll
+i386/qwertz	de	de	pc105	-	terminate:ctrl_alt_bksp
+i386/qwertz	de-latin1	de	pc105	-	terminate:ctrl_alt_bksp
+i386/qwertz	de-latin1-nodeadkeys	de	pc105	nodeadkeys	terminate:ctrl_alt_bksp
+i386/qwertz	de-mobii				
+i386/qwertz	de_alt_UTF-8				
+i386/qwertz	de_CH-latin1				
+i386/qwertz	fr_CH	ch	pc105	fr	terminate:ctrl_alt_bksp
+i386/qwertz	fr_CH-latin1	ch	pc105	fr	terminate:ctrl_alt_bksp
+i386/qwertz	hu	hu	pc105	-	terminate:ctrl_alt_bksp
+i386/qwertz	sg	ch	pc105	de_nodeadkeys	terminate:ctrl_alt_bksp
+i386/qwertz	sg-latin1	ch	pc105	de_nodeadkeys	terminate:ctrl_alt_bksp
+i386/qwertz	sg-latin1-lk450				
+i386/qwertz	sk-prog-qwertz				
+i386/qwertz	sk-qwertz				
+i386/qwertz	slovene	si	pc105	-	terminate:ctrl_alt_bksp
+mac/all	mac-be				
+mac/all	mac-de-latin1				
+mac/all	mac-de-latin1-nodeadkeys				
+mac/all	mac-de_CH				
+mac/all	mac-dk-latin1				
+mac/all	mac-dvorak				
+mac/all	mac-es				
+mac/all	mac-fi-latin1				
+mac/all	mac-fr				
+mac/all	mac-fr_CH-latin1				
+mac/all	mac-it				
+mac/all	mac-pl				
+mac/all	mac-pt-latin1				
+mac/all	mac-se				
+mac/all	mac-template				
+mac/all	mac-uk				
+mac/all	mac-us				
+mac/include	mac-euro				
+mac/include	mac-euro2				
+sun	sun-pl				
+sun	sun-pl-altgraph				
+sun	sundvorak				
+sun	sunkeymap				
+sun	sunt4-es				
+sun	sunt4-fi-latin1				
+sun	sunt4-no-latin1				
+sun	sunt5-cz-us				
+sun	sunt5-de-latin1				
+sun	sunt5-es				
+sun	sunt5-fi-latin1				
+sun	sunt5-fr-latin1				
+sun	sunt5-ru				
+sun	sunt5-uk				
+sun	sunt5-us-cz				
+sun	sunt6-uk				

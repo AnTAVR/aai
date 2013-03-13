@@ -22,4 +22,4 @@ sed 's#\(^ExecStart=-/sbin/agetty\)#\1 --autologin root#;
      /usr/lib/systemd/system/getty@.service > /etc/systemd/system/autologin@.service
 
 systemctl disable getty@tty1.service
-systemctl enable multi-user.target pacman-init.service autologin@.service dhcpcd.service
+systemctl enable multi-user.target pacman-init.service autologin@.service

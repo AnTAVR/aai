@@ -1,0 +1,558 @@
+AD	ca_AD ISO-8859-15		
+AD	ca_AD.UTF-8 UTF-8		
+AE	ar_AE ISO-8859-6		
+AE	ar_AE.UTF-8 UTF-8		
+AF	ps_AF UTF-8		
+AG	en_AG UTF-8	us	
+AI			
+AL	sq_AL ISO-8859-1		
+AL	sq_AL.UTF-8 UTF-8		
+AM	hy_AM UTF-8		
+AM	hy_AM.ARMSCII-8 ARMSCII-8		
+AN	pap_AN UTF-8		
+AO			
+AQ			
+AR	es_AR ISO-8859-1	es	
+AR	es_AR.UTF-8 UTF-8	es	
+AS			
+AT	de_AT ISO-8859-1	de	
+AT	de_AT.UTF-8 UTF-8	de	
+AT	de_AT@euro ISO-8859-15	de	
+AU	en_AU ISO-8859-1	us	
+AU	en_AU.UTF-8 UTF-8	us	
+AW	nl_AW UTF-8	nl	
+AX			
+AZ	az_AZ UTF-8		
+BA	bs_BA ISO-8859-2		
+BA	bs_BA.UTF-8 UTF-8		
+BB			
+BD	bn_BD UTF-8		
+BE	de_BE ISO-8859-1	be-latin1	
+BE	de_BE.UTF-8 UTF-8	be-latin1	
+BE	de_BE@euro ISO-8859-15	be-latin1	
+BE	fr_BE ISO-8859-1	be-latin1	
+BE	fr_BE.UTF-8 UTF-8	be-latin1	
+BE	fr_BE@euro ISO-8859-15	be-latin1	
+BE	li_BE UTF-8	be-latin1	
+BE	nl_BE ISO-8859-1	be-latin1	
+BE	nl_BE.UTF-8 UTF-8	be-latin1	
+BE	nl_BE@euro ISO-8859-15	be-latin1	
+BE	wa_BE ISO-8859-1	be-latin1	
+BE	wa_BE.UTF-8 UTF-8	be-latin1	
+BE	wa_BE@euro ISO-8859-15	be-latin1	
+BF			
+BG	bg_BG CP1251		
+BG	bg_BG.UTF-8 UTF-8		
+BH	ar_BH ISO-8859-6		
+BH	ar_BH.UTF-8 UTF-8		
+BI			
+BJ			
+BL			
+BM			
+BN			
+BO	es_BO ISO-8859-1	es	
+BO	es_BO.UTF-8 UTF-8	es	
+BQ			
+BR	pt_BR ISO-8859-1	br-latin1-abnt2	
+BR	pt_BR.UTF-8 UTF-8	br-latin1-abnt2	
+BS			
+BT	dz_BT UTF-8		
+BV			
+BW	en_BW ISO-8859-1	us	
+BW	en_BW.UTF-8 UTF-8	us	
+BY	be_BY CP1251	by	
+BY	be_BY.UTF-8 UTF-8	by	
+BY	be_BY@latin UTF-8	by	
+BZ			
+CA	en_CA ISO-8859-1	us	
+CA	en_CA.UTF-8 UTF-8	us	
+CA	fr_CA ISO-8859-1	fr	
+CA	fr_CA.UTF-8 UTF-8	fr	
+CA	ik_CA UTF-8		
+CA	iu_CA UTF-8		
+CA	shs_CA UTF-8		
+CC			
+CD			
+CF			
+CG			
+CH	de_CH ISO-8859-1	de	
+CH	de_CH.UTF-8 UTF-8	de	
+CH	fr_CH ISO-8859-1	fr	
+CH	fr_CH.UTF-8 UTF-8	fr	
+CH	it_CH ISO-8859-1	it	
+CH	it_CH.UTF-8 UTF-8	it	
+CH	wae_CH UTF-8		
+CI			
+CK			
+CL	es_CL ISO-8859-1	es	
+CL	es_CL.UTF-8 UTF-8	es	
+CM			
+CN	bo_CN UTF-8		
+CN	ug_CN UTF-8		
+CN	zh_CN GB2312		
+CN	zh_CN.GB18030 GB18030		
+CN	zh_CN.GBK GBK		
+CN	zh_CN.UTF-8 UTF-8		
+CO	es_CO ISO-8859-1	es	
+CO	es_CO.UTF-8 UTF-8	es	
+CR	es_CR ISO-8859-1	es	
+CR	es_CR.UTF-8 UTF-8	es	
+CU	es_CU UTF-8	es	
+CV			
+CW			
+CX			
+CY	el_CY ISO-8859-7		
+CY	el_CY.UTF-8 UTF-8		
+CY	tr_CY ISO-8859-9		
+CY	tr_CY.UTF-8 UTF-8		
+CZ	cs_CZ ISO-8859-2	cz	
+CZ	cs_CZ.UTF-8 UTF-8	cz	
+DE	de_DE ISO-8859-1	de	
+DE	de_DE.UTF-8 UTF-8	de	
+DE	de_DE@euro ISO-8859-15	de	
+DE	fy_DE UTF-8	de	
+DE	hsb_DE ISO-8859-2	de	
+DE	hsb_DE.UTF-8 UTF-8	de	
+DE	nds_DE UTF-8	de	
+DJ	aa_DJ ISO-8859-1		
+DJ	aa_DJ.UTF-8 UTF-8		
+DJ	so_DJ ISO-8859-1		
+DJ	so_DJ.UTF-8 UTF-8		
+DK	da_DK ISO-8859-1	dk	
+DK	da_DK.UTF-8 UTF-8	dk	
+DK	en_DK ISO-8859-1	dk	
+DK	en_DK.UTF-8 UTF-8	dk	
+DM			
+DO	es_DO ISO-8859-1	es	
+DO	es_DO.UTF-8 UTF-8	es	
+DZ	ar_DZ ISO-8859-6		
+DZ	ar_DZ.UTF-8 UTF-8		
+DZ	ber_DZ UTF-8		
+EC	es_EC ISO-8859-1	es	
+EC	es_EC.UTF-8 UTF-8	es	
+EE	et_EE ISO-8859-1	et	
+EE	et_EE.ISO-8859-15 ISO-8859-15	et	
+EE	et_EE.UTF-8 UTF-8	et	
+EG	ar_EG ISO-8859-6		
+EG	ar_EG.UTF-8 UTF-8		
+EH			
+ER	aa_ER UTF-8		
+ER	aa_ER@saaho UTF-8		
+ER	byn_ER UTF-8		
+ER	gez_ER UTF-8		
+ER	gez_ER@abegede UTF-8		
+ER	tig_ER UTF-8		
+ER	ti_ER UTF-8		
+ES	an_ES ISO-8859-15	es	
+ES	an_ES.UTF-8 UTF-8	es	
+ES	ast_ES ISO-8859-15	es	
+ES	ast_ES.UTF-8 UTF-8	es	
+ES	ca_ES ISO-8859-1	es	
+ES	ca_ES.UTF-8 UTF-8	es	
+ES	ca_ES@euro ISO-8859-15	es	
+ES	es_ES ISO-8859-1	es	
+ES	es_ES.UTF-8 UTF-8	es	
+ES	es_ES@euro ISO-8859-15	es	
+ES	eu_ES ISO-8859-1	es	
+ES	eu_ES.UTF-8 UTF-8	es	
+ES	eu_ES@euro ISO-8859-15	es	
+ES	gl_ES ISO-8859-1	es	
+ES	gl_ES.UTF-8 UTF-8	es	
+ES	gl_ES@euro ISO-8859-15	es	
+ET	aa_ET UTF-8	et	
+ET	am_ET UTF-8	et	
+ET	gez_ET UTF-8	et	
+ET	gez_ET@abegede UTF-8	et	
+ET	om_ET UTF-8	et	
+ET	sid_ET UTF-8	et	
+ET	so_ET UTF-8	et	
+ET	ti_ET UTF-8	et	
+ET	wal_ET UTF-8	et	
+FI	fi_FI ISO-8859-1	fi	
+FI	fi_FI.UTF-8 UTF-8	fi	
+FI	fi_FI@euro ISO-8859-15	fi	
+FI	sv_FI ISO-8859-1	fi	
+FI	sv_FI.UTF-8 UTF-8	fi	
+FI	sv_FI@euro ISO-8859-15	fi	
+FJ			
+FK			
+FM			
+FO	fo_FO ISO-8859-1		
+FO	fo_FO.UTF-8 UTF-8		
+FR	br_FR ISO-8859-1	fr	
+FR	br_FR.UTF-8 UTF-8	fr	
+FR	br_FR@euro ISO-8859-15	fr	
+FR	ca_FR ISO-8859-15	fr	
+FR	ca_FR.UTF-8 UTF-8	fr	
+FR	fr_FR ISO-8859-1	fr	
+FR	fr_FR.UTF-8 UTF-8	fr	
+FR	fr_FR@euro ISO-8859-15	fr	
+FR	ia_FR UTF-8	fr	
+FR	oc_FR ISO-8859-1	fr	
+FR	oc_FR.UTF-8 UTF-8	fr	
+GA			
+GB	cy_GB ISO-8859-14		
+GB	cy_GB.UTF-8 UTF-8		
+GB	en_GB ISO-8859-1	us	
+GB	en_GB.UTF-8 UTF-8	us	
+GB	gd_GB ISO-8859-15		
+GB	gd_GB.UTF-8 UTF-8		
+GB	gv_GB ISO-8859-1		
+GB	gv_GB.UTF-8 UTF-8		
+GB	kw_GB ISO-8859-1		
+GB	kw_GB.UTF-8 UTF-8		
+GD			
+GE	ka_GE GEORGIAN-PS		
+GE	ka_GE.UTF-8 UTF-8		
+GF			
+GG			
+GH			
+GI			
+GL	kl_GL ISO-8859-1		
+GL	kl_GL.UTF-8 UTF-8		
+GM			
+GN			
+GP			
+GQ			
+GR	el_GR ISO-8859-7	gr	
+GR	el_GR.UTF-8 UTF-8	gr	
+GS			
+GT	es_GT ISO-8859-1	es	
+GT	es_GT.UTF-8 UTF-8	es	
+GU			
+GW			
+GY			
+HK	en_HK ISO-8859-1	us	
+HK	en_HK.UTF-8 UTF-8	us	
+HK	yue_HK UTF-8		
+HK	zh_HK BIG5-HKSCS		
+HK	zh_HK.UTF-8 UTF-8		
+HM			
+HN	es_HN ISO-8859-1	es	
+HN	es_HN.UTF-8 UTF-8	es	
+HR	hr_HR ISO-8859-2		
+HR	hr_HR.UTF-8 UTF-8		
+HT	ht_HT UTF-8		
+HU	hu_HU ISO-8859-2	hu	
+HU	hu_HU.UTF-8 UTF-8	hu	
+ID	id_ID ISO-8859-1		
+ID	id_ID.UTF-8 UTF-8		
+IE	en_IE ISO-8859-1	us	
+IE	en_IE.UTF-8 UTF-8	us	
+IE	en_IE@euro ISO-8859-15	us	
+IE	ga_IE ISO-8859-1		
+IE	ga_IE.UTF-8 UTF-8		
+IE	ga_IE@euro ISO-8859-15		
+IL	he_IL ISO-8859-8	il	
+IL	he_IL.UTF-8 UTF-8	il	
+IL	iw_IL ISO-8859-8	il	
+IL	iw_IL.UTF-8 UTF-8	il	
+IM			
+IN	ar_IN UTF-8		
+IN	as_IN UTF-8		
+IN	bho_IN UTF-8		
+IN	bn_IN UTF-8		
+IN	bo_IN UTF-8		
+IN	brx_IN UTF-8		
+IN	doi_IN UTF-8		
+IN	en_IN UTF-8	us	
+IN	gu_IN UTF-8		
+IN	hi_IN UTF-8		
+IN	hne_IN UTF-8		
+IN	kn_IN UTF-8		
+IN	kok_IN UTF-8		
+IN	ks_IN UTF-8		
+IN	ks_IN@devanagari UTF-8		
+IN	mag_IN UTF-8		
+IN	mai_IN UTF-8		
+IN	ml_IN UTF-8		
+IN	mni_IN UTF-8		
+IN	mr_IN UTF-8		
+IN	or_IN UTF-8		
+IN	pa_IN UTF-8		
+IN	sat_IN UTF-8		
+IN	sa_IN UTF-8		
+IN	sd_IN UTF-8		
+IN	sd_IN@devanagari UTF-8		
+IN	ta_IN UTF-8		
+IN	te_IN UTF-8		
+IN	ur_IN UTF-8		
+IO			
+IQ	ar_IQ ISO-8859-6		
+IQ	ar_IQ.UTF-8 UTF-8		
+IR	fa_IR UTF-8		
+IS	is_IS ISO-8859-1	is-latin1	
+IS	is_IS.UTF-8 UTF-8	is-latin1	
+IT	ca_IT ISO-8859-15	it	
+IT	ca_IT.UTF-8 UTF-8	it	
+IT	fur_IT UTF-8	it	
+IT	it_IT ISO-8859-1	it	
+IT	it_IT.UTF-8 UTF-8	it	
+IT	it_IT@euro ISO-8859-15	it	
+IT	lij_IT UTF-8	it	
+IT	sc_IT UTF-8	it	
+JE			
+JM			
+JO	ar_JO ISO-8859-6		
+JO	ar_JO.UTF-8 UTF-8		
+JP	ja_JP.EUC-JP EUC-JP		
+JP	ja_JP.UTF-8 UTF-8		
+KE	om_KE ISO-8859-1		
+KE	om_KE.UTF-8 UTF-8		
+KE	so_KE ISO-8859-1		
+KE	so_KE.UTF-8 UTF-8		
+KE	sw_KE UTF-8		
+KG	ky_KG UTF-8		
+KH	km_KH UTF-8		
+KI			
+KM			
+KN			
+KP			
+KR	ko_KR.EUC-KR EUC-KR		
+KR	ko_KR.UTF-8 UTF-8		
+KW	ar_KW ISO-8859-6		
+KW	ar_KW.UTF-8 UTF-8		
+KY			
+KZ	kk_KZ PT154		
+KZ	kk_KZ.UTF-8 UTF-8		
+LA	lo_LA UTF-8	la-latin1	
+LB	ar_LB ISO-8859-6		
+LB	ar_LB.UTF-8 UTF-8		
+LC			
+LI			
+LK	si_LK UTF-8		
+LK	ta_LK UTF-8		
+LR			
+LS			
+LT	lt_LT ISO-8859-13	lt	
+LT	lt_LT.UTF-8 UTF-8	lt	
+LU	de_LU ISO-8859-1	de	
+LU	de_LU.UTF-8 UTF-8	de	
+LU	de_LU@euro ISO-8859-15	de	
+LU	fr_LU ISO-8859-1	fr	
+LU	fr_LU.UTF-8 UTF-8	fr	
+LU	fr_LU@euro ISO-8859-15	fr	
+LU	lb_LU UTF-8		
+LV	lv_LV ISO-8859-13		
+LV	lv_LV.UTF-8 UTF-8		
+LY	ar_LY ISO-8859-6		
+LY	ar_LY.UTF-8 UTF-8		
+MA	ar_MA ISO-8859-6		
+MA	ar_MA.UTF-8 UTF-8		
+MA	ber_MA UTF-8		
+MC			
+MD			
+ME	sr_ME UTF-8		
+MF			
+MG	mg_MG ISO-8859-15		
+MG	mg_MG.UTF-8 UTF-8		
+MH			
+MK	mk_MK ISO-8859-5	mk	
+MK	mk_MK.UTF-8 UTF-8	mk	
+MK	sq_MK UTF-8	mk	
+ML			
+MM	my_MM UTF-8		
+MN	mn_MN UTF-8		
+MO			
+MP			
+MQ			
+MR			
+MS			
+MT	mt_MT ISO-8859-3		
+MT	mt_MT.UTF-8 UTF-8		
+MU			
+MV	dv_MV UTF-8		
+MW			
+MX	es_MX ISO-8859-1	es	
+MX	es_MX.UTF-8 UTF-8	es	
+MX	nhn_MX UTF-8		
+MY	ms_MY ISO-8859-1		
+MY	ms_MY.UTF-8 UTF-8		
+MZ			
+NA			
+NC			
+NE			
+NF			
+NG	en_NG UTF-8	us	
+NG	ha_NG UTF-8		
+NG	ig_NG UTF-8		
+NG	yo_NG UTF-8		
+NI	es_NI ISO-8859-1	es	
+NI	es_NI.UTF-8 UTF-8	es	
+NL	fy_NL UTF-8	nl	
+NL	li_NL UTF-8	nl	
+NL	nds_NL UTF-8	nl	
+NL	nl_NL ISO-8859-1	nl	
+NL	nl_NL.UTF-8 UTF-8	nl	
+NL	nl_NL@euro ISO-8859-15	nl	
+NO	nb_NO ISO-8859-1	no	
+NO	nb_NO.UTF-8 UTF-8	no	
+NO	nn_NO ISO-8859-1	no	
+NO	nn_NO.UTF-8 UTF-8	no	
+NO	se_NO UTF-8	no	
+NP	ne_NP UTF-8		
+NR			
+NU	niu_NU UTF-8		
+NZ	en_NZ ISO-8859-1	us	
+NZ	en_NZ.UTF-8 UTF-8	us	
+NZ	mi_NZ ISO-8859-13		
+NZ	mi_NZ.UTF-8 UTF-8		
+NZ	niu_NZ UTF-8		
+OM	ar_OM ISO-8859-6		
+OM	ar_OM.UTF-8 UTF-8		
+PA	es_PA ISO-8859-1	es	
+PA	es_PA.UTF-8 UTF-8	es	
+PE	ayc_PE UTF-8		
+PE	es_PE ISO-8859-1	es	
+PE	es_PE.UTF-8 UTF-8	es	
+PF			
+PG			
+PH	en_PH ISO-8859-1	us	
+PH	en_PH.UTF-8 UTF-8	us	
+PH	fil_PH UTF-8		
+PH	tl_PH ISO-8859-1		
+PH	tl_PH.UTF-8 UTF-8		
+PK	pa_PK UTF-8		
+PK	ur_PK UTF-8		
+PL	csb_PL UTF-8	pl	
+PL	pl_PL ISO-8859-2	pl	
+PL	pl_PL.UTF-8 UTF-8	pl	
+PL	szl_PL UTF-8	pl	
+PM			
+PN			
+PR	es_PR ISO-8859-1	es	
+PR	es_PR.UTF-8 UTF-8	es	
+PS			
+PT	pt_PT ISO-8859-1	pt-latin1	
+PT	pt_PT.UTF-8 UTF-8	pt-latin1	
+PT	pt_PT@euro ISO-8859-15	pt-latin1	
+PW			
+PY	es_PY ISO-8859-1	es	
+PY	es_PY.UTF-8 UTF-8	es	
+QA	ar_QA ISO-8859-6		
+QA	ar_QA.UTF-8 UTF-8		
+RE			
+RO	ro_RO ISO-8859-2	ro	
+RO	ro_RO.UTF-8 UTF-8	ro	
+RS	sr_RS UTF-8		
+RS	sr_RS@latin UTF-8		
+RU	cv_RU UTF-8	ru	
+RU	mhr_RU UTF-8	ru	
+RU	os_RU UTF-8	ru	
+RU	ru_RU ISO-8859-5	ru	
+RU	ru_RU.KOI8-R KOI8-R	ru	
+RU	ru_RU.UTF-8 UTF-8	ru	cyr-sun16
+RU	tt_RU UTF-8	ru	
+RU	tt_RU@iqtelif UTF-8	ru	
+RW	rw_RW UTF-8		
+SA	ar_SA ISO-8859-6		
+SA	ar_SA.UTF-8 UTF-8		
+SB			
+SC			
+SD	ar_SD ISO-8859-6		
+SD	ar_SD.UTF-8 UTF-8		
+SE	sv_SE ISO-8859-1	sv-latin1	
+SE	sv_SE.UTF-8 UTF-8	sv-latin1	
+SG	en_SG ISO-8859-1	sg	
+SG	en_SG.UTF-8 UTF-8	sg	
+SG	zh_SG GB2312	sg	
+SG	zh_SG.GBK GBK	sg	
+SG	zh_SG.UTF-8 UTF-8	sg	
+SH			
+SI	sl_SI ISO-8859-2		
+SI	sl_SI.UTF-8 UTF-8		
+SJ			
+SK	sk_SK ISO-8859-2		
+SK	sk_SK.UTF-8 UTF-8		
+SL			
+SM			
+SN	ff_SN UTF-8		
+SN	wo_SN UTF-8		
+SO	so_SO ISO-8859-1		
+SO	so_SO.UTF-8 UTF-8		
+SR			
+SS			
+ST			
+SV	es_SV ISO-8859-1	sv-latin1	
+SV	es_SV.UTF-8 UTF-8	sv-latin1	
+SX			
+SY	ar_SY ISO-8859-6		
+SY	ar_SY.UTF-8 UTF-8		
+SZ			
+TC			
+TD			
+TF			
+TG			
+TH	th_TH TIS-620		
+TH	th_TH.UTF-8 UTF-8		
+TJ	tg_TJ KOI8-T		
+TJ	tg_TJ.UTF-8 UTF-8		
+TK			
+TL			
+TM	tk_TM UTF-8		
+TN	ar_TN ISO-8859-6		
+TN	ar_TN.UTF-8 UTF-8		
+TO			
+TR	ku_TR ISO-8859-9		
+TR	ku_TR.UTF-8 UTF-8		
+TR	tr_TR ISO-8859-9		
+TR	tr_TR.UTF-8 UTF-8		
+TT			
+TV			
+TW	nan_TW@latin UTF-8		
+TW	zh_TW BIG5		
+TW	zh_TW.EUC-TW EUC-TW		
+TW	zh_TW.UTF-8 UTF-8		
+TZ	sw_TZ UTF-8		
+UA	crh_UA UTF-8	ua	
+UA	ru_UA KOI8-U	ua	
+UA	ru_UA.UTF-8 UTF-8	ua	
+UA	uk_UA KOI8-U	ua	
+UA	uk_UA.UTF-8 UTF-8	ua	
+UG	lg_UG ISO-8859-10		
+UG	lg_UG.UTF-8 UTF-8		
+UM			
+US	en_US ISO-8859-1	us	
+US	en_US.UTF-8 UTF-8	us	
+US	es_US ISO-8859-1	us	
+US	es_US.UTF-8 UTF-8	us	
+US	unm_US UTF-8	us	
+US	yi_US CP1255	us	
+US	yi_US.UTF-8 UTF-8	us	
+UY	es_UY ISO-8859-1	es	
+UY	es_UY.UTF-8 UTF-8	es	
+UZ	uz_UZ ISO-8859-1		
+UZ	uz_UZ@cyrillic UTF-8		
+VA			
+VC			
+VE	es_VE ISO-8859-1	es	
+VE	es_VE.UTF-8 UTF-8	es	
+VG			
+VI			
+VN	vi_VN UTF-8		
+VU			
+WF			
+WS			
+YE	ar_YE ISO-8859-6		
+YE	ar_YE.UTF-8 UTF-8		
+YT			
+ZA	af_ZA ISO-8859-1		
+ZA	af_ZA.UTF-8 UTF-8		
+ZA	en_ZA ISO-8859-1	us	
+ZA	en_ZA.UTF-8 UTF-8	us	
+ZA	nr_ZA UTF-8		
+ZA	nso_ZA UTF-8		
+ZA	ss_ZA UTF-8		
+ZA	st_ZA ISO-8859-1		
+ZA	st_ZA.UTF-8 UTF-8		
+ZA	tn_ZA UTF-8		
+ZA	ts_ZA UTF-8		
+ZA	ve_ZA UTF-8		
+ZA	xh_ZA ISO-8859-1		
+ZA	xh_ZA.UTF-8 UTF-8		
+ZA	zu_ZA ISO-8859-1		
+ZA	zu_ZA.UTF-8 UTF-8		
+ZM	bem_ZM UTF-8		
+ZM	en_ZM UTF-8	us	
+ZW	en_ZW ISO-8859-1	us	
+ZW	en_ZW.UTF-8 UTF-8	us	

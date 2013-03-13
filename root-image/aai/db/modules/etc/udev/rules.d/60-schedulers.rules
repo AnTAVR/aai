@@ -1,0 +1,8 @@
+# set deadline scheduler for non-rotating disks
+ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="deadline"
+
+# set deadline scheduler for flash disks
+ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{removable}=="1", ENV{ID_USB_DRIVER}=="usb-storage", ATTR{queue/scheduler}="deadline"
+
+# set cfq scheduler for rotating disks
+#ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="1", ATTR{queue/scheduler}="cfq"

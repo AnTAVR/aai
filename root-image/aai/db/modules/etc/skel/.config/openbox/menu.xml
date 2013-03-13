@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openbox_menu xmlns="http://openbox.org/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="file:///usr/share/openbox/menu.xsd">
+    <menu id="root-menu" label="Openbox 3.5">
+	<showIcons>yes</showIcons>
+	<menu execute="xdg_menu --format openbox3-pipe --root-menu /etc/xdg/menus/arch-applications.menu" id="desktop-app" label="Applications" icon="/usr/share/pixmaps/arch-bubble-icons/fun/tux.png"/>
+	<menu id="preferences-menu" label="Preferences" icon="/usr/share/archlinux/icons/archlinux-icon-crystal-256.svg">
+	    <menu id="system-menu" label="Openbox Config" icon="/usr/share/pixmaps/openbox.png">
+		<item label="Edit autostart">
+		    <action name="Execute">
+			<execute>
+			    xterm -e mc -e ~/.config/openbox/autostart
+			</execute>
+		    </action>
+		</item>
+		<item label="GUI Menu Editor">
+		    <action name="Execute">
+			<execute>
+			    obmenu
+			</execute>
+		    </action>
+		</item>
+		<item label="Openbox Configuration Manager" icon="/usr/share/pixmaps/obconf.png">
+		    <action name="Execute">
+			<execute>
+			    obconf
+			</execute>
+		    </action>
+		</item>
+		<item label="Key Editor">
+		    <action name="Execute">
+			<execute>
+			    obkey
+			</execute>
+		    </action>
+		</item>
+		<item label="Reconfigure Openbox">
+		    <action name="Reconfigure"/>
+		</item>
+		<item label="Restart">
+		    <action name="Restart"/>
+		</item>
+	    </menu>
+	    <item label="Tint Wizard" icon="/usr/share/pixmaps/tint2conf.png">
+		<action name="Execute">
+		    <execute>
+			tint2conf
+		    </execute>
+		</action>
+	    </item>
+	    <item label="Wallpaper" icon="/usr/share/icons/hicolor/16x16/apps/nitrogen.png">
+		<action name="Execute">
+		    <execute>
+			nitrogen
+		    </execute>
+		</action>
+	    </item>
+	    <item label="xscreensaver" icon="/usr/share/pixmaps/xscreensaver.xpm">
+		<action name="Execute">
+		    <execute>
+			xscreensaver-demo
+		    </execute>
+		</action>
+	    </item>
+	</menu>
+	<separator/>
+	<item label="Exit oblogout" icon="/usr/share/pixmaps/arch-bubble-icons/actions/exit.png">
+	    <action name="Execute">
+		<execute>
+		    oblogout
+		</execute>
+	    </action>
+	</item>
+    </menu>
+</openbox_menu>

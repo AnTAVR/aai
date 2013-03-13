@@ -1,0 +1,2 @@
+# Setup all vconsoles for a new framebuffer device
+KERNEL=="fb*", ACTION=="add", RUN+="/etc/udev/all-vcs-set.sh"

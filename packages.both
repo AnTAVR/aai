@@ -31,7 +31,6 @@ nfs-utils
 nilfs-utils
 nmap
 ntfs-3g
-ntfsprogs
 ntp
 openconnect
 openssh
@@ -57,3 +56,5 @@ wvdial
 xl2tpd
 zd1211-firmware
 zsh
+hwinfo
+lshw

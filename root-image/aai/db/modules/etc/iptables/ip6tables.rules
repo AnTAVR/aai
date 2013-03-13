@@ -1,0 +1,56 @@
+*filter
+:INPUT DROP [0:0]
+:FORWARD DROP [0:0]
+:OUTPUT ACCEPT [0:0]
+
+:TCP - [0:0]
+:UDP - [0:0]
+
+## LOGDROP chain
+:LOGDROP - [0:0]
+
+-A LOGDROP -m limit --limit 5/min --limit-burst 10 -j LOG
+#--log-level debug --log-prefix "ip6_invalid "
+#-A LOGDROP -j AUDIT --type drop
+-A LOGDROP -j DROP
+
+
+
+# Allows all loopback (lo0) traffic and drop all traffic to 127/8 that doesn`t use lo0
+-A INPUT -i lo -j ACCEPT
+#-A INPUT ! -i lo -d 127.0.0.0/8 -j REJECT
+
+# Accepts all established inbound connections
+-A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+## log AND drop packets that hit this rule:
+-A INPUT -m conntrack --ctstate INVALID -j LOGDROP
+-A INPUT -m conntrack --ctstate INVALID -j DROP
+
+-A INPUT -p icmpv6 -m icmp6 --icmpv6-type echo-request -m conntrack --ctstate NEW -j ACCEPT
+
+-A INPUT -p udp -m conntrack --ctstate NEW -j UDP
+-A INPUT -p tcp --syn -m conntrack --ctstate NEW -j TCP
+
+-A INPUT -p udp -j REJECT --reject-with icmp6-port-unreachable
+-A INPUT -p tcp -j REJECT --reject-with tcp-reset
+
+#-A INPUT -j REJECT --reject-with icmp6-proto-unreachable
+-A INPUT -j REJECT --reject-with icmp6-adm-prohibited
+
+
+# Allows HTTP and HTTPS connections from anywhere (the normal ports for websites)
+-A TCP -p tcp --dport 80 -j ACCEPT
+-A TCP -p tcp --dport 443 -j ACCEPT
+
+# Allows FTP and FTPS connections
+-A TCP -p tcp --dport 21 -j ACCEPT
+-A TCP -p tcp --dport 990 -j ACCEPT
+
+# Allows SSH connections
+# THE -dport NUMBER IS THE SAME ONE YOU SET UP IN THE SSHD_CONFIG FILE
+-A TCP -p tcp --dport 22 -j ACCEPT
+
+-A UDP -p udp --dport 53 -j ACCEPT
+
+
+COMMIT

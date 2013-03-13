@@ -1,0 +1,30 @@
+own_window yes
+own_window_transparent yes
+own_window_type desktop
+double_buffer yes
+use_xft yes
+#alignment bottom_left
+alignment top_right
+gap_x 5
+gap_y 5
+out_to_console no
+update_interval 3
+maximum_width 350
+draw_shades yes
+default_shade_color black
+default_outline_color white
+uppercase no
+font Sans:size=10:weight=bold
+override_utf8_locale yes
+cpu_avg_samples 2
+net_avg_samples 2
+
+template0 ${color lightgrey}\1: $alignc ${color red}${totaldown \1}${color green} / ${color blue}${totalup \1}\n${color}IP:${addr \1} MAC:${execi 60 ifconfig \1 | grep ether | cut -d " " -f10}\n ${color lightgrey} Down: ${color red} ${downspeed \1} k/s ${tab 75} ${color lightgrey} Up: ${color blue} ${upspeed \1} k/s \n${color black}${downspeedgraph \1 32,150 0000ff ff0000 -t -l} $alignr${color black}${upspeedgraph \1 32,150 0000ff ff0000 -t -l}
+
+
+TEXT
+${tab 400}
+\
+${color green}Inet $hr
+
+${execpi 60 bash ~/.config/conky/conkyrc2.sh}

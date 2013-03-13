@@ -1,0 +1,418 @@
+AD	Europe/Andorra	ca_AD.UTF-8 UTF-8		
+AE	Asia/Dubai	ar_AE.UTF-8 UTF-8		
+AF	Asia/Kabul	ps_AF UTF-8		
+AG	America/Antigua	en_AG UTF-8		
+AI	America/Anguilla			
+AL	Europe/Tirane	sq_AL.UTF-8 UTF-8		
+AM	Asia/Yerevan	hy_AM UTF-8		
+AN		pap_AN UTF-8		
+AO	Africa/Luanda			
+AQ	Antarctica/Casey		-6617+11031	Casey Station, Bailey Peninsula
+AQ	Antarctica/Davis		-6835+07758	Davis Station, Vestfold Hills
+AQ	Antarctica/DumontDUrville		-6640+14001	Dumont-d'Urville Station, Terre Adelie
+AQ	Antarctica/Macquarie		-5430+15857	Macquarie Island Station, Macquarie Island
+AQ	Antarctica/Mawson		-6736+06253	Mawson Station, Holme Bay
+AQ	Antarctica/McMurdo		-7750+16636	McMurdo Station, Ross Island
+AQ	Antarctica/Palmer		-6448-06406	Palmer Station, Anvers Island
+AQ	Antarctica/Rothera		-6734-06808	Rothera Station, Adelaide Island
+AQ	Antarctica/South_Pole		-9000+00000	Amundsen-Scott Station, South Pole
+AQ	Antarctica/Syowa		-690022+0393524	Syowa Station, E Ongul I
+AQ	Antarctica/Vostok		-7824+10654	Vostok Station, Lake Vostok
+AR	America/Argentina/Buenos_Aires	es_AR.UTF-8 UTF-8	-3436-05827	Buenos Aires (BA, CF)
+AR	America/Argentina/Catamarca	es_AR.UTF-8 UTF-8	-2828-06547	Catamarca (CT), Chubut (CH)
+AR	America/Argentina/Cordoba	es_AR.UTF-8 UTF-8	-3124-06411	most locations (CB, CC, CN, ER, FM, MN, SE, SF)
+AR	America/Argentina/Jujuy	es_AR.UTF-8 UTF-8	-2411-06518	Jujuy (JY)
+AR	America/Argentina/La_Rioja	es_AR.UTF-8 UTF-8	-2926-06651	La Rioja (LR)
+AR	America/Argentina/Mendoza	es_AR.UTF-8 UTF-8	-3253-06849	Mendoza (MZ)
+AR	America/Argentina/Rio_Gallegos	es_AR.UTF-8 UTF-8	-5138-06913	Santa Cruz (SC)
+AR	America/Argentina/Salta	es_AR.UTF-8 UTF-8	-2447-06525	(SA, LP, NQ, RN)
+AR	America/Argentina/San_Juan	es_AR.UTF-8 UTF-8	-3132-06831	San Juan (SJ)
+AR	America/Argentina/San_Luis	es_AR.UTF-8 UTF-8	-3319-06621	San Luis (SL)
+AR	America/Argentina/Tucuman	es_AR.UTF-8 UTF-8	-2649-06513	Tucuman (TM)
+AR	America/Argentina/Ushuaia	es_AR.UTF-8 UTF-8	-5448-06818	Tierra del Fuego (TF)
+AS	Pacific/Pago_Pago			
+AT	Europe/Vienna	de_AT.UTF-8 UTF-8		
+AU	Australia/Adelaide	en_AU.UTF-8 UTF-8	-3455+13835	South Australia
+AU	Australia/Brisbane	en_AU.UTF-8 UTF-8	-2728+15302	Queensland - most locations
+AU	Australia/Broken_Hill	en_AU.UTF-8 UTF-8	-3157+14127	New South Wales - Yancowinna
+AU	Australia/Currie	en_AU.UTF-8 UTF-8	-3956+14352	Tasmania - King Island
+AU	Australia/Darwin	en_AU.UTF-8 UTF-8	-1228+13050	Northern Territory
+AU	Australia/Eucla	en_AU.UTF-8 UTF-8	-3143+12852	Western Australia - Eucla area
+AU	Australia/Hobart	en_AU.UTF-8 UTF-8	-4253+14719	Tasmania - most locations
+AU	Australia/Lindeman	en_AU.UTF-8 UTF-8	-2016+14900	Queensland - Holiday Islands
+AU	Australia/Lord_Howe	en_AU.UTF-8 UTF-8	-3133+15905	Lord Howe Island
+AU	Australia/Melbourne	en_AU.UTF-8 UTF-8	-3749+14458	Victoria
+AU	Australia/Perth	en_AU.UTF-8 UTF-8	-3157+11551	Western Australia - most locations
+AU	Australia/Sydney	en_AU.UTF-8 UTF-8	-3352+15113	New South Wales - most locations
+AW	America/Aruba	nl_AW UTF-8		
+AX	Europe/Mariehamn			
+AZ	Asia/Baku	az_AZ UTF-8		
+BA	Europe/Sarajevo	bs_BA.UTF-8 UTF-8		
+BB	America/Barbados			
+BD	Asia/Dhaka	bn_BD UTF-8		
+BE	Europe/Brussels	nl_BE.UTF-8 UTF-8		
+BF	Africa/Ouagadougou			
+BG	Europe/Sofia	bg_BG.UTF-8 UTF-8		
+BH	Asia/Bahrain	ar_BH.UTF-8 UTF-8		
+BI	Africa/Bujumbura			
+BJ	Africa/Porto-Novo			
+BL	America/St_Barthelemy			
+BM	Atlantic/Bermuda			
+BN	Asia/Brunei			
+BO	America/La_Paz	es_BO.UTF-8 UTF-8		
+BQ	America/Kralendijk			
+BR	America/Araguaina	pt_BR.UTF-8 UTF-8	-0712-04812	Tocantins
+BR	America/Bahia	pt_BR.UTF-8 UTF-8	-1259-03831	Bahia
+BR	America/Belem	pt_BR.UTF-8 UTF-8	-0127-04829	Amapa, E Para
+BR	America/Boa_Vista	pt_BR.UTF-8 UTF-8	+0249-06040	Roraima
+BR	America/Campo_Grande	pt_BR.UTF-8 UTF-8	-2027-05437	Mato Grosso do Sul
+BR	America/Cuiaba	pt_BR.UTF-8 UTF-8	-1535-05605	Mato Grosso
+BR	America/Eirunepe	pt_BR.UTF-8 UTF-8	-0640-06952	W Amazonas
+BR	America/Fortaleza	pt_BR.UTF-8 UTF-8	-0343-03830	NE Brazil (MA, PI, CE, RN, PB)
+BR	America/Maceio	pt_BR.UTF-8 UTF-8	-0940-03543	Alagoas, Sergipe
+BR	America/Manaus	pt_BR.UTF-8 UTF-8	-0308-06001	E Amazonas
+BR	America/Noronha	pt_BR.UTF-8 UTF-8	-0351-03225	Atlantic islands
+BR	America/Porto_Velho	pt_BR.UTF-8 UTF-8	-0846-06354	Rondonia
+BR	America/Recife	pt_BR.UTF-8 UTF-8	-0803-03454	Pernambuco
+BR	America/Rio_Branco	pt_BR.UTF-8 UTF-8	-0958-06748	Acre
+BR	America/Santarem	pt_BR.UTF-8 UTF-8	-0226-05452	W Para
+BR	America/Sao_Paulo	pt_BR.UTF-8 UTF-8	-2332-04637	S & SE Brazil (GO, DF, MG, ES, RJ, SP, PR, SC, RS)
+BS	America/Nassau			
+BT	Asia/Thimphu	dz_BT UTF-8		
+BV				
+BW	Africa/Gaborone	en_BW.UTF-8 UTF-8		
+BY	Europe/Minsk	be_BY.UTF-8 UTF-8		
+BZ	America/Belize			
+CA	America/Atikokan	en_CA.UTF-8 UTF-8	+484531-0913718	Eastern Standard Time - Atikokan, Ontario and Southampton I, Nunavut
+CA	America/Blanc-Sablon	en_CA.UTF-8 UTF-8	+5125-05707	Atlantic Standard Time - Quebec - Lower North Shore
+CA	America/Cambridge_Bay	en_CA.UTF-8 UTF-8	+690650-1050310	Mountain Time - west Nunavut
+CA	America/Creston	en_CA.UTF-8 UTF-8	+4906-11631	Mountain Standard Time - Creston, British Columbia
+CA	America/Dawson	en_CA.UTF-8 UTF-8	+6404-13925	Pacific Time - north Yukon
+CA	America/Dawson_Creek	en_CA.UTF-8 UTF-8	+5946-12014	Mountain Standard Time - Dawson Creek & Fort Saint John, British Columbia
+CA	America/Edmonton	en_CA.UTF-8 UTF-8	+5333-11328	Mountain Time - Alberta, east British Columbia & west Saskatchewan
+CA	America/Glace_Bay	en_CA.UTF-8 UTF-8	+4612-05957	Atlantic Time - Nova Scotia - places that did not observe DST 1966-1971
+CA	America/Goose_Bay	en_CA.UTF-8 UTF-8	+5320-06025	Atlantic Time - Labrador - most locations
+CA	America/Halifax	en_CA.UTF-8 UTF-8	+4439-06336	Atlantic Time - Nova Scotia (most places), PEI
+CA	America/Inuvik	en_CA.UTF-8 UTF-8	+682059-1334300	Mountain Time - west Northwest Territories
+CA	America/Iqaluit	en_CA.UTF-8 UTF-8	+6344-06828	Eastern Time - east Nunavut - most locations
+CA	America/Moncton	en_CA.UTF-8 UTF-8	+4606-06447	Atlantic Time - New Brunswick
+CA	America/Montreal	en_CA.UTF-8 UTF-8	+4531-07334	Eastern Time - Quebec - most locations
+CA	America/Nipigon	en_CA.UTF-8 UTF-8	+4901-08816	Eastern Time - Ontario & Quebec - places that did not observe DST 1967-1973
+CA	America/Pangnirtung	en_CA.UTF-8 UTF-8	+6608-06544	Eastern Time - Pangnirtung, Nunavut
+CA	America/Rainy_River	en_CA.UTF-8 UTF-8	+4843-09434	Central Time - Rainy River & Fort Frances, Ontario
+CA	America/Rankin_Inlet	en_CA.UTF-8 UTF-8	+624900-0920459	Central Time - central Nunavut
+CA	America/Regina	en_CA.UTF-8 UTF-8	+5024-10439	Central Standard Time - Saskatchewan - most locations
+CA	America/Resolute	en_CA.UTF-8 UTF-8	+744144-0944945	Central Standard Time - Resolute, Nunavut
+CA	America/St_Johns	en_CA.UTF-8 UTF-8	+4734-05243	Newfoundland Time, including SE Labrador
+CA	America/Swift_Current	en_CA.UTF-8 UTF-8	+5017-10750	Central Standard Time - Saskatchewan - midwest
+CA	America/Thunder_Bay	en_CA.UTF-8 UTF-8	+4823-08915	Eastern Time - Thunder Bay, Ontario
+CA	America/Toronto	en_CA.UTF-8 UTF-8	+4339-07923	Eastern Time - Ontario - most locations
+CA	America/Vancouver	en_CA.UTF-8 UTF-8	+4916-12307	Pacific Time - west British Columbia
+CA	America/Whitehorse	en_CA.UTF-8 UTF-8	+6043-13503	Pacific Time - south Yukon
+CA	America/Winnipeg	en_CA.UTF-8 UTF-8	+4953-09709	Central Time - Manitoba & west Ontario
+CA	America/Yellowknife	en_CA.UTF-8 UTF-8	+6227-11421	Mountain Time - central Northwest Territories
+CC	Indian/Cocos			
+CD	Africa/Kinshasa		-0418+01518	west Dem. Rep. of Congo
+CD	Africa/Lubumbashi		-1140+02728	east Dem. Rep. of Congo
+CF	Africa/Bangui			
+CG	Africa/Brazzaville			
+CH	Europe/Zurich	de_CH.UTF-8 UTF-8		
+CI	Africa/Abidjan			
+CK	Pacific/Rarotonga			
+CL	America/Santiago	es_CL.UTF-8 UTF-8	-3327-07040	most locations
+CL	Pacific/Easter	es_CL.UTF-8 UTF-8	-2709-10926	Easter Island & Sala y Gomez
+CM	Africa/Douala			
+CN	Asia/Chongqing	zh_CN.UTF-8 UTF-8	+2934+10635	central China - Sichuan, Yunnan, Guangxi, Shaanxi, Guizhou, etc.
+CN	Asia/Harbin	zh_CN.UTF-8 UTF-8	+4545+12641	Heilongjiang (except Mohe), Jilin
+CN	Asia/Kashgar	zh_CN.UTF-8 UTF-8	+3929+07559	west Tibet & Xinjiang
+CN	Asia/Shanghai	zh_CN.UTF-8 UTF-8	+3114+12128	east China - Beijing, Guangdong, Shanghai, etc.
+CN	Asia/Urumqi	zh_CN.UTF-8 UTF-8	+4348+08735	most of Tibet & Xinjiang
+CO	America/Bogota	es_CO.UTF-8 UTF-8		
+CR	America/Costa_Rica	es_CR.UTF-8 UTF-8		
+CU	America/Havana	es_CU UTF-8		
+CV	Atlantic/Cape_Verde			
+CW	America/Curacao			
+CX	Indian/Christmas			
+CY	Asia/Nicosia	tr_CY.UTF-8 UTF-8		
+CZ	Europe/Prague	cs_CZ.UTF-8 UTF-8		
+DE	Europe/Berlin	de_DE.UTF-8 UTF-8		
+DJ	Africa/Djibouti	aa_DJ.UTF-8 UTF-8		
+DK	Europe/Copenhagen	da_DK.UTF-8 UTF-8		
+DM	America/Dominica			
+DO	America/Santo_Domingo	es_DO.UTF-8 UTF-8		
+DZ	Africa/Algiers	ar_DZ.UTF-8 UTF-8		
+EC	America/Guayaquil	es_EC.UTF-8 UTF-8	-0210-07950	mainland
+EC	Pacific/Galapagos	es_EC.UTF-8 UTF-8	-0054-08936	Galapagos Islands
+EE	Europe/Tallinn	et_EE.UTF-8 UTF-8		
+EG	Africa/Cairo	ar_EG.UTF-8 UTF-8		
+EH	Africa/El_Aaiun			
+ER	Africa/Asmara	aa_ER UTF-8		
+ES	Africa/Ceuta	es_ES.UTF-8 UTF-8	+3553-00519	Ceuta & Melilla
+ES	Atlantic/Canary	es_ES.UTF-8 UTF-8	+2806-01524	Canary Islands
+ES	Europe/Madrid	es_ES.UTF-8 UTF-8	+4024-00341	mainland
+ET	Africa/Addis_Ababa	am_ET UTF-8		
+FI	Europe/Helsinki	fi_FI.UTF-8 UTF-8		
+FJ	Pacific/Fiji			
+FK	Atlantic/Stanley			
+FM	Pacific/Chuuk		+0725+15147	Chuuk (Truk) and Yap
+FM	Pacific/Kosrae		+0519+16259	Kosrae
+FM	Pacific/Pohnpei		+0658+15813	Pohnpei (Ponape)
+FO	Atlantic/Faroe	fo_FO.UTF-8 UTF-8		
+FR	Europe/Paris	fr_FR.UTF-8 UTF-8		
+GA	Africa/Libreville			
+GB	Europe/London	en_GB.UTF-8 UTF-8		
+GD	America/Grenada			
+GE	Asia/Tbilisi	ka_GE.UTF-8 UTF-8		
+GF	America/Cayenne			
+GG	Europe/Guernsey			
+GH	Africa/Accra			
+GI	Europe/Gibraltar			
+GL	America/Danmarkshavn	kl_GL.UTF-8 UTF-8	+7646-01840	east coast, north of Scoresbysund
+GL	America/Godthab	kl_GL.UTF-8 UTF-8	+6411-05144	most locations
+GL	America/Scoresbysund	kl_GL.UTF-8 UTF-8	+7029-02158	Scoresbysund / Ittoqqortoormiit
+GL	America/Thule	kl_GL.UTF-8 UTF-8	+7634-06847	Thule / Pituffik
+GM	Africa/Banjul			
+GN	Africa/Conakry			
+GP	America/Guadeloupe			
+GQ	Africa/Malabo			
+GR	Europe/Athens	el_GR.UTF-8 UTF-8		
+GS	Atlantic/South_Georgia			
+GT	America/Guatemala	es_GT.UTF-8 UTF-8		
+GU	Pacific/Guam			
+GW	Africa/Bissau			
+GY	America/Guyana			
+HK	Asia/Hong_Kong	en_HK.UTF-8 UTF-8		
+HM				
+HN	America/Tegucigalpa	es_HN.UTF-8 UTF-8		
+HR	Europe/Zagreb	hr_HR.UTF-8 UTF-8		
+HT	America/Port-au-Prince	ht_HT UTF-8		
+HU	Europe/Budapest	hu_HU.UTF-8 UTF-8		
+ID	Asia/Jakarta	id_ID.UTF-8 UTF-8	-0610+10648	Java & Sumatra
+ID	Asia/Jayapura	id_ID.UTF-8 UTF-8	-0232+14042	west New Guinea (Irian Jaya) & Malukus (Moluccas)
+ID	Asia/Makassar	id_ID.UTF-8 UTF-8	-0507+11924	east & south Borneo, Sulawesi (Celebes), Bali, Nusa Tengarra, west Timor
+ID	Asia/Pontianak	id_ID.UTF-8 UTF-8	-0002+10920	west & central Borneo
+IE	Europe/Dublin	en_IE.UTF-8 UTF-8		
+IL	Asia/Jerusalem	he_IL.UTF-8 UTF-8		
+IM	Europe/Isle_of_Man			
+IN	Asia/Kolkata	doi_IN UTF-8		
+IO	Indian/Chagos			
+IQ	Asia/Baghdad	ar_IQ.UTF-8 UTF-8		
+IR	Asia/Tehran	fa_IR UTF-8		
+IS	Atlantic/Reykjavik	is_IS.UTF-8 UTF-8		
+IT	Europe/Rome	it_IT.UTF-8 UTF-8		
+JE	Europe/Jersey			
+JM	America/Jamaica			
+JO	Asia/Amman	ar_JO.UTF-8 UTF-8		
+JP	Asia/Tokyo	ja_JP.UTF-8 UTF-8		
+KE	Africa/Nairobi	so_KE.UTF-8 UTF-8		
+KG	Asia/Bishkek	ky_KG UTF-8		
+KH	Asia/Phnom_Penh	km_KH UTF-8		
+KI	Pacific/Enderbury		-0308-17105	Phoenix Islands
+KI	Pacific/Kiritimati		+0152-15720	Line Islands
+KI	Pacific/Tarawa		+0125+17300	Gilbert Islands
+KM	Indian/Comoro			
+KN	America/St_Kitts			
+KP	Asia/Pyongyang			
+KR	Asia/Seoul	ko_KR.UTF-8 UTF-8		
+KW	Asia/Kuwait	ar_KW.UTF-8 UTF-8		
+KY	America/Cayman			
+KZ	Asia/Almaty	kk_KZ.UTF-8 UTF-8	+4315+07657	most locations
+KZ	Asia/Aqtau	kk_KZ.UTF-8 UTF-8	+4431+05016	Atyrau (Atirau, Gur'yev), Mangghystau (Mankistau)
+KZ	Asia/Aqtobe	kk_KZ.UTF-8 UTF-8	+5017+05710	Aqtobe (Aktobe)
+KZ	Asia/Oral	kk_KZ.UTF-8 UTF-8	+5113+05121	West Kazakhstan
+KZ	Asia/Qyzylorda	kk_KZ.UTF-8 UTF-8	+4448+06528	Qyzylorda (Kyzylorda, Kzyl-Orda)
+LA	Asia/Vientiane	lo_LA UTF-8		
+LB	Asia/Beirut	ar_LB.UTF-8 UTF-8		
+LC	America/St_Lucia			
+LI	Europe/Vaduz			
+LK	Asia/Colombo	si_LK UTF-8		
+LR	Africa/Monrovia			
+LS	Africa/Maseru			
+LT	Europe/Vilnius	lt_LT.UTF-8 UTF-8		
+LU	Europe/Luxembourg	lb_LU UTF-8		
+LV	Europe/Riga	lv_LV.UTF-8 UTF-8		
+LY	Africa/Tripoli	ar_LY.UTF-8 UTF-8		
+MA	Africa/Casablanca	ar_MA.UTF-8 UTF-8		
+MC	Europe/Monaco			
+MD	Europe/Chisinau			
+ME	Europe/Podgorica	sr_ME UTF-8		
+MF	America/Marigot			
+MG	Indian/Antananarivo	mg_MG.UTF-8 UTF-8		
+MH	Pacific/Kwajalein		+0905+16720	Kwajalein
+MH	Pacific/Majuro		+0709+17112	most locations
+MK	Europe/Skopje	mk_MK.UTF-8 UTF-8		
+ML	Africa/Bamako			
+MM	Asia/Rangoon	my_MM UTF-8		
+MN	Asia/Choibalsan	mn_MN UTF-8	+4804+11430	Dornod, Sukhbaatar
+MN	Asia/Hovd	mn_MN UTF-8	+4801+09139	Bayan-Olgiy, Govi-Altai, Hovd, Uvs, Zavkhan
+MN	Asia/Ulaanbaatar	mn_MN UTF-8	+4755+10653	most locations
+MO	Asia/Macau			
+MP	Pacific/Saipan			
+MQ	America/Martinique			
+MR	Africa/Nouakchott			
+MS	America/Montserrat			
+MT	Europe/Malta	mt_MT.UTF-8 UTF-8		
+MU	Indian/Mauritius			
+MV	Indian/Maldives	dv_MV UTF-8		
+MW	Africa/Blantyre			
+MX	America/Bahia_Banderas	es_MX.UTF-8 UTF-8	+2048-10515	Mexican Central Time - Bahia de Banderas
+MX	America/Cancun	es_MX.UTF-8 UTF-8	+2105-08646	Central Time - Quintana Roo
+MX	America/Chihuahua	es_MX.UTF-8 UTF-8	+2838-10605	Mexican Mountain Time - Chihuahua away from US border
+MX	America/Hermosillo	es_MX.UTF-8 UTF-8	+2904-11058	Mountain Standard Time - Sonora
+MX	America/Matamoros	es_MX.UTF-8 UTF-8	+2550-09730	US Central Time - Coahuila, Durango, Nuevo Leon, Tamaulipas near US border
+MX	America/Mazatlan	es_MX.UTF-8 UTF-8	+2313-10625	Mountain Time - S Baja, Nayarit, Sinaloa
+MX	America/Merida	es_MX.UTF-8 UTF-8	+2058-08937	Central Time - Campeche, Yucatan
+MX	America/Mexico_City	es_MX.UTF-8 UTF-8	+1924-09909	Central Time - most locations
+MX	America/Monterrey	es_MX.UTF-8 UTF-8	+2540-10019	Mexican Central Time - Coahuila, Durango, Nuevo Leon, Tamaulipas away from US border
+MX	America/Ojinaga	es_MX.UTF-8 UTF-8	+2934-10425	US Mountain Time - Chihuahua near US border
+MX	America/Santa_Isabel	es_MX.UTF-8 UTF-8	+3018-11452	Mexican Pacific Time - Baja California away from US border
+MX	America/Tijuana	es_MX.UTF-8 UTF-8	+3232-11701	US Pacific Time - Baja California near US border
+MY	Asia/Kuala_Lumpur	ms_MY.UTF-8 UTF-8	+0310+10142	peninsular Malaysia
+MY	Asia/Kuching	ms_MY.UTF-8 UTF-8	+0133+11020	Sabah & Sarawak
+MZ	Africa/Maputo			
+NA	Africa/Windhoek			
+NC	Pacific/Noumea			
+NE	Africa/Niamey			
+NF	Pacific/Norfolk			
+NG	Africa/Lagos	en_NG UTF-8		
+NI	America/Managua	es_NI.UTF-8 UTF-8		
+NL	Europe/Amsterdam	nl_NL.UTF-8 UTF-8		
+NO	Europe/Oslo	nb_NO.UTF-8 UTF-8		
+NP	Asia/Kathmandu	ne_NP UTF-8		
+NR	Pacific/Nauru			
+NU	Pacific/Niue	niu_NU UTF-8		
+NZ	Pacific/Auckland	en_NZ.UTF-8 UTF-8	-3652+17446	most locations
+NZ	Pacific/Chatham	en_NZ.UTF-8 UTF-8	-4357-17633	Chatham Islands
+OM	Asia/Muscat	ar_OM.UTF-8 UTF-8		
+PA	America/Panama	es_PA.UTF-8 UTF-8		
+PE	America/Lima	ayc_PE UTF-8		
+PF	Pacific/Gambier		-2308-13457	Gambier Islands
+PF	Pacific/Marquesas		-0900-13930	Marquesas Islands
+PF	Pacific/Tahiti		-1732-14934	Society Islands
+PG	Pacific/Port_Moresby			
+PH	Asia/Manila	fil_PH UTF-8		
+PK	Asia/Karachi	ur_PK UTF-8		
+PL	Europe/Warsaw	pl_PL.UTF-8 UTF-8		
+PM	America/Miquelon			
+PN	Pacific/Pitcairn			
+PR	America/Puerto_Rico	es_PR.UTF-8 UTF-8		
+PS	Asia/Gaza		+3130+03428	Gaza Strip
+PS	Asia/Hebron		+313200+0350542	West Bank
+PT	Atlantic/Azores	pt_PT.UTF-8 UTF-8	+3744-02540	Azores
+PT	Atlantic/Madeira	pt_PT.UTF-8 UTF-8	+3238-01654	Madeira Islands
+PT	Europe/Lisbon	pt_PT.UTF-8 UTF-8	+3843-00908	mainland
+PW	Pacific/Palau			
+PY	America/Asuncion	es_PY.UTF-8 UTF-8		
+QA	Asia/Qatar	ar_QA.UTF-8 UTF-8		
+RE	Indian/Reunion			
+RO	Europe/Bucharest	ro_RO.UTF-8 UTF-8		
+RS	Europe/Belgrade	sr_RS UTF-8		
+RU	Asia/Anadyr	ru_RU.UTF-8 UTF-8	+6445+17729	Moscow+08 - Bering Sea
+RU	Asia/Irkutsk	ru_RU.UTF-8 UTF-8	+5216+10420	Moscow+05 - Lake Baikal
+RU	Asia/Kamchatka	ru_RU.UTF-8 UTF-8	+5301+15839	Moscow+08 - Kamchatka
+RU	Asia/Krasnoyarsk	ru_RU.UTF-8 UTF-8	+5601+09250	Moscow+04 - Yenisei River
+RU	Asia/Magadan	ru_RU.UTF-8 UTF-8	+5934+15048	Moscow+08 - Magadan
+RU	Asia/Novokuznetsk	ru_RU.UTF-8 UTF-8	+5345+08707	Moscow+03 - Novokuznetsk
+RU	Asia/Novosibirsk	ru_RU.UTF-8 UTF-8	+5502+08255	Moscow+03 - Novosibirsk
+RU	Asia/Omsk	ru_RU.UTF-8 UTF-8	+5500+07324	Moscow+03 - west Siberia
+RU	Asia/Sakhalin	ru_RU.UTF-8 UTF-8	+4658+14242	Moscow+07 - Sakhalin Island
+RU	Asia/Vladivostok	ru_RU.UTF-8 UTF-8	+4310+13156	Moscow+07 - Amur River
+RU	Asia/Yakutsk	ru_RU.UTF-8 UTF-8	+6200+12940	Moscow+06 - Lena River
+RU	Asia/Yekaterinburg	ru_RU.UTF-8 UTF-8	+5651+06036	Moscow+02 - Urals
+RU	Europe/Kaliningrad	ru_RU.UTF-8 UTF-8	+5443+02030	Moscow-01 - Kaliningrad
+RU	Europe/Moscow	ru_RU.UTF-8 UTF-8	+5545+03735	Moscow+00 - west Russia
+RU	Europe/Samara	ru_RU.UTF-8 UTF-8	+5312+05009	Moscow+00 - Samara, Udmurtia
+RU	Europe/Volgograd	ru_RU.UTF-8 UTF-8	+4844+04425	Moscow+00 - Caspian Sea
+RW	Africa/Kigali	rw_RW UTF-8		
+SA	Asia/Riyadh	ar_SA.UTF-8 UTF-8		
+SB	Pacific/Guadalcanal			
+SC	Indian/Mahe			
+SD	Africa/Khartoum	ar_SD.UTF-8 UTF-8		
+SE	Europe/Stockholm	sv_SE.UTF-8 UTF-8		
+SG	Asia/Singapore	en_SG.UTF-8 UTF-8		
+SH	Atlantic/St_Helena			
+SI	Europe/Ljubljana	sl_SI.UTF-8 UTF-8		
+SJ	Arctic/Longyearbyen			
+SK	Europe/Bratislava	sk_SK.UTF-8 UTF-8		
+SL	Africa/Freetown			
+SM	Europe/San_Marino			
+SN	Africa/Dakar	ff_SN UTF-8		
+SO	Africa/Mogadishu	so_SO.UTF-8 UTF-8		
+SR	America/Paramaribo			
+SS	Africa/Juba			
+ST	Africa/Sao_Tome			
+SV	America/El_Salvador	es_SV.UTF-8 UTF-8		
+SX	America/Lower_Princes			
+SY	Asia/Damascus	ar_SY.UTF-8 UTF-8		
+SZ	Africa/Mbabane			
+TC	America/Grand_Turk			
+TD	Africa/Ndjamena			
+TF	Indian/Kerguelen			
+TG	Africa/Lome			
+TH	Asia/Bangkok	th_TH.UTF-8 UTF-8		
+TJ	Asia/Dushanbe	tg_TJ.UTF-8 UTF-8		
+TK	Pacific/Fakaofo			
+TL	Asia/Dili			
+TM	Asia/Ashgabat	tk_TM UTF-8		
+TN	Africa/Tunis	ar_TN.UTF-8 UTF-8		
+TO	Pacific/Tongatapu			
+TR	Europe/Istanbul	tr_TR.UTF-8 UTF-8		
+TT	America/Port_of_Spain			
+TV	Pacific/Funafuti			
+TW	Asia/Taipei	nan_TW@latin UTF-8		
+TZ	Africa/Dar_es_Salaam	sw_TZ UTF-8		
+UA	Europe/Kiev	uk_UA.UTF-8 UTF-8	+5026+03031	most locations
+UA	Europe/Simferopol	ru_RU.UTF-8 UTF-8	+4457+03406	central Crimea
+UA	Europe/Uzhgorod	uk_UA.UTF-8 UTF-8	+4837+02218	Ruthenia
+UA	Europe/Zaporozhye	uk_UA.UTF-8 UTF-8	+4750+03510	Zaporozh'ye, E Lugansk / Zaporizhia, E Luhansk
+UG	Africa/Kampala	lg_UG.UTF-8 UTF-8		
+UM	Pacific/Johnston		+1645-16931	Johnston Atoll
+UM	Pacific/Midway		+2813-17722	Midway Islands
+UM	Pacific/Wake		+1917+16637	Wake Island
+US	America/Adak	en_US.UTF-8 UTF-8	+515248-1763929	Aleutian Islands
+US	America/Anchorage	en_US.UTF-8 UTF-8	+611305-1495401	Alaska Time
+US	America/Boise	en_US.UTF-8 UTF-8	+433649-1161209	Mountain Time - south Idaho & east Oregon
+US	America/Chicago	en_US.UTF-8 UTF-8	+415100-0873900	Central Time
+US	America/Denver	en_US.UTF-8 UTF-8	+394421-1045903	Mountain Time
+US	America/Detroit	en_US.UTF-8 UTF-8	+421953-0830245	Eastern Time - Michigan - most locations
+US	America/Indiana/Indianapolis	en_US.UTF-8 UTF-8	+394606-0860929	Eastern Time - Indiana - most locations
+US	America/Indiana/Knox	en_US.UTF-8 UTF-8	+411745-0863730	Central Time - Indiana - Starke County
+US	America/Indiana/Marengo	en_US.UTF-8 UTF-8	+382232-0862041	Eastern Time - Indiana - Crawford County
+US	America/Indiana/Petersburg	en_US.UTF-8 UTF-8	+382931-0871643	Eastern Time - Indiana - Pike County
+US	America/Indiana/Tell_City	en_US.UTF-8 UTF-8	+375711-0864541	Central Time - Indiana - Perry County
+US	America/Indiana/Vevay	en_US.UTF-8 UTF-8	+384452-0850402	Eastern Time - Indiana - Switzerland County
+US	America/Indiana/Vincennes	en_US.UTF-8 UTF-8	+384038-0873143	Eastern Time - Indiana - Daviess, Dubois, Knox & Martin Counties
+US	America/Indiana/Winamac	en_US.UTF-8 UTF-8	+410305-0863611	Eastern Time - Indiana - Pulaski County
+US	America/Juneau	en_US.UTF-8 UTF-8	+581807-1342511	Alaska Time - Alaska panhandle
+US	America/Kentucky/Louisville	en_US.UTF-8 UTF-8	+381515-0854534	Eastern Time - Kentucky - Louisville area
+US	America/Kentucky/Monticello	en_US.UTF-8 UTF-8	+364947-0845057	Eastern Time - Kentucky - Wayne County
+US	America/Los_Angeles	en_US.UTF-8 UTF-8	+340308-1181434	Pacific Time
+US	America/Menominee	en_US.UTF-8 UTF-8	+450628-0873651	Central Time - Michigan - Dickinson, Gogebic, Iron & Menominee Counties
+US	America/Metlakatla	en_US.UTF-8 UTF-8	+550737-1313435	Metlakatla Time - Annette Island
+US	America/New_York	en_US.UTF-8 UTF-8	+404251-0740023	Eastern Time
+US	America/Nome	en_US.UTF-8 UTF-8	+643004-1652423	Alaska Time - west Alaska
+US	America/North_Dakota/Beulah	en_US.UTF-8 UTF-8	+471551-1014640	Central Time - North Dakota - Mercer County
+US	America/North_Dakota/Center	en_US.UTF-8 UTF-8	+470659-1011757	Central Time - North Dakota - Oliver County
+US	America/North_Dakota/New_Salem	en_US.UTF-8 UTF-8	+465042-1012439	Central Time - North Dakota - Morton County (except Mandan area)
+US	America/Phoenix	en_US.UTF-8 UTF-8	+332654-1120424	Mountain Standard Time - Arizona
+US	America/Shiprock	en_US.UTF-8 UTF-8	+364708-1084111	Mountain Time - Navajo
+US	America/Sitka	en_US.UTF-8 UTF-8	+571035-1351807	Alaska Time - southeast Alaska panhandle
+US	America/Yakutat	en_US.UTF-8 UTF-8	+593249-1394338	Alaska Time - Alaska panhandle neck
+US	Pacific/Honolulu	en_US.UTF-8 UTF-8	+211825-1575130	Hawaii
+UY	America/Montevideo	es_UY.UTF-8 UTF-8		
+UZ	Asia/Samarkand	uz_UZ@cyrillic UTF-8	+3940+06648	west Uzbekistan
+UZ	Asia/Tashkent	uz_UZ@cyrillic UTF-8	+4120+06918	east Uzbekistan
+VA	Europe/Vatican			
+VC	America/St_Vincent			
+VE	America/Caracas	es_VE.UTF-8 UTF-8		
+VG	America/Tortola			
+VI	America/St_Thomas			
+VN	Asia/Ho_Chi_Minh	vi_VN UTF-8		
+VU	Pacific/Efate			
+WF	Pacific/Wallis			
+WS	Pacific/Apia			
+YE	Asia/Aden	ar_YE.UTF-8 UTF-8		
+YT	Indian/Mayotte			
+ZA	Africa/Johannesburg	en_ZA.UTF-8 UTF-8		
+ZM	Africa/Lusaka	en_ZM UTF-8		
+ZW	Africa/Harare	en_ZW.UTF-8 UTF-8		
