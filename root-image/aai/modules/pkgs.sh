@@ -202,6 +202,17 @@ pkgs_geany()
 }
 APPS+=" 'geany' '$(gettext 'Текстовый редактор')' 'off'"
 
+pkgs_sublime()
+{
+    local PACS
+    #aur
+    PACS='sublime-text'
+    pacman_install "-S ${PACS}" '2'
+
+    git_commit
+}
+APPS+=" 'sublime' '$(gettext 'Отличный текстовый редактор!!!') (AUR)' 'on'"
+
 pkgs_vim()
 {
     local PACS
