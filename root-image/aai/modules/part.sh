@@ -58,8 +58,12 @@ run_part()
 		part_part
 		DEF_MENU='mount'
 		;;
+	    'autopart')
+		part_autopart || continue
+		[[ "${RUN_PART}" ]] && return 0
+		;;
 	    'raidlvm')
-		part_raidlvm
+		part_raidlvm || continue
 		DEF_MENU='mount'
 		;;
 	    'mount')
@@ -84,7 +88,8 @@ part_dialog_def_menu()
     local HELP_TXT="\n$(gettext 'Выберите действие')\n"
 
     local DEFAULT_ITEM="${P_DEF_MENU}"
-    local ITEMS="'raidlvm' '$(gettext 'RAID LVM') \Zb\Z3($(gettext 'Пока не поддерживается'))\Zn'"
+    local ITEMS="'autopart' '$(gettext 'Авто разметка и монтирование') \Zb\Z3($(gettext 'Пока не поддерживается'))\Zn'"
+    ITEMS+=" 'raidlvm' '$(gettext 'RAID LVM') \Zb\Z3($(gettext 'Пока не поддерживается'))\Zn'"
     ITEMS+=" 'part' '$(gettext 'Разметка диска')'"
 
     TEMP="\Zb\Z1($(gettext 'ОБЯЗАТЕЛЬНО!!!'))\Zn"
@@ -99,6 +104,13 @@ part_raidlvm()
 {
     dialog_warn \
 	"\Zb\Z1\"RAID LVM\" $(gettext 'пока не поддерживается, помогите проекту, допишите данный функционал')\Zn"
+    return 1
+}
+
+part_autopart()
+{
+    dialog_warn \
+	"\Zb\Z1\"$(gettext 'Авто разметка и монтирование')\" $(gettext 'пока не поддерживается, помогите проекту, допишите данный функционал')\Zn"
     return 1
 }
 
