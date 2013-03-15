@@ -881,21 +881,21 @@ base_install()
 #===============================================================================
 # Добавляю btrfs в mkinitcpio
 #===============================================================================
-    msg_log "$(gettext 'Добавляю') btrfs > /etc/mkinitcpio.conf"
-    sed -i '
-# Добавляем хук btrfs
-/^HOOKS=/{
-    h;
-    s/^/#/;
-    P;g;
-    //{
-	s/btrfs//g;s/ \{1,\}/ /g;
-	s/filesystems/btrfs filesystems/;
-    };
-};
-' "${NS_PATH}/etc/mkinitcpio.conf"
-
-    git_commit
+#     msg_log "$(gettext 'Добавляю') btrfs > /etc/mkinitcpio.conf"
+#     sed -i '
+# # Добавляем хук btrfs
+# /^HOOKS=/{
+#     h;
+#     s/^/#/;
+#     P;g;
+#     //{
+# 	s/btrfs//g;s/ \{1,\}/ /g;
+# 	s/filesystems/btrfs filesystems/;
+#     };
+# };
+# ' "${NS_PATH}/etc/mkinitcpio.conf"
+# 
+#     git_commit
 #-------------------------------------------------------------------------------
 
 
