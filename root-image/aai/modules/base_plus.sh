@@ -791,7 +791,7 @@ base_plus_install()
 
     SERVICES+=" 'fancontrol.service' '-' 'off'"
     SERVICES+=" 'healthd.service' '-' 'off'"
-    SERVICES+=" 'lm_sensors.service' '-' 'on'"
+    SERVICES+=" 'lm_sensors.service' '-' 'off'"
     SERVICES+=" 'sensord.service' '-' 'off'"
 #-------------------------------------------------------------------------------
 
