@@ -464,6 +464,8 @@ base_plus_install()
 
     pkgs_base_plus_crypt
 
+    pkgs_base_plus_zramswap
+
     pkgs_base_plus_hd
 
     pkgs_base_plus_man-pages-loc
