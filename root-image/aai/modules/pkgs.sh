@@ -532,7 +532,7 @@ pkgs_base_plus_preload()
     pacman_install "-S ${PACS}" '1'
     git_commit
 
-    SERVICES+=" 'preload.service' '-' 'off'"
+    SERVICES+=" 'preload.service' '-' 'on'"
 }
 
 pkgs_base_plus_aria2()
