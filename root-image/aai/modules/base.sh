@@ -811,147 +811,21 @@ base_install()
 
 
 
-#===============================================================================
-# Устанавливаем mc и дополнительные пакеты
-#===============================================================================
-    #extra
-    PACS='p7zip zip unrar smbclient mtools cvs aspell cdrkit cdparanoia'
-    #community
-    PACS+=' mc unarj unace python2-pytz python2-boto cabextract'
-    pacman_install "-S ${PACS}" '1'
-    git_commit
-#-------------------------------------------------------------------------------
+    pkgs_base_mc
 
+    pkgs_base_sudo
 
+    pkgs_base_hd
 
-#===============================================================================
-# Устанавливаем sudo
-#===============================================================================
-    #core
-    PACS='sudo'
-    pacman_install "-S ${PACS}" '1'
-    git_commit
-#-------------------------------------------------------------------------------
+    pkgs_base_fs
 
+    pkgs_base_btrfs
 
+    pkgs_base_utils
 
-#===============================================================================
-# Устанавливаем пакеты для винтов
-#===============================================================================
-    #core
-    PACS='hdparm'
-    #extra
-    PACS+=' smartmontools parted gptfdisk fsarchiver testdisk ddrescue'
-    #community
-    PACS+=' partclone partimage'
-    pacman_install "-S ${PACS}" '1'
-    git_commit
+    pkgs_base_zsh
 
-    SERVICES+=" 'smartd.service'  '-' 'off'"
-    SERVICES+=" 'partimaged.service'  '-' 'off'"
-#-------------------------------------------------------------------------------
-
-
-
-#===============================================================================
-# Устанавливаем пакеты для поддержки файловых систем
-#===============================================================================
-    #core
-    PACS='btrfs-progs mkinitcpio-nfs-utils nfs-utils nilfs-utils dmraid'
-    #extra
-    PACS+=' ntfs-3g'
-    #community
-    PACS+=' nbd'
-    pacman_install "-S ${PACS}" '1'
-    git_commit
-
-    SERVICES+=" 'blkmapd.service'  '-' 'off'"
-    SERVICES+=" 'nfsd.service'  '-' 'off'"
-    SERVICES+=" 'rpc-gssd.service'  '-' 'off'"
-    SERVICES+=" 'rpc-idmapd.service'  '-' 'off'"
-    SERVICES+=" 'rpc-mountd.service'  '-' 'off'"
-    SERVICES+=" 'rpc-statd.service'  '-' 'off'"
-    SERVICES+=" 'rpc-svcgssd.service'  '-' 'off'"
-    SERVICES+=" 'dmraid.service'  '-' 'off'"
-    SERVICES+=" 'nbd.service'  '-' 'off'"
-#-------------------------------------------------------------------------------
-
-
-
-#===============================================================================
-# Добавляю btrfs в mkinitcpio
-#===============================================================================
-#     msg_log "$(gettext 'Добавляю') btrfs > /etc/mkinitcpio.conf"
-#     sed -i '
-# # Добавляем хук btrfs
-# /^HOOKS=/{
-#     h;
-#     s/^/#/;
-#     P;g;
-#     //{
-# 	s/btrfs//g;s/ \{1,\}/ /g;
-# 	s/filesystems/btrfs filesystems/;
-#     };
-# };
-# ' "${NS_PATH}/etc/mkinitcpio.conf"
-# 
-#     git_commit
-#-------------------------------------------------------------------------------
-
-
-
-#===============================================================================
-# Устанавливаем дополнительные нужные пакеты для системы
-#===============================================================================
-    #extra
-    PACS='lftp irssi rsync wget'
-    #community
-    PACS+=' darkhttpd elinks js haveged'
-    pacman_install "-S ${PACS}" '1'
-    git_commit
-
-    SERVICES+=" 'rsyncd.service'  '-' 'off'"
-    SERVICES+=" 'haveged.service'  '-' 'off'"
-#-------------------------------------------------------------------------------
-
-
-
-#===============================================================================
-# Устанавливаем zsh и делаем его по умолчанию
-#===============================================================================
-    #extra
-    PACS='zsh grml-zsh-config'
-    pacman_install "-S ${PACS}" '1'
-    git_commit
-# Меняем оболочку по умолчанию для новых пользователей
-    chroot_run useradd -D --shell /bin/zsh
-# Меняем оболочку по умолчанию для root
-    chroot_run usermod --shell /bin/zsh root
-    git_commit
-#-------------------------------------------------------------------------------
-
-
-
-#===============================================================================
-# Устанавливаем pkgfile
-#===============================================================================
-    #community
-    PACS='pkgfile'
-    pacman_install "-S ${PACS}" '1'
-    git_commit
-
-# Добавляем определение в каком пакете можно найти не существующую команду
-    msg_log "$(gettext 'Добавляю') pkgfile > /etc/skel/.zshrc"
-    echo '[ -r /usr/share/doc/pkgfile/command-not-found.zsh ] && source /usr/share/doc/pkgfile/command-not-found.zsh' >> "${NS_PATH}/etc/skel/.zshrc"
-    cat "${NS_PATH}/etc/skel/.zshrc" > "${NS_PATH}/root/.zshrc"
-
-# Включаем ежедневное обновление базы по крону
-    cat "${DBDIR}modules/etc/cron.daily/pkgfile" > "${NS_PATH}/etc/cron.daily/pkgfile"
-    chmod +x "${NS_PATH}/etc/cron.daily/pkgfile"
-
-# Обновляем базу pkgfile
-    chroot_run pkgfile --update
-    git_commit
+    pkgs_base_pkgfile
 
 #-------------------------------------------------------------------------------
 
