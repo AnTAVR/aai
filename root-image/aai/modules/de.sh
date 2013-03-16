@@ -32,8 +32,8 @@ TXT_DE_MAIN="$(gettext 'Рабочий стол')"
 SET_DE=
 # Сигнальная переменная что Xorg уже установелн
 SET_XORG=
-# Разрешение Xorg по умолчанию
-DEF_XORG_XxYxD='1280x1024x24'
+# Разрешение Xorg
+SET_XORG_XxYxD=
 #===============================================================================
 
 # Выводим строку пункта главного меню
@@ -173,9 +173,6 @@ de_dialog_menu()
 
 de_install_xorg()
 {
-    local PACS
-    local XORG_XxYxD
-
     local TEMP
 
     [[ "${SET_XORG}" ]] && return 0
@@ -183,96 +180,12 @@ de_install_xorg()
     de_dialog_xorg 2> "${TEMPFILE}"
     TEMP="$(cat "${TEMPFILE}")"
     [[ ! -n "${TEMP}" ]] && return 1
-    XORG_XxYxD="${TEMP}"
+    SET_XORG_XxYxD="${TEMP}"
 
+    pkgs_de_mesa
 
-#===============================================================================
-# Устанавливаем xorg
-#===============================================================================
-    #extra
-    PACS='xorg xorg-xinit xdg-user-dirs xdg-utils'
-    PACS+=' ttf-dejavu ttf-freefont ttf-linux-libertine ttf-bitstream-vera'
-    PACS+=' mesa-demos xscreensaver'
-    PACS+=' gstreamer0.10-plugins phonon-gstreamer'
-    #community
-    PACS+=' ttf-liberation ttf-droid'
-    pacman_install "-S ${PACS}" '1'
-#   #aur
-#   PACS='ttf-ms-fonts'
-# #  PACS='ttf-vista-fonts'
-    PACS='lib32-mesa-libgl'
-    pacman_install "-S ${PACS}" '2'
-    git_commit
+    pkgs_de_xorg
 
-    msg_log "$(gettext 'Настраиваю') /etc/skel/.Xresources"
-    cat "${DBDIR}modules/etc/skel/.Xresources" > "${NS_PATH}/etc/skel/.Xresources"
-
-    msg_log "$(gettext 'Добавляю') alias startx > /etc/skel/.zshrc"
-    echo '[ "$(which startx 2> /dev/null)" ] && alias startx="startx &> ~/.xlog"' >> "${NS_PATH}/etc/skel/.zshrc"
-    cat "${NS_PATH}/etc/skel/.zshrc" > "${NS_PATH}/root/.zshrc"
-    git_commit
-#-------------------------------------------------------------------------------
-
-
-
-#===============================================================================
-# Настраиваем раскладку в Xorg
-#===============================================================================
-    mkdir -p "${NS_PATH}/etc/X11/xorg.conf.d/"
-
-    TEMP="$(grep "[[:space:]]${SET_KEYMAP}[[:space:]]" "${DBDIR}keymaps.db")"
-
-    local XLAYOUT="$(awk '{print $3}' <<< "${TEMP}")"
-    local XMODEL="$(awk '{print $4}' <<< "${TEMP}")"
-    local XVARIANT="$(awk '{print $5}' <<< "${TEMP}")"
-    local XOPTIONS="$(awk '{print $6}' <<< "${TEMP}")"
-
-    msg_log "$(gettext 'Настраиваю') /etc/X11/xorg.conf.d/00-keyboard.conf"
-    {
-	echo -e 'Section\t"InputClass"'
-	echo -e '\tIdentifier\t"system-keyboard"'
-	echo -e '\tMatchIsKeyboard\t"on"'
-	[[ ! "${XLAYOUT}" ]] && echo -ne '# '
-	echo -e "\tOption\t\"XkbLayout\" \"${XLAYOUT}\""
-	[[ ! "${XMODEL}" ]] && echo -ne '# '
-	echo -e "\tOption\t\"XkbModel\" \"${XMODEL}\""
-	[[ ! "${XVARIANT}" ]] && echo -ne '# '
-	echo -e "\tOption\t\"XkbVariant\" \"${XVARIANT}\""
-	[[ ! "${XOPTIONS}" ]] && echo -ne '# '
-	echo -e "\tOption\t\"XkbOptions\" \"${XOPTIONS}\""
-	echo -e 'EndSection'
-    } > "${NS_PATH}/etc/X11/xorg.conf.d/00-keyboard.conf"
-#  chroot_run localectl --no-convert set-x11-keymap "${XLAYOUT}" "${XMODEL}" "${XVARIANT}" "${XOPTIONS}"
-#-------------------------------------------------------------------------------
-
-
-
-#===============================================================================
-# Настраиваем разрешение монитора для Xorg
-#===============================================================================
-    msg_log "$(gettext 'Настраиваю') /etc/X11/xorg.conf.d/00-monitor.conf"
-    {
-	echo -e 'Section\t"Monitor"'
-	echo -e '\tIdentifier\t"Monitor0"'
-	echo -e '\tVendorName\t"Unknown"'
-	echo -e 'EndSection'
-	echo -e ''
-	echo -e 'Section\t"Device"'
-	echo -e '\tIdentifier\t"Device0"'
-	echo -e 'EndSection'
-	echo -e ''
-	echo -e 'Section\t"Screen"'
-	echo -e '\tIdentifier\t"Screen0"'
-	echo -e '\tDevice\t"Device0"'
-	echo -e '\tMonitor\t"Monitor0"'
-	echo -e "\tDefaultDepth\t${XORG_XxYxD##*x}"
-	echo -e '\tSubSection\t"Display"'
-	echo -e "\t\tDepth\t${XORG_XxYxD##*x}"
-	echo -e "\t\tModes\t\"${XORG_XxYxD%x*}\""
-	echo -e '\tEndSubSection'
-	echo -e 'EndSection'
-    } > "${NS_PATH}/etc/X11/xorg.conf.d/00-monitor.conf"
-#-------------------------------------------------------------------------------
     set_global_var 'SET_XORG' '1'
 }
 
@@ -283,7 +196,7 @@ de_dialog_xorg()
     local HELP_TXT="\n$(gettext 'Выберите разрешение экрана для Xorg')\n"
     HELP_TXT+="$(gettext 'По умолчанию'):"
 
-    local DEFAULT_ITEM="${DEF_XORG_XxYxD}"
+    local DEFAULT_ITEM='1280x1024x24'
     local ITEMS="$(hwinfo --framebuffer | grep ' Mode ' |  awk -F ' ' '{print sq $3 "x" $5 sq " " sq $0 sq}' sq=\')"
 #  local ITEMS="
 #'640x480x8' '-' '800x600x8' '-' '1024x768x8' '-' '1280x1024x8' '-'
