@@ -82,8 +82,8 @@ msg_info()
     local MSG="${1}"
 
     echo -e "${BLDGRN}[${SCRNAME}] INFO: ${MSG}${TXTRST}"
-    echo '' >&2
-    echo "[${SCRNAME}] INFO ($(date +%Y-%m-%d-%T,%N)): ${MSG}" >&2
+    echo '' >> "${LOG_FILE}"
+    echo "[${SCRNAME}] INFO ($(date +%Y-%m-%d-%T,%N)): ${MSG}" >> "${LOG_FILE}"
 }
 
 msg_log()
@@ -92,8 +92,8 @@ msg_log()
     local NO_ECHO=${2}
 
     [[ ! ${NO_ECHO} ]] && echo -e "${BLDYLW}[${SCRNAME}] LOG: ${MSG}${TXTRST}"
-    echo '' >&2
-    echo "[${SCRNAME}] LOG ($(date +%Y-%m-%d-%T,%N)): ${MSG}" >&2
+    echo '' >> "${LOG_FILE}"
+    echo "[${SCRNAME}] LOG ($(date +%Y-%m-%d-%T,%N)): ${MSG}" >> "${LOG_FILE}"
 }
 
 msg_error()
@@ -106,8 +106,8 @@ msg_error()
     [[ ${ERROR} -gt 0 ]] && TEMP='ERROR'
 
     echo -e "${BLDRED}[${SCRNAME}] ${TEMP} (${ERROR}): ${MSG}${TXTRST}"
-    echo '' >&2
-    echo "[${SCRNAME}]($(date +%Y-%m-%d-%T,%N)) ${TEMP} (${ERROR}): ${MSG}" >&2
+    echo '' >> "${LOG_FILE}"
+    echo "[${SCRNAME}]($(date +%Y-%m-%d-%T,%N)) ${TEMP} (${ERROR}): ${MSG}" >> "${LOG_FILE}"
 
     [[ ${ERROR} -gt 0 ]] && run_exit ${ERROR}
 }
