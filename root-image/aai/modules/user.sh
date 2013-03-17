@@ -170,6 +170,8 @@ user_ecryptfs()
 
 user_dialog_menu()
 {
+    msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for TEMP in ${@}; do echo -n " '${TEMP}'"; done)\"" 'noecho'
+
     local P_DEF_MENU="${1}"
 
     local TITLE="${TXT_USER_MAIN}"
@@ -184,6 +186,8 @@ user_dialog_menu()
 
 user_dialog_name()
 {
+    msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for TEMP in ${@}; do echo -n " '${TEMP}'"; done)\"" 'noecho'
+
     local TITLE="${TXT_USER_MAIN}"
     local HELP_TXT="\n$(gettext 'Введите логин нового пользователя')\n"
     HELP_TXT+="$(gettext 'По умолчанию'):"
@@ -197,6 +201,8 @@ user_dialog_name()
 
 user_dialog_password()
 {
+    msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for TEMP in ${@}; do echo -n " '${TEMP}'"; done)\"" 'noecho'
+
     local P_S="${1}"
 
     local TITLE="${TXT_USER_MAIN}"

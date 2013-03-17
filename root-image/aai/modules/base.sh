@@ -235,6 +235,8 @@ run_base()
 
 base_dialog_mirrorlist()
 {
+    msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for TEMP in ${@}; do echo -n " '${TEMP}'"; done)\"" 'noecho'
+
     local P_COUNTRY="${1}"
 
     local TEMP
@@ -276,6 +278,8 @@ base_dialog_mirrorlist()
 
 base_dialog_country()
 {
+    msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for TEMP in ${@}; do echo -n " '${TEMP}'"; done)\"" 'noecho'
+
     local P_COUNTRY="${1}"
 
     local TITLE="${TXT_BASE_MAIN}"
@@ -294,6 +298,8 @@ base_dialog_country()
 
 base_dialog_timezone()
 {
+    msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for TEMP in ${@}; do echo -n " '${TEMP}'"; done)\"" 'noecho'
+
     local P_COUNTRY="${1}"
 
     local TITLE="${TXT_BASE_MAIN}"
@@ -318,6 +324,8 @@ base_dialog_timezone()
 
 base_dialog_localtime()
 {
+    msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for TEMP in ${@}; do echo -n " '${TEMP}'"; done)\"" 'noecho'
+
     local P_TIMEZONE="${1}"
     local P_COUNTRY="${2}"
 
@@ -338,6 +346,8 @@ base_dialog_localtime()
 
 base_dialog_local()
 {
+    msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for TEMP in ${@}; do echo -n " '${TEMP}'"; done)\"" 'noecho'
+
     local P_TIMEZONE="${1}"
     local P_COUNTRY="${2}"
 
@@ -364,6 +374,8 @@ base_dialog_local()
 
 base_dialog_keymap()
 {
+    msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for TEMP in ${@}; do echo -n " '${TEMP}'"; done)\"" 'noecho'
+
     local P_LOCAL="${1}"
     local P_COUNTRY="${2}"
 
@@ -390,6 +402,8 @@ base_dialog_keymap()
 
 base_dialog_keymap_toggle()
 {
+    msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for TEMP in ${@}; do echo -n " '${TEMP}'"; done)\"" 'noecho'
+
     local P_LOCAL="${1}"
     local P_COUNTRY="${2}"
 
@@ -410,6 +424,8 @@ base_dialog_keymap_toggle()
 
 base_dialog_font()
 {
+    msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for TEMP in ${@}; do echo -n " '${TEMP}'"; done)\"" 'noecho'
+
     local P_LOCAL="${1}"
     local P_COUNTRY="${2}"
 
@@ -436,6 +452,8 @@ base_dialog_font()
 
 base_dialog_font_map()
 {
+    msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for TEMP in ${@}; do echo -n " '${TEMP}'"; done)\"" 'noecho'
+
     local P_FONT="${1}"
 
     local TITLE="${TXT_BASE_MAIN}"
@@ -462,6 +480,8 @@ base_dialog_font_map()
 
 base_dialog_font_unimap()
 {
+    msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for TEMP in ${@}; do echo -n " '${TEMP}'"; done)\"" 'noecho'
+
     local P_FONT="${1}"
 
     local TITLE="${TXT_BASE_MAIN}"
@@ -488,6 +508,8 @@ base_dialog_font_unimap()
 
 base_dialog_hostname()
 {
+    msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for TEMP in ${@}; do echo -n " '${TEMP}'"; done)\"" 'noecho'
+
     local P_COUNTRY="${1}"
 
     local TITLE="${TXT_BASE_MAIN}"

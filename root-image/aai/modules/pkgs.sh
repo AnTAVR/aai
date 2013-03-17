@@ -73,6 +73,8 @@ run_pkgs()
 
 pkgs_dialog_app()
 {
+    msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for TEMP in ${@}; do echo -n " '${TEMP}'"; done)\"" 'noecho'
+
     local TITLE="${TXT_PKGS_MAIN}"
     local HELP_TXT="\n$(gettext 'Выберите дополнительное ПО')\n"
 
@@ -282,7 +284,7 @@ pkgs_base_plus_gobject()
     git_commit
 }
 
-pkgs_base_plus_aspell-loc()
+pkgs_base_plus_aspell_loc()
 {
     local PACS
     PACS="aspell-${SET_LOCAL%_*}"
@@ -299,7 +301,7 @@ pkgs_base_plus_zramswap()
     SERVICES+=" 'zramswap.service' '-' 'off'"
 }
 
-pkgs_base_plus_crypt-swapfile()
+pkgs_base_plus_crypt_swapfile()
 {
     local PACS
 #     pacman_install '-U /aai/db/my_pkgs/crypt-swapfile-1.0-1-any.pkg.tar.xz' '0' 'noexit'
@@ -308,7 +310,7 @@ pkgs_base_plus_crypt-swapfile()
 #     SERVICES+=" 'crypt-swapfile.service' '-' 'off'"
 }
 
-pkgs_base_plus_cpu-temperature-save()
+pkgs_base_plus_cpu_temperature_save()
 {
     local PACS
     pacman_install '-U /aai/db/my_pkgs/cpu-temperature-save-1.0-1-any.pkg.tar.xz' '0' 'noexit'
@@ -378,7 +380,7 @@ pkgs_base_plus_archives()
     git_commit
 }
 
-pkgs_base_plus_man-pages-loc()
+pkgs_base_plus_man_pages_loc()
 {
     local PACS
     PACS="man-pages-${SET_LOCAL%_*}"

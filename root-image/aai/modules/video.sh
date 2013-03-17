@@ -118,6 +118,8 @@ run_video()
 
 video_dialog_def_menu()
 {
+    msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for TEMP in ${@}; do echo -n " '${TEMP}'"; done)\"" 'noecho'
+
     local P_VID="${1}"
 
     local TITLE="${TXT_VIDEO_MAIN}"

@@ -147,7 +147,7 @@ DEFAULT_MENU=
 
 setup_dialog_def_menu()
 {
-    msg_log "$(gettext 'Запуск диалога'): $(basename $0)" 'noecho'
+    msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for TEMP in ${@}; do echo -n " '${TEMP}'"; done)\"" 'noecho'
 
     local TITLE="$(gettext 'Инсталлятор Arch Linux для новичков')"
     local HELP_TXT="\n${TXT_MAIN_MENU}\n"

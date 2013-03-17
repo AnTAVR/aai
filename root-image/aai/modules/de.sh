@@ -149,6 +149,8 @@ run_de()
 
 de_dialog_menu()
 {
+    msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for TEMP in ${@}; do echo -n " '${TEMP}'"; done)\"" 'noecho'
+
     local P_DEF_MENU="${1}"
 
     local TITLE="${TXT_DE_MAIN}"
@@ -192,6 +194,8 @@ de_install_xorg()
 
 de_dialog_xorg()
 {
+    msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for TEMP in ${@}; do echo -n " '${TEMP}'"; done)\"" 'noecho'
+
     local TITLE="${TXT_DE_MAIN}"
     local HELP_TXT="\n$(gettext 'Выберите разрешение экрана для Xorg')\n"
     HELP_TXT+="$(gettext 'По умолчанию'):"

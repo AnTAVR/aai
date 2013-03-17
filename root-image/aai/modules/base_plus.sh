@@ -187,6 +187,8 @@ get_sounds()
 
 base_plus_dialog_sound()
 {
+    msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for TEMP in ${@}; do echo -n " '${TEMP}'"; done)\"" 'noecho'
+
     local TITLE="${TXT_BASE_PLUS_MAIN}"
     local HELP_TXT="\n$(gettext 'Выберите звуковую карту по умолчанию')\n"
 
@@ -200,6 +202,8 @@ base_plus_dialog_sound()
 
 base_plus_dialog_service()
 {
+    msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for TEMP in ${@}; do echo -n " '${TEMP}'"; done)\"" 'noecho'
+
     local TITLE="${TXT_BASE_PLUS_MAIN}"
     local HELP_TXT="\n$(gettext 'Включение сервисов')\n"
 
@@ -452,7 +456,7 @@ base_plus_install()
     git_commit
 #-------------------------------------------------------------------------------
 
-    pkgs_base_plus_aspell-loc
+    pkgs_base_plus_aspell_loc
 
     pkgs_base_plus_alsa
 
@@ -468,7 +472,7 @@ base_plus_install()
 
     pkgs_base_plus_hd
 
-    pkgs_base_plus_man-pages-loc
+    pkgs_base_plus_man_pages_loc
 
     pkgs_base_plus_laptop
 
@@ -488,9 +492,9 @@ base_plus_install()
 
     pkgs_base_plus_ufw
 
-    pkgs_base_plus_cpu-temperature-save
+    pkgs_base_plus_cpu_temperature_save
 
-    pkgs_base_plus_crypt-swapfile
+    pkgs_base_plus_crypt_swapfile
 
     pkgs_base_plus_gobject
 

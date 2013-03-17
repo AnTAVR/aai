@@ -120,6 +120,8 @@ run_bootloader()
 
 bootloader_dialog_menu()
 {
+    msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for TEMP in ${@}; do echo -n " '${TEMP}'"; done)\"" 'noecho'
+
     local P_DEF_MENU="${1}"
 
     local TITLE="${TXT_BOOTLOADER_MAIN}"
@@ -140,6 +142,8 @@ bootloader_dialog_menu()
 
 bootloader_dialog_console()
 {
+    msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for TEMP in ${@}; do echo -n " '${TEMP}'"; done)\"" 'noecho'
+
     local TITLE="${TXT_BOOTLOADER_MAIN}"
     local HELP_TXT="\n$(gettext 'Выберите разрешение экрана для консоли')\n"
     HELP_TXT+="$(gettext 'По умолчанию'):"
@@ -158,6 +162,8 @@ bootloader_dialog_console()
 
 bootloader_dialog_dev_part()
 {
+    msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for TEMP in ${@}; do echo -n " '${TEMP}'"; done)\"" 'noecho'
+
     local TITLE="${TXT_BOOTLOADER_MAIN}"
     local HELP_TXT="$(gettext 'Символом * помечены загрузочные разделы')\n"
     HELP_TXT+="\n$(gettext 'Выберите раздел для установки загрузчика')\n"
