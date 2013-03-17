@@ -75,12 +75,17 @@ pkgs_dialog_app()
 {
     msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for ((TEMP=1; TEMP<=${#}; TEMP++)); do echo -n " \$${TEMP}='$(eval "echo \"\${${TEMP}}\"")'"; done)\"" 'noecho'
 
+    local RETURN
+
     local TITLE="${TXT_PKGS_MAIN}"
     local HELP_TXT="\n$(gettext 'Выберите дополнительное ПО')\n"
 
     local ITEMS="${APPS}"
 
-    dialog_checklist "${TITLE}" "${HELP_TXT}" "${ITEMS}" "--cancel-label '${TXT_MAIN_MENU}'"
+    RETURN="$(dialog_checklist "${TITLE}" "${HELP_TXT}" "${ITEMS}" "--cancel-label '${TXT_MAIN_MENU}'")"
+
+    echo "${RETURN}"
+    msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
 }
 
 pkgs_de_xorg()

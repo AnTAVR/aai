@@ -167,6 +167,8 @@ user_dialog_menu()
 {
     msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for ((TEMP=1; TEMP<=${#}; TEMP++)); do echo -n " \$${TEMP}='$(eval "echo \"\${${TEMP}}\"")'"; done)\"" 'noecho'
 
+    local RETURN
+
     local P_DEF_MENU="${1}"
 
     local TITLE="${TXT_USER_MAIN}"
@@ -176,12 +178,17 @@ user_dialog_menu()
     local ITEMS="'root' '$(gettext 'Установить пароль для root')'"
     ITEMS+=" 'new_admin' '$(gettext 'Добавление администратора')'"
 
-    dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}" "--cancel-label '${TXT_MAIN_MENU}'"
+    RETURN="$(dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}" "--cancel-label '${TXT_MAIN_MENU}'")"
+
+    echo "${RETURN}"
+    msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
 }
 
 user_dialog_name()
 {
     msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for ((TEMP=1; TEMP<=${#}; TEMP++)); do echo -n " \$${TEMP}='$(eval "echo \"\${${TEMP}}\"")'"; done)\"" 'noecho'
+
+    local RETURN
 
     local TITLE="${TXT_USER_MAIN}"
     local HELP_TXT="\n$(gettext 'Введите логин нового пользователя')\n"
@@ -191,12 +198,17 @@ user_dialog_name()
 
     HELP_TXT+=" \Zb\Z7\"${TEXT}\"\Zn\n"
 
-    dialog_inputbox "${TITLE}" "${HELP_TXT}" "${TEXT}" '--no-cancel'
+    RETURN="$(dialog_inputbox "${TITLE}" "${HELP_TXT}" "${TEXT}" '--no-cancel')"
+
+    echo "${RETURN}"
+    msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
 }
 
 user_dialog_password()
 {
     msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for ((TEMP=1; TEMP<=${#}; TEMP++)); do echo -n " \$${TEMP}='$(eval "echo \"\${${TEMP}}\"")'"; done)\"" 'noecho'
+
+    local RETURN
 
     local P_S="${1}"
 
@@ -213,5 +225,8 @@ user_dialog_password()
 	HELP_TXT+="\n$(gettext 'Введите пароль')"
     fi
 
-    dialog_inputbox "${TITLE}" "${HELP_TXT}" "${TEXT}" '--no-cancel'
+    RETURN="$(dialog_inputbox "${TITLE}" "${HELP_TXT}" "${TEXT}" '--no-cancel')"
+
+    echo "${RETURN}"
+    msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
 }

@@ -226,6 +226,8 @@ base_dialog_mirrorlist()
 {
     msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for ((TEMP=1; TEMP<=${#}; TEMP++)); do echo -n " \$${TEMP}='$(eval "echo \"\${${TEMP}}\"")'"; done)\"" 'noecho'
 
+    local RETURN
+
     local P_COUNTRY="${1}"
 
     local COUNTRY='-'
@@ -263,12 +265,17 @@ base_dialog_mirrorlist()
 	    fi
 	done)"
 
-    dialog_checklist "${TITLE}" "${HELP_TXT}" "${ITEMS}" '--no-cancel'
+    RETURN="$(dialog_checklist "${TITLE}" "${HELP_TXT}" "${ITEMS}" '--no-cancel')"
+
+    echo "${RETURN}"
+    msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
 }
 
 base_dialog_country()
 {
     msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for ((TEMP=1; TEMP<=${#}; TEMP++)); do echo -n " \$${TEMP}='$(eval "echo \"\${${TEMP}}\"")'"; done)\"" 'noecho'
+
+    local RETURN
 
     local P_COUNTRY="${1}"
 
@@ -283,12 +290,17 @@ base_dialog_country()
 
     local ITEMS="$(sed "s/'/\`/g" "${DBDIR}domains.db" | awk -F '\t' '{print sq$1sq" "sq$2sq}' sq=\')"
 
-    dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}" "--cancel-label '${TXT_MAIN_MENU}'"
+    RETURN="$(dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}" "--cancel-label '${TXT_MAIN_MENU}'")"
+
+    echo "${RETURN}"
+    msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
 }
 
 base_dialog_timezone()
 {
     msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for ((TEMP=1; TEMP<=${#}; TEMP++)); do echo -n " \$${TEMP}='$(eval "echo \"\${${TEMP}}\"")'"; done)\"" 'noecho'
+
+    local RETURN
 
     local P_COUNTRY="${1}"
 
@@ -309,12 +321,17 @@ base_dialog_timezone()
 	POST_LOCALIZE=1
     fi
 
-    dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}"
+    RETURN="$(dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}")"
+
+    echo "${RETURN}"
+    msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
 }
 
 base_dialog_localtime()
 {
     msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for ((TEMP=1; TEMP<=${#}; TEMP++)); do echo -n " \$${TEMP}='$(eval "echo \"\${${TEMP}}\"")'"; done)\"" 'noecho'
+
+    local RETURN
 
     local P_TIMEZONE="${1}"
     local P_COUNTRY="${2}"
@@ -331,12 +348,17 @@ base_dialog_localtime()
 
     HELP_TXT+=" \Zb\Z7\"${DEFAULT_ITEM}\"\Zn\n"
 
-    dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}"
+    RETURN="$(dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}")"
+
+    echo "${RETURN}"
+    msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
 }
 
 base_dialog_local()
 {
     msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for ((TEMP=1; TEMP<=${#}; TEMP++)); do echo -n " \$${TEMP}='$(eval "echo \"\${${TEMP}}\"")'"; done)\"" 'noecho'
+
+    local RETURN
 
     local P_TIMEZONE="${1}"
     local P_COUNTRY="${2}"
@@ -359,12 +381,17 @@ base_dialog_local()
 	POST_LOCALIZE=1
     fi
 
-    dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}"
+    RETURN="$(dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}")"
+
+    echo "${RETURN}"
+    msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
 }
 
 base_dialog_keymap()
 {
     msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for ((TEMP=1; TEMP<=${#}; TEMP++)); do echo -n " \$${TEMP}='$(eval "echo \"\${${TEMP}}\"")'"; done)\"" 'noecho'
+
+    local RETURN
 
     local P_LOCAL="${1}"
     local P_COUNTRY="${2}"
@@ -387,12 +414,17 @@ base_dialog_keymap()
 	POST_LOCALIZE=1
     fi
 
-    dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}"
+    RETURN="$(dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}")"
+
+    echo "${RETURN}"
+    msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
 }
 
 base_dialog_keymap_toggle()
 {
     msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for ((TEMP=1; TEMP<=${#}; TEMP++)); do echo -n " \$${TEMP}='$(eval "echo \"\${${TEMP}}\"")'"; done)\"" 'noecho'
+
+    local RETURN
 
     local P_LOCAL="${1}"
     local P_COUNTRY="${2}"
@@ -409,12 +441,17 @@ base_dialog_keymap_toggle()
 
     HELP_TXT+=" \Zb\Z7\"${DEFAULT_ITEM}\"\Zn\n"
 
-    dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}"
+    RETURN="$(dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}")"
+
+    echo "${RETURN}"
+    msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
 }
 
 base_dialog_font()
 {
     msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for ((TEMP=1; TEMP<=${#}; TEMP++)); do echo -n " \$${TEMP}='$(eval "echo \"\${${TEMP}}\"")'"; done)\"" 'noecho'
+
+    local RETURN
 
     local P_LOCAL="${1}"
     local P_COUNTRY="${2}"
@@ -437,12 +474,17 @@ base_dialog_font()
 	POST_LOCALIZE=1
     fi
 
-    dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}"
+    RETURN="$(dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}")"
+
+    echo "${RETURN}"
+    msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
 }
 
 base_dialog_font_map()
 {
     msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for ((TEMP=1; TEMP<=${#}; TEMP++)); do echo -n " \$${TEMP}='$(eval "echo \"\${${TEMP}}\"")'"; done)\"" 'noecho'
+
+    local RETURN
 
     local P_FONT="${1}"
 
@@ -465,12 +507,17 @@ base_dialog_font_map()
 	POST_LOCALIZE=1
     fi
 
-    dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}"
+    RETURN="$(dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}")"
+
+    echo "${RETURN}"
+    msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
 }
 
 base_dialog_font_unimap()
 {
     msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for ((TEMP=1; TEMP<=${#}; TEMP++)); do echo -n " \$${TEMP}='$(eval "echo \"\${${TEMP}}\"")'"; done)\"" 'noecho'
+
+    local RETURN
 
     local P_FONT="${1}"
 
@@ -493,12 +540,17 @@ base_dialog_font_unimap()
 	POST_LOCALIZE=1
     fi
 
-    dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}"
+    RETURN="$(dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}")"
+
+    echo "${RETURN}"
+    msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
 }
 
 base_dialog_hostname()
 {
     msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for ((TEMP=1; TEMP<=${#}; TEMP++)); do echo -n " \$${TEMP}='$(eval "echo \"\${${TEMP}}\"")'"; done)\"" 'noecho'
+
+    local RETURN
 
     local P_COUNTRY="${1}"
 
@@ -511,7 +563,10 @@ base_dialog_hostname()
 
     HELP_TXT+=" \Zb\Z7\"${TEXT}\"\Zn\n"
 
-    dialog_inputbox "${TITLE}" "${HELP_TXT}" "${TEXT}"
+    RETURN="$(dialog_inputbox "${TITLE}" "${HELP_TXT}" "${TEXT}")"
+
+    echo "${RETURN}"
+    msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
 }
 
 # Устанавливаем и настраиваем базовую систему

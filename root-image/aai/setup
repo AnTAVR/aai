@@ -149,6 +149,8 @@ setup_dialog_def_menu()
 {
     msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for ((TEMP=1; TEMP<=${#}; TEMP++)); do echo -n " \$${TEMP}='$(eval "echo \"\${${TEMP}}\"")'"; done)\"" 'noecho'
 
+    local RETURN
+
     local TITLE="$(gettext 'Инсталлятор Arch Linux для новичков')"
     local HELP_TXT="\n${TXT_MAIN_MENU}\n"
 
@@ -164,7 +166,10 @@ setup_dialog_def_menu()
 	ITEMS+="'${TEMP}' '$(str_${TEMP})' "
     done
 
-    dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}" "--cancel-label '${TXT_EXIT_MAIN}'"
+    RETURN="$(dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}" "--cancel-label '${TXT_EXIT_MAIN}'")"
+
+    echo "${RETURN}"
+    msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
 }
 
 # Цикл обработки главного меню

@@ -112,6 +112,8 @@ net_dialog_iface()
 {
     msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for ((TEMP=1; TEMP<=${#}; TEMP++)); do echo -n " \$${TEMP}='$(eval "echo \"\${${TEMP}}\"")'"; done)\"" 'noecho'
 
+    local RETURN
+
     local TITLE="${TXT_NET_MAIN}"
     local HELP_TXT="\n$(gettext 'Выберите сетевой адаптер')\n"
 
@@ -120,13 +122,17 @@ net_dialog_iface()
     ITEMS+=" $(ip l | awk 'BEGIN {temp=""} $1~/[0-9]+:/ && $2!~/lo:/ && temp=="" { temp=sq substr($2, 1, length($2)-1) sq }
 $1~/^link\// && temp!="" { print temp " " sq substr($0, 5, length($0)) sq; temp="" }' sq=\' | sort -u)"
 
-    dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}" "--cancel-label '${TXT_MAIN_MENU}'"
+    RETURN="$(dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}" "--cancel-label '${TXT_MAIN_MENU}'")"
+
+    echo "${RETURN}"
+    msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
 }
 
 net_dialog_type()
 {
     msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for ((TEMP=1; TEMP<=${#}; TEMP++)); do echo -n " \$${TEMP}='$(eval "echo \"\${${TEMP}}\"")'"; done)\"" 'noecho'
-    msg_log "" 'noecho'
+
+    local RETURN
 
     local P_IFACE="${1}"
 
@@ -141,7 +147,10 @@ net_dialog_type()
     ITEMS+=" 'VPN' '$(gettext 'VPN') \Zb\Z3($(gettext 'Пока не поддерживается'))\Zn'"
     ITEMS+=" 'WIFI' '$(gettext 'WIFI') \Zb\Z3($(gettext 'Пока не поддерживается'))\Zn'"
 
-    dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}" "--cancel-label '$(gettext 'Назад')'"
+    RETURN="$(dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}" "--cancel-label '$(gettext 'Назад')'")"
+
+    echo "${RETURN}"
+    msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
 }
 
 net_off()
@@ -415,6 +424,8 @@ net_static_dialog_ip()
 {
     msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for ((TEMP=1; TEMP<=${#}; TEMP++)); do echo -n " \$${TEMP}='$(eval "echo \"\${${TEMP}}\"")'"; done)\"" 'noecho'
 
+    local RETURN
+
     local P_TYPE="${1}"
     local P_IFACE="${2}"
 
@@ -425,12 +436,17 @@ net_static_dialog_ip()
 
     local TEXT='192.168.0.2'
 
-    dialog_inputbox "${TITLE}" "${HELP_TXT}" "${TEXT}"
+    RETURN="$(dialog_inputbox "${TITLE}" "${HELP_TXT}" "${TEXT}")"
+
+    echo "${RETURN}"
+    msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
 }
 
 net_static_dialog_netmask()
 {
     msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for ((TEMP=1; TEMP<=${#}; TEMP++)); do echo -n " \$${TEMP}='$(eval "echo \"\${${TEMP}}\"")'"; done)\"" 'noecho'
+
+    local RETURN
 
     local P_TYPE="${1}"
     local P_IFACE="${2}"
@@ -442,12 +458,17 @@ net_static_dialog_netmask()
 
     local TEXT='255.255.255.0'
 
-    dialog_inputbox "${TITLE}" "${HELP_TXT}" "${TEXT}"
+    RETURN="$(dialog_inputbox "${TITLE}" "${HELP_TXT}" "${TEXT}")"
+
+    echo "${RETURN}"
+    msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
 }
 
 net_static_dialog_broadcast()
 {
     msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for ((TEMP=1; TEMP<=${#}; TEMP++)); do echo -n " \$${TEMP}='$(eval "echo \"\${${TEMP}}\"")'"; done)\"" 'noecho'
+
+    local RETURN
 
     local P_IP="${1}"
     local P_TYPE="${2}"
@@ -460,12 +481,17 @@ net_static_dialog_broadcast()
 
     local TEXT="$(sed 's/\.[^.]*$/\.255/' <<< "${P_IP}")"
 
-    dialog_inputbox "${TITLE}" "${HELP_TXT}" "${TEXT}"
+    RETURN="$(dialog_inputbox "${TITLE}" "${HELP_TXT}" "${TEXT}")"
+
+    echo "${RETURN}"
+    msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
 }
 
 net_static_dialog_dns()
 {
     msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for ((TEMP=1; TEMP<=${#}; TEMP++)); do echo -n " \$${TEMP}='$(eval "echo \"\${${TEMP}}\"")'"; done)\"" 'noecho'
+
+    local RETURN
 
     local P_IP="${1}"
     local P_TYPE="${2}"
@@ -478,12 +504,17 @@ net_static_dialog_dns()
 
     local TEXT="$(sed 's/\.[^.]*$/\.1/' <<< "${P_IP}")"
 
-    dialog_inputbox "${TITLE}" "${HELP_TXT}" "${TEXT}"
+    RETURN="$(dialog_inputbox "${TITLE}" "${HELP_TXT}" "${TEXT}")"
+
+    echo "${RETURN}"
+    msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
 }
 
 net_static_dialog_gateway()
 {
     msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for ((TEMP=1; TEMP<=${#}; TEMP++)); do echo -n " \$${TEMP}='$(eval "echo \"\${${TEMP}}\"")'"; done)\"" 'noecho'
+
+    local RETURN
 
     local P_IP="${1}"
     local P_TYPE="${2}"
@@ -496,7 +527,10 @@ net_static_dialog_gateway()
 
     local TEXT="$(sed 's/\.[^.]*$/\.1/' <<< "${P_IP}")"
 
-    dialog_inputbox "${TITLE}" "${HELP_TXT}" "${TEXT}"
+    RETURN="$(dialog_inputbox "${TITLE}" "${HELP_TXT}" "${TEXT}")"
+
+    echo "${RETURN}"
+    msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
 }
 
 net_static_set()
@@ -584,6 +618,8 @@ net_dialog_proxy_http()
 {
     msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for ((TEMP=1; TEMP<=${#}; TEMP++)); do echo -n " \$${TEMP}='$(eval "echo \"\${${TEMP}}\"")'"; done)\"" 'noecho'
 
+    local RETURN
+
     local P_TYPE="${1}"
     local P_IFACE="${2}"
 
@@ -595,12 +631,17 @@ net_dialog_proxy_http()
 
     local TEXT=''
 
-    dialog_inputbox "${TITLE}" "${HELP_TXT}" "${TEXT}" '--no-cancel'
+    RETURN="$(dialog_inputbox "${TITLE}" "${HELP_TXT}" "${TEXT}" '--no-cancel')"
+
+    echo "${RETURN}"
+    msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
 }
 
 net_dialog_proxy_https()
 {
     msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for ((TEMP=1; TEMP<=${#}; TEMP++)); do echo -n " \$${TEMP}='$(eval "echo \"\${${TEMP}}\"")'"; done)\"" 'noecho'
+
+    local RETURN
 
     local P_TYPE="${1}"
     local P_IFACE="${2}"
@@ -613,12 +654,17 @@ net_dialog_proxy_https()
 
     local TEXT=''
 
-    dialog_inputbox "${TITLE}" "${HELP_TXT}" "${TEXT}" '--no-cancel'
+    RETURN="$(dialog_inputbox "${TITLE}" "${HELP_TXT}" "${TEXT}" '--no-cancel')"
+
+    echo "${RETURN}"
+    msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
 }
 
 net_dialog_proxy_ftp()
 {
     msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for ((TEMP=1; TEMP<=${#}; TEMP++)); do echo -n " \$${TEMP}='$(eval "echo \"\${${TEMP}}\"")'"; done)\"" 'noecho'
+
+    local RETURN
 
     local P_TYPE="${1}"
     local P_IFACE="${2}"
@@ -631,7 +677,10 @@ net_dialog_proxy_ftp()
 
     local TEXT=''
 
-    dialog_inputbox "${TITLE}" "${HELP_TXT}" "${TEXT}" '--no-cancel'
+    RETURN="$(dialog_inputbox "${TITLE}" "${HELP_TXT}" "${TEXT}" '--no-cancel')"
+
+    echo "${RETURN}"
+    msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
 }
 
 net_set_proxy()

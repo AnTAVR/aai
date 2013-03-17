@@ -81,6 +81,8 @@ part_dialog_def_menu()
 {
     msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for ((TEMP=1; TEMP<=${#}; TEMP++)); do echo -n " \$${TEMP}='$(eval "echo \"\${${TEMP}}\"")'"; done)\"" 'noecho'
 
+    local RETURN
+
     local P_DEF_MENU="${1}"
 
     local TEMP
@@ -98,7 +100,10 @@ part_dialog_def_menu()
 
     ITEMS+=" 'mount' '$(gettext 'Монтирование разделов') ${TEMP}'"
 
-    dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}" "--cancel-label '${TXT_MAIN_MENU}'"
+    RETURN="$(dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}" "--cancel-label '${TXT_MAIN_MENU}'")"
+
+    echo "${RETURN}"
+    msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
 }
 
 part_raidlvm()
@@ -156,12 +161,17 @@ part_part_dialog_fdisk()
     ITEMS+=" 'cgdisk' 'GPT'"
     ITEMS+=" 'gdisk' 'GPT \Zb\Z3($(gettext 'Рекомендуется'))\Zn'"
 
-    dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}"
+    RETURN="$(dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}")"
+
+    echo "${RETURN}"
+    msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
 }
 
 part_part_dialog_dev()
 {
     msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for ((TEMP=1; TEMP<=${#}; TEMP++)); do echo -n " \$${TEMP}='$(eval "echo \"\${${TEMP}}\"")'"; done)\"" 'noecho'
+
+    local RETURN
 
     local P_DEV="${1}"
 
@@ -183,7 +193,10 @@ $1 ~ /\/dev\/[hs]d[a-z]$/{
   print sq $1 sq " " sq $6 "\t" $9 sq
 }' sq=\')"
 
-    dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}" "--cancel-label '$(gettext 'Назад')'"
+    RETURN="$(dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}" "--cancel-label '$(gettext 'Назад')'")"
+
+    echo "${RETURN}"
+    msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
 }
 
 # Функция монтирования разделов
@@ -224,6 +237,8 @@ part_mount_dialog_point()
 {
     msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for ((TEMP=1; TEMP<=${#}; TEMP++)); do echo -n " \$${TEMP}='$(eval "echo \"\${${TEMP}}\"")'"; done)\"" 'noecho'
 
+    local RETURN
+
     local P_POINT="${1}"
 
     local TITLE="${TXT_PART_MAIN}"
@@ -250,7 +265,10 @@ part_mount_dialog_point()
     [[ -n "${SET_DEV_SWAP[0]}" ]] && TEMP="\Zb\Z2($(gettext 'ВЫПОЛНЕНО'))\Zn"
     ITEMS+=" 'swap' '\"${SET_DEV_SWAP[0]}\" \"$(swapon --show | grep "^${SET_DEV_SWAP[0]} " | awk '{print $2}')\" ${TEMP}'"
 
-    dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}" "--cancel-label '${TXT_MAIN_MENU}'"
+    RETURN="$(dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}" "--cancel-label '${TXT_MAIN_MENU}'")"
+
+    echo "${RETURN}"
+    msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
 }
 
 part_mount_boot()
@@ -359,6 +377,8 @@ part_format_dialog_mkf()
 {
     msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for ((TEMP=1; TEMP<=${#}; TEMP++)); do echo -n " \$${TEMP}='$(eval "echo \"\${${TEMP}}\"")'"; done)\"" 'noecho'
 
+    local RETURN
+
     local P_PART="${1}"
     local P_POINT="${2}"
 
@@ -403,12 +423,17 @@ part_format_dialog_mkf()
 
     HELP_TXT+=" \Zb\Z7\"${DEFAULT_ITEM}\"\Zn\n"
 
-    dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}"
+    RETURN="$(dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}")"
+
+    echo "${RETURN}"
+    msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
 }
 
 part_format_dialog_mkf_opt()
 {
     msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for ((TEMP=1; TEMP<=${#}; TEMP++)); do echo -n " \$${TEMP}='$(eval "echo \"\${${TEMP}}\"")'"; done)\"" 'noecho'
+
+    local RETURN
 
     local P_MKF="${1}"
     local P_POINT="${2}"
@@ -474,7 +499,10 @@ part_format_dialog_mkf_opt()
     HELP_TXT+=" \Zb\Z7\"${TEXT}\"\Zn\n"
 #  HELP_TXT+="\n$(sed ':a; /$/N; s/\n/\\n/; ta' <<< "$(${P_MKF} 2>&1)" | sed "s/'/\"/" | sed '/^$/d')\n"
 
-    dialog_inputbox "${TITLE}" "${HELP_TXT}" "${TEXT}"
+    RETURN="$(dialog_inputbox "${TITLE}" "${HELP_TXT}" "${TEXT}")"
+
+    echo "${RETURN}"
+    msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
 }
 
 part_mount_home()
@@ -606,6 +634,8 @@ part_mount_dialog_dev_part()
 {
     msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for ((TEMP=1; TEMP<=${#}; TEMP++)); do echo -n " \$${TEMP}='$(eval "echo \"\${${TEMP}}\"")'"; done)\"" 'noecho'
 
+    local RETURN
+
     local P_POINT="${1}"
 
     local TITLE="${TXT_PART_MAIN}"
@@ -628,12 +658,17 @@ $1 ~ /\/dev\/[hs]d[a-z][0-9]/{
 	return 1
     fi
 
-    dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}"
+    RETURN="$(dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}")"
+
+    echo "${RETURN}"
+    msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
 }
 
 part_mount_dialog_dev_opt()
 {
     msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for ((TEMP=1; TEMP<=${#}; TEMP++)); do echo -n " \$${TEMP}='$(eval "echo \"\${${TEMP}}\"")'"; done)\"" 'noecho'
+
+    local RETURN
 
     local P_PART="${1}"
     local P_POINT="${2}"
@@ -661,7 +696,10 @@ part_mount_dialog_dev_opt()
 
     HELP_TXT+=" \Zb\Z7\"${TEXT}\"\Zn\n"
 
-    dialog_inputbox "${TITLE}" "${HELP_TXT}" "${TEXT}"
+    RETURN="$(dialog_inputbox "${TITLE}" "${HELP_TXT}" "${TEXT}")"
+
+    echo "${RETURN}"
+    msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
 }
 
 
@@ -756,6 +794,8 @@ part_mount_dialog_swap_type()
 {
     msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for ((TEMP=1; TEMP<=${#}; TEMP++)); do echo -n " \$${TEMP}='$(eval "echo \"\${${TEMP}}\"")'"; done)\"" 'noecho'
 
+    local RETURN
+
     local P_POINT="${1}"
 
     local TYPE="$(blkid -c /dev/null "${SET_DEV_ROOT[0]}" | sed -n '/ TYPE=/{s/.* TYPE="//; s/".*//; p}')"
@@ -778,12 +818,17 @@ part_mount_dialog_swap_type()
 	    ;;
     esac
 
-    dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}"
+    RETURN="$(dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}")"
+
+    echo "${RETURN}"
+    msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
 }
 
 part_mount_dialog_swap_dev()
 {
     msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for ((TEMP=1; TEMP<=${#}; TEMP++)); do echo -n " \$${TEMP}='$(eval "echo \"\${${TEMP}}\"")'"; done)\"" 'noecho'
+
+    local RETURN
 
     local P_POINT="${1}"
 
@@ -805,12 +850,17 @@ $1 ~ /\/dev\/[hs]d[a-z][0-9]/{
 	return 1
     fi
 
-    dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}"
+    RETURN="$(dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}")"
+
+    echo "${RETURN}"
+    msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
 }
 
 part_mount_dialog_swap_file()
 {
     msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for ((TEMP=1; TEMP<=${#}; TEMP++)); do echo -n " \$${TEMP}='$(eval "echo \"\${${TEMP}}\"")'"; done)\"" 'noecho'
+
+    local RETURN
 
     local P_POINT="${1}"
 
@@ -823,7 +873,10 @@ part_mount_dialog_swap_file()
 
     HELP_TXT+=" \Zb\Z7\"${TEXT}\"\Zn\n"
 
-    dialog_inputbox "${TITLE}" "${HELP_TXT}" "${TEXT}"
+    RETURN="$(dialog_inputbox "${TITLE}" "${HELP_TXT}" "${TEXT}")"
+
+    echo "${RETURN}"
+    msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
 }
 
 part_mount_test()

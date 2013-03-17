@@ -187,6 +187,8 @@ base_plus_dialog_sound()
 {
     msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for ((TEMP=1; TEMP<=${#}; TEMP++)); do echo -n " \$${TEMP}='$(eval "echo \"\${${TEMP}}\"")'"; done)\"" 'noecho'
 
+    local RETURN
+
     local TITLE="${TXT_BASE_PLUS_MAIN}"
     local HELP_TXT="\n$(gettext 'Выберите звуковую карту по умолчанию')\n"
 
@@ -195,12 +197,17 @@ base_plus_dialog_sound()
 
     ITEMS+="$(get_sounds | awk -F ',' '{print " " sq $1 sq " " sq $2 " " $3 sq}' sq=\')"
 
-    dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}"  '--no-cancel'
+    RETURN="$(dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}"  '--no-cancel')"
+
+    echo "${RETURN}"
+    msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
 }
 
 base_plus_dialog_service()
 {
     msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for ((TEMP=1; TEMP<=${#}; TEMP++)); do echo -n " \$${TEMP}='$(eval "echo \"\${${TEMP}}\"")'"; done)\"" 'noecho'
+
+    local RETURN
 
     local TITLE="${TXT_BASE_PLUS_MAIN}"
     local HELP_TXT="\n$(gettext 'Включение сервисов')\n"
@@ -209,7 +216,10 @@ base_plus_dialog_service()
 #     ITEMS+=" 'systemd-readahead-collect' '-' 'off'"
 #     ITEMS+=" 'systemd-readahead-replay' '-' 'off'"
 
-    dialog_checklist "${TITLE}" "${HELP_TXT}" "${ITEMS}" '--no-cancel'
+    RETURN="$(dialog_checklist "${TITLE}" "${HELP_TXT}" "${ITEMS}" '--no-cancel')"
+
+    echo "${RETURN}"
+    msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
 }
 
 #yaourt -S vlc
