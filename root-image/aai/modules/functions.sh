@@ -196,6 +196,7 @@ git_commit()
 get_parts()
 {
     local TEMP
+
     local I386_SYS_TYPES=(
 	['0x00']='Empty'
 	['0x01']='FAT12'
