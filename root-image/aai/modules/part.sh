@@ -810,10 +810,10 @@ part_mount_dialog_swap_type()
 
     case "${TYPE}" in
 	'ext2' | 'ext3' | 'ext4')
-	    echo ''
+	    RETURN=
 	    ;;
 	*)
-	    echo 'dev' >&2
+	    echo 'dev'
 	    return
 	    ;;
     esac
@@ -982,11 +982,11 @@ is_ssd()
     SDX="${SDX/\/dev\//}"
     SDX="${SDX:0:3}"
 
-    [[ "$(cat "/sys/block/${SDX}/queue/rotational")" == '0' ]] && echo '0' && return 0
-    [[ "$(cat "/sys/block/${SDX}/removable")" == '1' ]] && echo '0' && return 0
-#  [[ "$(udevadm info --query=property --name="${SDX}" | grep 'ID_BUS=' | sed 's/ID_BUS=//')" == 'usb' ]] && echo '0' && return 0
+    [[ "$(cat "/sys/block/${SDX}/queue/rotational")" == '0' ]] && return 0
+    [[ "$(cat "/sys/block/${SDX}/removable")" == '1' ]] && return 0
+#  [[ "$(udevadm info --query=property --name="${SDX}" | grep 'ID_BUS=' | sed 's/ID_BUS=//')" == 'usb' ]] && return 0
 
-    echo '1' && return 1
+    return 1
 }
 
 #chroot /mnt/newSystem nano /etc/fstab
