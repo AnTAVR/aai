@@ -170,8 +170,7 @@ setup_dialog_def_menu()
 # Цикл обработки главного меню
 while true
 do
-    setup_dialog_def_menu 2> "${TEMPFILE}"
-    DEFAULT_MENU="$(cat "${TEMPFILE}")"
+    DEFAULT_MENU="$(setup_dialog_def_menu)"
 
 # Если меню выбрано то исполняем соответствующую функцию, в противном случае выход
     if [[ -n "${DEFAULT_MENU}" ]]

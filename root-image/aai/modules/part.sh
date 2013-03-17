@@ -51,8 +51,7 @@ run_part()
 
     while true
     do
-	part_dialog_def_menu "${DEF_MENU}" 2> "${TEMPFILE}"
-	DEF_MENU="$(cat "${TEMPFILE}")"
+	DEF_MENU="$(part_dialog_def_menu "${DEF_MENU}")"
 	case "${DEF_MENU}" in
 	    'part')
 		part_part
@@ -122,16 +121,15 @@ part_part()
 {
     local FDISK='fdisk'
     local DEV
+
     local TEMP
 
     while true
     do
-	part_part_dialog_dev "${DEV}" 2> "${TEMPFILE}"
-	DEV="$(cat "${TEMPFILE}")"
+	DEV="$(part_part_dialog_dev "${DEV}")"
 	[[ ! -n "${DEV}" ]] && return 1
 
-	part_part_dialog_fdisk "${FDISK}" 2> "${TEMPFILE}"
-	TEMP="$(cat "${TEMPFILE}")"
+	TEMP="$(part_part_dialog_fdisk "${FDISK}")"
 	[[ ! -n "${TEMP}" ]] && continue
 	FDISK="${TEMP}"
 
@@ -196,8 +194,7 @@ part_mount()
     while true
     do
 # Диалог выбора точки монтирования
-	part_mount_dialog_point "${POINT}" 2> "${TEMPFILE}"
-	POINT="$(cat "${TEMPFILE}")"
+	POINT="$(part_mount_dialog_point "${POINT}")"
 
 	case "${POINT}" in
 	    'unmount')
@@ -263,10 +260,11 @@ part_mount_boot()
     local PART
     local OPT
 
+    local TEMP
+
     part_mount_test "${POINT}" 'SET_DEV_BOOT' || return 1
 
-    part_mount_dialog_dev_part "${POINT}" 2> "${TEMPFILE}"
-    PART="$(cat "${TEMPFILE}")"
+    PART="$(part_mount_dialog_dev_part "${POINT}")"
     [[ ! -n "${PART}" ]] && return 1
 
     dialog_yesno \
@@ -287,10 +285,10 @@ part_mount_boot()
 
     part_mount_test_fs "${PART}" || return 1
 
-    part_mount_dialog_dev_opt "${PART}" "${POINT}" 2> "${TEMPFILE}"
+    TEMP="$(part_mount_dialog_dev_opt "${PART}" "${POINT}")"
     case "${?}" in
 	'0') #Yes
-	    OPT="$(cat "${TEMPFILE}")"
+	    OPT="${TEMP}"
 	    ;;
 	'1') #No
 	    return 1
@@ -317,16 +315,17 @@ part_format()
     local MKF
     local MKF_OPT
 
+    local TEMP
+
     while true
     do
-	part_format_dialog_mkf "${P_PART}" "${P_POINT}" 2> "${TEMPFILE}"
-	MKF="$(cat "${TEMPFILE}")"
+	MKF="$(part_format_dialog_mkf "${P_PART}" "${P_POINT}")"
 	[[ ! -n "${MKF}" ]] && return 1
 
-	part_format_dialog_mkf_opt "${MKF}" "${P_POINT}" "${P_PART}" 2> "${TEMPFILE}"
+	TEMP="$(part_format_dialog_mkf_opt "${MKF}" "${P_POINT}" "${P_PART}")"
 	case "${?}" in
 	    '0') #Yes
-		MKF_OPT="$(cat "${TEMPFILE}")"
+		MKF_OPT="${TEMP}"
 		;;
 	    '1') #No
 		continue
@@ -485,10 +484,11 @@ part_mount_home()
     local PART
     local OPT
 
+    local TEMP
+
     part_mount_test "${POINT}" 'SET_DEV_HOME' || return 1
 
-    part_mount_dialog_dev_part "${POINT}" 2> "${TEMPFILE}"
-    PART="$(cat "${TEMPFILE}")"
+    PART="$(part_mount_dialog_dev_part "${POINT}")"
     [[ ! -n "${PART}" ]] && return 1
 
     dialog_yesno \
@@ -509,10 +509,10 @@ part_mount_home()
 
     part_mount_test_fs "${PART}" || return 1
 
-    part_mount_dialog_dev_opt "${PART}" "${POINT}" 2> "${TEMPFILE}"
+    TEMP="$(part_mount_dialog_dev_opt "${PART}" "${POINT}")"
     case "${?}" in
 	'0') #Yes
-	    OPT="$(cat "${TEMPFILE}")"
+	    OPT="${TEMP}"
 	    ;;
 	'1') #No
 	    return 1
@@ -534,6 +534,8 @@ part_mount_root()
     local PART
     local OPT
 
+    local TEMP
+
     if [[ -n "${SET_DEV_ROOT[0]}" ]]
     then
 	dialog_warn \
@@ -541,8 +543,7 @@ part_mount_root()
 	return 1
     fi
 
-    part_mount_dialog_dev_part "${POINT}" 2> "${TEMPFILE}"
-    PART="$(cat "${TEMPFILE}")"
+    PART="$(part_mount_dialog_dev_part "${POINT}")"
     [[ ! -n "${PART}" ]] && return 1
 
     dialog_yesno \
@@ -563,10 +564,10 @@ part_mount_root()
 
     part_mount_test_fs "${PART}" || return 1
 
-    part_mount_dialog_dev_opt "${PART}" "${POINT}" 2> "${TEMPFILE}"
+    TEMP="$(part_mount_dialog_dev_opt "${PART}" "${POINT}")"
     case "${?}" in
 	'0') #Yes
-	    OPT="$(cat "${TEMPFILE}")"
+	    OPT="${TEMP}"
 	    ;;
 	'1') #No
 	    return 1
@@ -690,16 +691,15 @@ part_mount_swap()
 
     local PART
     local OPT
+
     local TEMP
 
     part_mount_test "${POINT}" 'SET_DEV_SWAP' || return 1
 
-    part_mount_dialog_swap_type "${POINT}" 2> "${TEMPFILE}"
 # Диалог выбора раздела, для монтирования
-    case "$( < "${TEMPFILE}")" in
+    case "$(part_mount_dialog_swap_type "${POINT}")" in
 	'dev')
-	    part_mount_dialog_swap_dev "${POINT}" 2> "${TEMPFILE}"
-	    PART="$(cat "${TEMPFILE}")"
+	    PART="$(part_mount_dialog_swap_dev "${POINT}")"
 	    [[ ! -n "${PART}" ]] && return 1
 
 	    dialog_yesno \
@@ -729,8 +729,7 @@ part_mount_swap()
 	    swapon "${SET_DEV_SWAP[0]}"
 	    ;;
 	'file')
-	    part_mount_dialog_swap_file "${POINT}" 2> "${TEMPFILE}"
-	    OPT="$(cat "${TEMPFILE}")"
+	    OPT="$(part_mount_dialog_swap_file "${POINT}")"
 	    [[ ! -n "${OPT}" ]] && return 1
 	    OPT="${OPT}"
 	    PART='/swapfile'

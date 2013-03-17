@@ -113,62 +113,52 @@ run_base()
 
     while true
     do
-	base_dialog_country "${COUNTRY}" 2> "${TEMPFILE}"
-	TEMP="$(cat "${TEMPFILE}")"
+	TEMP="$(base_dialog_country "${COUNTRY}")"
 	[[ ! -n "${TEMP}" ]] && return 1
 	COUNTRY="${TEMP}"
 
 
-	base_dialog_timezone "${COUNTRY}" 2> "${TEMPFILE}"
-	TEMP="$(cat "${TEMPFILE}")"
+	TEMP="$(base_dialog_timezone "${COUNTRY}")"
 	[[ ! -n "${TEMP}" ]] && continue
 	TIMEZONE="${TEMP}"
 
 
-	base_dialog_localtime "${TIMEZONE}" "${COUNTRY}" 2> "${TEMPFILE}"
-	TEMP="$(cat "${TEMPFILE}")"
+	TEMP="$(base_dialog_localtime "${TIMEZONE}" "${COUNTRY}")"
 	[[ ! -n "${TEMP}" ]] && continue
 	LOCALTIME="${TEMP}"
 
 
-	base_dialog_local "${TIMEZONE}" "${COUNTRY}" 2> "${TEMPFILE}"
-	TEMP="$(cat "${TEMPFILE}")"
+	TEMP="$(base_dialog_local "${TIMEZONE}" "${COUNTRY}")"
 	[[ ! -n "${TEMP}" ]] && continue
 	LOCAL="${TEMP}"
 
 
-	base_dialog_keymap "${LOCAL}" "${COUNTRY}" 2> "${TEMPFILE}"
-	TEMP="$(cat "${TEMPFILE}")"
+	TEMP="$(base_dialog_keymap "${LOCAL}" "${COUNTRY}")"
 	[[ ! -n "${TEMP}" ]] && continue
 	KEYMAP="${TEMP}"
 
 
-	base_dialog_keymap_toggle "${LOCAL}" "${COUNTRY}" 2> "${TEMPFILE}"
-	TEMP="$(cat "${TEMPFILE}")"
+	TEMP="$(base_dialog_keymap_toggle "${LOCAL}" "${COUNTRY}")"
 	[[ ! -n "${TEMP}" ]] && continue
 	KEYMAP_TOGGLE="${TEMP}"
 
 
-	base_dialog_font "${LOCAL}" "${COUNTRY}" 2> "${TEMPFILE}"
-	TEMP="$(cat "${TEMPFILE}")"
+	TEMP="$(base_dialog_font "${LOCAL}" "${COUNTRY}")"
 	[[ ! -n "${TEMP}" ]] && continue
 	FONT="${TEMP}"
 
 
-	base_dialog_font_map "${FONT}" 2> "${TEMPFILE}"
-	TEMP="$(cat "${TEMPFILE}")"
+	TEMP="$(base_dialog_font_map "${FONT}")"
 	[[ ! -n "${TEMP}" ]] && continue
 	FONT_MAP="${TEMP}"
 
 
-	base_dialog_font_unimap "${FONT}" 2> "${TEMPFILE}"
-	TEMP="$(cat "${TEMPFILE}")"
+	TEMP="$(base_dialog_font_unimap "${FONT}")"
 	[[ ! -n "${TEMP}" ]] && continue
 	FONT_UNIMAP="${TEMP}"
 
 
-	base_dialog_hostname "${COUNTRY}" 2> "${TEMPFILE}"
-	TEMP="$(cat "${TEMPFILE}")"
+	TEMP="$(base_dialog_hostname "${COUNTRY}")"
 	[[ ! -n "${TEMP}" ]] && continue
 	HOSTNAME="${TEMP}"
 
@@ -211,8 +201,7 @@ run_base()
 
 		set_global_var 'SET_HOSTNAME' "${HOSTNAME}"
 
-		base_dialog_mirrorlist "${COUNTRY}" 2> "${TEMPFILE}"
-		TEMPS="$(cat "${TEMPFILE}")"
+		TEMPS="$(base_dialog_mirrorlist "${COUNTRY}")"
 		if [[ -n "${TEMPS}" ]] && [[ "${?}" == '0' ]]
 		then
 		    echo '' > /etc/pacman.d/mirrorlist
@@ -239,9 +228,10 @@ base_dialog_mirrorlist()
 
     local P_COUNTRY="${1}"
 
-    local TEMP
     local COUNTRY='-'
     local LINE
+
+    local TEMP
 
     local TITLE="${TXT_BASE_MAIN}"
     local HELP_TXT="$(gettext 'Домен'): \Zb\Z2\"${P_COUNTRY}\"\Zn\n"

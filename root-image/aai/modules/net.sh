@@ -74,8 +74,7 @@ run_net()
 
     while true
     do
-	net_dialog_iface 2> "${TEMPFILE}"
-	IFACE="$(cat "${TEMPFILE}")"
+	IFACE="$(net_dialog_iface)"
 	[[ ! -n "${IFACE}" ]] && return 1
 	if [[ "${IFACE}" == 'ok' ]]
 	then
@@ -83,8 +82,7 @@ run_net()
 	    return 0
 	fi
 
-	net_dialog_type "${IFACE}" 2> "${TEMPFILE}"
-	TYPE="$(cat "${TEMPFILE}")"
+	TYPE="$(net_dialog_type "${IFACE}")"
 	case "${TYPE}" in
 	    'DHCP')
 		net_dhcp "${IFACE}" || continue
@@ -183,14 +181,11 @@ net_vpn()
 	"\Zb\Z1\"VPN\" $(gettext 'пока не поддерживается, помогите проекту, допишите данный функционал')\Zn"
     return 1
 
-    net_dialog_proxy_http "${TYPE}" "${P_IFACE}" 2> "${TEMPFILE}"
-    HTTP_PROXY="$(cat "${TEMPFILE}")"
+    HTTP_PROXY="$(net_dialog_proxy_http "${TYPE}" "${P_IFACE}")"
 
-    net_dialog_proxy_https "${TYPE}" "${P_IFACE}" 2> "${TEMPFILE}"
-    HTTPS_PROXY="$(cat "${TEMPFILE}")"
+    HTTPS_PROXY="$(net_dialog_proxy_https "${TYPE}" "${P_IFACE}")"
 
-    net_dialog_proxy_ftp "${TYPE}" "${P_IFACE}" 2> "${TEMPFILE}"
-    FTP_PROXY="$(cat "${TEMPFILE}")"
+    FTP_PROXY="$(net_dialog_proxy_ftp "${TYPE}" "${P_IFACE}")"
 }
 
 net_vpn_set()
@@ -219,14 +214,11 @@ net_wifi()
 	"\Zb\Z1\"WIFI\" $(gettext 'пока не поддерживается, помогите проекту, допишите данный функционал')\Zn"
     return 1
 
-    net_dialog_proxy_http "${TYPE}" "${P_IFACE}" 2> "${TEMPFILE}"
-    HTTP_PROXY="$(cat "${TEMPFILE}")"
+    HTTP_PROXY="$(net_dialog_proxy_http "${TYPE}" "${P_IFACE}")"
 
-    net_dialog_proxy_https "${TYPE}" "${P_IFACE}" 2> "${TEMPFILE}"
-    HTTPS_PROXY="$(cat "${TEMPFILE}")"
+    HTTPS_PROXY="$(net_dialog_proxy_https "${TYPE}" "${P_IFACE}")"
 
-    net_dialog_proxy_ftp "${TYPE}" "${P_IFACE}" 2> "${TEMPFILE}"
-    FTP_PROXY="$(cat "${TEMPFILE}")"
+    FTP_PROXY="$(net_dialog_proxy_ftp "${TYPE}" "${P_IFACE}")"
 }
 
 net_wifi_set()
@@ -251,14 +243,11 @@ net_dhcp()
     local HTTP_PROXY
     local FTP_PROXY
 
-    net_dialog_proxy_http "${TYPE}" "${P_IFACE}" 2> "${TEMPFILE}"
-    HTTP_PROXY="$(cat "${TEMPFILE}")"
+    HTTP_PROXY="$(net_dialog_proxy_http "${TYPE}" "${P_IFACE}")"
 
-    net_dialog_proxy_https "${TYPE}" "${P_IFACE}" 2> "${TEMPFILE}"
-    HTTPS_PROXY="$(cat "${TEMPFILE}")"
+    HTTPS_PROXY="$(net_dialog_proxy_https "${TYPE}" "${P_IFACE}")"
 
-    net_dialog_proxy_ftp "${TYPE}" "${P_IFACE}" 2> "${TEMPFILE}"
-    FTP_PROXY="$(cat "${TEMPFILE}")"
+    FTP_PROXY="$(net_dialog_proxy_ftp "${TYPE}" "${P_IFACE}")"
 
 # Проверяем правильность ввода параметров, если не правильно введено,
 # то повторяем выбор, если отмена то выход
@@ -355,39 +344,31 @@ net_static()
 
     local TEMP
 
-    net_static_dialog_ip "${TYPE}" "${P_IFACE}" 2> "${TEMPFILE}"
-    TEMP="$(cat "${TEMPFILE}")"
+    TEMP="$(net_static_dialog_ip "${TYPE}" "${P_IFACE}")"
     [[ ! -n "${TEMP}" ]] && return 1
     IP="${TEMP}"
 
-    net_static_dialog_netmask "${TYPE}" "${P_IFACE}" 2> "${TEMPFILE}"
-    TEMP="$(cat "${TEMPFILE}")"
+    TEMP="$(net_static_dialog_netmask "${TYPE}" "${P_IFACE}")"
     [[ ! -n "${TEMP}" ]] && return 1
     NETMASK="${TEMP}"
 
-    net_static_dialog_broadcast "${IP}" "${TYPE}" "${P_IFACE}" 2> "${TEMPFILE}"
-    TEMP="$(cat "${TEMPFILE}")"
+    TEMP="$(net_static_dialog_broadcast "${IP}" "${TYPE}" "${P_IFACE}")"
     [[ ! -n "${TEMP}" ]] && return 1
     BROADCAST="${TEMP}"
 
-    net_static_dialog_dns "${IP}" "${TYPE}" "${P_IFACE}" 2> "${TEMPFILE}"
-    TEMP="$(cat "${TEMPFILE}")"
+    TEMP="$(net_static_dialog_dns "${IP}" "${TYPE}" "${P_IFACE}")"
     [[ ! -n "${TEMP}" ]] && return 1
     DNS="${TEMP}"
 
-    net_static_dialog_gateway "${IP}" "${TYPE}" "${P_IFACE}" 2> "${TEMPFILE}"
-    TEMP="$(cat "${TEMPFILE}")"
+    TEMP="$(net_static_dialog_gateway "${IP}" "${TYPE}" "${P_IFACE}")"
     [[ ! -n "${TEMP}" ]] && return 1
     GATEWAY="${TEMP}"
 
-    net_dialog_proxy_http "${TYPE}" "${P_IFACE}" 2> "${TEMPFILE}"
-    HTTP_PROXY="$(cat "${TEMPFILE}")"
+    HTTP_PROXY="$(net_dialog_proxy_http "${TYPE}" "${P_IFACE}")"
 
-    net_dialog_proxy_https "${TYPE}" "${P_IFACE}" 2> "${TEMPFILE}"
-    HTTPS_PROXY="$(cat "${TEMPFILE}")"
+    HTTPS_PROXY="$(net_dialog_proxy_https "${TYPE}" "${P_IFACE}")"
 
-    net_dialog_proxy_ftp "${TYPE}" "${P_IFACE}" 2> "${TEMPFILE}"
-    FTP_PROXY="$(cat "${TEMPFILE}")"
+    FTP_PROXY="$(net_dialog_proxy_ftp "${TYPE}" "${P_IFACE}")"
 
 # Проверяем правильность ввода параметров, если не правильно введено,
 # то повторяем выбор, если отмена то выход

@@ -20,14 +20,9 @@
 #
 
 
-# Временный файл для dialog
-TEMPFILE="$(mktemp)"
-# Удалять при выходе из скрипта
-#trap "rm -f '${TEMPFILE}' && part_unmount" EXIT
-
 # dialog по умолчанию, если запускается в Xorg то использовать Xdialog
 # при отладке не используется
-DIALOG='dialog --clear --colors'
+DIALOG='dialog --stdout --clear --colors'
 
 
 dialog_menu()

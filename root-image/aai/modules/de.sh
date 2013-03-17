@@ -75,8 +75,7 @@ run_de()
 
     while true
     do
-	de_dialog_menu "${DEF_MENU}" 2> "${TEMPFILE}"
-	DEF_MENU="$(cat "${TEMPFILE}")"
+	DEF_MENU="$(de_dialog_menu "${DEF_MENU}")"
 	case "${DEF_MENU}" in
 	    'no')
 		dialog_yesno \
@@ -179,8 +178,7 @@ de_install_xorg()
 
     [[ "${SET_XORG}" ]] && return 0
 
-    de_dialog_xorg 2> "${TEMPFILE}"
-    TEMP="$(cat "${TEMPFILE}")"
+    TEMP="$(de_dialog_xorg)"
     [[ ! -n "${TEMP}" ]] && return 1
     SET_XORG_XxYxD="${TEMP}"
 

@@ -46,6 +46,7 @@ run_video()
 {
     local DEF_MENU
     local VID
+
     local TEMP
 
     if [[ "${NO_DEBUG}" ]]
@@ -88,8 +89,7 @@ run_video()
 
     while true
     do
-	video_dialog_def_menu "${VID}" 2> "${TEMPFILE}"
-	DEF_MENU="$(cat "${TEMPFILE}")"
+	DEF_MENU="$(video_dialog_def_menu "${VID}")"
 	case "${DEF_MENU}" in
 	    'nvidia')
 		video_nvidia

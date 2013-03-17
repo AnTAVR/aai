@@ -64,8 +64,7 @@ run_user()
     while true
     do
 	NAME=
-	user_dialog_menu "${DEF_MENU}" 2> "${TEMPFILE}"
-	DEF_MENU="$(cat "${TEMPFILE}")"
+	DEF_MENU="$(user_dialog_menu "${DEF_MENU}")"
 	case "${DEF_MENU}" in
 	    'root')
 		user_set_passw 'root' || continue
@@ -91,8 +90,7 @@ run_user()
 # 		    continue
 # 		fi
 
-		user_dialog_name 2> "${TEMPFILE}"
-		NAME="$(cat "${TEMPFILE}")"
+		NAME="$(user_dialog_name)"
 		[[ ! -n "${NAME}" ]] && continue
 	
 		chroot_run useradd -m -G wheel,storage,adm,ecryptfs -U "${NAME}"
@@ -122,9 +120,7 @@ user_set_passw()
 
     while true
     do
-	user_dialog_password 2> "${TEMPFILE}"
-
-	PASS="$(cat "${TEMPFILE}")"
+	PASS="$(user_dialog_password)"
 	[[ ! "${PASS}" ]] && return 1
 	if (( ${#PASS} < 7 ))
 	then
@@ -133,8 +129,7 @@ user_set_passw()
 	    continue
 	fi
 
-	user_dialog_password '1' 2> "${TEMPFILE}"
-	PASS2="$(cat "${TEMPFILE}")"
+	PASS2="$(user_dialog_password '1')"
 
 	if [[ "${PASS}" != "${PASS2}" ]]
 	then

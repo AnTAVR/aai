@@ -79,8 +79,7 @@ run_bootloader()
 
     while true
     do
-	bootloader_dialog_menu "${DEF_MENU}" 2> "${TEMPFILE}"
-	DEF_MENU="$(cat "${TEMPFILE}")"
+	DEF_MENU="$(bootloader_dialog_menu "${DEF_MENU}")"
 	case "${DEF_MENU}" in
 	    'none')
 		set_global_var 'SET_BOOTLOADER' ''
@@ -196,11 +195,11 @@ bootloader_grub_bios()
 {
     local CONSOLE_V_XxYxD
     local PART
-    local TEMP
-    local TEMP1
     local PACS
     local FILE_TXT
 
+    local TEMP
+    local TEMP1
 #===============================================================================
 # Устанавливаем grub
 #===============================================================================
@@ -215,8 +214,7 @@ bootloader_grub_bios()
 
     while true
     do
-	bootloader_dialog_dev_part 2> "${TEMPFILE}"
-        PART="$(cat "${TEMPFILE}")"
+        PART="$(bootloader_dialog_dev_part)"
 	[[ ! -n "${PART}" ]] && return 1
 
 	chroot_run grub-install --force "${PART}"
@@ -231,8 +229,7 @@ bootloader_grub_bios()
     done
 
 # @todo Закомментировано потому что темы могут не поддерживать выбранные режимы
-#  bootloader_dialog_console 2> "${TEMPFILE}"
-#  TEMP="$(cat "${TEMPFILE}")"
+#  TEMP="$(bootloader_dialog_console)"
 #  [[ ! -n "${TEMP}" ]] && return 1
 #  CONSOLE_V_XxYxD="${TEMP}"
     CONSOLE_V_XxYxD="${DEF_CONSOLE_V_XxYxD}"
@@ -345,8 +342,7 @@ bootloader_grub_efi()
 
 
 # @todo Закомментировано потому что темы могут не поддерживать выбранные режимы
-#  bootloader_dialog_console 2> "${TEMPFILE}"
-#  TEMP="$(cat "${TEMPFILE}")"
+#  TEMP="$(bootloader_dialog_console)"
 #  [[ ! -n "${TEMP}" ]] && return 1
 #  CONSOLE_V_XxYxD="${TEMP}"
     CONSOLE_V_XxYxD="${DEF_CONSOLE_V_XxYxD}"
@@ -402,8 +398,7 @@ bootloader_syslinux()
     return 1
 
 # @todo Закомментировано потому что темы могут не поддерживать выбранные режимы
-#  bootloader_dialog_console 2> "${TEMPFILE}"
-#  TEMP="$(cat "${TEMPFILE}")"
+#  TEMP="$(bootloader_dialog_console)"
 #  [[ ! -n "${TEMP}" ]] && return 1
 #  CONSOLE_V_XxYxD="${TEMP}"
     CONSOLE_V_XxYxD="${DEF_CONSOLE_V_XxYxD}"
@@ -431,8 +426,7 @@ bootloader_lilo()
     return 1
 
 # @todo Закомментировано потому что темы могут не поддерживать выбранные режимы
-#  bootloader_dialog_console 2> "${TEMPFILE}"
-#  TEMP="$(cat "${TEMPFILE}")"
+#  TEMP="$(bootloader_dialog_console)"
 #  [[ ! -n "${TEMP}" ]] && return 1
 #  CONSOLE_V_XxYxD="${TEMP}"
     CONSOLE_V_XxYxD="${DEF_CONSOLE_V_XxYxD}"

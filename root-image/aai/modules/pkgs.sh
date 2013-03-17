@@ -45,6 +45,7 @@ str_pkgs()
 run_pkgs()
 {
     local TEMP
+
     local APP
 
     if [[ "${NO_DEBUG}" ]]
@@ -62,8 +63,7 @@ run_pkgs()
 	fi
     fi
 
-    pkgs_dialog_app 2> "${TEMPFILE}"
-    TEMP="$(cat "${TEMPFILE}")"
+    TEMP="$(pkgs_dialog_app)"
     for APP in ${TEMP}
     do
 	pkgs_${APP}

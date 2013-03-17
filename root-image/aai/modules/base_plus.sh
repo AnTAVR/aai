@@ -77,8 +77,7 @@ run_base_plus()
     local CARD_ID
     local MODULE
 
-    base_plus_dialog_sound 2> "${TEMPFILE}"
-    TEMP="$(cat "${TEMPFILE}")"
+    TEMP="$(base_plus_dialog_sound)"
     if [[ ! -n "${TEMP}" ]]
     then
 	msg_log "$(gettext 'Настраиваю') /etc/modprobe.d/alsa-base.conf"
@@ -134,8 +133,7 @@ run_base_plus()
 #-------------------------------------------------------------------------------
 
 
-    base_plus_dialog_service 2> "${TEMPFILE}"
-    SERVICES="$(cat "${TEMPFILE}")"
+    SERVICES="$(base_plus_dialog_service)"
     for SERVICE in ${SERVICES}
     do
 	chroot_run systemctl enable "${SERVICE}"
