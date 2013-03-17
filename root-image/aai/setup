@@ -114,11 +114,6 @@ do
 done
 
 
-# Переменные для главного меню
-DEFAULT_MENU=
-
-# Строки для главного меню
-MAIN_MENU=
 # Функции для главного меню
 declare -a MAIN_CASE
 
@@ -138,10 +133,6 @@ source "${LIBDIR}/donate.sh"
 source "${LIBDIR}/exit.sh"
 
 
-# Временные переменные
-TEMP=
-TEMP2=
-
 if [[ ! "${NO_DEBUG}" ]]
 then
     [[ -f "${VAR_FILE}" ]] && source "${VAR_FILE}"
@@ -149,27 +140,37 @@ then
 #    [[ -f "${VAR_FILE}" ]] && rm "${VAR_FILE}"
 fi
 
-
 TXT_MAIN_MENU="$(gettext 'Главное меню')"
+
+# Переменные для главного меню
+DEFAULT_MENU=
+
+setup_dialog_def_menu()
+{
+    msg_log "$(gettext 'Запуск диалога'): $(basename $0)" 'noecho'
+
+    local TITLE="$(gettext 'Инсталлятор Arch Linux для новичков')"
+    local HELP_TXT="\n${TXT_MAIN_MENU}\n"
+
+    local DEFAULT_ITEM="${DEFAULT_MENU}"
+
+    local TEMP
+
+    local ITEMS=''
+
+# Преобразуем строку главного меню в массив
+    for TEMP in ${MAIN_CASE[@]}
+    do
+	ITEMS+="'${TEMP}' '$(str_${TEMP})' "
+    done
+
+    dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}" "--cancel-label '${TXT_EXIT_MAIN}'"
+}
+
 # Цикл обработки главного меню
 while true
 do
-# Преобразуем строку главного меню в массив
-    TEMP=
-    MAIN_MENU=
-    for TEMP in ${MAIN_CASE[@]}
-    do
-	MAIN_MENU+="'${TEMP}' '$(str_${TEMP})' "
-    done
-# Показываем главное меню
-    dialog_menu \
-	"$(gettext 'Инсталлятор Arch Linux для новичков')" \
-	"${DEFAULT_MENU}" \
-	"\n${TXT_MAIN_MENU}\n" \
-	"${MAIN_MENU}" \
-	"--cancel-label '${TXT_EXIT_MAIN}'" \
-	2> "${TEMPFILE}"
-
+    setup_dialog_def_menu 2> "${TEMPFILE}"
     DEFAULT_MENU="$(cat "${TEMPFILE}")"
 
 # Если меню выбрано то исполняем соответствующую функцию, в противном случае выход
