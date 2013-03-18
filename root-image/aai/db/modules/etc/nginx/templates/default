@@ -1,0 +1,40 @@
+location / {
+    index		index.php index.html index.htm;
+}
+
+location = /favicon.ico {
+    log_not_found	off;
+    access_log		off;
+    expires		max;
+}
+
+location = /robots.txt {
+    allow		all;
+    log_not_found	off;
+    access_log		off;
+}
+
+location ~ /\.ht {
+    deny		all;
+    access_log		off;
+    log_not_found	off;
+}
+
+location ~ /\. {
+    deny		all;
+    access_log		off;
+    log_not_found	off;
+}
+
+location ~* .(js|css|ico|xml|swf|flv|eot|ttf|woff|pdf|xls|htc)$ {
+    add_header	Pragma "public";
+    add_header	Cache-Control "public, must-revalidate, proxy-revalidate";
+    access_log	off;
+    log_not_found	off;
+    expires		90d;
+}
+
+location ~* .(jpg|jpeg|gif|css|png)$ {
+    access_log	off;
+    expires		10d;
+}

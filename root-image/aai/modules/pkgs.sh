@@ -1494,8 +1494,7 @@ pkgs_apache()
     pacman_install "-S ${PACS}" '1'
     git_commit
 
-    mkdir -p "${NS_PATH}/etc/httpd/conf/sites-enabled/"
-    mkdir -p "${NS_PATH}/etc/httpd/conf/sites-available/"
+    mkdir -p "${NS_PATH}"/etc/httpd/conf/{sites-available,sites-enabled}
 
     git_commit
 }
@@ -1510,16 +1509,22 @@ pkgs_nginx()
     git_commit
 
     cp -Pb "${DBDIR}modules/etc/nginx/nginx.conf" "${NS_PATH}/etc/nginx/nginx.conf"
-
-    mkdir -p "${NS_PATH}/etc/nginx/sites-enabled/"
-    mkdir -p "${NS_PATH}/etc/nginx/sites-available/"
-    cat "${DBDIR}modules/etc/nginx/sites-available/default_localhost.conf" > "${NS_PATH}/etc/nginx/sites-available/default_localhost.conf"
-    cat "${DBDIR}modules/etc/nginx/sites-available/default_virtual.conf" > "${NS_PATH}/etc/nginx/sites-available/default_virtual.conf"
-
     cat "${DBDIR}modules/etc/nginx/proxy.conf" > "${NS_PATH}/etc/nginx/proxy.conf"
 
-    cat "${DBDIR}modules/etc/nginx/proxy.conf" > "${NS_PATH}/etc/nginx/proxy.conf"
+    mkdir -p "${NS_PATH}"/etc/nginx/{sites-available,sites-enabled,templates}
 
+    cp -Pb "${DBDIR}"modules/etc/nginx/templates/* "${NS_PATH}"/etc/nginx/templates/
+    cp -Pb "${DBDIR}"modules/etc/nginx/sites-available/* "${NS_PATH}"/etc/nginx/sites-available/
+
+    ln -srf "${NS_PATH}/etc/nginx/sites-available/localhost.conf" "${NS_PATH}/etc/nginx/sites-enabled/localhost.conf"
+
+    mkdir -p "${NS_PATH}"/srv/nginx/{public,private,logs,backup}
+    cp -Pb "${NS_PATH}"/usr/share/html/* "${NS_PATH}"/srv/nginx/public/
+
+    ln -sr "${NS_PATH}/usr/share/webapps/phpMyAdmin" "${NS_PATH}/srv/nginx/public/phpmyadmin"
+    ln -sr "${NS_PATH}/usr/share/webapps/phppgadmin" "${NS_PATH}/srv/nginx/public/phppgadmin"
+
+    chroot_run systemctl enable nginx.service
     git_commit
 }
 
@@ -1527,9 +1532,15 @@ pkgs_php()
 {
     local PACS
     #extra
-    PACS='php php-pgsql php-sqlite php-apc php-gd php-mcrypt php-pear php-pspell php-snmp php-tidy php-xsl'
-    PACS+=' php-apache php-fpm'
+    PACS='php php-sqlite php-apc php-gd php-mcrypt php-pear php-pspell php-snmp php-tidy php-xsl'
+    PACS+=' php-fpm'
+#    PACS+=' php-apache'
     pacman_install "-S ${PACS}" '1'
+    git_commit
+
+    cp -Pb "${DBDIR}modules/etc/php/php.ini" "${NS_PATH}/etc/php/php.ini"
+
+    chroot_run systemctl enable php-fpm.service
     git_commit
 }
 
@@ -1542,13 +1553,34 @@ pkgs_mysql()
     PACS+=' phpmyadmin'
     pacman_install "-S ${PACS}" '1'
     git_commit
+
+    chroot_run systemctl enable mysqld.service
+    git_commit
 }
 
 pkgs_postgresql()
 {
     local PACS
+    #extra
+    PACS='php-pgsql'
     #community
-    PACS='postgresql phppgadmin'
+    PACS+=' postgresql phppgadmin'
     pacman_install "-S ${PACS}" '1'
     git_commit
+
+    mkdir -p "${NS_PATH}"/var/lib/postgres/data
+    chroot_run chown -Rh -c postgres:postgres "${NS_PATH}"/var/lib/postgres/data
+    chroot_run bash -c "su postgres -c 'initdb -D /var/lib/postgres/data'"
+
+    chroot_run systemctl enable postgresql.service
+    git_commit
+
+# su root
+# su - postgres
+# createuser -DRSP <username>
+# -D Пользователь не может создавать базы данных
+# -R Пользователь не может создавать аккаунты
+# -S Пользователь не является суперпользователем
+# -P Запрашивать пароль при создании
+# createdb -O username databasename [-E database_encoding]
 }
