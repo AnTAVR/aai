@@ -1486,11 +1486,69 @@ pkgs_0ad()
 }
 APPS+=" '0ad' '$(gettext 'Игра. 3D Стратегия')' 'off'"
 
+pkgs_apache()
+{
+    local PACS
+    #extra
+    PACS='apache'
+    pacman_install "-S ${PACS}" '1'
+    git_commit
+
+    mkdir -p "${NS_PATH}/etc/httpd/conf/sites-enabled/"
+    mkdir -p "${NS_PATH}/etc/httpd/conf/sites-available/"
+
+    git_commit
+}
+
 pkgs_nginx()
 {
     local PACS
     #community
     PACS='nginx'
+    pacman_install "-S ${PACS}" '1'
+
+    git_commit
+
+    cp -Pb "${DBDIR}modules/etc/nginx/nginx.conf" "${NS_PATH}/etc/nginx/nginx.conf"
+
+    mkdir -p "${NS_PATH}/etc/nginx/sites-enabled/"
+    mkdir -p "${NS_PATH}/etc/nginx/sites-available/"
+    cat "${DBDIR}modules/etc/nginx/sites-available/default_localhost.conf" > "${NS_PATH}/etc/nginx/sites-available/default_localhost.conf"
+    cat "${DBDIR}modules/etc/nginx/sites-available/default_virtual.conf" > "${NS_PATH}/etc/nginx/sites-available/default_virtual.conf"
+
+    cat "${DBDIR}modules/etc/nginx/proxy.conf" > "${NS_PATH}/etc/nginx/proxy.conf"
+
+    cat "${DBDIR}modules/etc/nginx/proxy.conf" > "${NS_PATH}/etc/nginx/proxy.conf"
+
+    git_commit
+}
+
+pkgs_php()
+{
+    local PACS
+    #extra
+    PACS='php php-pgsql php-sqlite php-apc php-gd php-mcrypt php-pear php-pspell php-snmp php-tidy php-xsl'
+    PACS+=' php-apache php-fpm'
+    pacman_install "-S ${PACS}" '1'
+    git_commit
+}
+
+pkgs_mysql()
+{
+    local PACS
+    #extra
+    PACS='mysql'
+    #community
+    PACS+=' phpmyadmin'
+    pacman_install "-S ${PACS}" '1'
+    git_commit
+}
+
+pkgs_postgresql()
+{
+    local PACS
+    #community
+    PACS='postgresql phppgadmin'
     pacman_install "-S ${PACS}" '1'
     git_commit
 }
