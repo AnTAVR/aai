@@ -1486,4 +1486,11 @@ pkgs_0ad()
 }
 APPS+=" '0ad' '$(gettext 'Игра. 3D Стратегия')' 'off'"
 
-
+pkgs_nginx()
+{
+    local PACS
+    #community
+    PACS='nginx'
+    pacman_install "-S ${PACS}" '1'
+    git_commit
+}
