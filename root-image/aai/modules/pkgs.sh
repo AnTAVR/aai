@@ -1202,6 +1202,7 @@ pkgs_claws()
     pacman_install "-S ${PACS}" '1'
     git_commit
     chroot_run /usr/bin/vendor_perl/sa-update
+    chroot_run /usr/bin/vendor_perl/sa-compile
     git_commit
 }
 APPS+=" 'claws' '$(gettext 'EMAIL клиент')' 'on'"
