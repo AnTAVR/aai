@@ -935,6 +935,17 @@ pkgs_vim()
 }
 APPS+=" 'vim' '$(gettext 'Консольный текстовый редактор')' 'off'"
 
+pkgs_acestream()
+{
+    local PACS
+    #aur
+    PACS='acestream'
+    pacman_install "-S ${PACS}" '2'
+
+    git_commit
+}
+APPS+=" 'acestream' '$(gettext 'Медиа-платформа нового поколения') (AUR)' 'off'"
+
 pkgs_smplayer()
 {
     local PACS
