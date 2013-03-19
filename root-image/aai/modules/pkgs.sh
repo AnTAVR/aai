@@ -1176,6 +1176,7 @@ pkgs_firefox()
 # https://addons.mozilla.org/ru/firefox/addon/simple-markup-validator/
 # https://addons.mozilla.org/ru/firefox/addon/showip/
 # http://seleniumhq.org/download/
+# https://addons.mozilla.org/ru/firefox/addon/oxygen-kde-patched/
 }
 APPS+=" 'firefox' '$(gettext 'Интернет браузер')' 'on'"
 
@@ -1556,7 +1557,11 @@ pkgs_mysql()
 
     chroot_run systemctl enable mysqld.service
     git_commit
+# Поменять в /etc/webapps/phpmyadmin/config.inc.php
+# $cfg['Servers'][$i]['AllowNoPassword'] = false;
+# $cfg['Servers'][$i]['AllowNoPassword'] = true;
 }
+
 
 pkgs_postgresql()
 {
