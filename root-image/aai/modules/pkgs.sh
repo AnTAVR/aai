@@ -1530,11 +1530,11 @@ pkgs_nginx()
 
     ln -srf "${NS_PATH}/etc/nginx/sites-available/localhost.conf" "${NS_PATH}/etc/nginx/sites-enabled/localhost.conf"
 
-    mkdir -p "${NS_PATH}"/srv/nginx/{public,private,logs,backup}
-    cp -Pb "${NS_PATH}"/usr/share/html/* "${NS_PATH}"/srv/nginx/public/
+    mkdir -p "${NS_PATH}"/srv/http/nginx/{public,private,logs,backup}
+    cp -Pb "${NS_PATH}"/usr/share/html/* "${NS_PATH}"/srv/http/nginx/public/
 
-    ln -sr "${NS_PATH}/usr/share/webapps/phpMyAdmin" "${NS_PATH}/srv/nginx/public/phpmyadmin"
-    ln -sr "${NS_PATH}/usr/share/webapps/phppgadmin" "${NS_PATH}/srv/nginx/public/phppgadmin"
+    ln -sr "${NS_PATH}/usr/share/webapps/phpMyAdmin" "${NS_PATH}/srv/http/nginx/public/phpmyadmin"
+    ln -sr "${NS_PATH}/usr/share/webapps/phppgadmin" "${NS_PATH}/srv/http/nginx/public/phppgadmin"
 
     chroot_run systemctl enable nginx.service
     git_commit
