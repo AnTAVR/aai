@@ -157,6 +157,9 @@ video_nvidia()
     pacman_install "-S ${PACS}" '1'
     PACS='lib32-nvidia-utils'
     pacman_install "-S ${PACS}" '2'
+
+    pacman_install "-Rnsc ati-dri intel-dri nouveau-dri" '3' 'noexit'
+
     git_commit
 }
 
@@ -172,7 +175,11 @@ video_nvidia304()
     pacman_install "-S ${PACS}" '1'
     PACS='lib32-nvidia-304xx-utils'
     pacman_install "-S ${PACS}" '2'
+
+    pacman_install "-Rnsc ati-dri intel-dri nouveau-dri" '3' 'noexit'
+
     git_commit
+
 }
 
 video_ati()
@@ -189,5 +196,8 @@ video_ati()
     pacman_install "-S ${PACS}" '2'
     git_commit
     chroot_run systemctl enable dkms.service
+
+    pacman_install "-Rnsc ati-dri intel-dri nouveau-dri" '3' 'noexit'
+
     git_commit
 }
