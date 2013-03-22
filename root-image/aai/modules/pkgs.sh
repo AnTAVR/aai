@@ -303,7 +303,7 @@ pkgs_base_plus_zramswap()
     PACS='zramswap'
     pacman_install "-S ${PACS}" '2'
     git_commit
-    SERVICES+=" 'zramswap.service' '-' 'off'"
+    SERVICES+=" 'zramswap.service' '-' 'on'"
 }
 
 pkgs_base_plus_crypt_swapfile()
