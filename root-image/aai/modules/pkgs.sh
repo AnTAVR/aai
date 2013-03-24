@@ -1544,7 +1544,7 @@ pkgs_php()
 {
     local PACS
     #extra
-    PACS='php php-sqlite php-apc php-gd php-mcrypt php-pear php-pspell php-snmp php-tidy php-xsl'
+    PACS='php php-sqlite php-apc php-gd php-mcrypt php-pear php-pspell php-snmp php-tidy php-xsl php-intl'
     PACS+=' php-fpm'
 #    PACS+=' php-apache'
     pacman_install "-S ${PACS}" '1'
