@@ -214,7 +214,8 @@ user_dialog_password()
 
     local TITLE="${TXT_USER_MAIN}"
     local HELP_TXT="  $(gettext 'Сильный пароль должен состоять более чем из 8 символов,')\n"
-    HELP_TXT+="  $(gettext 'содержать цифры и буквы в нижнем и верхнем регистре')\n"
+    HELP_TXT+="  $(gettext 'содержать цифры и лат. буквы в нижнем и верхнем регистре.')\n"
+    HELP_TXT+="  \Zb\Z1$(gettext 'Использование других символов не рекомендуется!!!')\Zn\n"
 
     local TEXT=''
 
