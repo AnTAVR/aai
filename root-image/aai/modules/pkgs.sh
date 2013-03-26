@@ -1558,11 +1558,11 @@ pkgs_php()
     git_commit
 }
 
-pkgs_mysql()
+pkgs_mariadb()
 {
     local PACS
     #extra
-    PACS='mysql'
+    PACS='mariadb'
     #community
     PACS+=' phpmyadmin'
     pacman_install "-S ${PACS}" '1'

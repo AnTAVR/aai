@@ -104,8 +104,8 @@ webserver_dialog_menu()
     HELP_TXT+="$(gettext 'По умолчанию'):"
 
     local DEFAULT_ITEM="${P_DEF_MENU}"
-    local ITEMS="'nginx' 'nginx php mysql postgresql'"
-    ITEMS+=" 'apache' 'apache php mysql postgresql \Zb\Z3($(gettext 'Пока не поддерживается'))\Zn'"
+    local ITEMS="'nginx' 'nginx php mariadb(mysql) postgresql'"
+    ITEMS+=" 'apache' 'apache php mariadb(mysql) postgresql \Zb\Z3($(gettext 'Пока не поддерживается'))\Zn'"
 
     HELP_TXT+=" \Zb\Z7\"${DEFAULT_ITEM}\"\Zn\n"
 
@@ -119,7 +119,7 @@ webserver_nginx()
 {
     pkgs_nginx
     pkgs_php
-    pkgs_mysql
+    pkgs_mariadb
     pkgs_postgresql
 }
 
