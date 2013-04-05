@@ -1585,7 +1585,8 @@ pkgs_postgresql()
     #extra
     PACS='php-pgsql'
     #community
-    PACS+=' postgresql phppgadmin'
+    PACS+=' postgresql pgadmin3'
+#    phppgadmin
     pacman_install "-S ${PACS}" '1'
     git_commit
 
