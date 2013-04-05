@@ -113,7 +113,7 @@ pkgs_de_xorg()
     cat "${DBDIR}modules/etc/skel/.Xresources" > "${NS_PATH}/etc/skel/.Xresources"
 
     msg_log "$(gettext 'Добавляю') alias startx > /etc/skel/.zshrc"
-    echo '[ "$(which startx 2> /dev/null)" ] && alias startx="startx &> ~/.xlog"' >> "${NS_PATH}/etc/skel/.zshrc"
+    echo 'which startx && alias startx="startx &> ~/.xlog"' >> "${NS_PATH}/etc/skel/.zshrc"
     cat "${NS_PATH}/etc/skel/.zshrc" > "${NS_PATH}/root/.zshrc"
 #-------------------------------------------------------------------------------
 
@@ -222,7 +222,7 @@ pkgs_base_plus_yaourt()
     echo '' >> "${NS_PATH}/etc/pacman.conf"
     echo '[archlinuxfr]' >> "${NS_PATH}/etc/pacman.conf"
     echo '# The French Arch Linux communities packages.' >> "${NS_PATH}/etc/pacman.conf"
-#    echo 'SigLevel = PackageOptional' >> "${NS_PATH}/etc/pacman.conf"
+    echo 'SigLevel = PackageOptional' >> "${NS_PATH}/etc/pacman.conf"
     echo 'Server = http://repo.archlinux.fr/$arch' >> "${NS_PATH}/etc/pacman.conf"
 
     pacman_install '-Syy' '1'
@@ -256,7 +256,7 @@ pkgs_base_plus_yaourt()
 ' "${NS_PATH}/etc/yaourtrc"
 
 #    msg_log "$(gettext 'Добавляю') pacman-color > /etc/skel/.zshrc"
-#    echo '[ "$(which pacman-color 2> /dev/null)" ] && alias pacman="pacman-color"' >> "${NS_PATH}/etc/skel/.zshrc"
+#    echo 'which pacman-color && alias pacman="pacman-color"' >> "${NS_PATH}/etc/skel/.zshrc"
 #    cat "${NS_PATH}/etc/skel/.zshrc" > "${NS_PATH}/root/.zshrc"
     git_commit
 
