@@ -633,15 +633,21 @@ base_install()
     msg_log "$(gettext 'Добавляю репозиторий multilib')"
     sed -i '
 # Добавляем репозиторий multilib
-/^\[multilib\]/,+2{
+/^\[multilib\]/,+1{
   s/^/#/;
 };
 0,/^#\[multilib\]/{
   //{
     n;n;
     a [multilib]
-    a SigLevel = PackageRequired
     a Include = /etc/pacman.d/mirrorlist
+  };
+};
+# Включаем color
+/^Color$/s/^/#/;
+0,/^#Color/{
+  //{
+    a Color
   };
 };
 ' "${NS_PATH}/etc/pacman.conf"

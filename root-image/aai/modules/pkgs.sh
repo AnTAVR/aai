@@ -207,18 +207,28 @@ pkgs_base_plus_yaourt()
 
 
 # Устанавливаем не официальный репозиторий для установки yaourt
+# curl -O https://aur.archlinux.org/packages/pa/package-query/package-query.tar.gz
+# tar zxvf package-query.tar.gz
+# cd package-query
+# makepkg -si
+# cd ..
+# curl -O https://aur.archlinux.org/packages/ya/yaourt/yaourt.tar.gz
+# tar zxvf yaourt.tar.gz
+# cd yaourt
+# makepkg -si
+# cd ..
     msg_log "$(gettext 'Добавляю') archlinuxfr > /etc/pacman.conf"
     cp -Pb "${NS_PATH}/etc/pacman.conf" "${NS_PATH}/etc/pacman.conf.bak"
     echo '' >> "${NS_PATH}/etc/pacman.conf"
     echo '[archlinuxfr]' >> "${NS_PATH}/etc/pacman.conf"
     echo '# The French Arch Linux communities packages.' >> "${NS_PATH}/etc/pacman.conf"
-    echo 'SigLevel = PackageOptional' >> "${NS_PATH}/etc/pacman.conf"
+#    echo 'SigLevel = PackageOptional' >> "${NS_PATH}/etc/pacman.conf"
     echo 'Server = http://repo.archlinux.fr/$arch' >> "${NS_PATH}/etc/pacman.conf"
 
     pacman_install '-Syy' '1'
 
     #aur
-    PACS='yaourt pacman-color'
+    PACS='yaourt'
     pacman_install "-S ${PACS}" '1'
     git_commit
 
@@ -243,18 +253,11 @@ pkgs_base_plus_yaourt()
     a EXPORTSRC=1
   };
 };
-# Меняем pacman на pacman-color
-/^PACMAN=/s/^/#/;
-0,/^#PACMAN=/{
-  //{
-    a PACMAN="pacman-color"
-  };
-};
 ' "${NS_PATH}/etc/yaourtrc"
 
-    msg_log "$(gettext 'Добавляю') pacman-color > /etc/skel/.zshrc"
-    echo '[ "$(which pacman-color 2> /dev/null)" ] && alias pacman="pacman-color"' >> "${NS_PATH}/etc/skel/.zshrc"
-    cat "${NS_PATH}/etc/skel/.zshrc" > "${NS_PATH}/root/.zshrc"
+#    msg_log "$(gettext 'Добавляю') pacman-color > /etc/skel/.zshrc"
+#    echo '[ "$(which pacman-color 2> /dev/null)" ] && alias pacman="pacman-color"' >> "${NS_PATH}/etc/skel/.zshrc"
+#    cat "${NS_PATH}/etc/skel/.zshrc" > "${NS_PATH}/root/.zshrc"
     git_commit
 
 # aurvote Нужно зарегистрироваться https://aur.archlinux.org/account.php
