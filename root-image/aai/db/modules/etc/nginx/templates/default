@@ -1,32 +1,32 @@
 location = /favicon.ico {
-    log_not_found	off;
-    access_log		off;
-    expires		max;
+	log_not_found	off;
+	access_log		off;
+	expires			max;
 }
 
 location = /robots.txt {
-    allow		all;
-    log_not_found	off;
-    access_log		off;
+	allow			all;
+	log_not_found	off;
+	access_log		off;
 }
 
 location ~ /\.ht {
-    deny		all;
-    access_log		off;
-    log_not_found	off;
+	deny			all;
+	access_log		off;
+	log_not_found	off;
 }
 
 location ~ /\. {
-    deny		all;
-    access_log		off;
-    log_not_found	off;
+	deny			all;
+	access_log		off;
+	log_not_found	off;
 }
 
 location ~ \.(js|css|png|jpg|gif|ico|xml|swf|flv|eot|ttf|woff|pdf|xls|htc|mov|fla|zip|rar)$ {
-    try_files		$uri =404;
-    add_header		Pragma "public";
-    add_header		Cache-Control "public, must-revalidate, proxy-revalidate";
-    access_log		off;
-    log_not_found	off;
-    expires		90d;
+	try_files		$uri =404;
+	add_header		Pragma "public";
+	add_header		Cache-Control "public, must-revalidate, proxy-revalidate";
+	access_log		off;
+	log_not_found	off;
+	expires		90d;
 }
