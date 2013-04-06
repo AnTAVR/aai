@@ -309,6 +309,15 @@ pkgs_base_plus_zramswap()
     SERVICES+=" 'zramswap.service' '-' 'on'"
 }
 
+pkgs_base_plus_cdemu()
+{
+    local PACS
+    PACS='cdemu-client'
+    pacman_install "-S ${PACS}" '1'
+    git_commit
+    SERVICES+=" 'cdemu-daemon.service' '-' 'off'"
+}
+
 pkgs_base_plus_crypt_swapfile()
 {
     local PACS
