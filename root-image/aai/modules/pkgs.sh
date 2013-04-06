@@ -113,7 +113,7 @@ pkgs_de_xorg()
     cat "${DBDIR}modules/etc/skel/.Xresources" > "${NS_PATH}/etc/skel/.Xresources"
 
     msg_log "$(gettext 'Добавляю') alias startx > /etc/skel/.zshrc"
-    echo 'which startx && alias startx="startx &> ~/.xlog"' >> "${NS_PATH}/etc/skel/.zshrc"
+    echo 'which startx 2>&1 > /dev/null && alias startx="startx &> ~/.xlog"' >> "${NS_PATH}/etc/skel/.zshrc"
     cat "${NS_PATH}/etc/skel/.zshrc" > "${NS_PATH}/root/.zshrc"
 #-------------------------------------------------------------------------------
 
@@ -256,7 +256,7 @@ pkgs_base_plus_yaourt()
 ' "${NS_PATH}/etc/yaourtrc"
 
 #    msg_log "$(gettext 'Добавляю') pacman-color > /etc/skel/.zshrc"
-#    echo 'which pacman-color && alias pacman="pacman-color"' >> "${NS_PATH}/etc/skel/.zshrc"
+#    echo 'which pacman-color 2>&1 > /dev/null && alias pacman="pacman-color"' >> "${NS_PATH}/etc/skel/.zshrc"
 #    cat "${NS_PATH}/etc/skel/.zshrc" > "${NS_PATH}/root/.zshrc"
     git_commit
 
@@ -1000,6 +1000,8 @@ pkgs_k3b()
     local PACS
     #extra
     PACS='k3b dvd+rw-tools vcdimager transcode emovix cdrdao cdparanoia'
+    #community
+    PACS+=' nrg2iso'
     pacman_install "-S ${PACS}" '1'
 
     git_commit
