@@ -1046,7 +1046,7 @@ pkgs_soundkonverter()
     #extra
     PACS='cdrkit faac faad2 ffmpeg flac fluidsynth lame mplayer speex timidity++ vorbis-tools wavpack'
     #community
-    PACS+=' rubyripper soundkonverter mac mp3gain twolame vorbisgain'
+    PACS+=' rubyripper ruby-gtk2 soundkonverter mac mp3gain twolame vorbisgain'
     pacman_install "-S ${PACS}" '1'
     #aur
     PACS='split2flac-git isomaster'
