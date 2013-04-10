@@ -155,20 +155,20 @@ net_dialog_type()
 
 net_off()
 {
-    local FILE_SERVICE
+    local FILE_PROF
 
     if [[ "${SET_NET_IFACE}" ]]
     then
 	case "${SET_NET_TYPE}" in
 	    'DHCP')
-		FILE_SERVICE="netcfg@ethernet-dhcp-${SET_NET_IFACE}.service"
+		FILE_PROF="ethernet-dhcp-${SET_NET_IFACE}"
 		;;
 	    'STATIC')
-		FILE_SERVICE="netcfg@ethernet-static-${SET_NET_IFACE}.service"
+		FILE_PROF="ethernet-static-${SET_NET_IFACE}"
 		;;
 	esac
-	systemctl stop "${FILE_SERVICE}"
-	systemctl disable "${FILE_SERVICE}"
+	netctl stop "${FILE_PROF}"
+	netctl disable "${FILE_PROF}"
 	ip link set "${SET_NET_IFACE}" down
     fi
     RUN_NET=
@@ -298,31 +298,30 @@ net_dhcp_set()
     local CHROOTC
     [[ "${IS_NEW_SYS}" ]] && CHROOTC='chroot_run'
 
-    msg_log "$(gettext 'Настраиваю') /etc/network.d/ethernet-dhcp-${SET_NET_IFACE}"
-    cp -Pb "${PATH_ROOT}/etc/network.d/examples/ethernet-dhcp" "${PATH_ROOT}/etc/network.d/ethernet-dhcp-${SET_NET_IFACE}"
+    msg_log "$(gettext 'Настраиваю') /etc/netctl/ethernet-dhcp-${SET_NET_IFACE}"
+    cp -Pb "${PATH_ROOT}/etc/netctl/examples/ethernet-dhcp" "${PATH_ROOT}/etc/netctl/ethernet-dhcp-${SET_NET_IFACE}"
 
     sed -i "
-# Меняем INTERFACE
-/^INTERFACE=/s/^/#/;
-0,/^#INTERFACE=/{
+# Меняем Interface
+/^Interface=/s/^/#/;
+0,/^#Interface=/{
   //{
-    a INTERFACE='${SET_NET_IFACE}'
+    a Interface='${SET_NET_IFACE}'
   };
 };
-" "${PATH_ROOT}/etc/network.d/ethernet-dhcp-${SET_NET_IFACE}"
+" "${PATH_ROOT}/etc/netctl/ethernet-dhcp-${SET_NET_IFACE}"
 
     if [[ ! "${IS_NEW_SYS}" ]]
     then
-	${CHROOTC} systemctl stop "netcfg@ethernet-dhcp-${SET_NET_IFACE}.service"
-	${CHROOTC} systemctl disable "netcfg@ethernet-dhcp-${SET_NET_IFACE}.service"
+	${CHROOTC} netctl stop "ethernet-dhcp-${SET_NET_IFACE}"
+	${CHROOTC} netctl disable "ethernet-dhcp-${SET_NET_IFACE}"
     fi
 
-    ${CHROOTC} systemctl enable "netcfg@ethernet-dhcp-${SET_NET_IFACE}.service"
+    ${CHROOTC} netctl enable "ethernet-dhcp-${SET_NET_IFACE}"
 
     if [[ ! "${IS_NEW_SYS}" ]]
     then
-	${CHROOTC} systemctl daemon-reload
-	${CHROOTC} systemctl start "netcfg@ethernet-dhcp-${SET_NET_IFACE}.service"
+	${CHROOTC} netctl start "ethernet-dhcp-${SET_NET_IFACE}"
 	if [[ "${?}" -ne '0' ]]
 	then
 	    dialog_warn \
@@ -554,28 +553,28 @@ net_static_set()
 	DNS+=" '${TEMP}'"
     done
 
-    msg_log "$(gettext 'Настраиваю') /etc/network.d/ethernet-static-${SET_NET_IFACE}"
-    cp -Pb "${PATH_ROOT}/etc/network.d/examples/ethernet-static" "${PATH_ROOT}/etc/network.d/ethernet-static-${SET_NET_IFACE}"
+    msg_log "$(gettext 'Настраиваю') /etc/netctl/ethernet-static-${SET_NET_IFACE}"
+    cp -Pb "${PATH_ROOT}/etc/netctl/examples/ethernet-static" "${PATH_ROOT}/etc/netctl/ethernet-static-${SET_NET_IFACE}"
     sed -i "
-# Меняем INTERFACE
-/^INTERFACE=/s/^/#/;
-0,/^#INTERFACE=/{
+# Меняем Interface
+/^Interface=/s/^/#/;
+0,/^#Interface=/{
   //{
-    a INTERFACE='${SET_NET_IFACE}'
+    a Interface=${SET_NET_IFACE}
   };
 };
-# Меняем ADDR
-/^ADDR=/s/^/#/;
-0,/^#ADDR=/{
+# Меняем Address
+/^Address=/s/^/#/;
+0,/^#Address=/{
   //{
-    a ADDR='${SET_STATIC_IP}'
+    a Address=('${SET_STATIC_IP}/${SET_STATIC_NETMASK}')
   };
 };
-# Меняем GATEWAY
-/^GATEWAY=/s/^/#/;
-0,/^#GATEWAY=/{
+# Меняем Gateway
+/^Gateway=/s/^/#/;
+0,/^#Gateway=/{
   //{
-    a GATEWAY='${SET_STATIC_GATEWAY}'
+    a Gateway='${SET_STATIC_GATEWAY}'
   };
 };
 # Меняем DNS
@@ -585,22 +584,20 @@ net_static_set()
     a DNS=(${DNS})
   };
 };
-#      SET_STATIC_NETMASK
 #      SET_STATIC_BROADCAST
-" "${PATH_ROOT}/etc/network.d/ethernet-static-${SET_NET_IFACE}"
+" "${PATH_ROOT}/etc/netctl/ethernet-static-${SET_NET_IFACE}"
 
     if [[ ! "${IS_NEW_SYS}" ]]
     then
-	${CHROOTC} systemctl stop "netcfg@ethernet-static-${SET_NET_IFACE}.service"
-	${CHROOTC} systemctl disable "netcfg@ethernet-static-${SET_NET_IFACE}.service"
+	${CHROOTC} netctl stop "ethernet-static-${SET_NET_IFACE}"
+	${CHROOTC} netctl disable "ethernet-static-${SET_NET_IFACE}"
     fi
 
-    ${CHROOTC} systemctl enable "netcfg@ethernet-static-${SET_NET_IFACE}.service"
+    ${CHROOTC} netctl enable "ethernet-static-${SET_NET_IFACE}"
 
     if [[ ! "${IS_NEW_SYS}" ]]
     then
-	${CHROOTC} systemctl daemon-reload
-	${CHROOTC} systemctl start "netcfg@ethernet-static-${SET_NET_IFACE}.service"
+	${CHROOTC} netctl start "ethernet-static-${SET_NET_IFACE}"
 	if [[ "${?}" -ne '0' ]]
 	then
 	    dialog_warn \

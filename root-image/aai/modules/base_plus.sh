@@ -273,39 +273,6 @@ base_plus_install()
 
 
 #===============================================================================
-# Исправляем глюк когда сервис стартует раньше определения интерфейсов
-#===============================================================================
-    mkdir -p "${NS_PATH}/usr/local/lib/systemd/system"
-    msg_log "$(gettext 'Настраиваю') /usr/local/lib/systemd/system/netcfg.service"
-    cat "${DBDIR}modules/usr/local/lib/systemd/system/netcfg.service" > "${NS_PATH}/usr/local/lib/systemd/system/netcfg.service"
-    msg_log "$(gettext 'Настраиваю') /usr/local/lib/systemd/system/netcfg@.service"
-    cat "${DBDIR}modules/usr/local/lib/systemd/system/netcfg@.service" > "${NS_PATH}/usr/local/lib/systemd/system/netcfg@.service"
-#     hwdetect_net > "${NS_PATH}/etc/udev/rules.d/network_persistent.rules"
-# Настраиваем подключение к сети
-    if [[ "${RUN_NET}" ]]
-    then
-	case "${SET_NET_TYPE}" in
-	    'DHCP')
-		chroot_run systemctl disable "netcfg@ethernet-dhcp-${SET_NET_IFACE}.service"
-		chroot_run systemctl enable "netcfg@ethernet-dhcp-${SET_NET_IFACE}.service"
-		;;
-	    'STATIC')
-		chroot_run systemctl disable "netcfg@ethernet-static-${SET_NET_IFACE}.service"
-		chroot_run systemctl enable "netcfg@ethernet-static-${SET_NET_IFACE}.service"
-		;;
-# 	    'VPN')
-# 		;;
-# 	    'WIFI')
-# 		;;
-	esac
-    fi
-
-    git_commit
-#-------------------------------------------------------------------------------
-
-
-
-#===============================================================================
 # Добавляем сервис и rc.local для быстрого добавления своих команд в процесс загрузки
 #===============================================================================
 #Включаем Nul Lock в консоле

@@ -27,6 +27,7 @@ lilo
 linux-atm
 mc
 mtools
+netctl
 nfs-utils
 nilfs-utils
 nmap

@@ -1,9 +1,0 @@
-.include /usr/lib/systemd/system/netcfg@.service
-
-[Unit]
-Requires=systemd-udev-settle.service
-After=systemd-udev-settle.service systemd-modules-load.service
-
-#[Service]
-#Restart=on-failure
-#RestartSec=60

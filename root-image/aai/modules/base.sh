@@ -613,7 +613,7 @@ base_install()
 
 # Устанавливаем базовые пакеты
     #core
-    PACS='base'
+    PACS='base netctl'
     pacman_install "-S ${PACS}" '0'
 
     SERVICES+=" 'cronie.service' '-' 'on'"
@@ -675,12 +675,13 @@ base_install()
 
 
 #===============================================================================
-# Устанавливаем дополнения для netcfg
+# Устанавливаем дополнения для netctl
 #===============================================================================
     #core
-    PACS='dialog wpa_supplicant wpa_actiond wireless_tools ifenslave bridge-utils'
+    PACS='dialog wpa_supplicant wpa_actiond dhclient dhcpcd ifenslave bridge-utils ppp'
     # зависимость для wpa_actiond
     #wpa_supplicant
+#
     #extra
     PACS+=' ifplugd'
     pacman_install "-S ${PACS}" '0'
@@ -694,9 +695,9 @@ base_install()
 #===============================================================================
     #core
     PACS='dnsutils pptpclient openvpn rp-pppoe linux-atm b43-fwcutter'
-    PACS+=' crda ipw2100-fw ipw2200-fw zd1211-firmware rfkill openssh'
+    PACS+=' crda ipw2100-fw ipw2200-fw zd1211-firmware rfkill openssh wireless_tools'
     #extra
-    PACS+=' openconnect dnsmasq dhclient ethtool vpnc gnu-netcat nmap speedtouch tcpdump'
+    PACS+=' openconnect dnsmasq ethtool vpnc gnu-netcat nmap speedtouch tcpdump'
     #community
     PACS+=' usb_modeswitch xl2tpd wvdial'
     pacman_install "-S ${PACS}" '0'
