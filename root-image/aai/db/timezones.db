@@ -10,7 +10,6 @@ AO	Africa/Luanda
 AQ	Antarctica/Casey		-6617+11031	Casey Station, Bailey Peninsula
 AQ	Antarctica/Davis		-6835+07758	Davis Station, Vestfold Hills
 AQ	Antarctica/DumontDUrville		-6640+14001	Dumont-d'Urville Station, Terre Adelie
-AQ	Antarctica/Macquarie		-5430+15857	Macquarie Island Station, Macquarie Island
 AQ	Antarctica/Mawson		-6736+06253	Mawson Station, Holme Bay
 AQ	Antarctica/McMurdo		-7750+16636	McMurdo Station, Ross Island
 AQ	Antarctica/Palmer		-6448-06406	Palmer Station, Anvers Island
@@ -32,6 +31,7 @@ AR	America/Argentina/Tucuman	es_AR.UTF-8 UTF-8	-2649-06513	Tucuman (TM)
 AR	America/Argentina/Ushuaia	es_AR.UTF-8 UTF-8	-5448-06818	Tierra del Fuego (TF)
 AS	Pacific/Pago_Pago			
 AT	Europe/Vienna	de_AT.UTF-8 UTF-8		
+AU	Antarctica/Macquarie	en_AU.UTF-8 UTF-8	-5430+15857	Macquarie Island
 AU	Australia/Adelaide	en_AU.UTF-8 UTF-8	-3455+13835	South Australia
 AU	Australia/Brisbane	en_AU.UTF-8 UTF-8	-2728+15302	Queensland - most locations
 AU	Australia/Broken_Hill	en_AU.UTF-8 UTF-8	-3157+14127	New South Wales - Yancowinna
@@ -135,7 +135,8 @@ CW	America/Curacao
 CX	Indian/Christmas			
 CY	Asia/Nicosia	tr_CY.UTF-8 UTF-8		
 CZ	Europe/Prague	cs_CZ.UTF-8 UTF-8		
-DE	Europe/Berlin	de_DE.UTF-8 UTF-8		
+DE	Europe/Berlin	de_DE.UTF-8 UTF-8	+5230+01322	most locations
+DE	Europe/Busingen	de_DE.UTF-8 UTF-8	+4742+00841	Busingen
 DJ	Africa/Djibouti	aa_DJ.UTF-8 UTF-8		
 DK	Europe/Copenhagen	da_DK.UTF-8 UTF-8		
 DM	America/Dominica			
@@ -310,12 +311,14 @@ RS	Europe/Belgrade	sr_RS UTF-8
 RU	Asia/Anadyr	ru_RU.UTF-8 UTF-8	+6445+17729	Moscow+08 - Bering Sea
 RU	Asia/Irkutsk	ru_RU.UTF-8 UTF-8	+5216+10420	Moscow+05 - Lake Baikal
 RU	Asia/Kamchatka	ru_RU.UTF-8 UTF-8	+5301+15839	Moscow+08 - Kamchatka
+RU	Asia/Khandyga	ru_RU.UTF-8 UTF-8	+623923+1353314	Moscow+06 - Tomponsky, Ust-Maysky
 RU	Asia/Krasnoyarsk	ru_RU.UTF-8 UTF-8	+5601+09250	Moscow+04 - Yenisei River
 RU	Asia/Magadan	ru_RU.UTF-8 UTF-8	+5934+15048	Moscow+08 - Magadan
 RU	Asia/Novokuznetsk	ru_RU.UTF-8 UTF-8	+5345+08707	Moscow+03 - Novokuznetsk
 RU	Asia/Novosibirsk	ru_RU.UTF-8 UTF-8	+5502+08255	Moscow+03 - Novosibirsk
 RU	Asia/Omsk	ru_RU.UTF-8 UTF-8	+5500+07324	Moscow+03 - west Siberia
 RU	Asia/Sakhalin	ru_RU.UTF-8 UTF-8	+4658+14242	Moscow+07 - Sakhalin Island
+RU	Asia/Ust-Nera	ru_RU.UTF-8 UTF-8	+643337+1431336	Moscow+07 - Oymyakonsky
 RU	Asia/Vladivostok	ru_RU.UTF-8 UTF-8	+4310+13156	Moscow+07 - Amur River
 RU	Asia/Yakutsk	ru_RU.UTF-8 UTF-8	+6200+12940	Moscow+06 - Lena River
 RU	Asia/Yekaterinburg	ru_RU.UTF-8 UTF-8	+5651+06036	Moscow+02 - Urals
