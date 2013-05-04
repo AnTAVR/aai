@@ -27,7 +27,6 @@ lilo
 linux-atm
 mc
 mtools
-netctl
 nfs-utils
 nilfs-utils
 nmap
@@ -57,5 +56,6 @@ wvdial
 xl2tpd
 zd1211-firmware
 zsh
+netctl
 hwinfo
 lshw
