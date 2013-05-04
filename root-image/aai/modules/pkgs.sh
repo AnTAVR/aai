@@ -995,10 +995,10 @@ pkgs_tvtime()
 {
     local PACS
     #community
-    PACS='tvtime kradio'
+    PACS='tvtime'
     pacman_install "-S ${PACS}" '1'
     #aur
-    PACS='alevt'
+    PACS='alevt kradio'
     pacman_install "-S ${PACS}" '2'
     git_commit
 }
