@@ -31,7 +31,7 @@ VAR_FILE='/aai-var.log'
 
 # Для локализации
 # @todo Нужно доделать!!!
-AAI_VER='Arch AnTAVR Installer ver. 2.11'
+AAI_VER='Arch AnTAVR Installer ver. 3.0'
 setfont 'cyr-sun16'
 #systemctl start gpm
 
