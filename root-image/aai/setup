@@ -26,8 +26,8 @@ shopt -s extglob
 LOG_FILE='/aai-install.log'
 VAR_FILE='/aai-var.log'
 
-{
-    NO_DEBUG=1
+NO_DEBUG=1
+NO_MINI=1
 
 # Для локализации
 # @todo Нужно доделать!!!
@@ -62,11 +62,8 @@ export TEXTDOMAINDIR="${LOCALEDIR}"
 source "${LIBDIR}/functions.sh"
 source "${LIBDIR}/dialogs.sh"
 
-
-msg_log "${AAI_VER}"
-# Если не root то выход
-[[ ${EUID} -ne 0 ]] && msg_error "$(gettext 'This script must be run as root.')" 1
-
+echo -e "${BLDGRN}${AAI_VER}${TXTRST}"
+echo ''
 
 echo_help()
 {
@@ -84,13 +81,16 @@ echo_help()
     echo -e "\t\t$(gettext 'путь к временной папке, в которую будут примонтированы разделы')"
     echo -e "\t\t\t$(gettext 'по умолчанию'): ${NS_PATH}"
     echo ''
+    echo -e "\t${BLDWHT}-m${TXTRST}"
+    echo -e "\t\t$(gettext 'режим мини, установка только базовой системы')"
+    echo ''
     echo -e "\t${BLDWHT}-d${TXTRST}"
     echo -e "\t\t$(gettext 'режим без проверок выполненных пунктов')"
     echo ''
 }
 
 
-while getopts hgp:d OPTION
+while getopts hgp:dm OPTION
 do
     case "${OPTION}" in
 	'h')
@@ -106,6 +106,10 @@ do
 	'd')
 	    NO_DEBUG=
 	    ;;
+	'm')
+	    NO_MINI=
+	    AAI_VER+=' [mini]'
+	    ;;
 	'?')
 	    echo_help
 	    exit 1
@@ -113,6 +117,8 @@ do
     esac
 done
 
+# Если не root то выход
+[[ ${EUID} -ne 0 ]] && echo -e "${BLDRED}[${SCRNAME}] ERROR (1): $(gettext 'This script must be run as root.')${TXTRST}" >&2 && exit 1
 
 # Функции для главного меню
 declare -a MAIN_CASE
@@ -121,17 +127,19 @@ declare -a MAIN_CASE
 source "${LIBDIR}/net.sh"
 source "${LIBDIR}/part.sh"
 source "${LIBDIR}/base.sh"
-source "${LIBDIR}/base_plus.sh"
+[[ "${NO_MINI}" ]] && source "${LIBDIR}/base_plus.sh"
 source "${LIBDIR}/bootloader.sh"
-source "${LIBDIR}/de.sh"
-source "${LIBDIR}/video.sh"
-source "${LIBDIR}/print.sh"
-source "${LIBDIR}/pkgs.sh"
-source "${LIBDIR}/webserver.sh"
-source "${LIBDIR}/user.sh"
+[[ "${NO_MINI}" ]] && source "${LIBDIR}/de.sh"
+[[ "${NO_MINI}" ]] && source "${LIBDIR}/video.sh"
+[[ "${NO_MINI}" ]] && source "${LIBDIR}/print.sh"
+[[ "${NO_MINI}" ]] && source "${LIBDIR}/pkgs.sh"
+[[ "${NO_MINI}" ]] && source "${LIBDIR}/webserver.sh"
+[[ "${NO_MINI}" ]] && source "${LIBDIR}/user.sh"
 source "${LIBDIR}/donate.sh"
 source "${LIBDIR}/exit.sh"
 
+
+{
 
 if [[ ! "${NO_DEBUG}" ]]
 then

@@ -37,7 +37,7 @@ DEF_CONSOLE_V_XxYxD='0x317_1024x768x16'
 # Выводим строку пункта главного меню
 str_bootloader()
 {
-    local TEMP
+    local TEMP="\Zb\Z1($(gettext 'ОБЯЗАТЕЛЬНО!!!'))\Zn"
 
     [[ "${RUN_BOOTLOADER}" ]] && TEMP="\Zb\Z2($(gettext 'ВЫПОЛНЕНО'))\Zn"
     echo "${TXT_BOOTLOADER_MAIN} ${TEMP}"
