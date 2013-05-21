@@ -951,7 +951,7 @@ pkgs_acestream()
 {
     local PACS
     #aur
-    PACS='acestream'
+    PACS='acestream-player acestream-mozilla-plugin'
     pacman_install "-S ${PACS}" '2'
 
     git_commit
