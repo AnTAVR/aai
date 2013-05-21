@@ -81,7 +81,7 @@ echo_help()
     echo -e "\t\t\t$(gettext 'по умолчанию'): $(gettext 'консольный режим')"
     echo ''
     echo -e "\t${BLDWHT}-p${TXTRST}"
-    echo -e "\t\t$(gettext 'путь к .')"
+    echo -e "\t\t$(gettext 'путь к временной папке, в которую будут примонтированы разделы')"
     echo -e "\t\t\t$(gettext 'по умолчанию'): ${NS_PATH}"
     echo ''
     echo -e "\t${BLDWHT}-d${TXTRST}"
