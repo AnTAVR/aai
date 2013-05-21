@@ -104,7 +104,7 @@ msg_error()
 
     local TEMP='WARNING'
 
-    [[ ${3} ]] && EXIT=0
+    [[ ${3} ]] && EXIT=
 
     [[ ${ERROR} -gt 0 ]] && TEMP='ERROR'
 
