@@ -100,8 +100,11 @@ msg_error()
 {
     local MSG="${1}"
     local ERROR=${2}
+    local EXIT=1
 
     local TEMP='WARNING'
+
+    [[ ${3} ]] && EXIT=0
 
     [[ ${ERROR} -gt 0 ]] && TEMP='ERROR'
 
@@ -109,7 +112,7 @@ msg_error()
     echo '' >&2
     echo "[${SCRNAME}]($(date +%Y-%m-%d-%T,%N)) ${TEMP} (${ERROR}): ${MSG}" >&2
 
-    [[ ${ERROR} -gt 0 ]] && run_exit ${ERROR}
+    [[ ${ERROR} -gt 0 ]] && [[ ${EXIT} ]] && run_exit ${ERROR}
 }
 
 pacman_install()
@@ -163,7 +166,7 @@ pacman_install()
 	'2')
 	    chroot_run yaourt --noconfirm --needed ${P_PACS}
 	    RET=${?}
-	    msg_error "$(gettext 'Предупреждение yaourt! Смотрите подробнее в') ${LOG_FILE}" 0
+	    msg_error "$(gettext 'Предупреждение yaourt! Смотрите подробнее в') ${LOG_FILE}" ${RET} 1
 	    rm -rf "${NS_PATH}/tmp/yaourt-tmp-root"
 	    ;;
 	'3')
