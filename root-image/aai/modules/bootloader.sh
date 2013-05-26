@@ -68,7 +68,7 @@ run_bootloader()
 	fi
 
 # Проверяем выполнен ли base_plus
-	if [[ ! "${RUN_BASE_PLUS}" ]]
+	if [[ "${NO_MINI}" ]] && [[ ! "${RUN_BASE_PLUS}" ]]
 	then
 	    dialog_warn \
 		"\Zb\Z1$(gettext 'Пункт') \"${TXT_BASE_PLUS_MAIN}\" $(gettext 'не выполнен')\Zn\n$(gettext 'Тема загрузчика не будет установлена')"
