@@ -31,7 +31,7 @@ NO_MINI=1
 
 # Для локализации
 # @todo Нужно доделать!!!
-AAI_VER='Arch AnTAVR Installer ver. 3.0'
+AAI_VER='Arch AnTAVR Installer ver. 3.1'
 setfont 'cyr-sun16'
 #systemctl start gpm
 
@@ -159,7 +159,7 @@ setup_dialog_def_menu()
 
     local RETURN
 
-    local TITLE="$(gettext 'Инсталлятор Arch Linux для новичков')"
+    local TITLE="$(gettext 'Инсталлятор Arch Linux')"
     local HELP_TXT="\n${TXT_MAIN_MENU}\n"
 
     local DEFAULT_ITEM="${DEFAULT_MENU}"
