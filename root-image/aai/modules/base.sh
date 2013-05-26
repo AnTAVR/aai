@@ -912,8 +912,10 @@ pkgs_base_ntp()
 pkgs_base_mc()
 {
     local PACS
+    #core
+    PACS='gpm'
     #extra
-    PACS='p7zip zip unrar smbclient mtools cvs aspell cdrkit cdparanoia'
+    PACS+=' p7zip zip unrar smbclient mtools cvs aspell cdrkit cdparanoia'
     #community
     PACS+=' mc unarj unace python2-pytz python2-boto cabextract'
     pacman_install "-S ${PACS}" '1'
@@ -968,7 +970,7 @@ pkgs_base_fs()
     #core
     PACS='mkinitcpio-nfs-utils nfs-utils nilfs-utils dmraid'
     #extra
-    PACS+=' ntfs-3g'
+    PACS+=' ntfs-3g f2fs-tools'
     #community
     PACS+=' nbd'
     pacman_install "-S ${PACS}" '1'
