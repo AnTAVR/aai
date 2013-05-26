@@ -394,6 +394,7 @@ part_format_dialog_mkf()
     ITEMS+=" 'mkfs.ext2' '-'"
     ITEMS+=" 'mkfs.ext3' '-'"
 #  ITEMS+=" 'mkfs.ext4dev' '-'"
+    ITEMS+=" 'mkfs.f2fs' '-'"
     ITEMS+=" 'mkfs.btrfs' '-'"
     ITEMS+=" 'mkfs.reiserfs' '-'"
     ITEMS+=" 'mkfs.jfs' '-'"
@@ -474,7 +475,7 @@ part_format_dialog_mkf_opt()
 	'mkfs.exfat' | 'mkfs.vfat' | 'mkfs.msdos')
 	    TEXT="-n ${LABEL}"
 	    ;;
-	'mkfs.reiserfs')
+	'mkfs.reiserfs' | 'mkfs.f2fs')
 	    TEXT="-l ${LABEL}"
 	    ;;
 	'mkfs.ext4' | 'mkfs.ext4dev')
