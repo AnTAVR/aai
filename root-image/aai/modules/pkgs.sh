@@ -501,7 +501,7 @@ pkgs_base_plus_utils()
 {
     local PACS
     #extra
-    PACS='beep whois postfix proftpd lirc lirc-utils rtkit irqbalance fbset'
+    PACS='beep whois postfix lirc lirc-utils rtkit irqbalance fbset'
     PACS+=' htop lsof strace'
     #community
     PACS+=' linux-tools cpupower libtraceevent perf usbip x86_energy_perf_policy'
@@ -510,8 +510,11 @@ pkgs_base_plus_utils()
 
     git_commit
 
+    #extra proftpd убран из инсталляции так как был перенесен в аур
+#     PACS='proftpd'
+#     SERVICES+=" 'proftpd.service' '-' 'off'"
+
     SERVICES+=" 'postfix.service' '-' 'off'"
-    SERVICES+=" 'proftpd.service' '-' 'off'"
     SERVICES+=" 'irexec.service' '-' 'off'"
     SERVICES+=" 'lirc.service' '-' 'off'"
     SERVICES+=" 'lircm.service' '-' 'off'"
