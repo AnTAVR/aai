@@ -300,15 +300,6 @@ pkgs_base_plus_aspell_loc()
     git_commit
 }
 
-pkgs_base_plus_zramswap()
-{
-    local PACS
-    PACS='zramswap'
-    pacman_install "-S ${PACS}" '2'
-    git_commit
-    SERVICES+=" 'zramswap.service' '-' 'on'"
-}
-
 pkgs_base_plus_cdemu()
 {
     local PACS

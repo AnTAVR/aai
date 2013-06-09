@@ -443,8 +443,6 @@ base_plus_install()
 
     pkgs_base_plus_crypt
 
-    pkgs_base_plus_zramswap
-
     pkgs_base_plus_cdemu
 
     pkgs_base_plus_hd
