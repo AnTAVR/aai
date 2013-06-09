@@ -95,7 +95,7 @@ pkgs_de_xorg()
 # Устанавливаем xorg
 #===============================================================================
     #extra
-    PACS='xorg xorg-xinit xdg-user-dirs xdg-utils'
+    PACS='xorg xorg-xinit xdg-user-dirs xdg-utils xorg-server-utils'
     PACS+=' ttf-dejavu ttf-freefont ttf-linux-libertine ttf-bitstream-vera'
     PACS+=' xscreensaver'
     PACS+=' gstreamer0.10-plugins phonon-gstreamer'
