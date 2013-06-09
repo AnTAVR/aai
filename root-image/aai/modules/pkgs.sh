@@ -309,15 +309,6 @@ pkgs_base_plus_cdemu()
     SERVICES+=" 'cdemu-daemon.service' '-' 'off'"
 }
 
-pkgs_base_plus_crypt_swapfile()
-{
-    local PACS
-#     pacman_install '-U /aai/db/my_pkgs/crypt-swapfile-1.0-1-any.pkg.tar.xz' '0' 'noexit'
-#     git_commit
-# 
-#     SERVICES+=" 'crypt-swapfile.service' '-' 'off'"
-}
-
 pkgs_base_plus_cpu_temperature_save()
 {
     local PACS

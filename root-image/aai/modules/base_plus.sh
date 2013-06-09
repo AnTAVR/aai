@@ -469,8 +469,6 @@ base_plus_install()
 
     pkgs_base_plus_cpu_temperature_save
 
-    pkgs_base_plus_crypt_swapfile
-
     pkgs_base_plus_gobject
 
     chroot_run mkinitcpio -p linux
