@@ -268,7 +268,7 @@ pkgs_base_plus_yaourt()
 #-------------------------------------------------------------------------------
 }
 
-pkgs_base_plus_gobject()
+pkgs_base_plus_timestamp()
 {
     local PACS
      #extra
