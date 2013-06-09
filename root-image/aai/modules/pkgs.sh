@@ -479,6 +479,7 @@ pkgs_base_plus_utils()
     #community
     PACS+=' linux-tools cpupower libtraceevent perf usbip x86_energy_perf_policy'
     PACS+=' audit lshw hwinfo flashrom grc chrony mcelog iotop'
+    PACS+=' vsftpd'
     pacman_install "-S ${PACS}" '1'
 
     git_commit
@@ -487,16 +488,26 @@ pkgs_base_plus_utils()
 #     PACS='proftpd'
 #     SERVICES+=" 'proftpd.service' '-' 'off'"
 
+
+    SERVICES+=" 'vsftpd.service' '-' 'off'"
+    SERVICES+=" 'vsftpd.socket' '-' 'off'"
+    SERVICES+=" 'vsftpd-ssl.service' '-' 'off'"
+    SERVICES+=" 'vsftpd-ssl.socket' '-' 'off'"
+
     SERVICES+=" 'postfix.service' '-' 'off'"
+
     SERVICES+=" 'irexec.service' '-' 'off'"
     SERVICES+=" 'lirc.service' '-' 'off'"
     SERVICES+=" 'lircm.service' '-' 'off'"
+
     SERVICES+=" 'rtkit-daemon.service' '-' 'off'"
     SERVICES+=" 'irqbalance.service' '-' 'off'"
     SERVICES+=" 'cpupower.service' '-' 'on'"
     SERVICES+=" 'usbipd.service' '-' 'off'"
+
     SERVICES+=" 'auditd.service' '-' 'off'"
     SERVICES+=" 'chronyd.service' '-' 'off'"
+
     SERVICES+=" 'mcelog.service' '-' 'off'"
 }
 
