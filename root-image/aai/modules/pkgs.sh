@@ -309,15 +309,6 @@ pkgs_base_plus_cdemu()
     SERVICES+=" 'cdemu-daemon.service' '-' 'off'"
 }
 
-pkgs_base_plus_cpu_temperature_save()
-{
-    local PACS
-    pacman_install '-U /aai/db/my_pkgs/cpu-temperature-save-1.0-1-any.pkg.tar.xz' '0' 'noexit'
-    git_commit
-
-    SERVICES+=" 'cpu-temperature-save.timer' '-' 'off'"
-}
-
 pkgs_base_plus_alsa()
 {
     local PACS

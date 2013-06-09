@@ -467,8 +467,6 @@ base_plus_install()
 
     pkgs_base_plus_ufw
 
-    pkgs_base_plus_cpu_temperature_save
-
     pkgs_base_plus_gobject
 
     chroot_run mkinitcpio -p linux
