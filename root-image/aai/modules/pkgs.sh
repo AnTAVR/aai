@@ -1142,6 +1142,22 @@ pkgs_cryptkeeper()
 }
 APPS+=" 'cryptkeeper' '$(gettext 'GUI для шифрования папок') (+AUR)' 'on'"
 
+pkgs_keepassx()
+{
+    local PACS
+    #community
+    PACS='keepassx'
+    pacman_install "-S ${PACS}" '1'
+    #aur
+#     PACS='keepass'
+#     pacman_install "-S ${PACS}" '2'
+# Локализация закоментированна потому что можно вручную скачать файл с сайта.
+# А установка задает вопросы!
+#     PACS="keepass-${SET_LOCAL%_*}"
+#     pacman_install "-S ${PACS}" '2'
+}
+APPS+=" 'keepassx' '$(gettext 'программа для хранения паролей')' 'on'"
+
 pkgs_mmex()
 {
     local PACS
