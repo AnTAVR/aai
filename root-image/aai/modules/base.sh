@@ -1040,9 +1040,9 @@ pkgs_base_zsh()
     git_commit
 
 # Меняем оболочку по умолчанию для новых пользователей
-    chroot_run useradd -D --shell /bin/zsh
+    chroot_run useradd -D --shell /usr/bin/zsh
 # Меняем оболочку по умолчанию для root
-    chroot_run usermod --shell /bin/zsh root
+    chroot_run usermod --shell /usr/bin/zsh root
 
     git_commit
 }
