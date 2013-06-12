@@ -1356,6 +1356,36 @@ pkgs_0ad()
 }
 APPS+=" '0ad' '$(gettext 'Игра. 3D Стратегия')' 'off'"
 
+pkgs_warsow()
+{
+    local PACS
+    #community
+    PACS='warsow'
+    pacman_install "-S ${PACS}" '1'
+    git_commit
+}
+APPS+=" 'warsow' '$(gettext 'Игра. Киберспортивная игра')' 'off'"
+
+pkgs_minetest()
+{
+    local PACS
+    #community
+    PACS='minetest'
+    pacman_install "-S ${PACS}" '1'
+    git_commit
+}
+APPS+=" 'minetest' '$(gettext 'Игра. Аналог Minecraft')' 'off'"
+
+pkgs_neverball()
+{
+    local PACS
+    #community
+    PACS='neverball'
+    pacman_install "-S ${PACS}" '1'
+    git_commit
+}
+APPS+=" 'neverball' '$(gettext 'Игра. Neverball')' 'off'"
+
 pkgs_apache()
 {
     local PACS
