@@ -284,6 +284,7 @@ base_plus_install()
     msg_log "$(gettext 'Настраиваю') /usr/local/lib/systemd/system/rc-local.service"
     mkdir -p "${NS_PATH}/usr/local/lib/systemd/system"
     cat "${DBDIR}modules/usr/local/lib/systemd/system/rc-local.service" > "${NS_PATH}/usr/local/lib/systemd/system/rc-local.service"
+    cat "${DBDIR}modules/usr/local/lib/systemd/system/autologin@.service" > "${NS_PATH}/usr/local/lib/systemd/system/autologin@.service"
 
     git_commit
 
