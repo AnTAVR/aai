@@ -18,7 +18,7 @@ border_color = #FFFFFF 40
 # ID 3
 rounded = 5
 border_width = 1
-background_color = #FFFFFF 1
+background_color = #FFFFFF 0
 border_color = #FFFFFF 60
 
 # Panel
@@ -90,7 +90,7 @@ clock_background_id = 0
 clock_rclick_command = orage
 
 # Tooltips
-tooltip = 0
+tooltip = 1
 tooltip_padding = 2 2
 tooltip_show_timeout = 0.7
 tooltip_hide_timeout = 0.3
@@ -111,7 +111,7 @@ battery_low_cmd = notify-send "battery low"
 battery_hide = 98
 bat1_font = sans 8
 bat2_font = sans 6
-battery_font_color = #FFFFFF 72
+battery_font_color = #FFFFFF 70
 battery_padding = 1 0
 battery_background_id = 0
 

@@ -28,3 +28,9 @@ ${tab 400}
 ${color green}Inet $hr
 
 ${execpi 60 bash ~/.config/conky/conkyrc2.sh}
+
+${color green}archlinux.org $hr
+${color orange}${rss https://www.archlinux.org/feeds/news/ 15 item_titles 5}
+
+${color green}archlinux.org.ru $hr
+${color orange}${rss http://archlinux.org.ru/news/feed/ 15 item_titles 3}
