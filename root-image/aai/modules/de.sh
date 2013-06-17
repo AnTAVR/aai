@@ -253,6 +253,7 @@ s/<number>4<\/number>/<number>2<\/number>/;
 	echo '[[ -z ${DISPLAY} && ${XDG_VTNR} -eq 1 ]] && exec startx &> ~/.xlog' >> "${NS_PATH}/etc/skel/.zprofile"
 
 	msg_log "$(gettext 'Настраиваю') /etc/skel/.xinitrc"
+	echo "export XCURSOR_THEME='Vanilla-DMZ'" >> "${NS_PATH}/etc/skel/.xinitrc"
 	echo 'exec openbox-session' >> "${NS_PATH}/etc/skel/.xinitrc"
     fi
 

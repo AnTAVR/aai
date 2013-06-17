@@ -100,7 +100,7 @@ pkgs_de_xorg()
     PACS+=' xscreensaver'
     PACS+=' gstreamer0.10-plugins phonon-gstreamer'
     #community
-    PACS+=' ttf-liberation ttf-droid'
+    PACS+=' ttf-liberation ttf-droid xcursor-vanilla-dmz'
     pacman_install "-S ${PACS}" '1'
 #   #aur
 #   PACS='ttf-ms-fonts'
