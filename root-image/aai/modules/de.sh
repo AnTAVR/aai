@@ -291,8 +291,8 @@ s/<number>4<\/number>/<number>2<\/number>/;
     git_commit
 
     msg_log "$(gettext 'Добавляю') Xresources > /etc/skel/.config/openbox/autostart"
-    echo '[[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources &' >> "${NS_PATH}/etc/skel/.config/openbox/autostart"
-    echo '[[ -f ~/.Xmodmap ]] && xmodmap ~/.Xmodmap &' >> "${NS_PATH}/etc/skel/.config/openbox/autostart"
+    echo '([[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources) &' >> "${NS_PATH}/etc/skel/.config/openbox/autostart"
+    echo '([[ -f ~/.Xmodmap ]] && xmodmap ~/.Xmodmap) &' >> "${NS_PATH}/etc/skel/.config/openbox/autostart"
     git_commit
 #-------------------------------------------------------------------------------
 
@@ -456,12 +456,9 @@ s/<number>4<\/number>/<number>2<\/number>/;
 
 
     msg_log "$(gettext 'Добавляю') conky > /etc/skel/.config/openbox/autostart"
-    echo 'sleep 2 &&' >> "${NS_PATH}/etc/skel/.config/openbox/autostart"
-    echo 'conky -c ~/.config/conky/conkyrc1 -q &' >> "${NS_PATH}/etc/skel/.config/openbox/autostart"
-    echo 'sleep 3 &&' >> "${NS_PATH}/etc/skel/.config/openbox/autostart"
-    echo 'conky -c ~/.config/conky/conkyrc2 -q &' >> "${NS_PATH}/etc/skel/.config/openbox/autostart"
-    echo 'sleep 4 &&' >> "${NS_PATH}/etc/skel/.config/openbox/autostart"
-    echo 'conky -c ~/.config/conky/conkyrc3 -q &' >> "${NS_PATH}/etc/skel/.config/openbox/autostart"
+    echo '(sleep 2 && conky -c ~/.config/conky/conkyrc1 -q) &' >> "${NS_PATH}/etc/skel/.config/openbox/autostart"
+    echo '(sleep 3 && conky -c ~/.config/conky/conkyrc2 -q) &' >> "${NS_PATH}/etc/skel/.config/openbox/autostart"
+    echo '(sleep 4 && conky -c ~/.config/conky/conkyrc3 -q) &' >> "${NS_PATH}/etc/skel/.config/openbox/autostart"
     git_commit
 #-------------------------------------------------------------------------------
 
@@ -475,8 +472,7 @@ s/<number>4<\/number>/<number>2<\/number>/;
     git_commit
 
     msg_log "$(gettext 'Добавляю') sbxkb > /etc/skel/.config/openbox/autostart"
-    echo 'sleep 5 &&' >> "${NS_PATH}/etc/skel/.config/openbox/autostart"
-    echo 'sbxkb &' >> "${NS_PATH}/etc/skel/.config/openbox/autostart"
+    echo '(sleep 5 && sbxkb) &' >> "${NS_PATH}/etc/skel/.config/openbox/autostart"
 
     git_commit
 #-------------------------------------------------------------------------------
