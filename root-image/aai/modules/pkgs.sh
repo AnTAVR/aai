@@ -474,41 +474,89 @@ pkgs_base_plus_utils()
 {
     local PACS
     #extra
-    PACS='beep whois postfix lirc lirc-utils rtkit irqbalance fbset'
+    PACS='beep whois rtkit irqbalance fbset'
     PACS+=' htop lsof strace'
     #community
-    PACS+=' linux-tools cpupower libtraceevent perf usbip x86_energy_perf_policy'
     PACS+=' audit lshw hwinfo flashrom grc chrony mcelog iotop'
-    PACS+=' vsftpd'
     pacman_install "-S ${PACS}" '1'
 
     git_commit
 
-    #extra proftpd убран из инсталляции так как был перенесен в аур
-#     PACS='proftpd'
-#     SERVICES+=" 'proftpd.service' '-' 'off'"
-
-
-    SERVICES+=" 'vsftpd.service' '-' 'off'"
-    SERVICES+=" 'vsftpd.socket' '-' 'off'"
-    SERVICES+=" 'vsftpd-ssl.service' '-' 'off'"
-    SERVICES+=" 'vsftpd-ssl.socket' '-' 'off'"
-
-    SERVICES+=" 'postfix.service' '-' 'off'"
-
-    SERVICES+=" 'irexec.service' '-' 'off'"
-    SERVICES+=" 'lirc.service' '-' 'off'"
-    SERVICES+=" 'lircm.service' '-' 'off'"
-
     SERVICES+=" 'rtkit-daemon.service' '-' 'off'"
     SERVICES+=" 'irqbalance.service' '-' 'off'"
-    SERVICES+=" 'cpupower.service' '-' 'on'"
-    SERVICES+=" 'usbipd.service' '-' 'off'"
 
     SERVICES+=" 'auditd.service' '-' 'off'"
     SERVICES+=" 'chronyd.service' '-' 'off'"
 
     SERVICES+=" 'mcelog.service' '-' 'off'"
+}
+
+pkgs_base_plus_linux_tools()
+{
+    local PACS
+    #community
+    PACS='cpupower libtraceevent perf usbip x86_energy_perf_policy'
+    # linux-tools
+    pacman_install "-S ${PACS}" '1'
+
+    git_commit
+
+    SERVICES+=" 'cpupower.service' '-' 'on'"
+    SERVICES+=" 'usbipd.service' '-' 'off'"
+}
+
+pkgs_base_plus_lirc()
+{
+    local PACS
+    #extra
+    PACS='lirc'
+    # lirc-utils
+    pacman_install "-S ${PACS}" '1'
+
+    git_commit
+
+    SERVICES+=" 'irexec.service' '-' 'off'"
+    SERVICES+=" 'lirc.service' '-' 'off'"
+    SERVICES+=" 'lircm.service' '-' 'off'"
+}
+
+pkgs_base_plus_postfix()
+{
+#  http://www.hypexr.org/linux_mail_server.php#postfix_install
+    local PACS
+    #extra
+    PACS='postfix dovecot'
+#    PACS+=' cyrus-sasl'
+    pacman_install "-S ${PACS}" '1'
+
+    git_commit
+
+    chroot_run newaliases
+
+    git_commit
+
+    SERVICES+=" 'postfix.service' '-' 'off'"
+    SERVICES+=" 'dovecot.service' '-' 'off'"
+#    SERVICES+=" 'saslauthd.service' '-' 'off'"
+}
+
+pkgs_base_plus_vsftpd()
+{
+    local PACS
+    #community
+    PACS='vsftpd'
+    pacman_install "-S ${PACS}" '1'
+
+    git_commit
+
+#    chroot_run newaliases
+
+#    git_commit
+
+    SERVICES+=" 'vsftpd.service' '-' 'off'"
+    SERVICES+=" 'vsftpd.socket' '-' 'off'"
+    SERVICES+=" 'vsftpd-ssl.service' '-' 'off'"
+    SERVICES+=" 'vsftpd-ssl.socket' '-' 'off'"
 }
 
 pkgs_base_plus_sensors()

@@ -454,6 +454,14 @@ base_plus_install()
 
     pkgs_base_plus_utils
 
+    pkgs_base_plus_linux_tools
+
+    pkgs_base_plus_lirc
+
+    pkgs_base_plus_postfix
+
+    pkgs_base_plus_vsftpd
+
     pkgs_base_plus_mlocate
 
     pkgs_base_plus_sensors
