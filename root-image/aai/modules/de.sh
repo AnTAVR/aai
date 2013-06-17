@@ -242,7 +242,7 @@ de_openbox()
 
     msg_log "$(gettext 'Настраиваю') /etc/skel/.config/openbox/rc.xml"
     sed -i "
-s/<name>Clearlooks<\/name>/<name>Orang<\/name>/;
+s/<name>Clearlooks<\/name>/<name>Simple-Aubergine<\/name>/;
 s/<number>4<\/number>/<number>2<\/number>/;
 #s/entry in parent menu -->/entry in parent menu --\&gt;/;
 " "${NS_PATH}/etc/skel/.config/openbox/rc.xml"
@@ -253,13 +253,18 @@ s/<number>4<\/number>/<number>2<\/number>/;
 	echo '[[ -z ${DISPLAY} && ${XDG_VTNR} -eq 1 ]] && exec startx &> ~/.xlog' >> "${NS_PATH}/etc/skel/.zprofile"
 
 	msg_log "$(gettext 'Настраиваю') /etc/skel/.xinitrc"
-	echo "export XCURSOR_THEME='Vanilla-DMZ'" >> "${NS_PATH}/etc/skel/.xinitrc"
 	echo 'exec openbox-session' >> "${NS_PATH}/etc/skel/.xinitrc"
     fi
 
     git_commit
 #-------------------------------------------------------------------------------
 
+#===============================================================================
+# Устанавливаем тему курсора
+#===============================================================================
+    echo "export XCURSOR_THEME='Vanilla-DMZ'" >> "${NS_PATH}/etc/skel/.config/openbox/environment"
+
+    git_commit
 
     #community
     PACS='archlinux-artwork'
@@ -323,11 +328,10 @@ s/<number>4<\/number>/<number>2<\/number>/;
     mkdir -p "${NS_PATH}/etc/skel/.config/compton"
 
     msg_log "$(gettext 'Настраиваю') /etc/skel/.config/compton/compton.conf"
-    cat "${DBDIR}modules/etc/skel/.config/compton/compton.conf" > "${NS_PATH}/etc/skel/.config/compton/compton.conf"
-#     sed "
-# /^menu-opacity =/s/^/#/;
-# /^inactive-opacity =/s/^/#/;
-# " "${NS_PATH}/etc/xdg/compton.conf.example" > "${NS_PATH}/etc/skel/.config/compton/compton.conf"
+    sed "
+/^menu-opacity =/s/^/#/;
+/^inactive-opacity =/s/^/#/;
+" "${NS_PATH}/etc/xdg/compton.conf.example" > "${NS_PATH}/etc/skel/.config/compton/compton.conf"
 
     msg_log "$(gettext 'Добавляю') compton > /etc/skel/.config/openbox/autostart"
     echo 'compton --config ~/.config/compton/compton.conf -b &' >> "${NS_PATH}/etc/skel/.config/openbox/autostart"

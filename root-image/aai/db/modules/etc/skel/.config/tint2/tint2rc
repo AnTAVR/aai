@@ -5,9 +5,9 @@
 # Background definitions
 # ID 1
 rounded = 7
-border_width = 0
-background_color = #CE5C00 100
-border_color = #FFFFFF 0
+border_width = 1
+background_color = #695977 100
+border_color = #9D85B2 100
 
 # ID 2
 rounded = 5
@@ -18,7 +18,7 @@ border_color = #FFFFFF 40
 # ID 3
 rounded = 5
 border_width = 1
-background_color = #FFFFFF 3
+background_color = #FFFFFF 1
 border_color = #FFFFFF 60
 
 # Panel
@@ -88,7 +88,6 @@ clock_font_color = #FFFFFF 100
 clock_padding = 1 0
 clock_background_id = 0
 clock_rclick_command = orage
-#clock_lclick_command = ~/.config/tint2/vremya
 
 # Tooltips
 tooltip = 0
@@ -112,7 +111,7 @@ battery_low_cmd = notify-send "battery low"
 battery_hide = 98
 bat1_font = sans 8
 bat2_font = sans 6
-battery_font_color = #FFFFFF 74
+battery_font_color = #FFFFFF 72
 battery_padding = 1 0
 battery_background_id = 0
 
