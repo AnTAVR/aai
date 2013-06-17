@@ -315,21 +315,22 @@ s/<number>4<\/number>/<number>2<\/number>/;
 # Устанавливаем compton
 #===============================================================================
 #     #aur
-#     PACS='compton-git'
-#     pacman_install "-S ${PACS}" '2'
-#     git_commit
-# 
-#     mkdir -p "${NS_PATH}/etc/skel/.config/compton"
-# 
-#     msg_log "$(gettext 'Настраиваю') /etc/skel/.config/compton/compton.conf"
+    PACS='compton-git'
+    pacman_install "-S ${PACS}" '2'
+    git_commit
+
+    mkdir -p "${NS_PATH}/etc/skel/.config/compton"
+
+    msg_log "$(gettext 'Настраиваю') /etc/skel/.config/compton/compton.conf"
+    cat "${DBDIR}modules/etc/skel/.config/compton/compton.conf" > "${NS_PATH}/etc/skel/.config/compton/compton.conf"
 #     sed "
 # /^menu-opacity =/s/^/#/;
 # /^inactive-opacity =/s/^/#/;
 # " "${NS_PATH}/etc/xdg/compton.conf.example" > "${NS_PATH}/etc/skel/.config/compton/compton.conf"
-# 
-#     msg_log "$(gettext 'Добавляю') compton > /etc/skel/.config/openbox/autostart"
-#     echo 'compton --config ~/.config/compton/compton.conf &' >> "${NS_PATH}/etc/skel/.config/openbox/autostart"
-#     git_commit
+
+    msg_log "$(gettext 'Добавляю') compton > /etc/skel/.config/openbox/autostart"
+    echo 'compton --config ~/.config/compton/compton.conf -b &' >> "${NS_PATH}/etc/skel/.config/openbox/autostart"
+    git_commit
 #-------------------------------------------------------------------------------
 
 
