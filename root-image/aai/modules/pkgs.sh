@@ -1079,7 +1079,20 @@ pkgs_firefox()
 # http://seleniumhq.org/download/
 # https://addons.mozilla.org/ru/firefox/addon/oxygen-kde-patched/
 }
-APPS+=" 'firefox' '$(gettext 'Интернет браузер')' 'on'"
+APPS+=" 'firefox' '$(gettext 'Интернет браузер (Mozilla)')' 'on'"
+
+pkgs_thunderbird()
+{
+    local PACS
+    #extra
+    PACS='thunderbird'
+    pacman_install "-S ${PACS}" '1'
+    #extra
+    PACS="thunderbird-i18n-${SET_LOCAL%_*}"
+    pacman_install "-S ${PACS}" '2'
+    git_commit
+}
+APPS+=" 'thunderbird' '$(gettext 'Почтовая программа (Mozilla)')' 'on'"
 
 pkgs_opera()
 {
@@ -1107,7 +1120,7 @@ pkgs_claws()
     chroot_run /usr/bin/vendor_perl/sa-compile
     git_commit
 }
-APPS+=" 'claws' '$(gettext 'EMAIL клиент')' 'on'"
+APPS+=" 'claws' '$(gettext 'EMAIL клиент')' 'off'"
 
 pkgs_filezilla()
 {
