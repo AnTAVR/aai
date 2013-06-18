@@ -1434,6 +1434,16 @@ pkgs_neverball()
 }
 APPS+=" 'neverball' '$(gettext 'Игра. Neverball')' 'off'"
 
+pkgs_xboard()
+{
+    local PACS
+    #community
+    PACS='xboard'
+    pacman_install "-S ${PACS}" '1'
+    git_commit
+}
+APPS+=" 'xboard' '$(gettext 'Игра. Шахматы')' 'on'"
+
 pkgs_apache()
 {
     local PACS
