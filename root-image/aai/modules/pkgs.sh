@@ -1229,6 +1229,11 @@ pkgs_clamav()
     sed -i "
 /^Example/s/^/#/;
 " "${NS_PATH}/etc/clamav/freshclam.conf"
+
+# Включаем ежедневное обновление базы по крону
+    cat "${DBDIR}modules/etc/cron.daily/freshclam" > "${NS_PATH}/etc/cron.daily/freshclam"
+    chmod +x "${NS_PATH}/etc/cron.daily/freshclam"
+
     msg_info "$(gettext 'Пожалуйста, подождите')..."
     chroot_run freshclam
     git_commit
