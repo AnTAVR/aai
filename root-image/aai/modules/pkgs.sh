@@ -1092,7 +1092,7 @@ pkgs_thunderbird()
     pacman_install "-S ${PACS}" '2'
     git_commit
 }
-APPS+=" 'thunderbird' '$(gettext 'Почтовая программа (Mozilla)')' 'on'"
+APPS+=" 'thunderbird' '$(gettext 'Почтовая программа (Mozilla)')' 'off'"
 
 pkgs_opera()
 {
@@ -1120,7 +1120,7 @@ pkgs_claws()
     chroot_run /usr/bin/vendor_perl/sa-compile
     git_commit
 }
-APPS+=" 'claws' '$(gettext 'EMAIL клиент')' 'off'"
+APPS+=" 'claws' '$(gettext 'EMAIL клиент')' 'on'"
 
 pkgs_filezilla()
 {
