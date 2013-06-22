@@ -1118,7 +1118,36 @@ pkgs_claws()
     git_commit
     chroot_run /usr/bin/vendor_perl/sa-update
     chroot_run /usr/bin/vendor_perl/sa-compile
+
     git_commit
+
+# iptables -t nat -A PREROUTING -p tcp --dport pop3 -j REDIRECT --to 8110
+
+# *nat
+# :PREROUTING ACCEPT [0:0]
+# :INPUT ACCEPT [0:0]
+# :OUTPUT ACCEPT [0:0]
+# :POSTROUTING ACCEPT [0:0]
+# -A PREROUTING -p tcp -m tcp --dport 110 -j REDIRECT --to-ports 8110
+# COMMIT
+
+# ~/.claws-mail/accountrc
+# spam: %as{execute "spamassassin -R --local -e < %F" execute "sa-learn --spam %F" move "#mh/Mail/spam!!!" mark_as_spam}
+# nospam: %as{execute "spamassassin -W --local -e < %F" execute "sa-learn --ham %F" copy "#mh/Mail/spamNO" mark_as_ham}
+
+# ~/.claws-mail/matcherrc
+# [filtering]
+# enabled rulename "spamc" ~test "spamassassin -e < %F" move "#mh/Mail/spam" mark_as_spam
+
+# ~/.claws-mail/toolbar_msgview.xml
+# ~/.claws-mail/toolbar_main.xml
+# <toolbar>
+# 	<separator/>
+# 	<item file="spam_btn" text="spam" action="A_CLAWS_ACTIONS"/>
+# 	<item file="ham_btn" text="nospam" action="A_CLAWS_ACTIONS"/>
+# </toolbar>
+
+
 }
 APPS+=" 'claws' '$(gettext 'EMAIL клиент')' 'on'"
 
