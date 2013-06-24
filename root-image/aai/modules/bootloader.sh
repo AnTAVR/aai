@@ -37,10 +37,10 @@ DEF_CONSOLE_V_XxYxD='0x317_1024x768x16'
 # Выводим строку пункта главного меню
 str_bootloader()
 {
-    local TEMP="\Zb\Z1($(gettext 'ОБЯЗАТЕЛЬНО!!!'))\Zn"
+	local TEMP="\Zb\Z1($(gettext 'ОБЯЗАТЕЛЬНО!!!'))\Zn"
 
-    [[ "${RUN_BOOTLOADER}" ]] && TEMP="\Zb\Z2($(gettext 'ВЫПОЛНЕНО'))\Zn"
-    echo "${TXT_BOOTLOADER_MAIN} ${TEMP}"
+	[[ "${RUN_BOOTLOADER}" ]] && TEMP="\Zb\Z2($(gettext 'ВЫПОЛНЕНО'))\Zn"
+	echo "${TXT_BOOTLOADER_MAIN} ${TEMP}"
 }
 
 # Функция выполнения из главного меню
@@ -219,7 +219,7 @@ bootloader_grub_bios()
 # Устанавливаем grub
 #===============================================================================
     #core
-    PACS='grub-bios'
+    PACS='grub'
     #extra
     PACS+=' memtest86+'
     #community
@@ -230,17 +230,17 @@ bootloader_grub_bios()
     while true
     do
         PART="$(bootloader_dialog_dev_part)"
-	[[ ! -n "${PART}" ]] && return 1
+		[[ ! -n "${PART}" ]] && return 1
 
-	chroot_run grub-install --force "${PART}"
+		chroot_run grub-install --force "${PART}"
 
-	if [[ "${?}" != '0' ]]
-	then
-	    dialog_warn \
-		"\Zb\Z1$(gettext 'Grub не установлен на раздел')\Zn\n${PART}"
-	    continue
-	fi
-	break
+		if [[ "${?}" != '0' ]]
+		then
+			dialog_warn \
+				"\Zb\Z1$(gettext 'Grub не установлен на раздел')\Zn\n${PART}"
+			continue
+		fi
+		break
     done
 
 # @todo Закомментировано потому что темы могут не поддерживать выбранные режимы
@@ -370,9 +370,9 @@ bootloader_grub_efi()
     CONSOLE_V_XxYxD="${DEF_CONSOLE_V_XxYxD}"
 
     #core
-    PACS="grub-efi-$(uname -m)"
+    PACS='grub dosfstools efibootmgr'
     #extra
-    PACS+=' refind-efi gummiboot-efi memtest86+'
+    PACS+=' refind-efi memtest86+'
     #community
     PACS+=' os-prober'
     pacman_install "-S ${PACS}" '1'

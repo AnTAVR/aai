@@ -1119,6 +1119,9 @@ pkgs_claws()
     chroot_run /usr/bin/vendor_perl/sa-update
     chroot_run /usr/bin/vendor_perl/sa-compile
 
+    cat "${DBDIR}modules/usr/local/bin/sa-run" > "${NS_PATH}/usr/local/bin/sa-run"
+    chmod +x "${NS_PATH}/usr/local/bin/sa-run"
+
     git_commit
 
 # iptables -t nat -A PREROUTING -p tcp --dport pop3 -j REDIRECT --to 8110
@@ -1137,7 +1140,7 @@ pkgs_claws()
 
 # ~/.claws-mail/matcherrc
 # [filtering]
-# enabled rulename "spamc" ~test "spamassassin -e < %F" move "#mh/Mail/spam" mark_as_spam
+# enabled rulename "sa-run" test "!(sa-run %F)" move "#mh/Mail/spam"
 
 # ~/.claws-mail/toolbar_msgview.xml
 # ~/.claws-mail/toolbar_main.xml
