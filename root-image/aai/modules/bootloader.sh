@@ -240,6 +240,10 @@ bootloader_grub_bios()
 				"\Zb\Z1$(gettext 'Grub не установлен на раздел')\Zn\n${PART}"
 			continue
 		fi
+
+		mkdir -p "${NS_PATH}/boot/grub/locale"
+		cp "${NS_PATH}/usr/share/locale/en@quot/LC_MESSAGES/grub.mo" "${NS_PATH}/boot/grub/locale/en.mo"
+
 		break
     done
 
@@ -390,6 +394,13 @@ bootloader_grub_efi()
 	mkdir -p "${NS_PATH}/usr/local/bin"
 	cat "${DBDIR}modules/usr/local/bin/update-grub" > "${NS_PATH}/usr/local/bin/update-grub"
 	chmod +x "${NS_PATH}/usr/local/bin/update-grub"
+
+# mkdir -p /boot/efi
+# mount -t vfat /dev/sdXY /boot/efi
+# modprobe dm-mod
+# grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=arch_grub --recheck --debug
+# mkdir -p /boot/grub/locale
+# cp /usr/share/locale/en@quot/LC_MESSAGES/grub.mo /boot/grub/locale/en.mo
 
 	msg_log "$(gettext 'Настраиваю') /etc/default/grub"
 	sed -i "
