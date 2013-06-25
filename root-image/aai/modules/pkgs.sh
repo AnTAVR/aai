@@ -1584,8 +1584,8 @@ pkgs_postgresql()
 	git_commit
 
 	mkdir -p "${NS_PATH}"/var/lib/postgres/data
-	chroot_run chown -Rh -c postgres:postgres "${NS_PATH}"/var/lib/postgres/data
-	chroot_run bash -c "su postgres -c 'initdb --locale en_US.UTF-8 -D /var/lib/postgres/data && exit'"
+	chroot_run chown -Rh -c postgres:postgres /var/lib/postgres/data
+	chroot_run "bash -c \"su postgres -c 'initdb --locale en_US.UTF-8 -D /var/lib/postgres/data && exit'\""
 
 	chroot_run systemctl enable postgresql.service
 	git_commit
