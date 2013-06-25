@@ -897,7 +897,7 @@ pkgs_avidemux()
 {
 	local PACS
 	#extra
-	PACS='avidemux-qt mkvtoolnix-gtk mencoder mediainfo-gui'
+	PACS='avidemux-qt mkvtoolnix-gtk mencoder'
 	#community
 	PACS+=' mediainfo-gui'
 	pacman_install "-S ${PACS}" '1'
