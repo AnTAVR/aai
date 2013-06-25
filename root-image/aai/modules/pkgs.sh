@@ -1110,8 +1110,8 @@ pkgs_claws()
 {
 	local PACS
 	#extra
-	PACS='claws-mail claws-mail-extra-plugins'
-	PACS+=' spamassassin razor bogofilter'
+	PACS='claws-mail claws-mail-themes'
+	PACS+=' spamassassin razor'
 	#community
 	PACS+=' dspam p3scan'
 	pacman_install "-S ${PACS}" '1'
