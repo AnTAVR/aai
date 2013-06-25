@@ -501,7 +501,7 @@ pkgs_base_plus_linux_tools()
 
 	git_commit
 
-	SERVICES+=" 'cpupower.service' '-' 'on'"
+	SERVICES+=" 'cpupower.service' '-' 'off'"
 	SERVICES+=" 'usbipd.service' '-' 'off'"
 }
 
@@ -586,7 +586,7 @@ pkgs_base_plus_preload()
 	pacman_install "-S ${PACS}" '1'
 	git_commit
 
-	SERVICES+=" 'preload.service' '-' 'on'"
+	SERVICES+=" 'preload.service' '-' 'off'"
 }
 
 pkgs_base_plus_aria2()
