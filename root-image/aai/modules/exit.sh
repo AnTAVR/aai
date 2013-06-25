@@ -32,37 +32,37 @@ TXT_EXIT_MAIN="$(gettext 'Выход')"
 # Выводим строку пункта главного меню
 str_exit()
 {
-    echo "${TXT_EXIT_MAIN}"
+	echo "${TXT_EXIT_MAIN}"
 }
 
 # Функция выполнения из главного меню
 run_exit()
 {
-    local P_RUN_EXIT="${1}"
+	local P_RUN_EXIT="${1}"
 
-    local TEMP
-    [[ ! "${P_RUN_EXIT}" ]] && [[ "${RUN_BASE}" ]] && [[ ! "${SET_BOOTLOADER}" ]] && TEMP+="\Zb\Z1$(gettext 'Пункт') \"${TXT_BOOTLOADER_MAIN}\" $(gettext 'не выполнен')\Zn\n"
-    [[ ! "${P_RUN_EXIT}" ]] && [[ "${RUN_BASE_PLUS}" ]] && [[ ! "${RUN_USER}" ]] && TEMP+="\Zb\Z1$(gettext 'Пункт') \"${TXT_USER_MAIN}\" $(gettext 'не выполнен')\Zn\n"
+	local TEMP
+	[[ ! "${P_RUN_EXIT}" ]] && [[ "${RUN_BASE}" ]] && [[ ! "${SET_BOOTLOADER}" ]] && TEMP+="\Zb\Z1$(gettext 'Пункт') \"${TXT_BOOTLOADER_MAIN}\" $(gettext 'не выполнен')\Zn\n"
+	[[ ! "${P_RUN_EXIT}" ]] && [[ "${RUN_BASE_PLUS}" ]] && [[ ! "${RUN_USER}" ]] && TEMP+="\Zb\Z1$(gettext 'Пункт') \"${TXT_USER_MAIN}\" $(gettext 'не выполнен')\Zn\n"
 
-    if [[ "${TEMP}" ]]
-    then
-	dialog_yesno \
-	    "${TXT_EXIT_MAIN}" \
-	    "$(gettext 'Подтвердите выход ПОВЕЛИТЕЛЬ...')\n${TEMP}" \
-	    "--defaultno --yes-label '$(gettext 'Выполняй халлоп!')'"
+	if [[ "${TEMP}" ]]
+	then
+		dialog_yesno \
+			"${TXT_EXIT_MAIN}" \
+			"$(gettext 'Подтвердите выход ПОВЕЛИТЕЛЬ...')\n${TEMP}" \
+			"--defaultno --yes-label '$(gettext 'Выполняй халлоп!')'"
 
-	case "${?}" in
-	    '0') #Yes
-		msg_info "$(gettext 'Повинуюсь') :("
-		;;
-	    *) #ESC
-		return 1
-		;;
-	esac
-    fi
-    net_off
-    part_unmount
-    [[ ! "${P_RUN_EXIT}" ]] && clear
-    msg_log "${TXT_EXIT_MAIN}"
-    exit ${P_RUN_EXIT}
+		case "${?}" in
+			'0') #Yes
+				msg_info "$(gettext 'Повинуюсь') :("
+				;;
+			*) #ESC
+				return 1
+				;;
+		esac
+	fi
+	net_off
+	part_unmount
+	[[ ! "${P_RUN_EXIT}" ]] && clear
+	msg_log "${TXT_EXIT_MAIN}"
+	exit ${P_RUN_EXIT}
 }

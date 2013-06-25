@@ -35,169 +35,169 @@ SET_VIDEO=
 # Выводим строку пункта главного меню
 str_video()
 {
-    local TEMP
+	local TEMP
 
-    [[ "${RUN_VIDEO}" ]] && TEMP="\Zb\Z2($(gettext 'ВЫПОЛНЕНО'))\Zn"
-    echo "${TXT_VIDEO_MAIN} ${TEMP}"
+	[[ "${RUN_VIDEO}" ]] && TEMP="\Zb\Z2($(gettext 'ВЫПОЛНЕНО'))\Zn"
+	echo "${TXT_VIDEO_MAIN} ${TEMP}"
 }
 
 # Функция выполнения из главного меню
 run_video()
 {
-    local DEF_MENU
-    local VID
+	local DEF_MENU
+	local VID
 
-    local TEMP
+	local TEMP
 
-    if [[ "${NO_DEBUG}" ]]
-    then
+	if [[ "${NO_DEBUG}" ]]
+	then
 # Проверяем выполнен ли base
-	[[ ! "${RUN_BASE}" ]] && TEMP+=" $(str_base)\n"
+		[[ ! "${RUN_BASE}" ]] && TEMP+=" $(str_base)\n"
 # Проверяем выполнен ли de пункт меню
-	[[ ! "${RUN_DE}" ]] && TEMP+=" $(str_de)\n"
+		[[ ! "${RUN_DE}" ]] && TEMP+=" $(str_de)\n"
 
-	if [[ "${TEMP}" ]]
-	then
-	    dialog_warn \
-		"\Zb\Z1$(gettext 'Не выполнены обязательные пункты меню')\Zn\n${TEMP}"
-	    return 1
+		if [[ "${TEMP}" ]]
+		then
+			dialog_warn \
+				"\Zb\Z1$(gettext 'Не выполнены обязательные пункты меню')\Zn\n${TEMP}"
+			return 1
+		fi
+
+		if [[ "${SET_VIDEO}" ]]
+		then
+			dialog_warn \
+				"\Zb\Z1$(gettext 'Пункт') \"${TXT_VIDEO_MAIN}\" $(gettext 'уже выполнен')\Zn \Zb\Z2\"${SET_VIDEO}\"\Zn"
+			return 1
+		fi
 	fi
 
-	if [[ "${SET_VIDEO}" ]]
-	then
-	    dialog_warn \
-		"\Zb\Z1$(gettext 'Пункт') \"${TXT_VIDEO_MAIN}\" $(gettext 'уже выполнен')\Zn \Zb\Z2\"${SET_VIDEO}\"\Zn"
-	    return 1
-	fi
-    fi
-
-    for VID in "$(lshw -c display | awk '/vendor/{print $2}')"
-    do
-	VID="$(tr '[:upper:]' '[:lower:]' <<< "${VID}")"
-	case "${VID}" in
-	    'nvidia')
-		break
-		;;
-	    'ati')
-		break
-		;;
+	for VID in "$(lshw -c display | awk '/vendor/{print $2}')"
+	do
+		VID="$(tr '[:upper:]' '[:lower:]' <<< "${VID}")"
+		case "${VID}" in
+			'nvidia')
+				break
+				;;
+			'ati')
+				break
+				;;
 # 	    'intel')
 # 		break
 # 		;;
-	esac
-    done
+		esac
+	done
 
-    while true
-    do
-	DEF_MENU="$(video_dialog_def_menu "${VID}")"
-	case "${DEF_MENU}" in
-	    'nvidia')
-		video_nvidia
-		set_global_var 'SET_VIDEO' "${DEF_MENU}"
-		RUN_VIDEO=1
-		return 0
-		;;
-	    'nvidia304')
-		video_nvidia304
-		set_global_var 'SET_VIDEO' "${DEF_MENU}"
-		RUN_VIDEO=1
-		return 0
-		;;
-	    'ati')
-		video_ati
-		set_global_var 'SET_VIDEO' "${DEF_MENU}"
-		RUN_VIDEO=1
-		return 0
-		;;
-	    *)
-		return 1
-		;;
-	esac
-    done
+	while true
+	do
+		DEF_MENU="$(video_dialog_def_menu "${VID}")"
+		case "${DEF_MENU}" in
+			'nvidia')
+				video_nvidia
+				set_global_var 'SET_VIDEO' "${DEF_MENU}"
+				RUN_VIDEO=1
+				return 0
+				;;
+			'nvidia304')
+				video_nvidia304
+				set_global_var 'SET_VIDEO' "${DEF_MENU}"
+				RUN_VIDEO=1
+				return 0
+				;;
+			'ati')
+				video_ati
+				set_global_var 'SET_VIDEO' "${DEF_MENU}"
+				RUN_VIDEO=1
+				return 0
+				;;
+			*)
+				return 1
+				;;
+		esac
+	done
 }
 
 video_dialog_def_menu()
 {
-    msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for ((TEMP=1; TEMP<=${#}; TEMP++)); do echo -n " \$${TEMP}='$(eval "echo \"\${${TEMP}}\"")'"; done)\"" 'noecho'
+	msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for ((TEMP=1; TEMP<=${#}; TEMP++)); do echo -n " \$${TEMP}='$(eval "echo \"\${${TEMP}}\"")'"; done)\"" 'noecho'
 
-    local RETURN
+	local RETURN
 
-    local P_VID="${1}"
+	local P_VID="${1}"
 
-    local TITLE="${TXT_VIDEO_MAIN}"
-    local HELP_TXT="\n$(gettext 'Выберите видео драйвер для установки')\n"
-    HELP_TXT+="$(gettext 'По умолчанию'):"
+	local TITLE="${TXT_VIDEO_MAIN}"
+	local HELP_TXT="\n$(gettext 'Выберите видео драйвер для установки')\n"
+	HELP_TXT+="$(gettext 'По умолчанию'):"
 
-    local DEFAULT_ITEM="${P_VID}"
-    local ITEMS="'none' '-'"
-    ITEMS+=" 'nvidia' 'NVIDIA'"
-    ITEMS+=" 'nvidia304' 'NVIDIA 304xx'"
+	local DEFAULT_ITEM="${P_VID}"
+	local ITEMS="'none' '-'"
+	ITEMS+=" 'nvidia' 'NVIDIA'"
+	ITEMS+=" 'nvidia304' 'NVIDIA 304xx'"
 #     ITEMS+=" 'nvidia173' 'NVIDIA 173xx \Zb\Z3($(gettext 'Пока не поддерживается'))\Zn'"
 #     ITEMS+=" 'nvidia96' 'NVIDIA 96xx \Zb\Z3($(gettext 'Пока не поддерживается'))\Zn'"
-    ITEMS+=" 'ati' 'ATI Catalyst'"
+	ITEMS+=" 'ati' 'ATI Catalyst'"
 
-    HELP_TXT+=" \Zb\Z7\"${DEFAULT_ITEM}\"\Zn\n"
+	HELP_TXT+=" \Zb\Z7\"${DEFAULT_ITEM}\"\Zn\n"
 
-    RETURN="$(dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}" "--cancel-label '${TXT_MAIN_MENU}'")"
+	RETURN="$(dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}" "--cancel-label '${TXT_MAIN_MENU}'")"
 
-    echo "${RETURN}"
-    msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
+	echo "${RETURN}"
+	msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
 }
 
 video_nvidia()
 {
-    local PACS
+	local PACS
 
-    pacman_install "-Rdds mesa-libgl" '3' 'noexit'
-    pacman_install "-Rdds lib32-mesa-libgl" '3' 'noexit'
-    #extra
-    PACS='nvidia nvidia-utils'
+	pacman_install "-Rdds mesa-libgl" '3' 'noexit'
+	pacman_install "-Rdds lib32-mesa-libgl" '3' 'noexit'
+	#extra
+	PACS='nvidia nvidia-utils'
 #     PACS+=' opencl-nvidia'
 #     dkms-nvidia
-    pacman_install "-S ${PACS}" '1'
-    PACS='lib32-nvidia-utils'
-    pacman_install "-S ${PACS}" '2'
+	pacman_install "-S ${PACS}" '1'
+	PACS='lib32-nvidia-utils'
+	pacman_install "-S ${PACS}" '2'
 
-    pacman_install "-Rnsc ati-dri intel-dri nouveau-dri" '3' 'noexit'
+	pacman_install "-Rnsc ati-dri intel-dri nouveau-dri" '3' 'noexit'
 
-    git_commit
+	git_commit
 }
 
 video_nvidia304()
 {
-    local PACS
+	local PACS
 
-    pacman_install "-Rdds mesa-libgl" '3' 'noexit'
-    pacman_install "-Rdds lib32-mesa-libgl" '3' 'noexit'
-    #extra
-    PACS='nvidia nvidia-304xx-utils'
+	pacman_install "-Rdds mesa-libgl" '3' 'noexit'
+	pacman_install "-Rdds lib32-mesa-libgl" '3' 'noexit'
+	#extra
+	PACS='nvidia nvidia-304xx-utils'
 #     PACS+=' opencl-nvidia-304xx'
-    pacman_install "-S ${PACS}" '1'
-    PACS='lib32-nvidia-304xx-utils'
-    pacman_install "-S ${PACS}" '2'
+	pacman_install "-S ${PACS}" '1'
+	PACS='lib32-nvidia-304xx-utils'
+	pacman_install "-S ${PACS}" '2'
 
-    pacman_install "-Rnsc ati-dri intel-dri nouveau-dri" '3' 'noexit'
+	pacman_install "-Rnsc ati-dri intel-dri nouveau-dri" '3' 'noexit'
 
-    git_commit
+	git_commit
 
 }
 
 video_ati()
 {
-    local PACS
+	local PACS
 
-    pacman_install "-Rdds mesa-libgl" '3' 'noexit'
-    pacman_install "-Rdds lib32-mesa-libgl" '3' 'noexit'
-    #community
-    PACS='catalyst-dkms catalyst-utils'
+	pacman_install "-Rdds mesa-libgl" '3' 'noexit'
+	pacman_install "-Rdds lib32-mesa-libgl" '3' 'noexit'
+	#community
+	PACS='catalyst-dkms catalyst-utils'
 #     PACS+=' opencl-catalyst'
-    pacman_install "-S ${PACS}" '1'
-    PACS='lib32-catalyst-utils'
-    pacman_install "-S ${PACS}" '2'
-    git_commit
-    chroot_run systemctl enable dkms.service
+	pacman_install "-S ${PACS}" '1'
+	PACS='lib32-catalyst-utils'
+	pacman_install "-S ${PACS}" '2'
+	git_commit
+	chroot_run systemctl enable dkms.service
 
-    pacman_install "-Rnsc ati-dri intel-dri nouveau-dri" '3' 'noexit'
+	pacman_install "-Rnsc ati-dri intel-dri nouveau-dri" '3' 'noexit'
 
-    git_commit
+	git_commit
 }

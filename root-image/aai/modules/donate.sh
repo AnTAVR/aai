@@ -32,17 +32,17 @@ TXT_DONATE_MAIN="\Zb\Z2$(gettext 'Пожалуйста, поддержите р�
 # Выводим строку пункта главного меню
 str_donate()
 {
-    echo "${TXT_DONATE_MAIN}"
+	echo "${TXT_DONATE_MAIN}"
 }
 
 # Функция выполнения из главного меню
 run_donate()
 {
-    local TITLE="${TXT_DONATE_MAIN}"
-    local TEXT="${DBDIR}modules/aai-donate.txt"
+	local TITLE="${TXT_DONATE_MAIN}"
+	local TEXT="${DBDIR}modules/aai-donate.txt"
 
-    dialog_textbox \
-	"${TITLE}" \
-	"${TEXT}" \
-	"--exit-label '${TXT_MAIN_MENU}'"
+	dialog_textbox \
+		"${TITLE}" \
+		"${TEXT}" \
+		"--exit-label '${TXT_MAIN_MENU}'"
 }

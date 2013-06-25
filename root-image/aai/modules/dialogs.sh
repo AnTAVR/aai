@@ -27,13 +27,13 @@ DIALOG='dialog --stdout --clear --colors'
 
 dialog_menu()
 {
-    local TITLE="${1}"
-    local DEFAULT_ITEM="${2}"
-    local MENU="${3}"
-    local ITEMS="${4}"
-    local PARAMS="${5}"
+	local TITLE="${1}"
+	local DEFAULT_ITEM="${2}"
+	local MENU="${3}"
+	local ITEMS="${4}"
+	local PARAMS="${5}"
 
-    local TEMP="${DIALOG}
+	local TEMP="${DIALOG}
 ${PARAMS}
 --backtitle '${AAI_VER}'
 --title '${TITLE}'
@@ -41,122 +41,121 @@ ${PARAMS}
 --menu '${MENU}' 0 0 0
 ${ITEMS}"
 
-    eval "$(tr '\n' ' ' <<< "${TEMP}")"
+	eval "$(tr '\n' ' ' <<< "${TEMP}")"
 }
 
 dialog_inputbox()
 {
-    local TITLE="${1}"
-    local INPUTBOX="${2}"
-    local TEXT="${3}"
-    local PARAMS="${4}"
+	local TITLE="${1}"
+	local INPUTBOX="${2}"
+	local TEXT="${3}"
+	local PARAMS="${4}"
 
-    local TEMP="${DIALOG}
+	local TEMP="${DIALOG}
 ${PARAMS}
 --backtitle '${AAI_VER}'
 --title '${TITLE}'
 --inputbox '${INPUTBOX}' 0 0
 '${TEXT}'"
 
-    eval "$(tr '\n' ' ' <<< "${TEMP}")"
+	eval "$(tr '\n' ' ' <<< "${TEMP}")"
 }
 
 dialog_passwordbox()
 {
-    local TITLE="${1}"
-    local PASSWORDBOX="${2}"
-    local PARAMS="${3}"
+	local TITLE="${1}"
+	local PASSWORDBOX="${2}"
+	local PARAMS="${3}"
 
-    local TEMP="${DIALOG}
+	local TEMP="${DIALOG}
 ${PARAMS}
 --backtitle '${AAI_VER}'
 --title '${TITLE}'
 --passwordbox '${PASSWORDBOX}' 0 0"
 
-    eval "$(tr '\n' ' ' <<< "${TEMP}")"
+	eval "$(tr '\n' ' ' <<< "${TEMP}")"
 }
 
 dialog_yesno()
 {
-    local TITLE="${1}"
-    local TEXT="${2}"
-    local PARAMS="${3}"
+	local TITLE="${1}"
+	local TEXT="${2}"
+	local PARAMS="${3}"
 
-    local TEMP="${DIALOG}
+	local TEMP="${DIALOG}
 ${PARAMS}
 --backtitle '${AAI_VER}'
 --title '${TITLE}'
 --yesno '${TEXT}' 0 0"
 
-    eval "$(tr '\n' ' ' <<< "${TEMP}")"
+	eval "$(tr '\n' ' ' <<< "${TEMP}")"
 }
 
 dialog_programbox()
 {
-    local TITLE="${1}"
-    local TEXT="${2}"
-    local PARAMS="${3}"
+	local TITLE="${1}"
+	local TEXT="${2}"
+	local PARAMS="${3}"
 
-    local TEMP="${DIALOG}
+	local TEMP="${DIALOG}
 ${PARAMS}
 --backtitle '${AAI_VER}'
 --title '${TITLE}'
 --programbox '${TEXT}' 30 80"
 
-    eval "$(tr '\n' ' ' <<< "${TEMP}")"
+	eval "$(tr '\n' ' ' <<< "${TEMP}")"
 }
 
 dialog_msgbox()
 {
-    local TITLE="${1}"
-    local TEXT="${2}"
-    local PARAMS="${3}"
+	local TITLE="${1}"
+	local TEXT="${2}"
+	local PARAMS="${3}"
 
-    local TEMP="${DIALOG}
+	local TEMP="${DIALOG}
 ${PARAMS}
 --backtitle '${AAI_VER}'
 --title '${TITLE}'
 --msgbox '${TEXT}' 0 0"
 
-    eval "$(tr '\n' ' ' <<< "${TEMP}")"
+	eval "$(tr '\n' ' ' <<< "${TEMP}")"
 }
 
 dialog_warn()
 {
-    local TEXT="${1}"
+	local TEXT="${1}"
 
-    dialog_msgbox "$(gettext 'Внимание!!!')" "${TEXT}"
+	dialog_msgbox "$(gettext 'Внимание!!!')" "${TEXT}"
 }
 
 dialog_textbox()
 {
-    local TITLE="${1}"
-    local TEXT="${2}"
-    local PARAMS="${3}"
+	local TITLE="${1}"
+	local TEXT="${2}"
+	local PARAMS="${3}"
 
-    local TEMP="${DIALOG}
+	local TEMP="${DIALOG}
 ${PARAMS}
 --backtitle '${AAI_VER}'
 --title '${TITLE}'
 --textbox '${TEXT}' 0 0"
 
-    eval "$(tr '\n' ' ' <<< "${TEMP}")"
+	eval "$(tr '\n' ' ' <<< "${TEMP}")"
 }
 
 dialog_checklist()
 {
-    local TITLE="${1}"
-    local CHECKLIST="${2}"
-    local ITEMS="${3}"
-    local PARAMS="${4}"
+	local TITLE="${1}"
+	local CHECKLIST="${2}"
+	local ITEMS="${3}"
+	local PARAMS="${4}"
 
-    local TEMP="${DIALOG}
+	local TEMP="${DIALOG}
 ${PARAMS}
 --backtitle '${AAI_VER}'
 --title '${TITLE}'
 --checklist '${CHECKLIST}' 0 0 0
 ${ITEMS}"
 
-    eval "$(tr '\n' ' ' <<< "${TEMP}")"
+	eval "$(tr '\n' ' ' <<< "${TEMP}")"
 }
-

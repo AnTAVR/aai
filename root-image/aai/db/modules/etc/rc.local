@@ -1,2 +1,5 @@
 #!/bin/sh
-for TTY in /dev/tty?; do /usr/bin/setleds -D +num < "${TTY}"; done
+for TTY in /dev/tty?
+do
+	/usr/bin/setleds -D +num < "${TTY}"
+done

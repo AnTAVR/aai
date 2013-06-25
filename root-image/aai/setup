@@ -67,54 +67,54 @@ echo ''
 
 echo_help()
 {
-    echo -e "${BLDYLW}$(gettext "Использование: ${SCRNAME} <опции> [...]")${TXTRST}"
-    echo -e "${BLDWHT}$(gettext 'ОПЦИИ'):${TXTRST}"
-    echo ''
-    echo -e "\t${BLDWHT}-h${TXTRST}"
-    echo -e "\t\t$(gettext 'вывод помощи')"
-    echo ''
-    echo -e "\t${BLDWHT}-g${TXTRST}"
-    echo -e "\t\t$(gettext 'включение графического режима')"
-    echo -e "\t\t\t$(gettext 'по умолчанию'): $(gettext 'консольный режим')"
-    echo ''
-    echo -e "\t${BLDWHT}-p${TXTRST}"
-    echo -e "\t\t$(gettext 'путь к временной папке, в которую будут примонтированы разделы')"
-    echo -e "\t\t\t$(gettext 'по умолчанию'): ${NS_PATH}"
-    echo ''
-    echo -e "\t${BLDWHT}-m${TXTRST}"
-    echo -e "\t\t$(gettext 'режим мини, установка только базовой системы')"
-    echo ''
-    echo -e "\t${BLDWHT}-d${TXTRST}"
-    echo -e "\t\t$(gettext 'режим без проверок выполненных пунктов')"
-    echo ''
+	echo -e "${BLDYLW}$(gettext "Использование: ${SCRNAME} <опции> [...]")${TXTRST}"
+	echo -e "${BLDWHT}$(gettext 'ОПЦИИ'):${TXTRST}"
+	echo ''
+	echo -e "\t${BLDWHT}-h${TXTRST}"
+	echo -e "\t\t$(gettext 'вывод помощи')"
+	echo ''
+	echo -e "\t${BLDWHT}-g${TXTRST}"
+	echo -e "\t\t$(gettext 'включение графического режима')"
+	echo -e "\t\t\t$(gettext 'по умолчанию'): $(gettext 'консольный режим')"
+	echo ''
+	echo -e "\t${BLDWHT}-p${TXTRST}"
+	echo -e "\t\t$(gettext 'путь к временной папке, в которую будут примонтированы разделы')"
+	echo -e "\t\t\t$(gettext 'по умолчанию'): ${NS_PATH}"
+	echo ''
+	echo -e "\t${BLDWHT}-m${TXTRST}"
+	echo -e "\t\t$(gettext 'режим мини, установка только базовой системы')"
+	echo ''
+	echo -e "\t${BLDWHT}-d${TXTRST}"
+	echo -e "\t\t$(gettext 'режим без проверок выполненных пунктов')"
+	echo ''
 }
 
 
 while getopts hgp:dm OPTION
 do
-    case "${OPTION}" in
-	'h')
-	    echo_help
-	    exit 0
-	    ;;
-	'g')
-	    [[ ! -z "${DISPLAY}" ]] && DIALOG='Xdialog --clear --colors'
-	    ;;
-	'p')
-	    NS_PATH="${OPTARG}"
-	    ;;
-	'd')
-	    NO_DEBUG=
-	    ;;
-	'm')
-	    NO_MINI=
-	    AAI_VER+=' [mini]'
-	    ;;
-	'?')
-	    echo_help
-	    exit 1
-	    ;;
-    esac
+	case "${OPTION}" in
+		'h')
+			echo_help
+			exit 0
+			;;
+		'g')
+			[[ ! -z "${DISPLAY}" ]] && DIALOG='Xdialog --clear --colors'
+			;;
+		'p')
+			NS_PATH="${OPTARG}"
+			;;
+		'd')
+			NO_DEBUG=
+			;;
+		'm')
+			NO_MINI=
+			AAI_VER+=' [mini]'
+			;;
+		'?')
+			echo_help
+			exit 1
+			;;
+	esac
 done
 
 # Если не root то выход
@@ -143,9 +143,9 @@ source "${LIBDIR}/exit.sh"
 
 if [[ ! "${NO_DEBUG}" ]]
 then
-    [[ -f "${VAR_FILE}" ]] && source "${VAR_FILE}"
-#else
-#    [[ -f "${VAR_FILE}" ]] && rm "${VAR_FILE}"
+	[[ -f "${VAR_FILE}" ]] && source "${VAR_FILE}"
+# else
+# 	[[ -f "${VAR_FILE}" ]] && rm "${VAR_FILE}"
 fi
 
 TXT_MAIN_MENU="$(gettext 'Главное меню')"
@@ -155,42 +155,42 @@ DEFAULT_MENU=
 
 setup_dialog_def_menu()
 {
-    msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for ((TEMP=1; TEMP<=${#}; TEMP++)); do echo -n " \$${TEMP}='$(eval "echo \"\${${TEMP}}\"")'"; done)\"" 'noecho'
+	msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for ((TEMP=1; TEMP<=${#}; TEMP++)); do echo -n " \$${TEMP}='$(eval "echo \"\${${TEMP}}\"")'"; done)\"" 'noecho'
 
-    local RETURN
+	local RETURN
 
-    local TITLE="$(gettext 'Инсталлятор Arch Linux')"
-    local HELP_TXT="\n${TXT_MAIN_MENU}\n"
+	local TITLE="$(gettext 'Инсталлятор Arch Linux')"
+	local HELP_TXT="\n${TXT_MAIN_MENU}\n"
 
-    local DEFAULT_ITEM="${DEFAULT_MENU}"
+	local DEFAULT_ITEM="${DEFAULT_MENU}"
 
-    local TEMP
+	local TEMP
 
-    local ITEMS=''
+	local ITEMS=''
 
 # Преобразуем строку главного меню в массив
-    for TEMP in ${MAIN_CASE[@]}
-    do
-	ITEMS+="'${TEMP}' '$(str_${TEMP})' "
-    done
+	for TEMP in ${MAIN_CASE[@]}
+	do
+		ITEMS+="'${TEMP}' '$(str_${TEMP})' "
+	done
 
-    RETURN="$(dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}" "--cancel-label '${TXT_EXIT_MAIN}'")"
+	RETURN="$(dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}" "--cancel-label '${TXT_EXIT_MAIN}'")"
 
-    echo "${RETURN}"
-    msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
+	echo "${RETURN}"
+	msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
 }
 
 # Цикл обработки главного меню
 while true
 do
-    DEFAULT_MENU="$(setup_dialog_def_menu)"
+	DEFAULT_MENU="$(setup_dialog_def_menu)"
 
 # Если меню выбрано то исполняем соответствующую функцию, в противном случае выход
-    if [[ -n "${DEFAULT_MENU}" ]]
-    then
-	run_${DEFAULT_MENU}
-    else
-	run_exit
-    fi
+	if [[ -n "${DEFAULT_MENU}" ]]
+	then
+		run_${DEFAULT_MENU}
+	else
+		run_exit
+	fi
 done
 } 2> "${LOG_FILE}"

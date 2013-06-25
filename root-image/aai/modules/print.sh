@@ -35,31 +35,31 @@ SET_PRINT=
 # Выводим строку пункта главного меню
 str_print()
 {
-    local TEMP
+	local TEMP
 
-    [[ "${RUN_PRINT}" ]] && TEMP="\Zb\Z2($(gettext 'ВЫПОЛНЕНО'))\Zn"
-    echo "${TXT_PRINT_MAIN} \Zb\Z3($(gettext 'Пока не поддерживается'))\Zn ${TEMP}"
+	[[ "${RUN_PRINT}" ]] && TEMP="\Zb\Z2($(gettext 'ВЫПОЛНЕНО'))\Zn"
+	echo "${TXT_PRINT_MAIN} \Zb\Z3($(gettext 'Пока не поддерживается'))\Zn ${TEMP}"
 }
 
 # Функция выполнения из главного меню
 run_print()
 {
-    local TEMP
+	local TEMP
 
-    if [[ "${NO_DEBUG}" ]]
-    then
-# Проверяем выполнен ли base_plus
-	[[ ! "${RUN_BASE_PLUS}" ]] && TEMP+=" $(str_base_plus)\n"
-
-	if [[ "${TEMP}" ]]
+	if [[ "${NO_DEBUG}" ]]
 	then
-	    dialog_warn \
-		"\Zb\Z1$(gettext 'Не выполнены обязательные пункты меню')\Zn\n${TEMP}"
-	    return 1
-	fi
-    fi
+# Проверяем выполнен ли base_plus
+		[[ ! "${RUN_BASE_PLUS}" ]] && TEMP+=" $(str_base_plus)\n"
 
-    dialog_warn \
-	"\Zb\Z1\"${TXT_PRINT_MAIN}\" $(gettext 'пока не поддерживается, помогите проекту, допишите данный функционал')\Zn"
-    return 1
+		if [[ "${TEMP}" ]]
+		then
+			dialog_warn \
+				"\Zb\Z1$(gettext 'Не выполнены обязательные пункты меню')\Zn\n${TEMP}"
+			return 1
+		fi
+	fi
+
+	dialog_warn \
+		"\Zb\Z1\"${TXT_PRINT_MAIN}\" $(gettext 'пока не поддерживается, помогите проекту, допишите данный функционал')\Zn"
+	return 1
 }
