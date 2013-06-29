@@ -78,12 +78,12 @@ run_video()
 			'nvidia')
 				break
 				;;
+			'optimus')
+				break
+				;;
 			'ati')
 				break
 				;;
-# 	    'intel')
-# 		break
-# 		;;
 		esac
 	done
 
@@ -99,6 +99,12 @@ run_video()
 				;;
 			'nvidia304')
 				video_nvidia304
+				set_global_var 'SET_VIDEO' "${DEF_MENU}"
+				RUN_VIDEO=1
+				return 0
+				;;
+			'optimus')
+				video_optimus
 				set_global_var 'SET_VIDEO' "${DEF_MENU}"
 				RUN_VIDEO=1
 				return 0
@@ -132,6 +138,7 @@ video_dialog_def_menu()
 	local ITEMS="'none' '-'"
 	ITEMS+=" 'nvidia' 'NVIDIA'"
 	ITEMS+=" 'nvidia304' 'NVIDIA 304xx'"
+	ITEMS+=" 'optimus' 'Bumblebee NVIDIA Optimus'"
 #     ITEMS+=" 'nvidia173' 'NVIDIA 173xx \Zb\Z3($(gettext 'Пока не поддерживается'))\Zn'"
 #     ITEMS+=" 'nvidia96' 'NVIDIA 96xx \Zb\Z3($(gettext 'Пока не поддерживается'))\Zn'"
 	ITEMS+=" 'ati' 'ATI Catalyst'"
@@ -180,6 +187,38 @@ video_nvidia304()
 
 	git_commit
 
+}
+
+video_optimus()
+{
+	local PACS
+
+#	pacman_install "-Rdds mesa-libgl" '3' 'noexit'
+#	pacman_install "-Rdds lib32-mesa-libgl" '3' 'noexit'
+	#community
+	PACS='bumblebee'
+	#extra
+	PACS=+' nvidia nvidia-utils'
+#     PACS+=' opencl-nvidia'
+#     dkms-nvidia
+	pacman_install "-S ${PACS}" '1'
+	PACS='lib32-nvidia-utils'
+	pacman_install "-S ${PACS}" '2'
+
+	pacman_install "-Rnsc ati-dri nouveau-dri" '3' 'noexit'
+
+	#extra
+	PACS='virtualgl'
+	pacman_install "-S ${PACS}" '2'
+	#multilib
+	PACS='lib32-virtualgl'
+	pacman_install "-S ${PACS}" '2'
+
+	chroot_run systemctl enable 'nvidia-enable.service'
+
+	SET_USER_GRUPS+=',bumblebee'
+
+	git_commit
 }
 
 video_ati()
