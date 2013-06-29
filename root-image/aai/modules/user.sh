@@ -28,6 +28,8 @@ MAIN_CASE+=('user')
 RUN_USER=
 TXT_USER_MAIN="$(gettext 'Пользователи')"
 
+SET_USER_GRUPS='adm'
+
 #===============================================================================
 
 # Выводим строку пункта главного меню
@@ -92,8 +94,8 @@ run_user()
 
 				NAME="$(user_dialog_name)"
 				[[ ! -n "${NAME}" ]] && continue
-	
-				chroot_run useradd -m -G wheel,storage,adm,ecryptfs -U "${NAME}"
+
+				chroot_run useradd -m -G "${SET_USER_GRUPS}" -U "${NAME}"
 				if [[ "${?}" != '0' ]]
 				then
 					dialog_warn \

@@ -944,6 +944,8 @@ pkgs_base_sudo()
 };
 ' "${NS_PATH}/etc/sudoers"
 
+	SET_USER_GRUPS+=',wheel'
+
 	git_commit
 }
 

@@ -307,6 +307,7 @@ pkgs_base_plus_cdemu()
 	pacman_install "-S ${PACS}" '1'
 	git_commit
 	SERVICES+=" 'cdemu-daemon.service' '-' 'off'"
+	SET_USER_GRUPS+=',cdemu'
 }
 
 pkgs_base_plus_alsa()
@@ -411,6 +412,9 @@ i session   required  pam_ecryptfs.so unwrap # eCryptfs
 ' "${NS_PATH}/etc/pam.d/system-auth"
 
 	chroot_run groupadd ecryptfs
+
+	SET_USER_GRUPS+=',ecryptfs'
+
 	git_commit
 }
 
@@ -1334,6 +1338,9 @@ pkgs_virtualbox()
 	git_commit
 	msg_log "$(gettext 'Настраиваю') /etc/modules-load.d/vbox.conf"
 	cat "${DBDIR}modules/etc/modules-load.d/vbox.conf" > "${NS_PATH}/etc/modules-load.d/vbox.conf"
+
+	SET_USER_GRUPS+=',vboxusers'
+
 	git_commit
 }
 APPS+=" 'virtualbox' '$(gettext 'Виртуальная машина') (+AUR)' 'off'"
@@ -1359,6 +1366,9 @@ pkgs_wireshark()
 	#extra
 	PACS='wireshark-gtk'
 	pacman_install "-S ${PACS}" '1'
+
+	SET_USER_GRUPS+=',wireshark'
+
 	git_commit
 }
 APPS+=" 'wireshark' '$(gettext 'Анализатор трафика для сетей Ethernet')' 'off'"

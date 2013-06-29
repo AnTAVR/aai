@@ -382,6 +382,8 @@ base_plus_install()
 	mkdir -p "${NS_PATH}/etc/polkit-1/rules.d"
 	cat "${DBDIR}modules/etc/polkit-1/rules.d/10-udisks.rules" > "${NS_PATH}/etc/polkit-1/rules.d/10-udisks.rules"
 
+	SET_USER_GRUPS+=',storage'
+
 	git_commit
 #-------------------------------------------------------------------------------
 
