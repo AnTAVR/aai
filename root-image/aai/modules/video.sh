@@ -207,11 +207,11 @@ video_optimus()
 
 	pacman_install "-Rnsc ati-dri nouveau-dri" '3' 'noexit'
 
-	#extra
-	PACS='virtualgl'
+	#community
+	PACS='virtualgl primus'
 	pacman_install "-S ${PACS}" '2'
 	#multilib
-	PACS='lib32-virtualgl'
+	PACS='lib32-virtualgl lib32-primus'
 	pacman_install "-S ${PACS}" '2'
 
 	chroot_run systemctl enable 'nvidia-enable.service'
