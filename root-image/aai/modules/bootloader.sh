@@ -374,9 +374,9 @@ bootloader_grub_efi()
 	CONSOLE_V_XxYxD="${DEF_CONSOLE_V_XxYxD}"
 
 	#core
-	PACS='grub dosfstools efibootmgr'
+	PACS='grub dosfstools efibootmgr gummiboot'
 	#extra
-	PACS+=' refind-efi memtest86+'
+	PACS+=' refind-efi prebootloader memtest86+'
 	#community
 	PACS+=' os-prober'
 	pacman_install "-S ${PACS}" '1'
