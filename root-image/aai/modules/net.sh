@@ -547,7 +547,7 @@ net_static_set()
 	echo "nameserver ${SET_STATIC_DNS}" > "${PATH_ROOT}/etc/resolv.conf"
 
 	local TEMP
-	for TEMP in "${DEFAULT_NAMESERVERS[@]}"
+	for TEMP in ${DEFAULT_NAMESERVERS[@]}
 	do
 		echo "nameserver ${TEMP}" >> "${PATH_ROOT}/etc/resolv.conf"
 		DNS+=" '${TEMP}'"
