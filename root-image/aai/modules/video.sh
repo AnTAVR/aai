@@ -71,21 +71,7 @@ run_video()
 		fi
 	fi
 
-	for VID in "$(lshw -c display | awk '/vendor/{print $2}')"
-	do
-		VID="$(tr '[:upper:]' '[:lower:]' <<< "${VID}")"
-		case "${VID}" in
-			'nvidia')
-				break
-				;;
-			'optimus')
-				break
-				;;
-			'ati')
-				break
-				;;
-		esac
-	done
+	VID=$(video_get_drv)
 
 	while true
 	do
@@ -120,6 +106,49 @@ run_video()
 				;;
 		esac
 	done
+}
+
+video_get_drv()
+{
+	local VID
+
+	local TEMP=0
+
+	local DISPLAY
+
+	DISPLAY=$(lshw -c display | tr '[:upper:]' '[:lower:]')
+
+	for VID in $(awk '/product:/{print $2}' <<< "${DISPLAY}")
+	do
+		case "${VID}" in
+			'gf108m' | '3rd')
+				TEMP=$((TEMP+1))
+				;;
+		esac
+	done
+
+	if [[ "${TEMP}" == '2' ]]
+	then
+		echo 'optimus'
+		return 0
+	fi
+
+	TEMP=
+	for VID in $(awk '/vendor:/{print $2}' <<< "${DISPLAY}")
+	do
+		case "${VID}" in
+			'nvidia' | 'ati')
+				echo "${VID}"
+				return 0
+				;;
+			*)
+				[[ ! "${TEMP}" ]] && TEMP="${VID}"
+				;;
+		esac
+	done
+
+	echo "${TEMP}"
+	return 1
 }
 
 video_dialog_def_menu()
