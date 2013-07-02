@@ -683,7 +683,7 @@ part_mount_dialog_dev_opt()
 	HELP_TXT+="\n$(gettext 'Введите дополнительные опции монтирования')\n"
 	HELP_TXT+="$(gettext 'По умолчанию'):"
 
-	local TEXT='defaults,relatime,noauto,x-systemd.automount'
+	local TEXT='defaults,noauto,x-systemd.automount'
 
 	case "${TYPE}" in
 		'ext4' | 'ext4dev')
