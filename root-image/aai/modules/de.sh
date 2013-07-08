@@ -545,7 +545,9 @@ de_kde()
 	local PACS
 
 	#extra
-	PACS='kdebase-plasma kde-wallpapers kdeartwork kdemultimedia-kmix'
+	PACS='kdebase-plasma kde-wallpapers kdeartwork kdemultimedia-kmix oxygen-gtk2 oxygen-gtk3'
+	#community
+	PACS+=' kde-gtk-config'
 	pacman_install "-S ${PACS}" '1'
 	#extra
 	PACS="kde-l10n-${SET_LOCAL%_*}"
