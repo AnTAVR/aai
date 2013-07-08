@@ -679,6 +679,17 @@ pkgs_base_plus_ufw()
 	git_commit
 }
 
+pkgs_packagekit()
+{
+	local PACS
+	#community
+	PACS='gnome-packagekit'
+	pacman_install "-S ${PACS}" '1'
+
+	git_commit
+}
+APPS+=" 'packagekit' '$(gettext 'Графический менеджер пакетов')' 'off'"
+
 pkgs_dolphin()
 {
 	local PACS
