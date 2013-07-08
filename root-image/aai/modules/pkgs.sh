@@ -679,16 +679,16 @@ pkgs_base_plus_ufw()
 	git_commit
 }
 
-pkgs_packagekit()
+pkgs_appset()
 {
 	local PACS
-	#community
-	PACS='gnome-packagekit'
-	pacman_install "-S ${PACS}" '1'
+	#aur
+	PACS='appset-qt packer'
+	pacman_install "-S ${PACS}" '2'
 
 	git_commit
 }
-APPS+=" 'packagekit' '$(gettext 'Графический менеджер пакетов')' 'off'"
+APPS+=" 'appset' '$(gettext 'Графический менеджер пакетов') (AUR)' 'off'"
 
 pkgs_dolphin()
 {
