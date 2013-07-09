@@ -687,6 +687,10 @@ pkgs_appset()
 	pacman_install "-S ${PACS}" '2'
 
 	git_commit
+
+	chroot_run systemctl appset-helper.service
+
+	git_commit
 }
 APPS+=" 'appset' '$(gettext 'Графический менеджер пакетов') (AUR)' 'off'"
 
