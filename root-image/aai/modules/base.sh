@@ -731,8 +731,8 @@ s/^/#/;
 	echo "PRETTY_HOSTNAME=${HOSTNAME}" > "${NS_PATH}/etc/machine-info"
 
 # Добавляем в /etc/hosts имя хоста
-	msg_log "$(gettext 'Настраиваю') /etc/hosts"
-	echo -e "127.0.0.1\t${SET_HOSTNAME}\t${HOSTNAME}" >> "${NS_PATH}/etc/hosts"
+#	msg_log "$(gettext 'Настраиваю') /etc/hosts"
+#	echo -e "127.0.0.1\t${SET_HOSTNAME}\t${HOSTNAME}" >> "${NS_PATH}/etc/hosts"
 #-------------------------------------------------------------------------------
 
 
