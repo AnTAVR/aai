@@ -625,6 +625,8 @@ de_gnome()
 {
 	local PACS
 
+	pacman_install "-Rnsc bluez" '3' 'noexit'
+
 	#extra
 	PACS='gnome gnome-extra'
 	pacman_install "-S ${PACS}" '1'
