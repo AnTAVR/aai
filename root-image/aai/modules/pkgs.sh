@@ -858,6 +858,8 @@ pkgs_smplayer()
 	local PACS
 	#extra
 	PACS='smplayer smplayer-themes'
+	#community
+	PACS+=' smtube'
 	pacman_install "-S ${PACS}" '1'
 
 	git_commit
