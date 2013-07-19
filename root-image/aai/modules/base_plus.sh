@@ -468,7 +468,7 @@ base_plus_install()
 
 	pkgs_base_plus_sensors
 
-	pkgs_base_plus_preload
+# 	pkgs_base_plus_preload
 
 	pkgs_base_plus_aria2
 

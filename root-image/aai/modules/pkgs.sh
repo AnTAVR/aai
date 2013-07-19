@@ -582,16 +582,17 @@ pkgs_base_plus_sensors()
 	SERVICES+=" 'sensord.service' '-' 'off'"
 }
 
-pkgs_base_plus_preload()
-{
-	local PACS
-	#community
-	PACS='preload'
-	pacman_install "-S ${PACS}" '1'
-	git_commit
-
-	SERVICES+=" 'preload.service' '-' 'off'"
-}
+# Убрал установку так как пакет переехал в Аур
+# pkgs_base_plus_preload()
+# {
+# 	local PACS
+# 	#community
+# 	PACS='preload'
+# 	pacman_install "-S ${PACS}" '1'
+# 	git_commit
+# 
+# 	SERVICES+=" 'preload.service' '-' 'off'"
+# }
 
 pkgs_base_plus_aria2()
 {
