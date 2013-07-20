@@ -295,6 +295,8 @@ pkgs_base_plus_timestamp()
 pkgs_base_plus_aspell_loc()
 {
 	local PACS
+	PACS="aspell-en"
+	pacman_install "-S ${PACS}" '1'
 	PACS="aspell-${SET_LOCAL%_*}"
 	pacman_install "-S ${PACS}" '2'
 	git_commit
