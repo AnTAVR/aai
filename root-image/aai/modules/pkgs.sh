@@ -1019,14 +1019,15 @@ pkgs_tesseract()
 {
 	local PACS
 	#community
-	PACS='yagf tesseract ocrfeeder tesseract-data'
+	PACS='tesseract tesseract-data cuneiform'
+	PACS+=' ocrfeeder yagf'
 	pacman_install "-S ${PACS}" '1'
-	#aur
-	PACS='tesseract-gui'
-	pacman_install "-S ${PACS}" '2'
+# 	#aur
+# 	PACS='tesseract-gui'
+# 	pacman_install "-S ${PACS}" '2'
 	git_commit
 }
-APPS+=" 'tesseract' '$(gettext 'Система распознавания текста') (+AUR)' 'off'"
+APPS+=" 'tesseract' '$(gettext 'Система распознавания текста')' 'off'"
 
 pkgs_libreoffice()
 {
