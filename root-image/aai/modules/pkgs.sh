@@ -1189,6 +1189,16 @@ pkgs_filezilla()
 }
 APPS+=" 'filezilla' '$(gettext 'FTP клиент')' 'on'"
 
+pkgs_linuxdcpp()
+{
+	local PACS
+	#community
+	PACS='linuxdcpp'
+	pacman_install "-S ${PACS}" '1'
+	git_commit
+}
+APPS+=" 'linuxdcpp' '$(gettext 'DC++ клиент')' 'off'"
+
 #Хороший торрент клиент но при работе вылетает (((
 # kernel: qbittorrent[5140]: segfault at 680000003f ip 00007f963956ad63 sp 00007f962c55ba00 error 4 in libc-2.17.so[7f96394ef000+1a4000]
 pkgs_qbittorrent()
