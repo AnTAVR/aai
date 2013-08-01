@@ -259,7 +259,7 @@ video_ati()
 	#community
 	PACS='catalyst-dkms catalyst-utils'
 #     PACS+=' opencl-catalyst'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S ${PACS}" '2'
 	PACS='lib32-catalyst-utils'
 	pacman_install "-S ${PACS}" '2'
 	git_commit
