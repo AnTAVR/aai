@@ -283,12 +283,12 @@ bootloader_grub_bios()
 #  };
 #};
 # Добавляем параметр zcache2
-/^GRUB_CMDLINE_LINUX+=\" *zcache2/s/^/#/;
-0,/^GRUB_CMDLINE_LINUX=/{
-//{
-	a GRUB_CMDLINE_LINUX+=\" zcache2\"
-};
-};
+# /^GRUB_CMDLINE_LINUX+=\" *zcache2/s/^/#/;
+# 0,/^GRUB_CMDLINE_LINUX=/{
+# //{
+# 	a GRUB_CMDLINE_LINUX+=\" zcache2\"
+# };
+# };
 # Добавляем параметр video и vga
 /^GRUB_CMDLINE_LINUX+=\" *video/s/^/#/;
 0,/^GRUB_CMDLINE_LINUX=/{
