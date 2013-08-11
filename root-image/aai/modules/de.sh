@@ -71,7 +71,7 @@ run_de()
 
 	fi
 
-	local DEF_MENU='openbox'
+	local DEF_MENU='kde'
 
 	while true
 	do
@@ -164,6 +164,7 @@ de_dialog_menu()
 	ITEMS+=" 'openbox' 'Open Box ($(gettext 'консольный вход'))'"
 	ITEMS+=" 'lxde' 'LXDE'"
 	ITEMS+=" 'xfce4' 'Xfce4 ($(gettext 'консольный вход'))'"
+	ITEMS+=" 'e17' 'Enlightenment ($(gettext 'консольный вход'))'"
 	ITEMS+=" 'kde' 'KDE'"
 	ITEMS+=" 'gnome' 'GNOME'"
 	ITEMS+=" 'mate' 'Mate \Zb\Z3($(gettext 'Пока не поддерживается'))\Zn'"
@@ -533,6 +534,29 @@ de_xfce4()
 
 		msg_log "$(gettext 'Настраиваю') /etc/skel/.xinitrc"
 		echo 'exec startxfce4' >> "${NS_PATH}/etc/skel/.xinitrc"
+	fi
+
+	git_commit
+	return 0
+}
+
+# Устанавливаем e17
+de_e17()
+{
+	local PACS
+
+	#extra
+	PACS='enlightenment17'
+	pacman_install "-S ${PACS}" '1'
+	git_commit
+
+	if [[ ! "$SET_DE" ]]
+	then
+		msg_log "$(gettext 'Настраиваю') /etc/skel/.zprofile"
+		echo '[[ -z ${DISPLAY} && ${XDG_VTNR} -eq 1 ]] && exec startx &> ~/.xlog' >> "${NS_PATH}/etc/skel/.zprofile"
+
+		msg_log "$(gettext 'Настраиваю') /etc/skel/.xinitrc"
+		echo 'exec enlightenment_start' >> "${NS_PATH}/etc/skel/.xinitrc"
 	fi
 
 	git_commit
