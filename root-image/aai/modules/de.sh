@@ -168,7 +168,7 @@ de_dialog_menu()
 	ITEMS+=" 'e17' 'Enlightenment ($(gettext 'консольный вход'))'"
 	ITEMS+=" 'gnome' 'GNOME'"
 	ITEMS+=" 'mate' 'Mate ($(gettext 'консольный вход'))'"
-	ITEMS+=" 'cinnamon' 'Cinnamon \Zb\Z3($(gettext 'Пока не поддерживается'))\Zn'"
+	ITEMS+=" 'cinnamon' 'Cinnamon ($(gettext 'консольный вход'))'"
 
 	HELP_TXT+=" \Zb\Z7\"${DEFAULT_ITEM}\"\Zn\n"
 
@@ -706,21 +706,21 @@ de_cinnamon()
 {
 	local PACS
 
-	dialog_warn \
-		"\Zb\Z1\"CINNAMON\" $(gettext 'пока не поддерживается, помогите проекту, допишите данный функционал')\Zn"
-	return 1
+	pacman_install "-Rnsc bluez" '3' 'noexit'
 
-	#extra
-	PACS=''
+	#community
+	PACS='cinnamon cinnamon-control-center cinnamon-screensaver nemo'
 	pacman_install "-S ${PACS}" '1'
 	git_commit
 
 
 	if [[ ! "$SET_DE" ]]
 	then
-# включаем gdm
-		chroot_run systemctl disable 'getty@tty1.service'
-		chroot_run systemctl enable 'gdm.service'
+		msg_log "$(gettext 'Настраиваю') /etc/skel/.zprofile"
+		echo '[[ -z ${DISPLAY} && ${XDG_VTNR} -eq 1 ]] && exec startx &> ~/.xlog' >> "${NS_PATH}/etc/skel/.zprofile"
+
+		msg_log "$(gettext 'Настраиваю') /etc/skel/.xinitrc"
+		echo 'exec gnome-session-cinnamon' >> "${NS_PATH}/etc/skel/.xinitrc"
 	fi
 
 	git_commit
