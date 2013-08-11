@@ -569,7 +569,9 @@ de_kde()
 	local PACS
 
 	#extra
-	PACS='kdebase-plasma kde-wallpapers kdeartwork kdemultimedia-kmix oxygen-gtk2 oxygen-gtk3'
+#	PACS='kdebase-plasma kde-wallpapers kdeartwork'
+	PACS='kde'
+	PACS+=' kdemultimedia-kmix oxygen-gtk2 oxygen-gtk3'
 	#community
 	PACS+=' kde-gtk-config'
 	pacman_install "-S ${PACS}" '1'
@@ -599,22 +601,22 @@ de_kde()
 
 	git_commit
 
-	pkgs_dolphin
-	pkgs_kdeadmin
-	pkgs_kdesdk
-	pkgs_kdeutils
-	pkgs_kdegraphics
-	pkgs_kpatience
-
-	dialog_yesno \
-		"$(gettext 'Установить дополнительные пакеты')" \
-		"$(gettext 'Установить группу kdepim')?" \
-		'--defaultno'
-	case "${?}" in
-		'0') #Yes
-			pkgs_kdepim
-			;;
-	esac
+# 	pkgs_dolphin
+# 	pkgs_kdeadmin
+# 	pkgs_kdesdk
+# 	pkgs_kdeutils
+# 	pkgs_kdegraphics
+# 	pkgs_kpatience
+# 
+# 	dialog_yesno \
+# 		"$(gettext 'Установить дополнительные пакеты')" \
+# 		"$(gettext 'Установить группу kdepim')?" \
+# 		'--defaultno'
+# 	case "${?}" in
+# 		'0') #Yes
+# 			pkgs_kdepim
+# 			;;
+# 	esac
 
 #     #extra
 #     PACS='archlinux-themes-kdm'
@@ -639,7 +641,7 @@ de_kde()
 #  cat "${DBDIR}modules/etc/skel/.kde4/share/config/plasma-desktop-appletsrc" > "${NS_PATH}/etc/skel/.kde4/share/config/plasma-desktop-appletsrc"
 #  cat "${DBDIR}modules/etc/skel/.kde4/share/config/ksplashrc" > "${NS_PATH}/etc/skel/.kde4/share/config/ksplashrc"
 
-	git_commit
+#	git_commit
 
 	return 0
 }
