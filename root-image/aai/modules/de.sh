@@ -162,12 +162,12 @@ de_dialog_menu()
 	local DEFAULT_ITEM="${P_DEF_MENU}"
 	local ITEMS="'no' '$(gettext 'Сам установлю, потом...')'"
 	ITEMS+=" 'openbox' 'Open Box ($(gettext 'консольный вход'))'"
-	ITEMS+=" 'lxde' 'LXDE'"
-	ITEMS+=" 'xfce4' 'Xfce4 ($(gettext 'консольный вход'))'"
-	ITEMS+=" 'e17' 'Enlightenment ($(gettext 'консольный вход'))'"
 	ITEMS+=" 'kde' 'KDE'"
+	ITEMS+=" 'xfce4' 'Xfce4 ($(gettext 'консольный вход'))'"
+	ITEMS+=" 'lxde' 'LXDE'"
+	ITEMS+=" 'e17' 'Enlightenment ($(gettext 'консольный вход'))'"
 	ITEMS+=" 'gnome' 'GNOME'"
-	ITEMS+=" 'mate' 'Mate \Zb\Z3($(gettext 'Пока не поддерживается'))\Zn'"
+	ITEMS+=" 'mate' 'Mate ($(gettext 'консольный вход'))'"
 	ITEMS+=" 'cinnamon' 'Cinnamon \Zb\Z3($(gettext 'Пока не поддерживается'))\Zn'"
 
 	HELP_TXT+=" \Zb\Z7\"${DEFAULT_ITEM}\"\Zn\n"
@@ -673,21 +673,28 @@ de_mate()
 {
 	local PACS
 
-	dialog_warn \
-		"\Zb\Z1\"MATE\" $(gettext 'пока не поддерживается, помогите проекту, допишите данный функционал')\Zn"
-	return 1
+	msg_log "$(gettext 'Добавляю') mate > /etc/pacman.conf"
+	grep 'mate' "${NS_PATH}/etc/pacman.conf" > /dev/null && echo '' || echo '
 
-	#extra
-	PACS=''
+[mate]
+SigLevel = Optional TrustAll
+Server = http://repo.mate-desktop.org/archlinux/$arch
+' >> "${NS_PATH}/etc/pacman.conf"
+
+	pacman_install '-Syy' '1'
+
+	#mate
+	PACS='mate mate-extras'
 	pacman_install "-S ${PACS}" '1'
 	git_commit
 
-
 	if [[ ! "$SET_DE" ]]
 	then
-# включаем gdm
-		chroot_run systemctl disable 'getty@tty1.service'
-		chroot_run systemctl enable 'gdm.service'
+		msg_log "$(gettext 'Настраиваю') /etc/skel/.zprofile"
+		echo '[[ -z ${DISPLAY} && ${XDG_VTNR} -eq 1 ]] && exec startx &> ~/.xlog' >> "${NS_PATH}/etc/skel/.zprofile"
+
+		msg_log "$(gettext 'Настраиваю') /etc/skel/.xinitrc"
+		echo 'exec mate-session' >> "${NS_PATH}/etc/skel/.xinitrc"
 	fi
 
 	git_commit
