@@ -90,51 +90,9 @@ run_de()
 				RUN_DE=1
 				return 0
 				;;
-			'openbox')
+			'openbox' | 'lxde' | 'xfce4' | 'kde' | 'gnome' | 'mate' | 'cinnamon' | 'awesome')
 				de_install_xorg || continue
-				de_openbox || continue
-				[[ ! "$SET_DE" ]] && set_global_var 'SET_DE' "${DEF_MENU}"
-				RUN_DE=1
-				return 0
-				;;
-			'lxde')
-				de_install_xorg || continue
-				de_lxde || continue
-				[[ ! "$SET_DE" ]] && set_global_var 'SET_DE' "${DEF_MENU}"
-				RUN_DE=1
-				return 0
-				;;
-			'xfce4')
-				de_install_xorg || continue
-				de_xfce4 || continue
-				[[ ! "$SET_DE" ]] && set_global_var 'SET_DE' "${DEF_MENU}"
-				RUN_DE=1
-				return 0
-				;;
-			'kde')
-				de_install_xorg || continue
-				de_kde || continue
-				[[ ! "$SET_DE" ]] && set_global_var 'SET_DE' "${DEF_MENU}"
-				RUN_DE=1
-				return 0
-				;;
-			'gnome')
-				de_install_xorg || continue
-				de_gnome || continue
-				[[ ! "$SET_DE" ]] && set_global_var 'SET_DE' "${DEF_MENU}"
-				RUN_DE=1
-				return 0
-				;;
-			'mate')
-#        de_install_xorg || continue
-				de_mate || continue
-				[[ ! "$SET_DE" ]] && set_global_var 'SET_DE' "${DEF_MENU}"
-				RUN_DE=1
-				return 0
-				;;
-			'cinnamon')
-#        de_install_xorg || continue
-				de_cinnamon || continue
+				de_${DEF_MENU} || continue
 				[[ ! "$SET_DE" ]] && set_global_var 'SET_DE' "${DEF_MENU}"
 				RUN_DE=1
 				return 0
@@ -169,6 +127,7 @@ de_dialog_menu()
 	ITEMS+=" 'gnome' 'GNOME'"
 	ITEMS+=" 'mate' 'Mate ($(gettext 'консольный вход'))'"
 	ITEMS+=" 'cinnamon' 'Cinnamon ($(gettext 'консольный вход'))'"
+	ITEMS+=" 'awesome' 'Awesome ($(gettext 'консольный вход'))'"
 
 	HELP_TXT+=" \Zb\Z7\"${DEFAULT_ITEM}\"\Zn\n"
 
@@ -723,6 +682,30 @@ de_cinnamon()
 
 		msg_log "$(gettext 'Настраиваю') /etc/skel/.xinitrc"
 		echo 'exec gnome-session-cinnamon' >> "${NS_PATH}/etc/skel/.xinitrc"
+	fi
+
+	git_commit
+	return 0
+}
+
+# Устанавливаем awesome
+de_awesome()
+{
+	local PACS
+
+	#community
+	PACS='awesome'
+	pacman_install "-S ${PACS}" '1'
+	git_commit
+
+
+	if [[ ! "$SET_DE" ]]
+	then
+		msg_log "$(gettext 'Настраиваю') /etc/skel/.zprofile"
+		echo '[[ -z ${DISPLAY} && ${XDG_VTNR} -eq 1 ]] && exec startx &> ~/.xlog' >> "${NS_PATH}/etc/skel/.zprofile"
+
+		msg_log "$(gettext 'Настраиваю') /etc/skel/.xinitrc"
+		echo 'exec awesome' >> "${NS_PATH}/etc/skel/.xinitrc"
 	fi
 
 	git_commit
