@@ -1572,6 +1572,9 @@ pkgs_nginx()
 	mkdir -p "${NS_PATH}"/srv/http/nginx/{public,private,logs,backup}
 	cp -Pb "${NS_PATH}"/usr/share/html/* "${NS_PATH}"/srv/http/nginx/public/
 
+	echo '<?php' > "${NS_PATH}"/srv/http/nginx/public/index.php
+	echo 'phpinfo();' >> "${NS_PATH}"/srv/http/nginx/public/index.php
+
 	ln -sr "${NS_PATH}/usr/share/webapps/phpMyAdmin" "${NS_PATH}/srv/http/nginx/public/phpmyadmin"
 	ln -sr "${NS_PATH}/usr/share/webapps/phppgadmin" "${NS_PATH}/srv/http/nginx/public/phppgadmin"
 
