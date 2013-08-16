@@ -30,6 +30,7 @@ TXT_PRINT_MAIN="$(gettext 'Принтеры, сканеры')"
 
 # Выбранный драйвер
 SET_PRINT=
+SET_SCAN=
 #===============================================================================
 
 # Выводим строку пункта главного меню
@@ -50,6 +51,8 @@ run_print()
 	then
 # Проверяем выполнен ли base_plus
 		[[ ! "${RUN_BASE_PLUS}" ]] && TEMP+=" $(str_base_plus)\n"
+# Проверяем выполнен ли de пункт меню
+		[[ ! "${RUN_DE}" ]] && TEMP+=" $(str_de)\n"
 
 		if [[ "${TEMP}" ]]
 		then
@@ -59,7 +62,72 @@ run_print()
 		fi
 	fi
 
-	dialog_warn \
-		"\Zb\Z1\"${TXT_PRINT_MAIN}\" $(gettext 'пока не поддерживается, помогите проекту, допишите данный функционал')\Zn"
+
+	local DEF_MENU='scan'
+
+	while true
+	do
+		DEF_MENU="$(print_dialog_menu "${DEF_MENU}")"
+		case "${DEF_MENU}" in
+			'print' )
+				print_print || continue
+				RUN_PRINT=1
+				;;
+			'scan')
+				print_scan || continue
+				RUN_PRINT=1
+				;;
+			*)
+				return 1
+				;;
+		esac
+	done
+
+}
+
+print_dialog_menu()
+{
+	msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for ((TEMP=1; TEMP<=${#}; TEMP++)); do echo -n " \$${TEMP}='$(eval "echo \"\${${TEMP}}\"")'"; done)\"" 'noecho'
+
+	local RETURN
+
+	local TITLE="${TXT_DE_MAIN}"
+	local HELP_TXT="\n$(gettext 'Выберите установку устройства')\n"
+
+	local DEFAULT_ITEM=
+
+	local TEMP="\Zb\Z1$(gettext 'пока не поддерживается')\Zn"
+	[[ "${SET_SCAN}" ]] && TEMP="\Zb\Z2($(gettext 'ВЫПОЛНЕНО'))\Zn"
+	local ITEMS="'print' '$(gettext 'Принтер') ${TEMP}'"
+
+	TEMP=
+	[[ "${SET_SCAN}" ]] && TEMP="\Zb\Z2($(gettext 'ВЫПОЛНЕНО'))\Zn"
+	ITEMS+=" 'scan' '$(gettext 'Сканеры') ${TEMP}'"
+
+	RETURN="$(dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}" "--cancel-label '${TXT_MAIN_MENU}'")"
+
+	echo "${RETURN}"
+	msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
+
+}
+
+print_scan()
+{
+	if [[ ! "$SET_SCAN" ]]
+	then
+		pkgs_print_sane
+		SET_SCAN='sane'
+		set_global_var 'SET_SCAN' "${SET_SCAN}"
+		return 0
+	fi
 	return 1
+}
+
+print_print()
+{
+	dialog_warn \
+		"\Zb\Z1$(gettext 'пока не поддерживается, помогите проекту, допишите данный функционал')\Zn"
+	return 1
+
+	[[ ! "$SET_PRINT" ]] && set_global_var 'SET_PRINT' "${SET_PRINT}"
 }

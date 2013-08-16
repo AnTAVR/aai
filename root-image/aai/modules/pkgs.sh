@@ -1640,3 +1640,12 @@ pkgs_postgresql()
 # -P Запрашивать пароль при создании
 # createdb -O username databasename [-E database_encoding]
 }
+
+pkgs_print_sane()
+{
+	local PACS
+	#extra
+	PACS='xsane'
+	pacman_install "-S ${PACS}" '1'
+	git_commit
+}
