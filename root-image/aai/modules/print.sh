@@ -39,7 +39,7 @@ str_print()
 	local TEMP
 
 	[[ "${RUN_PRINT}" ]] && TEMP="\Zb\Z2($(gettext 'ВЫПОЛНЕНО'))\Zn"
-	echo "${TXT_PRINT_MAIN} \Zb\Z3($(gettext 'Пока не поддерживается'))\Zn ${TEMP}"
+	echo "${TXT_PRINT_MAIN} ${TEMP}"
 }
 
 # Функция выполнения из главного меню
@@ -97,7 +97,7 @@ print_dialog_menu()
 	local DEFAULT_ITEM=
 
 	local TEMP="\Zb\Z1$(gettext 'пока не поддерживается')\Zn"
-	[[ "${SET_SCAN}" ]] && TEMP="\Zb\Z2($(gettext 'ВЫПОЛНЕНО'))\Zn"
+	[[ "${SET_PRINT}" ]] && TEMP="\Zb\Z2($(gettext 'ВЫПОЛНЕНО'))\Zn"
 	local ITEMS="'print' '$(gettext 'Принтер') ${TEMP}'"
 
 	TEMP=
