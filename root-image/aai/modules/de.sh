@@ -610,7 +610,7 @@ de_gnome()
 {
 	local PACS
 
-	pacman_install "-Rnsc bluez" '3' 'noexit'
+# 	pacman_install "-Rnsc bluez" '3' 'noexit'
 
 	#extra
 	PACS='gnome gnome-extra'
@@ -634,7 +634,7 @@ de_mate()
 {
 	local PACS
 
-	pacman_install "-Rnsc bluez" '3' 'noexit'
+# 	pacman_install "-Rnsc bluez" '3' 'noexit'
 
 	msg_log "$(gettext 'Добавляю') mate > /etc/pacman.conf"
 	grep 'mate' "${NS_PATH}/etc/pacman.conf" > /dev/null && echo '' || echo '
@@ -669,7 +669,7 @@ de_cinnamon()
 {
 	local PACS
 
-	pacman_install "-Rnsc bluez" '3' 'noexit'
+# 	pacman_install "-Rnsc bluez" '3' 'noexit'
 
 	#community
 	PACS='cinnamon cinnamon-control-center cinnamon-screensaver nemo'

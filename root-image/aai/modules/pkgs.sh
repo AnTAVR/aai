@@ -448,7 +448,8 @@ pkgs_base_plus_laptop()
 {
 	local PACS
 	#extra
-	PACS='upower bluez bluez-firmware'
+	PACS='upower'
+# 	PACS='bluez bluez-firmware'
 	#community
 	PACS+=' laptop-mode-tools apcupsd powertop'
 	# acpi acpid
