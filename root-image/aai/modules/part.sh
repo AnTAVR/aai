@@ -778,9 +778,11 @@ part_mount_swap()
 
 			msg_log "$(gettext 'Создается') /swapfile"
 			fallocate -l "${SET_DEV_SWAP[1]}M" "${NS_PATH}${SET_DEV_SWAP[0]}"
-			msg_log "dd if='/dev/urandom' of=${NS_PATH}${SET_DEV_SWAP[0]} bs='1M' count=${SET_DEV_SWAP[1]}"
+			msg_log "dd if='/dev/zero' of=${NS_PATH}${SET_DEV_SWAP[0]} bs='1M' count=${SET_DEV_SWAP[1]}"
+# 			msg_log "dd if='/dev/urandom' of=${NS_PATH}${SET_DEV_SWAP[0]} bs='1M' count=${SET_DEV_SWAP[1]}"
 			msg_info "$(gettext 'Пожалуйста, подождите')..."
-			dd if='/dev/urandom' of="${NS_PATH}${SET_DEV_SWAP[0]}" bs='1M' count="${SET_DEV_SWAP[1]}"
+			dd if='/dev/zero' of="${NS_PATH}${SET_DEV_SWAP[0]}" bs='1M' count="${SET_DEV_SWAP[1]}"
+# 			dd if='/dev/urandom' of="${NS_PATH}${SET_DEV_SWAP[0]}" bs='1M' count="${SET_DEV_SWAP[1]}"
 			mkswap -L SwapFile "${NS_PATH}${SET_DEV_SWAP[0]}"
 			msg_log " swapon ${NS_PATH}${SET_DEV_SWAP[0]}"
 			swapon "${NS_PATH}${SET_DEV_SWAP[0]}"
