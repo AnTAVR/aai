@@ -634,6 +634,8 @@ de_mate()
 {
 	local PACS
 
+	pacman_install "-Rnsc bluez" '3' 'noexit'
+
 	msg_log "$(gettext 'Добавляю') mate > /etc/pacman.conf"
 	grep 'mate' "${NS_PATH}/etc/pacman.conf" > /dev/null && echo '' || echo '
 
