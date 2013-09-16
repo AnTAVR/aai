@@ -157,6 +157,7 @@ part_part_dialog_fdisk()
 	local DEFAULT_ITEM="${P_FDISK}"
 	local ITEMS="'cfdisk' 'MBR'"
 	ITEMS+=" 'fdisk' 'MBR \Zb\Z3($(gettext 'Рекомендуется'))\Zn'"
+	ITEMS+=" 'sfdisk' '-'"
 	ITEMS+=" 'parted' '-'"
 	ITEMS+=" 'cgdisk' 'GPT'"
 	ITEMS+=" 'gdisk' 'GPT \Zb\Z3($(gettext 'Рекомендуется'))\Zn'"
