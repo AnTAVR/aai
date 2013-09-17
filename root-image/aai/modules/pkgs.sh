@@ -458,7 +458,7 @@ pkgs_base_plus_laptop()
 	git_commit
 
 	SERVICES+=" 'upower.service' '-' 'off'"
-	SERVICES+=" 'bluetooth.service' '-' 'off'"
+# 	SERVICES+=" 'bluetooth.service' '-' 'off'"
 	SERVICES+=" 'laptop-mode.service' '-' 'off'"
 	SERVICES+=" 'apcupsd.service' '-' 'off'"
 }
