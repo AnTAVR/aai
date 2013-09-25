@@ -321,6 +321,11 @@ pkgs_base_plus_alsa()
 	pacman_install "-S ${PACS}" '1'
 	git_commit
 
+	#multilib
+	PACS='lib32-alsa-plugins lib32-alsa-oss'
+	pacman_install "-S ${PACS}" '2'
+	git_commit
+
 	msg_log "$(gettext 'Настраиваю') /etc/modules-load.d/snd-alsa-oss.conf"
 	cat "${DBDIR}modules/etc/modules-load.d/snd-alsa-oss.conf" > "${NS_PATH}/etc/modules-load.d/snd-alsa-oss.conf"
 	git_commit
@@ -1236,7 +1241,7 @@ pkgs_skype()
 	PACS+=' skype-call-recorder'
 	#multilib
 	PACS+=' skype'
-# lib32-libcanberra lib32-libpulse
+# lib32-libcanberra-pulse lib32-libcanberra lib32-libpulse
 	pacman_install "-S ${PACS}" '1'
 	git_commit
 }
