@@ -28,7 +28,7 @@ MAIN_CASE+=('user')
 RUN_USER=
 TXT_USER_MAIN="$(gettext 'Пользователи')"
 
-SET_USER_GRUPS='adm'
+SET_USER_GRUPS='adm,systemd-journal'
 
 #===============================================================================
 
