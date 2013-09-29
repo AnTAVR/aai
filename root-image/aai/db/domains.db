@@ -28,7 +28,7 @@ BL	St Barthelemy	America/St_Barthelemy
 BM	Bermuda	Atlantic/Bermuda
 BN	Brunei	Asia/Brunei
 BO	Bolivia	America/La_Paz
-BQ	Bonaire Sint Eustatius & Saba	America/Kralendijk
+BQ	Caribbean Netherlands	America/Kralendijk
 BR	Brazil	America/Belem
 BS	Bahamas	America/Nassau
 BT	Bhutan	Asia/Thimphu
@@ -209,7 +209,7 @@ SR	Suriname	America/Paramaribo
 SS	South Sudan	Africa/Juba
 ST	Sao Tome & Principe	Africa/Sao_Tome
 SV	El Salvador	America/El_Salvador
-SX	Sint Maarten	America/Lower_Princes
+SX	St Maarten (Dutch part)	America/Lower_Princes
 SY	Syria	Asia/Damascus
 SZ	Swaziland	Africa/Mbabane
 TC	Turks & Caicos Is	America/Grand_Turk

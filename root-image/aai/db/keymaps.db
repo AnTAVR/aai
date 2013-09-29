@@ -12,6 +12,8 @@ i386/azerty	fr-latin9	fr	pc105	latin9	terminate:ctrl_alt_bksp
 i386/azerty	fr-pc	fr	pc105	-	terminate:ctrl_alt_bksp
 i386/azerty	wangbe				
 i386/azerty	wangbe2				
+i386/bepo	dvorak-fr-bepo				
+i386/bepo	dvorak-fr-bepo-utf8				
 i386/colemak	colemak				
 i386/dvorak	ANSI-dvorak				
 i386/dvorak	dvorak	us	pc105	dvorak	terminate:ctrl_alt_bksp
