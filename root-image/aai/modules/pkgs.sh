@@ -1074,6 +1074,16 @@ pkgs_inkscape()
 }
 APPS+=" 'inkscape' '$(gettext 'Векторный редактор')' 'on'"
 
+pkgs_xmind()
+{
+	local PACS
+	#aur
+	PACS='xmind'
+	pacman_install "-S ${PACS}" '2'
+	git_commit
+}
+APPS+=" 'xmind' '$(gettext 'Редактор интеллект-карт и диаграмм') (AUR)' 'on'"
+
 pkgs_firefox()
 {
 	local PACS
