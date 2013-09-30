@@ -1552,6 +1552,8 @@ pkgs_apache()
 	mkdir -p "${NS_PATH}"/etc/httpd/conf/{sites-available,sites-enabled}
 
 	git_commit
+
+	SET_USER_GRUPS+=',http'
 }
 
 pkgs_nginx()
@@ -1586,6 +1588,8 @@ pkgs_nginx()
 
 	chroot_run systemctl enable nginx.service
 	git_commit
+
+	SET_USER_GRUPS+=',http'
 }
 
 pkgs_php()
@@ -1657,4 +1661,6 @@ pkgs_print_sane()
 	PACS='xsane'
 	pacman_install "-S ${PACS}" '1'
 	git_commit
+
+	SET_USER_GRUPS+=',scanner'
 }
