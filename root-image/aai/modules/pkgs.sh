@@ -1677,3 +1677,14 @@ pkgs_print_sane()
 
 	SET_USER_GRUPS+=',scanner'
 }
+
+pkgs_print_print()
+{
+# 	local PACS
+# 	#extra
+# 	PACS='xsane'
+# 	pacman_install "-S ${PACS}" '1'
+# 	git_commit
+
+	SET_USER_GRUPS+=',lp'
+}

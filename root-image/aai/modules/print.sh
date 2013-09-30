@@ -113,14 +113,17 @@ print_dialog_menu()
 
 print_scan()
 {
-	if [[ ! "$SET_SCAN" ]]
+	if [[ "$SET_SCAN" ]]
 	then
-		pkgs_print_sane
-		SET_SCAN='sane'
-		set_global_var 'SET_SCAN' "${SET_SCAN}"
-		return 0
+		dialog_warn \
+			"\Zb\Z1$(gettext 'Сканер уже установлен')\Zn"
+		return 1
 	fi
-	return 1
+
+	pkgs_print_sane
+	SET_SCAN='sane'
+	set_global_var 'SET_SCAN' "${SET_SCAN}"
+	return 0
 }
 
 print_print()
@@ -129,5 +132,15 @@ print_print()
 		"\Zb\Z1$(gettext 'пока не поддерживается, помогите проекту, допишите данный функционал')\Zn"
 	return 1
 
-	[[ ! "$SET_PRINT" ]] && set_global_var 'SET_PRINT' "${SET_PRINT}"
+	if [[ "$SET_PRINT" ]]
+	then
+		dialog_warn \
+			"\Zb\Z1$(gettext 'Принтер уже установлен')\Zn"
+		return 1
+	fi
+
+	pkgs_print_print
+	SET_PRINT='print'
+	set_global_var 'SET_PRINT' "${SET_PRINT}"
+	return 0
 }
