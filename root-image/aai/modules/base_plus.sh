@@ -488,7 +488,7 @@ base_plus_install()
 
 	pkgs_base_plus_ufw
 
-	pkgs_base_plus_timestamp
+#	pkgs_base_plus_timestamp
 
 	chroot_run mkinitcpio -p linux
 
