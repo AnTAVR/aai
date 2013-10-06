@@ -334,6 +334,7 @@ pkgs_base_plus_alsa()
 	SET_USER_GRUPS+=',audio'
 }
 
+# @todo Нужно доделать!!!
 pkgs_base_plus_squashfs()
 {
 	local PACS
@@ -572,6 +573,8 @@ pkgs_base_plus_vsftpd()
 	SERVICES+=" 'vsftpd.socket' '-' 'off'"
 	SERVICES+=" 'vsftpd-ssl.service' '-' 'off'"
 	SERVICES+=" 'vsftpd-ssl.socket' '-' 'off'"
+
+	SET_USER_GRUPS+=',ftp'
 }
 
 pkgs_base_plus_sensors()
@@ -1678,6 +1681,7 @@ pkgs_print_sane()
 	SET_USER_GRUPS+=',scanner'
 }
 
+# @todo Нужно доделать!!!
 pkgs_print_print()
 {
 # 	local PACS

@@ -875,6 +875,8 @@ pkgs_base_netctl()
 	pacman_install "-S ${PACS}" '0'
 
 	git_commit
+
+	SET_USER_GRUPS+=',network'
 }
 
 pkgs_base_netutils()
@@ -893,6 +895,8 @@ pkgs_base_netutils()
 
 	SERVICES+=" 'sshd.service' '-' 'off'"
 	SERVICES+=" 'sshdgenkeys.service' '-' 'off'"
+
+	SET_USER_GRUPS+=',rfkill'
 }
 
 pkgs_base_ntp()

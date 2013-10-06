@@ -28,7 +28,8 @@ MAIN_CASE+=('user')
 RUN_USER=
 TXT_USER_MAIN="$(gettext 'Пользователи')"
 
-SET_USER_GRUPS='adm,systemd-journal'
+SET_USER_GRUPS='users,adm,systemd-journal,log,power,floppy,optical,disk'
+SET_USER_GRUPS+=',games,video'
 
 #===============================================================================
 
@@ -92,7 +93,7 @@ run_user()
 # 		    continue
 # 		fi
 
-				NAME="$(user_dialog_name)"
+				NAME="$(user_dialog_name 'admin')"
 				[[ ! -n "${NAME}" ]] && continue
 
 				chroot_run useradd -m -G "${SET_USER_GRUPS}" -U "${NAME}"
@@ -103,9 +104,34 @@ run_user()
 					continue
 				fi
 				user_set_passw "${NAME}" || continue
-				user_ecryptfs "${NAME}"
+#				user_ecryptfs "${NAME}"
 				RUN_USER=1
-				return 0
+				DEF_MENU='new_user'
+				;;
+			'new_user')
+# Проверяем выполнен ли base_plus
+				if [[ "${NO_DEBUG}" ]]
+				then
+					if [[ ! "${RUN_BASE_PLUS}" ]]
+					then
+						dialog_warn \
+							"\Zb\Z1$(gettext 'Пункт') \"${TXT_BASE_PLUS_MAIN}\" $(gettext 'не выполнен')\Zn"
+						return 1
+					fi
+				fi
+
+				NAME="$(user_dialog_name 'newUser')"
+				[[ ! -n "${NAME}" ]] && continue
+
+				chroot_run useradd -m -G users -U "${NAME}"
+				if [[ "${?}" != '0' ]]
+				then
+					dialog_warn \
+						"\Zb\Z1$(gettext 'Пользователь не создан, возможно он уже присутствует в системе')\Zn"
+					continue
+				fi
+				user_set_passw "${NAME}" || continue
+#				user_ecryptfs "${NAME}"
 				;;
 			*)
 				return 1
@@ -161,6 +187,7 @@ user_ecryptfs()
 		'0') #Yes
 			modprobe ecryptfs
 			chroot_run ecryptfs-migrate-home -u "${P_USER}"
+			chroot_run usermod -a -G ecryptfs "${P_USER}"
 			;;
 	esac
 }
@@ -179,6 +206,7 @@ user_dialog_menu()
 	local DEFAULT_ITEM="${P_DEF_MENU}"
 	local ITEMS="'root' '$(gettext 'Установить пароль для root')'"
 	ITEMS+=" 'new_admin' '$(gettext 'Добавление администратора')'"
+	ITEMS+=" 'new_user' '$(gettext 'Добавление пользователя')'"
 
 	RETURN="$(dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}" "--cancel-label '${TXT_MAIN_MENU}'")"
 
@@ -192,11 +220,12 @@ user_dialog_name()
 
 	local RETURN
 
-	local TITLE="${TXT_USER_MAIN}"
+	local P_NAME="${1}"
+
 	local HELP_TXT="\n$(gettext 'Введите логин нового пользователя')\n"
 	HELP_TXT+="$(gettext 'По умолчанию'):"
 
-	local TEXT='admin'
+	local TEXT=${P_NAME}
 
 	HELP_TXT+=" \Zb\Z7\"${TEXT}\"\Zn\n"
 

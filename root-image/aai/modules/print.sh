@@ -126,6 +126,7 @@ print_scan()
 	return 0
 }
 
+# @todo Нужно доделать!!!
 print_print()
 {
 	dialog_warn \
