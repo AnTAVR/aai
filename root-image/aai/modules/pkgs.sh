@@ -317,7 +317,7 @@ pkgs_base_plus_alsa()
 {
 	local PACS
 	#extra
-	PACS='alsa-utils alsa-firmware alsa-plugins'
+	PACS='alsa-utils alsa-firmware alsa-plugins alsa-tools'
 	PACS+=' alsa-oss'
 	pacman_install "-S ${PACS}" '1'
 	git_commit
@@ -633,12 +633,13 @@ pkgs_base_plus_net()
 	PACS+=' modemmanager nss-mdns'
 # samba
 	#community
-	PACS+=' openresolv arp-scan dsniff ntop'
+	PACS+=' openresolv arp-scan dsniff ntop tor'
 	pacman_install "-S ${PACS}" '1'
 
 	git_commit
 
 	SERVICES+=" 'ntop.service' '-' 'off'"
+	SERVICES+=" 'tor.service' '-' 'off'"
 }
 
 pkgs_base_plus_iptables()
