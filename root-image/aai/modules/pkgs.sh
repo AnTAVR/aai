@@ -201,7 +201,7 @@ pkgs_base_plus_yaourt()
 	#extra
 	PACS='namcap ccache pkgstats'
 	#community
-	PACS+=' pkgtools upx'
+	PACS+=' upx'
 	pacman_install "-S ${PACS}" '1'
 	git_commit
 
@@ -262,7 +262,7 @@ pkgs_base_plus_yaourt()
 
 # aurvote Нужно зарегистрироваться https://aur.archlinux.org/account.php
 	#aur
-	PACS='aurvote customizepkg downgrade'
+	PACS='aurvote customizepkg downgrade pkgtools'
 	pacman_install "-S ${PACS}" '2'
 	git_commit
 #-------------------------------------------------------------------------------
