@@ -668,7 +668,7 @@ pkgs_base_plus_ufw()
 {
 	local PACS
 	#community
-	PACS='ufw'
+	PACS='ufw ufw-extras'
 	pacman_install "-S ${PACS}" '1'
 	git_commit
 
