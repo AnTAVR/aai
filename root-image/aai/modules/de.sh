@@ -226,9 +226,9 @@ s/<number>4<\/number>/<number>2<\/number>/;
 
 	git_commit
 
-	#community
+	#aur
 	PACS='archlinux-artwork'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S ${PACS}" '2'
 	git_commit
 
 #===============================================================================
