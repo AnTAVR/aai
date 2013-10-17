@@ -319,16 +319,23 @@ pkgs_base_plus_alsa()
 	#extra
 	PACS='alsa-utils alsa-firmware alsa-plugins alsa-tools'
 	PACS+=' alsa-oss'
+	#community
+	PACS+=' jack2'
+	
 	pacman_install "-S ${PACS}" '1'
 	git_commit
 
 	#multilib
-	PACS='lib32-alsa-plugins lib32-alsa-oss'
+	PACS='lib32-alsa-plugins lib32-alsa-oss lib32-jack2'
 	pacman_install "-S ${PACS}" '2'
 	git_commit
 
 	msg_log "$(gettext 'Настраиваю') /etc/modules-load.d/snd-alsa-oss.conf"
 	cat "${DBDIR}modules/etc/modules-load.d/snd-alsa-oss.conf" > "${NS_PATH}/etc/modules-load.d/snd-alsa-oss.conf"
+
+	cat "${DBDIR}modules/usr/local/lib/systemd/user/jack.service" > "${NS_PATH}/usr/local/lib/systemd/user/jack.service"
+#	cat "${DBDIR}modules/etc/skel/.asoundrc" > "${NS_PATH}/etc/skel/.asoundrc"
+
 	git_commit
 
 	SET_USER_GRUPS+=',audio'
