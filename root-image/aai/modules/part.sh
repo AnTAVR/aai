@@ -493,7 +493,10 @@ part_format_dialog_mkf_opt()
 					;;
 			esac
 			;;
-		'mkfs.btrfs' | 'mkswap' | 'mkfs.ext2' | 'mkfs.ext3' | 'mkfs.jfs' | 'mkfs.xfs' | 'mkfs.nilfs2')
+		'mkfs.btrfs' | 'mkfs.xfs')
+			TEXT="-f -L ${LABEL}"
+			;;
+		'mkswap' | 'mkfs.ext2' | 'mkfs.ext3' | 'mkfs.jfs' | 'mkfs.nilfs2')
 			TEXT="-L ${LABEL}"
 			;;
 	esac
