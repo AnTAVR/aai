@@ -1,6 +1,6 @@
 [Unit]
 Description=/etc/rc.local Compatibility
-#ConditionPathIsExecutable=/etc/rc.local
+ConditionFileIsExecutable=/etc/rc.local
 #After=
 
 [Service]
