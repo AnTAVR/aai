@@ -728,7 +728,9 @@ s/^/#/;
 
 # Создаем /etc/machine-info и добавляем имя хоста
 	msg_log "$(gettext 'Настраиваю') /etc/machine-info"
-	echo "PRETTY_HOSTNAME=${HOSTNAME}" > "${NS_PATH}/etc/machine-info"
+	echo "PRETTY_HOSTNAME='${HOSTNAME}'" > "${NS_PATH}/etc/machine-info"
+	echo "#ICON_NAME=" >> "${NS_PATH}/etc/machine-info"
+	echo "#CHASSIS=" >> "${NS_PATH}/etc/machine-info"
 
 # Добавляем в /etc/hosts имя хоста
 #	msg_log "$(gettext 'Настраиваю') /etc/hosts"
