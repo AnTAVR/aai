@@ -1355,7 +1355,19 @@ pkgs_mixxx()
 	pacman_install "-S ${PACS}" '1'
 	git_commit
 }
-APPS+=" 'mixxx' '$(gettext 'Цифровая DJ система')' 'off'"
+APPS+=" 'mixxx' '$(gettext 'DJ система')' 'off'"
+
+pkgs_ardour()
+{
+	local PACS
+	#extra
+	PACS='ardour qjackctl'
+	#community
+	PACS+=' calf ladspa-plugins'
+	pacman_install "-S ${PACS}" '1'
+	git_commit
+}
+APPS+=" 'ardour' '$(gettext 'Аудио станция')' 'off'"
 
 pkgs_myrulib()
 {
