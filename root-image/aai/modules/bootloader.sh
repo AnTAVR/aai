@@ -282,13 +282,13 @@ bootloader_grub_bios()
 #    a GRUB_CMDLINE_LINUX+=\" nomodeset\"
 #  };
 #};
-# Добавляем параметр zcache2
-# /^GRUB_CMDLINE_LINUX+=\" *zcache2/s/^/#/;
-# 0,/^GRUB_CMDLINE_LINUX=/{
-# //{
-# 	a GRUB_CMDLINE_LINUX+=\" zcache2\"
-# };
-# };
+# Добавляем параметр zswap.enabled=1
+/^GRUB_CMDLINE_LINUX+=\" *zswap/s/^/#/;
+0,/^GRUB_CMDLINE_LINUX=/{
+//{
+	a GRUB_CMDLINE_LINUX+=\" zswap.enabled=1\"
+};
+};
 # Добавляем параметр video и vga
 /^GRUB_CMDLINE_LINUX+=\" *video/s/^/#/;
 0,/^GRUB_CMDLINE_LINUX=/{
