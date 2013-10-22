@@ -406,10 +406,8 @@ pkgs_base_plus_man_pages_loc()
 pkgs_base_plus_crypt()
 {
 	local PACS
-	#extra
-	PACS='truecrypt'
 	#community
-	PACS+=' encfs ecryptfs-utils'
+	PACS='encfs ecryptfs-utils'
 	pacman_install "-S ${PACS}" '1'
 
 	git_commit
@@ -1270,6 +1268,16 @@ pkgs_skype()
 	git_commit
 }
 APPS+=" 'skype' '$(gettext 'Skype, Ekiga')' 'on'"
+
+pkgs_truecrypt()
+{
+	local PACS
+	#extra
+	PACS='truecrypt'
+	pacman_install "-S ${PACS}" '1'
+	git_commit
+}
+APPS+=" 'truecrypt' '$(gettext 'TrueCrypt шифрование на лету')' 'on'"
 
 pkgs_cryptkeeper()
 {
