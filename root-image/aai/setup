@@ -31,7 +31,7 @@ NO_MINI=1
 
 # Для локализации
 # @todo Нужно доделать!!!
-AAI_VER='Arch AnTAVR Installer ver. 3.5.1'
+AAI_VER='Arch AnTAVR Installer ver. 3.6'
 setfont 'cyr-sun16'
 #systemctl start gpm
 

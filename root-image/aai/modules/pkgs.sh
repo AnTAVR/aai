@@ -631,6 +631,7 @@ pkgs_base_plus_aria2()
 
 pkgs_base_plus_net()
 {
+#@todo кто то из них тянет графику, нужно выяснить!!!
 	local PACS
 	#core
 	PACS='net-tools isdn4k-utils iw wireless-regdb'
