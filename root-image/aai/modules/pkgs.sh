@@ -498,7 +498,7 @@ pkgs_base_plus_utils()
 	PACS='beep whois rtkit irqbalance fbset'
 	PACS+=' htop lsof strace'
 	#community
-	PACS+=' audit lshw hwinfo flashrom grc chrony mcelog iotop'
+	PACS+=' collectd audit lshw hwinfo flashrom grc chrony mcelog iotop'
 	pacman_install "-S ${PACS}" '1'
 
 	git_commit
@@ -506,6 +506,7 @@ pkgs_base_plus_utils()
 	SERVICES+=" 'rtkit-daemon.service' '-' 'off'"
 	SERVICES+=" 'irqbalance.service' '-' 'off'"
 
+	SERVICES+=" 'collectd.service' '-' 'off'"
 	SERVICES+=" 'auditd.service' '-' 'off'"
 	SERVICES+=" 'chronyd.service' '-' 'off'"
 
