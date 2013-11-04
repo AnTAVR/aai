@@ -639,12 +639,14 @@ pkgs_base_plus_net()
 	PACS+=' modemmanager nss-mdns'
 # samba
 	#community
-	PACS+=' openresolv arp-scan dsniff ntop tor'
+	PACS+=' openresolv arp-scan dsniff tor'
+# убрал потому что тянет графику
+#	PACS+='ntop'
 	pacman_install "-S ${PACS}" '1'
 
 	git_commit
 
-	SERVICES+=" 'ntop.service' '-' 'off'"
+#	SERVICES+=" 'ntop.service' '-' 'off'"
 	SERVICES+=" 'tor.service' '-' 'off'"
 }
 
