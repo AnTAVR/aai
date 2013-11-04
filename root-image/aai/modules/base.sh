@@ -821,10 +821,12 @@ s/^/#/;
 
 
 #===============================================================================
-# Добавляю resume в mkinitcpio
+# Добавляю resume в mkinitcpio.conf если свап выбран
 #===============================================================================
-	msg_log "$(gettext 'Добавляю') resume > /etc/mkinitcpio.conf"
-	sed -i '
+	if [[ -n "${SET_DEV_SWAP[0]}" ]]
+	then
+		msg_log "$(gettext 'Добавляю') resume > /etc/mkinitcpio.conf"
+		sed -i '
 # Добавляем хук resume
 /^HOOKS=/{
 	h;
@@ -837,7 +839,8 @@ s/^/#/;
 };
 ' "${NS_PATH}/etc/mkinitcpio.conf"
 
-	git_commit
+		git_commit
+	fi
 #-------------------------------------------------------------------------------
 
 
