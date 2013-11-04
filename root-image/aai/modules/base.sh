@@ -225,6 +225,7 @@ run_base()
 base_dialog_mirrorlist()
 {
 	msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for ((TEMP=1; TEMP<=${#}; TEMP++)); do echo -n " \$${TEMP}='$(eval "echo \"\${${TEMP}}\"")'"; done)\"" 'noecho'
+	msg_info "$(gettext 'Пожалуйста, подождите')..."
 
 	local RETURN
 
