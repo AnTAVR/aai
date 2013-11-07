@@ -1322,6 +1322,16 @@ pkgs_mmex()
 }
 APPS+=" 'mmex' '$(gettext 'Менеджер личных финансов') (AUR)' 'off'"
 
+pkgs_teamviewer()
+{
+	local PACS
+	#aur
+	PACS='teamviewer'
+	pacman_install "-S ${PACS}" '2'
+	git_commit
+}
+APPS+=" 'teamviewer' '$(gettext 'Удаенный доступ и поддержка через Интернет') (AUR)' 'off'"
+
 pkgs_clamav()
 {
 	local PACS
