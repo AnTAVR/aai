@@ -1363,7 +1363,7 @@ pkgs_stardict()
 {
 	local PACS
 	#community
-	PACS='stardict'
+	PACS='stardict goldendict'
 	pacman_install "-S ${PACS}" '1'
 	git_commit
 }
