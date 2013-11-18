@@ -633,7 +633,7 @@ de_gnome()
 # 	pacman_install "-Rnsc bluez" '3' 'noexit'
 
 	#extra
-	PACS='gnome gnome-extra'
+	PACS='gnome gnome-extra gnome-tweak-tool'
 	pacman_install "-S ${PACS}" '1'
 	git_commit
 
