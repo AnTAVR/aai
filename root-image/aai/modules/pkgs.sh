@@ -1027,6 +1027,16 @@ pkgs_diffuse()
 }
 APPS+=" 'diffuse' '$(gettext 'Работа с git репозиторием')' 'on'"
 
+pkgs_smartgithg()
+{
+	local PACS
+	#aur
+	PACS='smartgithg'
+	pacman_install "-S ${PACS}" '2'
+	git_commit
+}
+APPS+=" 'smartgithg' '$(gettext 'GUI клиент Git, Mercurial и Subversion') (AUR)' 'off'"
+
 pkgs_gparted()
 {
 	local PACS
