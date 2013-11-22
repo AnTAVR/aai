@@ -441,7 +441,7 @@ RU	mhr_RU UTF-8	ru
 RU	os_RU UTF-8	ru	
 RU	ru_RU ISO-8859-5	ru	
 RU	ru_RU.KOI8-R KOI8-R	ru	
-RU	ru_RU.UTF-8 UTF-8	ru	cyr-sun16
+RU	ru_RU.UTF-8 UTF-8	ruwin_alt_sh-UTF-8	cyr-sun16
 RU	tt_RU UTF-8	ru	
 RU	tt_RU@iqtelif UTF-8	ru	
 RW	rw_RW UTF-8		

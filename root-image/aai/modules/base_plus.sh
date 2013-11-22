@@ -152,15 +152,15 @@ run_base_plus()
 #===============================================================================
 # Меняем метод переключения раскладки на alt+shift
 #===============================================================================
-	dialog_yesno \
-		"$(gettext 'Установить переключение раскладки')" \
-		"$(gettext 'Установить переключение раскладки клавиатуры в консоле на') alt+shift ?"
-
-	case "${?}" in
-		'0') #Yes
-			conv_keymap
-			;;
-	esac
+#	dialog_yesno \
+#		"$(gettext 'Установить переключение раскладки')" \
+#		"$(gettext 'Установить переключение раскладки клавиатуры в консоле на') alt+shift ?"
+#
+#	case "${?}" in
+#		'0') #Yes
+#			conv_keymap
+#			;;
+#	esac
 #-------------------------------------------------------------------------------
 
 
@@ -510,86 +510,86 @@ s/system-auth/system-login/g
 }
 
 #udevadm info -a -p `udevadm info -q path -n /dev/fb0`
-conv_keymap__add_strs()
-{
-	local P_KEYNAME_S="${1}"
-	local P_KEYNAME_A="${2}"
-	local P_KEYMAP_FILE="${3}"
-
-	local KEYCODE
-	local STR
-
-	grep "${P_KEYNAME_S}$" "${P_KEYMAP_FILE}" \
-	| while read STR
-	do
-		KEYCODE=(${STR})
-		sed -i "/${STR}/ a${P_KEYNAME_A} keycode ${KEYCODE[1]} = AltGr_Lock\naltgr ${P_KEYNAME_A} keycode ${KEYCODE[1]} = AltGr_Lock" "${P_KEYMAP_FILE}"
-	done
-}
-
-conv_keymap__conv_alt_sh()
-{
-	local P_KEYMAP="${1}"
-
-	local KEYMAPSDIR='/etc/kbd/keymaps/'
-	mkdir -p "${NS_PATH}${KEYMAPSDIR}"
-
-	local KEYMAP_FILE="$(find "${NS_PATH}/usr/share/kbd/keymaps/" -iname "${P_KEYMAP}.map.gz")"
-	[[ ! "${KEYMAP_FILE}" ]] && msg_error "$(gettext 'Файл раскладки клавиатуры не найден!!!')" 0 && return
-
-	KEYMAPSDIR+="${P_KEYMAP}.map"
-	local KEYMAP_FILE_NEW="${NS_PATH}${KEYMAPSDIR}"
-
-	gzip -dc "${KEYMAP_FILE}" | grep -v 'AltGr_Lock' | sed 's/#\(.*\)//;s/^[ \t]*//;s/[ \t]*$//;s/ \{1,\}/ /g' | sed '/^ *$/d' > "${KEYMAP_FILE_NEW}"
-
-	conv_keymap__add_strs 'Alt' 'shift' "${KEYMAP_FILE_NEW}"
-	conv_keymap__add_strs 'Shift' 'alt' "${KEYMAP_FILE_NEW}"
-	sed -i "1i # Gen `date '+%Y-%m-%d %H:%M'`. From ${P_KEYMAP}.map.gz. Mode is switched by the Alt+Shift" "${KEYMAP_FILE_NEW}"
-
-	gzip -9f "${KEYMAP_FILE_NEW}"
-
-	echo "${KEYMAPSDIR}.gz"
-}
-
-conv_keymap()
-{
-	local KEYMAP_FILE_NEW
-	local KEYMAP
-	local KEYMAP_TOGGLE
-	local FONT
-	local FONT_MAP
-	local FONT_UNIMAPMAP
-
-	source "${NS_PATH}/etc/vconsole.conf"
-
-	if [[ "${KEYMAP}" ]] && [[ ! -f "${NS_PATH}${KEYMAP}" ]]
-	then
-		msg_log "$(gettext 'Изменяю раскладку') KEYMAP=${KEYMAP}"
-		KEYMAP_FILE_NEW="$(conv_keymap__conv_alt_sh "${KEYMAP}")"
-		[[ "${KEYMAP_FILE_NEW}" ]] && sed -i "
-/^KEYMAP=/s/^/#/;
-0,/^#KEYMAP=/{
-//{
-	a KEYMAP='$(sed 's/\//\\\//g' <<< "${KEYMAP_FILE_NEW}")'
-};
-};
-" "${NS_PATH}/etc/vconsole.conf"
-	fi
-
-	if [[ "${KEYMAP_TOGGLE}" ]] && [[ ! -f "${NS_PATH}${KEYMAP_TOGGLE}" ]]
-	then
-		msg_log "$(gettext 'Изменяю раскладку') KEYMAP_TOGGLE=${KEYMAP_TOGGLE}"
-		KEYMAP_FILE_NEW="$(conv_keymap__conv_alt_sh "${KEYMAP_TOGGLE}")"
-		[[ "${KEYMAP_FILE_NEW}" ]] && sed -i "
-/^KEYMAP_TOGGLE=/s/^/#/;
-0,/^#KEYMAP_TOGGLE=/{
-//{
-	a KEYMAP_TOGGLE='$(sed 's/\//\\\//g' <<< "${KEYMAP_FILE_NEW}")'
-};
-};
-" "${NS_PATH}/etc/vconsole.conf"
-	fi
-}
+# conv_keymap__add_strs()
+# {
+# 	local P_KEYNAME_S="${1}"
+# 	local P_KEYNAME_A="${2}"
+# 	local P_KEYMAP_FILE="${3}"
+# 
+# 	local KEYCODE
+# 	local STR
+# 
+# 	grep "${P_KEYNAME_S}$" "${P_KEYMAP_FILE}" \
+# 	| while read STR
+# 	do
+# 		KEYCODE=(${STR})
+# 		sed -i "/${STR}/ a${P_KEYNAME_A} keycode ${KEYCODE[1]} = AltGr_Lock\naltgr ${P_KEYNAME_A} keycode ${KEYCODE[1]} = AltGr_Lock" "${P_KEYMAP_FILE}"
+# 	done
+# }
+# 
+# conv_keymap__conv_alt_sh()
+# {
+# 	local P_KEYMAP="${1}"
+# 
+# 	local KEYMAPSDIR='/etc/kbd/keymaps/'
+# 	mkdir -p "${NS_PATH}${KEYMAPSDIR}"
+# 
+# 	local KEYMAP_FILE="$(find "${NS_PATH}/usr/share/kbd/keymaps/" -iname "${P_KEYMAP}.map.gz")"
+# 	[[ ! "${KEYMAP_FILE}" ]] && msg_error "$(gettext 'Файл раскладки клавиатуры не найден!!!')" 0 && return
+# 
+# 	KEYMAPSDIR+="${P_KEYMAP}.map"
+# 	local KEYMAP_FILE_NEW="${NS_PATH}${KEYMAPSDIR}"
+# 
+# 	gzip -dc "${KEYMAP_FILE}" | grep -v 'AltGr_Lock' | sed 's/#\(.*\)//;s/^[ \t]*//;s/[ \t]*$//;s/ \{1,\}/ /g' | sed '/^ *$/d' > "${KEYMAP_FILE_NEW}"
+# 
+# 	conv_keymap__add_strs 'Alt' 'shift' "${KEYMAP_FILE_NEW}"
+# 	conv_keymap__add_strs 'Shift' 'alt' "${KEYMAP_FILE_NEW}"
+# 	sed -i "1i # Gen `date '+%Y-%m-%d %H:%M'`. From ${P_KEYMAP}.map.gz. Mode is switched by the Alt+Shift" "${KEYMAP_FILE_NEW}"
+# 
+# 	gzip -9f "${KEYMAP_FILE_NEW}"
+# 
+# 	echo "${KEYMAPSDIR}.gz"
+# }
+# 
+# conv_keymap()
+# {
+# 	local KEYMAP_FILE_NEW
+# 	local KEYMAP
+# 	local KEYMAP_TOGGLE
+# 	local FONT
+# 	local FONT_MAP
+# 	local FONT_UNIMAPMAP
+# 
+# 	source "${NS_PATH}/etc/vconsole.conf"
+# 
+# 	if [[ "${KEYMAP}" ]] && [[ ! -f "${NS_PATH}${KEYMAP}" ]]
+# 	then
+# 		msg_log "$(gettext 'Изменяю раскладку') KEYMAP=${KEYMAP}"
+# 		KEYMAP_FILE_NEW="$(conv_keymap__conv_alt_sh "${KEYMAP}")"
+# 		[[ "${KEYMAP_FILE_NEW}" ]] && sed -i "
+# /^KEYMAP=/s/^/#/;
+# 0,/^#KEYMAP=/{
+# //{
+# 	a KEYMAP='$(sed 's/\//\\\//g' <<< "${KEYMAP_FILE_NEW}")'
+# };
+# };
+# " "${NS_PATH}/etc/vconsole.conf"
+# 	fi
+# 
+# 	if [[ "${KEYMAP_TOGGLE}" ]] && [[ ! -f "${NS_PATH}${KEYMAP_TOGGLE}" ]]
+# 	then
+# 		msg_log "$(gettext 'Изменяю раскладку') KEYMAP_TOGGLE=${KEYMAP_TOGGLE}"
+# 		KEYMAP_FILE_NEW="$(conv_keymap__conv_alt_sh "${KEYMAP_TOGGLE}")"
+# 		[[ "${KEYMAP_FILE_NEW}" ]] && sed -i "
+# /^KEYMAP_TOGGLE=/s/^/#/;
+# 0,/^#KEYMAP_TOGGLE=/{
+# //{
+# 	a KEYMAP_TOGGLE='$(sed 's/\//\\\//g' <<< "${KEYMAP_FILE_NEW}")'
+# };
+# };
+# " "${NS_PATH}/etc/vconsole.conf"
+# 	fi
+# }
 
 hwdetect_net()
 {
