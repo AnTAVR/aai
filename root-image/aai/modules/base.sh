@@ -891,6 +891,7 @@ pkgs_base_netutils()
 	#core
 	PACS='dnsutils pptpclient openvpn rp-pppoe linux-atm b43-fwcutter'
 	PACS+=' crda ipw2100-fw ipw2200-fw zd1211-firmware rfkill openssh wireless_tools'
+	PACS+=' traceroute'
 	#extra
 	PACS+=' openconnect dnsmasq ethtool vpnc gnu-netcat nmap speedtouch tcpdump'
 	#community
