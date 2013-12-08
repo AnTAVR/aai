@@ -321,7 +321,8 @@ pkgs_base_plus_alsa()
 	PACS+=' alsa-oss'
 	#community
 	PACS+=' jack2'
-	
+	PACS+=' ladspa-plugins'
+
 	pacman_install "-S ${PACS}" '1'
 	git_commit
 
@@ -1395,7 +1396,7 @@ pkgs_ardour()
 	#extra
 	PACS='ardour qjackctl'
 	#community
-	PACS+=' calf ladspa-plugins'
+	PACS+=' calf'
 	pacman_install "-S ${PACS}" '1'
 	git_commit
 }
