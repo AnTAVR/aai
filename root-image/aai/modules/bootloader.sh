@@ -290,10 +290,17 @@ bootloader_grub_bios()
 };
 };
 # Добавляем параметр video и vga
-/^GRUB_CMDLINE_LINUX+=\" *video/s/^/#/;
+# /^GRUB_CMDLINE_LINUX+=\" *video/s/^/#/;
+# 0,/^GRUB_CMDLINE_LINUX=/{
+# //{
+# 	a GRUB_CMDLINE_LINUX+=\" video=${TEMP}-${TEMP1} vga=${CONSOLE_V_XxYxD%_*}\"
+# };
+# };
+# Добавляем параметр acpi_backlight
+/^GRUB_CMDLINE_LINUX+=\" *acpi_backlight/s/^/#/;
 0,/^GRUB_CMDLINE_LINUX=/{
 //{
-	a GRUB_CMDLINE_LINUX+=\" video=${TEMP}-${TEMP1} vga=${CONSOLE_V_XxYxD%_*} acpi_backlight=vendor\"
+	a GRUB_CMDLINE_LINUX+=\" acpi_backlight=vendor\"
 };
 };
 # Добавляем параметр resume
