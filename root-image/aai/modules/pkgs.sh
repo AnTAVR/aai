@@ -1402,6 +1402,30 @@ pkgs_ardour()
 }
 APPS+=" 'ardour' '$(gettext 'Аудио станция')' 'off'"
 
+pkgs_hydrogen()
+{
+	local PACS
+	#extra
+	PACS='hydrogen'
+	pacman_install "-S ${PACS}" '1'
+	#aur
+	PACS='hydrogen-drumkits'
+	pacman_install "-S ${PACS}" '2'
+	
+	git_commit
+}
+APPS+=" 'hydrogen' '$(gettext 'Драм-машина +drumkits') (+AUR)' 'off'"
+
+pkgs_rosegarden()
+{
+	local PACS
+	#extra
+	PACS='rosegarden'
+	pacman_install "-S ${PACS}" '1'
+	git_commit
+}
+APPS+=" 'rosegarden' '$(gettext 'MIDI-секвенсер')' 'off'"
+
 pkgs_myrulib()
 {
 	local PACS
