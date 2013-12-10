@@ -502,6 +502,7 @@ pkgs_base_plus_utils()
 	#extra
 	PACS='beep whois rtkit irqbalance fbset'
 	PACS+=' htop lsof strace'
+	PACS+=' bc'
 	#community
 	PACS+=' collectd audit lshw hwinfo flashrom grc chrony mcelog iotop'
 	pacman_install "-S ${PACS}" '1'
