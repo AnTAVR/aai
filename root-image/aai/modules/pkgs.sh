@@ -318,10 +318,9 @@ pkgs_base_plus_alsa()
 	local PACS
 	#extra
 	PACS='alsa-utils alsa-firmware alsa-plugins alsa-tools'
-	PACS+=' alsa-oss'
+	PACS+=' alsa-oss timidity++'
 	#community
-	PACS+=' jack2'
-	PACS+=' ladspa-plugins'
+	PACS+=' jack2 ladspa-plugins timidity-freepats'
 
 	pacman_install "-S ${PACS}" '1'
 	git_commit
@@ -337,7 +336,12 @@ pkgs_base_plus_alsa()
 	cat "${DBDIR}modules/usr/local/lib/systemd/user/jack.service" > "${NS_PATH}/usr/local/lib/systemd/user/jack.service"
 #	cat "${DBDIR}modules/etc/skel/.asoundrc" > "${NS_PATH}/etc/skel/.asoundrc"
 
+	cp -Pb "${NS_PATH}/etc/timidity++/timidity-freepats.cfg" "${NS_PATH}/etc/timidity++/timidity.cfg"
+	cat "${DBDIR}modules/usr/local/lib/systemd/user/timidity.service" > "${NS_PATH}/usr/local/lib/systemd/user/timidity.service"
+
 	git_commit
+
+	SERVICES+=" 'timidity.service' '-' 'on'"
 
 	SET_USER_GRUPS+=',audio'
 }
@@ -967,7 +971,7 @@ pkgs_soundkonverter()
 {
 	local PACS
 	#extra
-	PACS='cdrkit faac faad2 ffmpeg flac fluidsynth lame mplayer speex timidity++ vorbis-tools wavpack'
+	PACS='cdrkit faac faad2 ffmpeg flac fluidsynth lame mplayer speex vorbis-tools wavpack'
 	#community
 	PACS+=' rubyripper ruby-gtk2 soundkonverter mac mp3gain twolame vorbisgain'
 	pacman_install "-S ${PACS}" '1'
