@@ -318,9 +318,11 @@ pkgs_base_plus_alsa()
 	local PACS
 	#extra
 	PACS='alsa-utils alsa-firmware alsa-plugins alsa-tools'
-	PACS+=' alsa-oss timidity++'
+	PACS+=' alsa-oss'
+#	PACS+=' timidity++'
 	#community
-	PACS+=' jack2 ladspa-plugins timidity-freepats'
+	PACS+=' jack2 ladspa-plugins'
+#	PACS+=' timidity-freepats'
 
 	pacman_install "-S ${PACS}" '1'
 	git_commit
@@ -336,12 +338,12 @@ pkgs_base_plus_alsa()
 	cat "${DBDIR}modules/usr/local/lib/systemd/user/jack.service" > "${NS_PATH}/usr/local/lib/systemd/user/jack.service"
 #	cat "${DBDIR}modules/etc/skel/.asoundrc" > "${NS_PATH}/etc/skel/.asoundrc"
 
-	cp -Pb "${NS_PATH}/etc/timidity++/timidity-freepats.cfg" "${NS_PATH}/etc/timidity++/timidity.cfg"
-	cat "${DBDIR}modules/usr/local/lib/systemd/user/timidity.service" > "${NS_PATH}/usr/local/lib/systemd/user/timidity.service"
+#	cp -Pb "${NS_PATH}/etc/timidity++/timidity-freepats.cfg" "${NS_PATH}/etc/timidity++/timidity.cfg"
+#	cat "${DBDIR}modules/usr/local/lib/systemd/user/timidity.service" > "${NS_PATH}/usr/local/lib/systemd/user/timidity.service"
 
 	git_commit
 
-	SERVICES+=" 'timidity.service' '-' 'on'"
+#	SERVICES+=" 'timidity.service' '-' 'on'"
 
 	SET_USER_GRUPS+=',audio'
 }
