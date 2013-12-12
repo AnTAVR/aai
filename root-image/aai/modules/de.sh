@@ -550,7 +550,8 @@ de_kde()
 	#extra
 #	PACS='kdebase-plasma kde-wallpapers kdeartwork'
 	PACS='kde'
-	PACS+=' kdemultimedia-kmix oxygen-gtk2 oxygen-gtk3'
+	PACS+=' oxygen-gtk2 oxygen-gtk3'
+#	PACS+=' kdemultimedia-kmix' # отключил потому что входит в группу kde
 	#community
 	PACS+=' kde-gtk-config'
 	pacman_install "-S ${PACS}" '1'
