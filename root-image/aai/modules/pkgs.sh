@@ -974,12 +974,14 @@ pkgs_soundkonverter()
 {
 	local PACS
 	#extra
-	PACS='cdrkit faac faad2 ffmpeg flac fluidsynth lame mplayer speex vorbis-tools wavpack'
+	PACS='cdrkit faac faad2 ffmpeg flac lame mplayer speex vorbis-tools wavpack'
+	PACS+=' fluidsynth'
 	#community
-	PACS+=' rubyripper ruby-gtk2 soundkonverter mac mp3gain twolame vorbisgain'
+	PACS+=' rubyripper ruby-gtk2 soundkonverter mac mp3gain twolame vorbisgain opus-tools'
 	pacman_install "-S ${PACS}" '1'
 	#aur
 	PACS='split2flac-git isomaster'
+	PACS+=' fluidr3' # для fluidsynth
 	pacman_install "-S ${PACS}" '2'
 	git_commit
 }
