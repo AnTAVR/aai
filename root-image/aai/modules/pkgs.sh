@@ -645,7 +645,7 @@ pkgs_base_plus_net()
 	#core
 	PACS='net-tools isdn4k-utils iw wireless-regdb'
 	#extra
-	PACS+=' modemmanager nss-mdns'
+	PACS+=' modemmanager nss-mdns mtr'
 # samba
 	#community
 	PACS+=' openresolv arp-scan dsniff tor'
