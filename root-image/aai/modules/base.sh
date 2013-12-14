@@ -983,9 +983,9 @@ pkgs_base_fs()
 	#core
 	PACS='mkinitcpio-nfs-utils nfs-utils nilfs-utils dmraid'
 	#extra
-	PACS+=' ntfs-3g f2fs-tools'
+	PACS+=' dosfstools ntfs-3g f2fs-tools'
 	#community
-	PACS+=' nbd'
+	PACS+=' nbd exfat-utils'
 	pacman_install "-S ${PACS}" '1'
 
 	git_commit

@@ -445,9 +445,7 @@ pkgs_base_plus_fs()
 {
 	local PACS
 	#extra
-	PACS='dosfstools avfs'
-	#community
-	PACS+=' exfat-utils'
+	PACS='avfs'
 	pacman_install "-S ${PACS}" '1'
 	git_commit
 }
