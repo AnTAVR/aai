@@ -825,7 +825,7 @@ pkgs_kate()
 {
 	local PACS
 	#extra
-	PACS=' kdesdk-kate kdebase-konsole kdebindings-python'
+	PACS=' kdesdk-kate kdebase-konsole'
 	pacman_install "-S ${PACS}" '1'
 	#extra
 	PACS="kde-l10n-${SET_LOCAL%_*}"
