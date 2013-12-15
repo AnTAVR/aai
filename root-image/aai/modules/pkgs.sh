@@ -729,19 +729,19 @@ pkgs_dolphin()
 {
 	local PACS
 	#extra
-	PACS='kdebase-dolphin kdegraphics-thumbnailers ruby kdesdk-dolphin-plugins kdemultimedia-ffmpegthumbs'
+	PACS='kdebase-dolphin kdesdk-dolphin-plugins kdemultimedia-ffmpegthumbs'
 	PACS+=' kdebase-konsole kdebase-kdialog kdeutils-kwallet'
 	pacman_install "-S ${PACS}" '1'
 	#aur
-	PACS='kde-servicemenus-rootactions'
-	pacman_install "-S ${PACS}" '2'
+#	PACS='kde-servicemenus-rootactions' # отключил потому что подвисает, и xauth зомбируется так что лучше использовать kdesu!
+#	pacman_install "-S ${PACS}" '2'
 	#extra
 	PACS="kde-l10n-${SET_LOCAL%_*}"
 	pacman_install "-S ${PACS}" '2'
 
 	git_commit
 }
-APPS+=" 'dolphin' '$(gettext 'Файловый менеджер') (+AUR)' 'on'"
+APPS+=" 'dolphin' '$(gettext 'Файловый менеджер')' 'on'"
 
 pkgs_kdeadmin()
 {
