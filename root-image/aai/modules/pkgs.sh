@@ -1423,15 +1423,15 @@ pkgs_hydrogen()
 }
 APPS+=" 'hydrogen' '$(gettext 'Драм-машина +drumkits') (+AUR)' 'off'"
 
-pkgs_rosegarden()
-{
-	local PACS
-	#extra
-	PACS='rosegarden'
-	pacman_install "-S ${PACS}" '1'
-	git_commit
-}
-APPS+=" 'rosegarden' '$(gettext 'MIDI-секвенсер')' 'off'"
+# pkgs_rosegarden()
+# {
+# 	local PACS
+# 	#extra
+# 	PACS='rosegarden'
+# 	pacman_install "-S ${PACS}" '1'
+# 	git_commit
+# }
+# APPS+=" 'rosegarden' '$(gettext 'MIDI-секвенсер')' 'off'"
 
 pkgs_myrulib()
 {
