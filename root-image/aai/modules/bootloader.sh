@@ -152,15 +152,16 @@ bootloader_dialog_console()
 
 	local TITLE="${TXT_BOOTLOADER_MAIN}"
 	local HELP_TXT="\n$(gettext 'Выберите разрешение экрана для консоли')\n"
+	HELP_TXT+=" \Zb\Z3($(gettext 'Некоторые разрешения могут не поддерживаеться!!!'))\Zn\n"
 	HELP_TXT+="$(gettext 'По умолчанию'):"
 
 	local DEFAULT_ITEM="${DEF_CONSOLE_V_XxYxD}"
-#  local ITEMS="$(hwinfo --vbe | grep ' Mode ' |  awk -F ' ' '{print sq $2 "_" $3 "x" $5 sq " " sq $0 sq}' sq=\' | sed 's/:_/_/g')"
-	local ITEMS="
-'0x301_640x480x8' '-' '0x303_800x600x8' '-' '0x305_1024x768x8' '-' '0x307_1280x1024x8' '-'
-'0x311_640x480x16' '-' '0x314_800x600x16' '-' '0x317_1024x768x16' '-' '0x31A_1280x1024x16' '-'
-'0x312_640x480x24' '-' '0x315_800x600x24' '-' '0x318_1024x768x24' '-' '0x31B_1280x1024x24' '-'
-"
+	local ITEMS="$(hwinfo --vbe | grep ' Mode ' |  awk -F ' ' '{print sq $2 "_" $3 "x" $5 sq " " sq $0 sq}' sq=\' | sed 's/:_/_/g')"
+# 	local ITEMS="
+# '0x301_640x480x8' '-' '0x303_800x600x8' '-' '0x305_1024x768x8' '-' '0x307_1280x1024x8' '-'
+# '0x311_640x480x16' '-' '0x314_800x600x16' '-' '0x317_1024x768x16' '-' '0x31A_1280x1024x16' '-'
+# '0x312_640x480x24' '-' '0x315_800x600x24' '-' '0x318_1024x768x24' '-' '0x31B_1280x1024x24' '-'
+# "
 	HELP_TXT+=" \Zb\Z7\"${DEFAULT_ITEM}\"\Zn\n"
 
 	RETURN="$(dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}")"
@@ -227,6 +228,12 @@ bootloader_grub_bios()
 	pacman_install "-S ${PACS}" '1'
 	git_commit
 
+# @todo Закомментировано потому что темы могут не поддерживать выбранные режимы
+	TEMP="$(bootloader_dialog_console)"
+	[[ ! -n "${TEMP}" ]] && return 1
+	CONSOLE_V_XxYxD="${TEMP}"
+#	CONSOLE_V_XxYxD="${DEF_CONSOLE_V_XxYxD}"
+
 	while true
 	do
 		PART="$(bootloader_dialog_dev_part)"
@@ -246,12 +253,6 @@ bootloader_grub_bios()
 
 		break
 	done
-
-# @todo Закомментировано потому что темы могут не поддерживать выбранные режимы
-#  TEMP="$(bootloader_dialog_console)"
-#  [[ ! -n "${TEMP}" ]] && return 1
-#  CONSOLE_V_XxYxD="${TEMP}"
-	CONSOLE_V_XxYxD="${DEF_CONSOLE_V_XxYxD}"
 
 # Добавляем параметр resume если выбран свап
 	if [[ "${SET_DEV_SWAP[0]}" ]]
