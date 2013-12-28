@@ -372,9 +372,9 @@ base_plus_install()
 #===============================================================================
 # Включаю zcache2 для экономии памяти
 #===============================================================================
-	msg_log "$(gettext 'Включаю ') zcache2"
-	cat "${DBDIR}modules/etc/modules-load.d/zcache.conf" > "${NS_PATH}/etc/modules-load.d/zcache.conf"
-	git_commit
+#	msg_log "$(gettext 'Включаю ') zcache2"
+#	cat "${DBDIR}modules/etc/modules-load.d/zcache.conf" > "${NS_PATH}/etc/modules-load.d/zcache.conf"
+#	git_commit
 #-------------------------------------------------------------------------------
 
 
