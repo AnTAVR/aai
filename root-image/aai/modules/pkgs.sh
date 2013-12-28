@@ -579,17 +579,25 @@ APPS+=" 'pidgin' '$(gettext 'ICQ, QIP и т.п.') (+AUR)' 'on'"
 pkgs_skype()
 {
 	local PACS
-	#extra
-	PACS='ekiga'
 	#community
-	PACS+=' skype-call-recorder'
+	PACS='skype-call-recorder'
 	#multilib
 	PACS+=' skype'
 # lib32-libcanberra-pulse lib32-libcanberra lib32-libpulse
 	pacman_install "-S ${PACS}" '1'
 	git_commit
 }
-APPS+=" 'skype' '$(gettext 'Skype, Ekiga')' 'on'"
+APPS+=" 'skype' '$(gettext 'Skype IP-телефония')' 'on'"
+
+pkgs_ekiga()
+{
+	local PACS
+	#extra
+	PACS='ekiga'
+	pacman_install "-S ${PACS}" '1'
+	git_commit
+}
+APPS+=" 'ekiga' '$(gettext 'Ekiga IP-телефония')' 'off'"
 
 pkgs_truecrypt()
 {
