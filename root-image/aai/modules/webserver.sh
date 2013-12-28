@@ -66,20 +66,20 @@ run_webserver()
 		fi
 	fi
 
-	local DEF_MENU='nginx'
+	local DEF_MENU='lnmpp'
 
 	while true
 	do
 		DEF_MENU="$(webserver_dialog_menu "${DEF_MENU}")"
 		case "${DEF_MENU}" in
-			'nginx')
-				webserver_nginx || continue
+			'lnmpp')
+				webserver_lnmpp || continue
 				[[ ! "$SET_WEBSERVER" ]] && set_global_var 'SET_WEBSERVER' "${DEF_MENU}"
 				RUN_WEBSERVER=1
 				return 0
 				;;
-			'apache')
-				webserver_apache || continue
+			'lampp')
+				webserver_lampp || continue
 				[[ ! "$SET_WEBSERVER" ]] && set_global_var 'SET_WEBSERVER' "${DEF_MENU}"
 				RUN_WEBSERVER=1
 				return 0
@@ -104,8 +104,8 @@ webserver_dialog_menu()
 	HELP_TXT+="$(gettext 'По умолчанию'):"
 
 	local DEFAULT_ITEM="${P_DEF_MENU}"
-	local ITEMS="'nginx' 'nginx php mariadb(mysql) postgresql'"
-	ITEMS+=" 'apache' 'apache php mariadb(mysql) postgresql \Zb\Z3($(gettext 'Пока не поддерживается'))\Zn'"
+	local ITEMS="'lnmpp' 'nginx mariadb(mysql) php postgresql'"
+	ITEMS+=" 'lampp' 'apache mariadb(mysql) php postgresql \Zb\Z3($(gettext 'Пока не поддерживается'))\Zn'"
 
 	HELP_TXT+=" \Zb\Z7\"${DEFAULT_ITEM}\"\Zn\n"
 
@@ -115,17 +115,129 @@ webserver_dialog_menu()
 	msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
 }
 
-webserver_nginx()
+webserver_lnmpp()
 {
-	pkgs_nginx
-	pkgs_php
-	pkgs_mariadb
-	pkgs_postgresql
+	webserver_nginx
+	webserver_php
+	webserver_mariadb
+	webserver_postgresql
 }
 
-webserver_apache()
+webserver_lampp()
 {
 	dialog_warn \
 		"\Zb\Z1\"${TXT_WEBSERVER_MAIN}\" $(gettext 'пока не поддерживается, помогите проекту, допишите данный функционал')\Zn"
 	return 1
+}
+
+webserver_nginx()
+{
+	local PACS
+	#community
+	PACS='nginx'
+	pacman_install "-S ${PACS}" '1'
+
+	git_commit
+
+	cp -Pb "${DBDIR}modules/etc/nginx/nginx.conf" "${NS_PATH}/etc/nginx/nginx.conf"
+	cp -Pb "${DBDIR}modules/etc/nginx/mime.types" "${NS_PATH}/etc/nginx/mime.types"
+	cp -Pb "${DBDIR}modules/etc/nginx/uwsgi_params" "${NS_PATH}/etc/nginx/uwsgi_params"
+	cat "${DBDIR}modules/etc/nginx/proxy.conf" > "${NS_PATH}/etc/nginx/proxy.conf"
+
+	mkdir -p "${NS_PATH}"/etc/nginx/{sites-available,sites-enabled,templates}
+
+	cp -Pb "${DBDIR}"modules/etc/nginx/templates/* "${NS_PATH}"/etc/nginx/templates/
+	cp -Pb "${DBDIR}"modules/etc/nginx/sites-available/* "${NS_PATH}"/etc/nginx/sites-available/
+
+	ln -srf "${NS_PATH}/etc/nginx/sites-available/localhost.conf" "${NS_PATH}/etc/nginx/sites-enabled/localhost.conf"
+
+	mkdir -p "${NS_PATH}"/srv/http/nginx/{public,private,logs,backup}
+	cp -Pb "${NS_PATH}"/usr/share/html/* "${NS_PATH}"/srv/http/nginx/public/
+
+	echo '<?php' > "${NS_PATH}"/srv/http/nginx/public/index.php
+	echo 'phpinfo();' >> "${NS_PATH}"/srv/http/nginx/public/index.php
+
+	ln -sr "${NS_PATH}/usr/share/webapps/phpMyAdmin" "${NS_PATH}/srv/http/nginx/public/phpmyadmin"
+	ln -sr "${NS_PATH}/usr/share/webapps/phppgadmin" "${NS_PATH}/srv/http/nginx/public/phppgadmin"
+
+	chroot_run systemctl enable nginx.service
+	git_commit
+
+	SET_USER_GRUPS+=',http'
+}
+
+webserver_php()
+{
+	local PACS
+	#extra
+	PACS='php php-sqlite php-apc php-gd php-mcrypt php-pear php-pspell php-snmp php-tidy php-xsl php-intl'
+	PACS+=' php-fpm'
+#    PACS+=' php-apache'
+	pacman_install "-S ${PACS}" '1'
+	git_commit
+
+	cp -Pb "${DBDIR}modules/etc/php/php.ini" "${NS_PATH}/etc/php/php.ini"
+
+	chroot_run systemctl enable php-fpm.service
+	git_commit
+}
+
+webserver_mariadb()
+{
+	local PACS
+	#extra
+	PACS='mariadb'
+	#community
+	PACS+=' phpmyadmin'
+	pacman_install "-S ${PACS}" '1'
+	git_commit
+
+	chroot_run systemctl enable mysqld.service
+	git_commit
+# Поменять в /etc/webapps/phpmyadmin/config.inc.php
+# $cfg['Servers'][$i]['AllowNoPassword'] = false;
+# $cfg['Servers'][$i]['AllowNoPassword'] = true;
+}
+
+webserver_postgresql()
+{
+	local PACS
+	#extra
+	PACS='php-pgsql'
+	#community
+	PACS+=' postgresql pgadmin3'
+#    phppgadmin
+	pacman_install "-S ${PACS}" '1'
+	git_commit
+
+	mkdir -p "${NS_PATH}"/var/lib/postgres/data
+	chroot_run chown -Rh -c postgres:postgres /var/lib/postgres/data
+	chroot_run "bash -c \"su postgres -c 'initdb --locale en_US.UTF-8 -D /var/lib/postgres/data && exit'\""
+
+	chroot_run systemctl enable postgresql.service
+	git_commit
+
+# su root
+# su - postgres
+# createuser -DRSP <username>
+# -D Пользователь не может создавать базы данных
+# -R Пользователь не может создавать аккаунты
+# -S Пользователь не является суперпользователем
+# -P Запрашивать пароль при создании
+# createdb -O username databasename [-E database_encoding]
+}
+
+webserver_apache()
+{
+	local PACS
+	#extra
+	PACS='apache'
+	pacman_install "-S ${PACS}" '1'
+	git_commit
+
+	mkdir -p "${NS_PATH}"/etc/httpd/conf/{sites-available,sites-enabled}
+
+	git_commit
+
+	SET_USER_GRUPS+=',http'
 }

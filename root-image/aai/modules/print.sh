@@ -113,6 +113,8 @@ print_dialog_menu()
 
 print_scan()
 {
+	local PACS
+
 	if [[ "$SET_SCAN" ]]
 	then
 		dialog_warn \
@@ -120,7 +122,12 @@ print_scan()
 		return 1
 	fi
 
-	pkgs_print_sane
+	#extra
+	PACS='xsane'
+	pacman_install "-S ${PACS}" '1'
+	git_commit
+
+	SET_USER_GRUPS+=',scanner'
 	SET_SCAN='sane'
 	set_global_var 'SET_SCAN' "${SET_SCAN}"
 	return 0
@@ -129,6 +136,8 @@ print_scan()
 # @todo Нужно доделать!!!
 print_print()
 {
+# 	local PACS
+
 	dialog_warn \
 		"\Zb\Z1$(gettext 'пока не поддерживается, помогите проекту, допишите данный функционал')\Zn"
 	return 1
@@ -140,31 +149,13 @@ print_print()
 		return 1
 	fi
 
-	pkgs_print_print
-	SET_PRINT='print'
-	set_global_var 'SET_PRINT' "${SET_PRINT}"
-	return 0
-}
-
-# @todo Нужно доделать!!!
-pkgs_print_print()
-{
-# 	local PACS
 # 	#extra
 # 	PACS='xsane'
 # 	pacman_install "-S ${PACS}" '1'
 # 	git_commit
 
 	SET_USER_GRUPS+=',lp'
-}
-
-pkgs_print_sane()
-{
-	local PACS
-	#extra
-	PACS='xsane'
-	pacman_install "-S ${PACS}" '1'
-	git_commit
-
-	SET_USER_GRUPS+=',scanner'
+	SET_PRINT='print'
+	set_global_var 'SET_PRINT' "${SET_PRINT}"
+	return 0
 }

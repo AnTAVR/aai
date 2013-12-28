@@ -674,11 +674,11 @@ s/^/#/;
 
 	git_commit
 
-	pkgs_base_netctl
+	base_netctl
 
-	pkgs_base_netutils
+	base_netutils
 
-	pkgs_base_ntp
+	base_ntp
 
 
 #===============================================================================
@@ -846,20 +846,20 @@ s/^/#/;
 
 
 
-	[[ "${NO_MINI}" ]] && pkgs_base_mc
+	[[ "${NO_MINI}" ]] && base_mc
 
-	[[ "${NO_MINI}" ]] && pkgs_base_sudo
+	[[ "${NO_MINI}" ]] && base_sudo
 
-	[[ "${NO_MINI}" ]] && pkgs_base_hd
+	[[ "${NO_MINI}" ]] && base_hd
 
-	pkgs_base_fs
-	pkgs_base_btrfs
+	base_fs
+	base_btrfs
 
-	[[ "${NO_MINI}" ]] && pkgs_base_utils
+	[[ "${NO_MINI}" ]] && base_utils
 
-	[[ "${NO_MINI}" ]] && pkgs_base_zsh
+	[[ "${NO_MINI}" ]] && base_zsh
 
-	[[ "${NO_MINI}" ]] && pkgs_base_pkgfile
+	[[ "${NO_MINI}" ]] && base_pkgfile
 
 #-------------------------------------------------------------------------------
 
@@ -868,7 +868,7 @@ s/^/#/;
 	return 0
 }
 
-pkgs_base_netctl()
+base_netctl()
 {
 	local PACS
 	#core
@@ -885,7 +885,7 @@ pkgs_base_netctl()
 	SET_USER_GRUPS+=',network'
 }
 
-pkgs_base_netutils()
+base_netutils()
 {
 	local PACS
 	#core
@@ -906,7 +906,7 @@ pkgs_base_netutils()
 	SET_USER_GRUPS+=',rfkill'
 }
 
-pkgs_base_ntp()
+base_ntp()
 {
 	local PACS
 	#extra
@@ -920,7 +920,7 @@ pkgs_base_ntp()
 	SERVICES+=" 'ntpdate.service' '-' 'off'"
 }
 
-pkgs_base_mc()
+base_mc()
 {
 	local PACS
 	#core
@@ -934,7 +934,7 @@ pkgs_base_mc()
 	git_commit
 }
 
-pkgs_base_sudo()
+base_sudo()
 {
 	local PACS
 	#core
@@ -960,7 +960,7 @@ pkgs_base_sudo()
 	git_commit
 }
 
-pkgs_base_hd()
+base_hd()
 {
 	local PACS
 	#core
@@ -977,7 +977,7 @@ pkgs_base_hd()
 	SERVICES+=" 'partimaged.service'  '-' 'off'"
 }
 
-pkgs_base_fs()
+base_fs()
 {
 	local PACS
 	#core
@@ -1001,7 +1001,7 @@ pkgs_base_fs()
 	SERVICES+=" 'nbd.service'  '-' 'off'"
 }
 
-pkgs_base_btrfs()
+base_btrfs()
 {
 	local PACS
 	#core
@@ -1028,7 +1028,7 @@ pkgs_base_btrfs()
 #     git_commit
 }
 
-pkgs_base_utils()
+base_utils()
 {
 	local PACS
 	#extra
@@ -1043,7 +1043,7 @@ pkgs_base_utils()
 	SERVICES+=" 'haveged.service'  '-' 'off'"
 }
 
-pkgs_base_zsh()
+base_zsh()
 {
 	local PACS
 	#extra
@@ -1060,7 +1060,7 @@ pkgs_base_zsh()
 	git_commit
 }
 
-pkgs_base_pkgfile()
+base_pkgfile()
 {
 	local PACS
 	#community

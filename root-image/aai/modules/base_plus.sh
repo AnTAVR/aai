@@ -238,7 +238,7 @@ base_plus_install()
 	local PACS
 
 
-	pkgs_base_plus_yaourt
+	base_plus_yaourt
 
 #===============================================================================
 # Создаем папки и перемещаем кеш пакетов для создания бэкапов.
@@ -461,51 +461,51 @@ base_plus_install()
 	git_commit
 #-------------------------------------------------------------------------------
 
-	pkgs_base_plus_aspell_loc
+	base_plus_aspell_loc
 
-	pkgs_base_plus_alsa
+	base_plus_alsa
 
-	pkgs_base_plus_squashfs
+	base_plus_squashfs
 
-	pkgs_base_plus_archives
+	base_plus_archives
 
-	pkgs_base_plus_fs
+	base_plus_fs
 
-	pkgs_base_plus_crypt
+	base_plus_crypt
 
-	pkgs_base_plus_cdemu
+	base_plus_cdemu
 
-	pkgs_base_plus_hd
+	base_plus_hd
 
-	pkgs_base_plus_man_pages_loc
+	base_plus_man_pages_loc
 
-	pkgs_base_plus_laptop
+	base_plus_laptop
 
-	pkgs_base_plus_utils
+	base_plus_utils
 
-	pkgs_base_plus_linux_tools
+	base_plus_linux_tools
 
-	pkgs_base_plus_lirc
+	base_plus_lirc
 
-	pkgs_base_plus_postfix
+	base_plus_postfix
 
-	pkgs_base_plus_vsftpd
+	base_plus_vsftpd
 
-	pkgs_base_plus_mlocate
+	base_plus_mlocate
 
-	pkgs_base_plus_sensors
+	base_plus_sensors
 
-# 	pkgs_base_plus_preload
+# 	base_plus_preload
 
-	pkgs_base_plus_aria2
+	base_plus_aria2
 
-	pkgs_base_plus_net
+	base_plus_net
 
-	pkgs_base_plus_iptables
+	base_plus_iptables
 
-	pkgs_base_plus_ufw
+	base_plus_ufw
 
-#	pkgs_base_plus_timestamp
+#	base_plus_timestamp
 
 	chroot_run mkinitcpio -p linux
 
@@ -595,22 +595,22 @@ base_plus_install()
 # 	fi
 # }
 
-hwdetect_net()
-{
-	local IFACE
-	local IFACE_NAME
+# hwdetect_net()
+# {
+# 	local IFACE
+# 	local IFACE_NAME
+# 
+# 	for IFACE in /sys/class/net/*
+# 	do
+# 		IFACE_NAME="${IFACE/\/sys\/class\/net\//}"
+# 		[[ "${IFACE_NAME}" == 'lo' ]] && continue
+# 		IFACE_NAME="${IFACE_NAME/eth/net}"
+# 		IFACE_NAME="${IFACE_NAME/wlan/wifi}"
+# 		echo "SUBSYSTEM==\"net\", ATTR{address}==\"$(cat ${IFACE}/address)\", NAME=\"${IFACE_NAME}\""
+# 	done
+# }
 
-	for IFACE in /sys/class/net/*
-	do
-		IFACE_NAME="${IFACE/\/sys\/class\/net\//}"
-		[[ "${IFACE_NAME}" == 'lo' ]] && continue
-		IFACE_NAME="${IFACE_NAME/eth/net}"
-		IFACE_NAME="${IFACE_NAME/wlan/wifi}"
-		echo "SUBSYSTEM==\"net\", ATTR{address}==\"$(cat ${IFACE}/address)\", NAME=\"${IFACE_NAME}\""
-	done
-}
-
-pkgs_base_plus_yaourt()
+base_plus_yaourt()
 {
 	local PACS
 	#core
@@ -688,7 +688,7 @@ pkgs_base_plus_yaourt()
 #-------------------------------------------------------------------------------
 }
 
-pkgs_base_plus_aspell_loc()
+base_plus_aspell_loc()
 {
 	local PACS
 	PACS="aspell-en"
@@ -698,7 +698,7 @@ pkgs_base_plus_aspell_loc()
 	git_commit
 }
 
-pkgs_base_plus_alsa()
+base_plus_alsa()
 {
 	local PACS
 	#extra
@@ -734,7 +734,7 @@ pkgs_base_plus_alsa()
 }
 
 # @todo Нужно доделать!!!
-pkgs_base_plus_squashfs()
+base_plus_squashfs()
 {
 	local PACS
 	#community
@@ -770,7 +770,7 @@ pkgs_base_plus_squashfs()
 #     git_commit
 }
 
-pkgs_base_plus_archives()
+base_plus_archives()
 {
 	local PACS
 	#extra
@@ -781,7 +781,7 @@ pkgs_base_plus_archives()
 	git_commit
 }
 
-pkgs_base_plus_fs()
+base_plus_fs()
 {
 	local PACS
 	#extra
@@ -790,7 +790,7 @@ pkgs_base_plus_fs()
 	git_commit
 }
 
-pkgs_base_plus_crypt()
+base_plus_crypt()
 {
 	local PACS
 	#community
@@ -821,7 +821,7 @@ i session   required  pam_ecryptfs.so unwrap # eCryptfs
 	git_commit
 }
 
-pkgs_base_plus_cdemu()
+base_plus_cdemu()
 {
 	local PACS
 	PACS='cdemu-client'
@@ -832,7 +832,7 @@ pkgs_base_plus_cdemu()
 	SET_USER_GRUPS+=',cdemu'
 }
 
-pkgs_base_plus_hd()
+base_plus_hd()
 {
 	local PACS
 	#core
@@ -845,7 +845,7 @@ pkgs_base_plus_hd()
 	git_commit
 }
 
-pkgs_base_plus_man_pages_loc()
+base_plus_man_pages_loc()
 {
 	local PACS
 	PACS="man-pages-${SET_LOCAL%_*}"
@@ -859,7 +859,7 @@ pkgs_base_plus_man_pages_loc()
 #   git_commit
 }
 
-pkgs_base_plus_laptop()
+base_plus_laptop()
 {
 	local PACS
 	#extra
@@ -878,7 +878,7 @@ pkgs_base_plus_laptop()
 	SERVICES+=" 'apcupsd.service' '-' 'off'"
 }
 
-pkgs_base_plus_utils()
+base_plus_utils()
 {
 	local PACS
 	#extra
@@ -901,7 +901,7 @@ pkgs_base_plus_utils()
 	SERVICES+=" 'mcelog.service' '-' 'off'"
 }
 
-pkgs_base_plus_linux_tools()
+base_plus_linux_tools()
 {
 	local PACS
 	#community
@@ -915,7 +915,7 @@ pkgs_base_plus_linux_tools()
 	SERVICES+=" 'usbipd.service' '-' 'off'"
 }
 
-pkgs_base_plus_lirc()
+base_plus_lirc()
 {
 	local PACS
 	#extra
@@ -930,7 +930,7 @@ pkgs_base_plus_lirc()
 	SERVICES+=" 'lircm.service' '-' 'off'"
 }
 
-pkgs_base_plus_postfix()
+base_plus_postfix()
 {
 #  http://www.hypexr.org/linux_mail_server.php#postfix_install
 	local PACS
@@ -950,7 +950,7 @@ pkgs_base_plus_postfix()
 #    SERVICES+=" 'saslauthd.service' '-' 'off'"
 }
 
-pkgs_base_plus_vsftpd()
+base_plus_vsftpd()
 {
 	local PACS
 	#community
@@ -971,7 +971,7 @@ pkgs_base_plus_vsftpd()
 	SET_USER_GRUPS+=',ftp'
 }
 
-pkgs_base_plus_mlocate()
+base_plus_mlocate()
 {
 	local PACS
 	#core
@@ -985,7 +985,7 @@ pkgs_base_plus_mlocate()
 	git_commit
 }
 
-pkgs_base_plus_sensors()
+base_plus_sensors()
 {
 	local PACS
 	#extra
@@ -1005,7 +1005,7 @@ pkgs_base_plus_sensors()
 }
 
 # Убрал установку так как пакет переехал в Аур
-# pkgs_base_plus_preload()
+# base_plus_preload()
 # {
 # 	local PACS
 # 	#community
@@ -1016,7 +1016,7 @@ pkgs_base_plus_sensors()
 # 	SERVICES+=" 'preload.service' '-' 'off'"
 # }
 
-pkgs_base_plus_aria2()
+base_plus_aria2()
 {
 	local PACS
 	#community
@@ -1032,7 +1032,7 @@ pkgs_base_plus_aria2()
 	git_commit
 }
 
-pkgs_base_plus_net()
+base_plus_net()
 {
 #@todo кто то из них тянет графику, нужно выяснить!!!
 	local PACS
@@ -1053,7 +1053,7 @@ pkgs_base_plus_net()
 	SERVICES+=" 'tor.service' '-' 'off'"
 }
 
-pkgs_base_plus_iptables()
+base_plus_iptables()
 {
 	local PACS
 
@@ -1075,7 +1075,7 @@ pkgs_base_plus_iptables()
 	SERVICES+=" 'iptables.service' '-' 'off'"
 }
 
-pkgs_base_plus_ufw()
+base_plus_ufw()
 {
 	local PACS
 	#community
@@ -1106,7 +1106,7 @@ pkgs_base_plus_ufw()
 	git_commit
 }
 
-# pkgs_base_plus_timestamp()
+# base_plus_timestamp()
 # {
 # 	local PACS
 # 	#extra

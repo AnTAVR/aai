@@ -148,9 +148,9 @@ de_install_xorg()
 	[[ ! -n "${TEMP}" ]] && return 1
 	SET_XORG_XxYxD="${TEMP}"
 
-	pkgs_de_mesa
+	de_mesa
 
-	pkgs_de_xorg
+	de_xorg
 
 	set_global_var 'SET_XORG' '1'
 }
@@ -797,7 +797,7 @@ de_awesome()
 	return 0
 }
 
-pkgs_de_xorg()
+de_xorg()
 {
 	local PACS
 #===============================================================================
@@ -887,7 +887,7 @@ pkgs_de_xorg()
 	git_commit
 }
 
-pkgs_de_mesa()
+de_mesa()
 {
 	local PACS
 	#extra
@@ -899,15 +899,15 @@ pkgs_de_mesa()
 	git_commit
 }
 
-pkgs_kdesdk()
-{
-	local PACS
-	#extra
-	PACS='kdesdk jre7-openjdk'
-	pacman_install "-S ${PACS}" '1'
-	#extra
-	PACS="kde-l10n-${SET_LOCAL%_*}"
-	pacman_install "-S ${PACS}" '2'
-
-	git_commit
-}
+# pkgs_kdesdk()
+# {
+# 	local PACS
+# 	#extra
+# 	PACS='kdesdk jre7-openjdk'
+# 	pacman_install "-S ${PACS}" '1'
+# 	#extra
+# 	PACS="kde-l10n-${SET_LOCAL%_*}"
+# 	pacman_install "-S ${PACS}" '2'
+# 
+# 	git_commit
+# }
