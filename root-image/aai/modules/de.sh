@@ -71,7 +71,7 @@ run_de()
 
 	fi
 
-	local DEF_MENU='kde'
+	local DEF_MENU='kde_mini'
 
 	while true
 	do
@@ -90,7 +90,7 @@ run_de()
 				RUN_DE=1
 				return 0
 				;;
-			'openbox' | 'lxde' | 'xfce4' | 'kde' | 'gnome' | 'mate' | 'cinnamon' | 'awesome')
+			'openbox' | 'kde_mini' | 'kde' | 'xfce4' | 'lxde' | 'e17' | 'gnome' | 'mate' | 'cinnamon' | 'awesome')
 				de_install_xorg || continue
 				de_${DEF_MENU} || continue
 				[[ ! "$SET_DE" ]] && set_global_var 'SET_DE' "${DEF_MENU}"
@@ -120,6 +120,7 @@ de_dialog_menu()
 	local DEFAULT_ITEM="${P_DEF_MENU}"
 	local ITEMS="'no' '$(gettext 'Сам установлю, потом...')'"
 	ITEMS+=" 'openbox' 'Open Box ($(gettext 'консольный вход'))'"
+	ITEMS+=" 'kde_mini' 'KDE Mini'"
 	ITEMS+=" 'kde' 'KDE'"
 	ITEMS+=" 'xfce4' 'Xfce4 ($(gettext 'консольный вход'))'"
 	ITEMS+=" 'lxde' 'LXDE'"
@@ -153,7 +154,6 @@ de_install_xorg()
 
 	set_global_var 'SET_XORG' '1'
 }
-
 
 de_dialog_xorg()
 {
@@ -191,8 +191,10 @@ de_openbox()
 #===============================================================================
 	#community
 	PACS='obconf obmenu openbox openbox-themes'
+	pacman_install "-S ${PACS}" '1'
+	git_commit
 	#aur
-	PACS+=' obkey-git'
+	PACS='obkey-git'
 #3ddesktop
 	pacman_install "-S ${PACS}" '2'
 	git_commit
@@ -236,11 +238,13 @@ s/<number>4<\/number>/<number>2<\/number>/;
 #===============================================================================
 	#community
 	PACS='archlinux-xdg-menu'
-	#aur
-#  PACS+=' arch-bubble-icons'
-#3ddesktop
-	pacman_install "-S ${PACS}" '2'
+	pacman_install "-S ${PACS}" '1'
 	git_commit
+	#aur
+#  PACS='arch-bubble-icons'
+#3ddesktop
+#	pacman_install "-S ${PACS}" '2'
+#	git_commit
 
 	msg_log "$(gettext 'Настраиваю') /etc/skel/.config/openbox/menu.xml"
 	cat "${DBDIR}modules/etc/skel/.config/openbox/menu.xml" > "${NS_PATH}/etc/skel/.config/openbox/menu.xml"
@@ -253,7 +257,7 @@ s/<number>4<\/number>/<number>2<\/number>/;
 #===============================================================================
 	#extra
 	PACS='xterm'
-	pacman_install "-S ${PACS}" '2'
+	pacman_install "-S ${PACS}" '1'
 	git_commit
 
 	msg_log "$(gettext 'Добавляю') Xresources > /etc/skel/.config/openbox/autostart"
@@ -344,10 +348,12 @@ s/<number>4<\/number>/<number>2<\/number>/;
 	PACS='orage'
 	#community
 	PACS+=' tint2'
-	#aur
-#  PACS+=' tintwizard'
-	pacman_install "-S ${PACS}" '2'
+	pacman_install "-S ${PACS}" '1'
 	git_commit
+	#aur
+#  PACS='tintwizard'
+#	pacman_install "-S ${PACS}" '2'
+#	git_commit
 
 	mkdir -p "${NS_PATH}/etc/skel/.config/tint2"
 
@@ -364,7 +370,7 @@ s/<number>4<\/number>/<number>2<\/number>/;
 #===============================================================================
 # Устанавливаем volumeicon
 #===============================================================================
-#community
+	#community
 	PACS='volumeicon'
 	pacman_install "-S ${PACS}" '1'
 	git_commit
@@ -551,7 +557,6 @@ de_kde()
 #	PACS='kdebase-plasma kde-wallpapers kdeartwork'
 	PACS='kde'
 	PACS+=' oxygen-gtk2 oxygen-gtk3'
-#	PACS+=' kdemultimedia-kmix' # отключил потому что входит в группу kde
 	#community
 	PACS+=' kde-gtk-config'
 	pacman_install "-S ${PACS}" '1'
@@ -581,23 +586,6 @@ de_kde()
 
 	git_commit
 
-# 	pkgs_dolphin
-# 	pkgs_kdeadmin
-# 	pkgs_kdesdk
-# 	pkgs_kdeutils
-# 	pkgs_kdegraphics
-# 	pkgs_kpatience
-# 
-# 	dialog_yesno \
-# 		"$(gettext 'Установить дополнительные пакеты')" \
-# 		"$(gettext 'Установить группу kdepim')?" \
-# 		'--defaultno'
-# 	case "${?}" in
-# 		'0') #Yes
-# 			pkgs_kdepim
-# 			;;
-# 	esac
-
 #     #extra
 #     PACS='archlinux-themes-kdm'
 #     pacman_install "-S ${PACS}" '1'
@@ -622,6 +610,71 @@ de_kde()
 #  cat "${DBDIR}modules/etc/skel/.kde4/share/config/ksplashrc" > "${NS_PATH}/etc/skel/.kde4/share/config/ksplashrc"
 
 #	git_commit
+
+	return 0
+}
+# Устанавливаем kde
+de_kde_mini()
+{
+	local PACS
+
+	#extra
+	PACS='kdebase-workspace kde-wallpapers appmenu-qt'
+	PACS+=' kdegraphics-strigi-analyzer kdenetwork-strigi-analyzers kdesdk-strigi-analyzers'
+	PACS+=' kdebase-plasma kdemultimedia-kmix'
+	PACS+=' oxygen-gtk2 oxygen-gtk3'
+	PACS+=' kdegraphics-okular kdegraphics-mobipocket kdegraphics-gwenview kipi-plugins kdegraphics-ksnapshot'
+	PACS+=' kdeutils-kcalc kdeutils-kgpg'
+	PACS+=' kdeadmin kdeadmin-kcron kdeadmin-ksystemlog kdeadmin-kuser kdebase-kdepasswd'
+
+	#community
+	PACS+=' kde-gtk-config'
+	pacman_install "-S ${PACS}" '1'
+
+	#extra
+	PACS="kde-l10n-${SET_LOCAL%_*}"
+	pacman_install "-S ${PACS}" '2'
+
+# kdebase-dolphin
+# kdesdk-dolphin-plugins
+# 	kdemultimedia-ffmpegthumbs
+# 	kdeutils-ark
+# kdebase-konsole
+# kdebase-kdialog
+# kdeutils-kwallet
+	pkgs_dolphin
+
+
+# kdegames-kpatience
+	pkgs_kpatience
+
+# kdesdk-kate
+# 	kdebase-konsole
+	pkgs_kate
+
+# 	pkgs_kdesdk
+
+	git_commit
+
+	if [[ ! "$SET_DE" ]]
+	then
+# включаем kdm
+		chroot_run systemctl disable 'getty@tty1.service'
+		chroot_run systemctl enable 'kdm.service'
+	fi
+
+	msg_log "$(gettext 'Настраиваю') /usr/share/config/kdm/kdmrc"
+	sed -i "
+# Включаем NumLock
+/^NumLock=/s/^/#/;
+0,/^#NumLock=/{
+//{
+	a NumLock=On
+};
+};
+" "${NS_PATH}/usr/share/config/kdm/kdmrc"
+
+	git_commit
 
 	return 0
 }

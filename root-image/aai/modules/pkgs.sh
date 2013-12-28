@@ -729,8 +729,8 @@ pkgs_dolphin()
 {
 	local PACS
 	#extra
-	PACS='kdebase-dolphin kdesdk-dolphin-plugins kdemultimedia-ffmpegthumbs'
-	PACS+=' kdebase-konsole kdebase-kdialog kdeutils-kwallet'
+	PACS='kdebase-dolphin kdesdk-dolphin-plugins kdemultimedia-ffmpegthumbs kdeutils-ark kdebase-konsole'
+	PACS+=' kdebase-kdialog kdeutils-kwallet'
 	pacman_install "-S ${PACS}" '1'
 	#aur
 #	PACS='kde-servicemenus-rootactions' # отключил потому что подвисает, и xauth зомбируется так что лучше использовать kdesu!
@@ -743,76 +743,11 @@ pkgs_dolphin()
 }
 APPS+=" 'dolphin' '$(gettext 'Файловый менеджер')' 'on'"
 
-pkgs_kdeadmin()
-{
-	local PACS
-	#extra
-	PACS='kdeadmin kdeadmin-kcron kdeadmin-ksystemlog kdeadmin-kuser kdebase-kdepasswd'
-	pacman_install "-S ${PACS}" '1'
-	#extra
-	PACS="kde-l10n-${SET_LOCAL%_*}"
-	pacman_install "-S ${PACS}" '2'
-
-	git_commit
-}
-
 pkgs_kdesdk()
 {
 	local PACS
 	#extra
 	PACS='kdesdk jre7-openjdk'
-	pacman_install "-S ${PACS}" '1'
-	#extra
-	PACS="kde-l10n-${SET_LOCAL%_*}"
-	pacman_install "-S ${PACS}" '2'
-
-	git_commit
-}
-
-pkgs_kdepim()
-{
-	local PACS
-	#extra
-	PACS='kdepim'
-	pacman_install "-S ${PACS}" '1'
-	#extra
-	PACS="kde-l10n-${SET_LOCAL%_*}"
-	pacman_install "-S ${PACS}" '2'
-
-	git_commit
-}
-
-pkgs_kdeutils()
-{
-	local PACS
-	#extra
-	PACS='kdeutils'
-	pacman_install "-S ${PACS}" '1'
-	#extra
-	PACS="kde-l10n-${SET_LOCAL%_*}"
-	pacman_install "-S ${PACS}" '2'
-
-	git_commit
-}
-
-pkgs_kdewebdev()
-{
-	local PACS
-	#extra
-	PACS='kdewebdev'
-	pacman_install "-S ${PACS}" '1'
-	#extra
-	PACS="kde-l10n-${SET_LOCAL%_*}"
-	pacman_install "-S ${PACS}" '2'
-
-	git_commit
-}
-
-pkgs_kdegraphics()
-{
-	local PACS
-	#extra
-	PACS='kdegraphics'
 	pacman_install "-S ${PACS}" '1'
 	#extra
 	PACS="kde-l10n-${SET_LOCAL%_*}"
@@ -1532,21 +1467,6 @@ pkgs_netbeans()
 	git_commit
 }
 APPS+=" 'netbeans' '$(gettext 'Java, PHP, C, C++ редактор')' 'off'"
-
-pkgs_kdevelop()
-{
-	local PACS
-	#community
-	PACS='kdevelop'
-	#community
-	PACS+=' qtcreator poedit'
-	pacman_install "-S ${PACS}" '1'
-	#extra
-	PACS="kde-l10n-${SET_LOCAL%_*}"
-	pacman_install "-S ${PACS}" '2'
-	git_commit
-}
-APPS+=" 'kdevelop' '$(gettext 'Разработка на C++')' 'off'"
 
 pkgs_kpatience()
 {
