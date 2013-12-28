@@ -623,7 +623,6 @@ de_kde_mini()
 	PACS+=' kdegraphics-strigi-analyzer kdenetwork-strigi-analyzers kdesdk-strigi-analyzers'
 	PACS+=' kdebase-plasma kdemultimedia-kmix'
 	PACS+=' oxygen-gtk2 oxygen-gtk3'
-	PACS+=' kdegraphics-okular kdegraphics-mobipocket kdegraphics-gwenview kipi-plugins kdegraphics-ksnapshot'
 	PACS+=' kdeutils-kcalc kdeutils-kgpg'
 	PACS+=' kdeadmin kdeadmin-kcron kdeadmin-ksystemlog kdeadmin-kuser kdebase-kdepasswd'
 
@@ -651,6 +650,16 @@ de_kde_mini()
 # kdesdk-kate
 # 	kdebase-konsole
 	pkgs_kate
+
+# kdegraphics-ksnapshot
+	pkgs_snapshot
+
+# kdegraphics-okular
+# kdegraphics-mobipocket
+# kdegraphics-gwenview
+# 	kipi-plugins
+	pkgs_okular
+
 
 # 	pkgs_kdesdk
 

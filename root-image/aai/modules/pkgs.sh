@@ -230,7 +230,7 @@ pkgs_tvtime()
 	pacman_install "-S ${PACS}" '2'
 	git_commit
 }
-APPS+=" 'tvtime' '$(gettext 'ТВ и РАДИО тюнер') (+AUR)' 'off'"
+APPS+=" 'tvtime' '$(gettext 'ТВ и РАДИО тюнер, Телетекст') (+AUR)' 'off'"
 
 pkgs_k3b()
 {
@@ -291,6 +291,10 @@ pkgs_snapshot()
 	#extra
 	PACS='kdegraphics-ksnapshot'
 	pacman_install "-S ${PACS}" '1'
+	#extra
+	PACS="kde-l10n-${SET_LOCAL%_*}"
+	pacman_install "-S ${PACS}" '2'
+
 	git_commit
 }
 APPS+=" 'snapshot' '$(gettext 'Снимки экрана')' 'on'"
@@ -309,8 +313,12 @@ pkgs_okular()
 {
 	local PACS
 	#extra
-	PACS='kdegraphics-okular kdegraphics-mobipocket kdegraphics-gwenview'
+	PACS='kdegraphics-okular kdegraphics-mobipocket kdegraphics-gwenview kipi-plugins'
 	pacman_install "-S ${PACS}" '1'
+	#extra
+	PACS="kde-l10n-${SET_LOCAL%_*}"
+	pacman_install "-S ${PACS}" '2'
+
 	git_commit
 }
 APPS+=" 'okular' '$(gettext 'Просмотр документов')' 'on'"
