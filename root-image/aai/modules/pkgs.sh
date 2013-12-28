@@ -88,108 +88,6 @@ pkgs_dialog_app()
 	msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
 }
 
-pkgs_de_xorg()
-{
-	local PACS
-#===============================================================================
-# Устанавливаем xorg
-#===============================================================================
-	#extra
-	PACS='xorg xorg-xinit xdg-user-dirs xdg-utils xorg-server-utils'
-	PACS+=' ttf-dejavu ttf-freefont ttf-linux-libertine ttf-bitstream-vera'
-	PACS+=' xscreensaver'
-	PACS+=' gstreamer0.10-plugins phonon-gstreamer'
-	#community
-	PACS+=' ttf-liberation ttf-droid xcursor-vanilla-dmz'
-	pacman_install "-S ${PACS}" '1'
-#   #aur
-#   PACS='ttf-ms-fonts'
-# #  PACS='ttf-vista-fonts'
-#    pacman_install "-S ${PACS}" '2'
-
-	git_commit
-
-	msg_log "$(gettext 'Настраиваю') /etc/skel/.Xresources"
-	cat "${DBDIR}modules/etc/skel/.Xresources" > "${NS_PATH}/etc/skel/.Xresources"
-
-	msg_log "$(gettext 'Добавляю') alias startx > /etc/skel/.zshrc"
-	echo 'which startx 2>&1 > /dev/null && alias startx="startx &> ~/.xlog"' >> "${NS_PATH}/etc/skel/.zshrc"
-	cat "${NS_PATH}/etc/skel/.zshrc" > "${NS_PATH}/root/.zshrc"
-#-------------------------------------------------------------------------------
-
-
-
-#===============================================================================
-# Настраиваем раскладку в Xorg
-#===============================================================================
-	mkdir -p "${NS_PATH}/etc/X11/xorg.conf.d/"
-
-	local XOPTIONS="$(grep "[[:space:]]${SET_KEYMAP}[[:space:]]" "${DBDIR}keymaps.db")"
-	local XLAYOUT="$(awk '{print $3}' <<< "${XOPTIONS}")"
-	local XMODEL="$(awk '{print $4}' <<< "${XOPTIONS}")"
-	local XVARIANT="$(awk '{print $5}' <<< "${XOPTIONS}")"
-	XOPTIONS="$(awk '{print $6}' <<< "${XOPTIONS}")"
-
-	msg_log "$(gettext 'Настраиваю') /etc/X11/xorg.conf.d/00-keyboard.conf"
-	{
-	echo -e 'Section\t"InputClass"'
-	echo -e '\tIdentifier\t"system-keyboard"'
-	echo -e '\tMatchIsKeyboard\t"on"'
-	[[ ! "${XLAYOUT}" ]] && echo -ne '# '
-	echo -e "\tOption\t\"XkbLayout\" \"${XLAYOUT}\""
-	[[ ! "${XMODEL}" ]] && echo -ne '# '
-	echo -e "\tOption\t\"XkbModel\" \"${XMODEL}\""
-	[[ ! "${XVARIANT}" ]] && echo -ne '# '
-	echo -e "\tOption\t\"XkbVariant\" \"${XVARIANT}\""
-	[[ ! "${XOPTIONS}" ]] && echo -ne '# '
-	echo -e "\tOption\t\"XkbOptions\" \"${XOPTIONS}\""
-	echo -e 'EndSection'
-	} > "${NS_PATH}/etc/X11/xorg.conf.d/00-keyboard.conf"
-#  chroot_run localectl --no-convert set-x11-keymap "${XLAYOUT}" "${XMODEL}" "${XVARIANT}" "${XOPTIONS}"
-#-------------------------------------------------------------------------------
-
-
-
-#===============================================================================
-# Настраиваем разрешение монитора для Xorg
-#===============================================================================
-	msg_log "$(gettext 'Настраиваю') /etc/X11/xorg.conf.d/00-monitor.conf"
-	{
-	echo -e 'Section\t"Monitor"'
-	echo -e '\tIdentifier\t"Monitor0"'
-	echo -e '\tVendorName\t"Unknown"'
-	echo -e 'EndSection'
-	echo -e ''
-	echo -e 'Section\t"Device"'
-	echo -e '\tIdentifier\t"Device0"'
-	echo -e 'EndSection'
-	echo -e ''
-	echo -e 'Section\t"Screen"'
-	echo -e '\tIdentifier\t"Screen0"'
-	echo -e '\tDevice\t"Device0"'
-	echo -e '\tMonitor\t"Monitor0"'
-	echo -e "\tDefaultDepth\t${SET_XORG_XxYxD##*x}"
-	echo -e '\tSubSection\t"Display"'
-	echo -e "\t\tDepth\t${SET_XORG_XxYxD##*x}"
-	echo -e "\t\tModes\t\"${SET_XORG_XxYxD%x*}\""
-	echo -e '\tEndSubSection'
-	echo -e 'EndSection'
-	} > "${NS_PATH}/etc/X11/xorg.conf.d/00-monitor.conf"
-	git_commit
-}
-
-pkgs_de_mesa()
-{
-	local PACS
-	#extra
-	PACS='mesa-demos mesa-libgl'
-	pacman_install "-S ${PACS}" '2'
-	#multilib
-	PACS='lib32-mesa-demos lib32-mesa-libgl'
-	pacman_install "-S ${PACS}" '2'
-	git_commit
-}
-
 pkgs_appset()
 {
 	local PACS
@@ -222,19 +120,6 @@ pkgs_dolphin()
 	git_commit
 }
 APPS+=" 'dolphin' '$(gettext 'Файловый менеджер')' 'on'"
-
-pkgs_kdesdk()
-{
-	local PACS
-	#extra
-	PACS='kdesdk jre7-openjdk'
-	pacman_install "-S ${PACS}" '1'
-	#extra
-	PACS="kde-l10n-${SET_LOCAL%_*}"
-	pacman_install "-S ${PACS}" '2'
-
-	git_commit
-}
 
 pkgs_kate()
 {
