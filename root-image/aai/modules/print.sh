@@ -145,3 +145,26 @@ print_print()
 	set_global_var 'SET_PRINT' "${SET_PRINT}"
 	return 0
 }
+
+# @todo Нужно доделать!!!
+pkgs_print_print()
+{
+# 	local PACS
+# 	#extra
+# 	PACS='xsane'
+# 	pacman_install "-S ${PACS}" '1'
+# 	git_commit
+
+	SET_USER_GRUPS+=',lp'
+}
+
+pkgs_print_sane()
+{
+	local PACS
+	#extra
+	PACS='xsane'
+	pacman_install "-S ${PACS}" '1'
+	git_commit
+
+	SET_USER_GRUPS+=',scanner'
+}
