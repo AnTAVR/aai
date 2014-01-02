@@ -872,7 +872,8 @@ base_netctl()
 {
 	local PACS
 	#core
-	PACS='netctl dialog wpa_supplicant wpa_actiond dhclient dhcpcd ifenslave bridge-utils ppp'
+#	PACS='netctl'
+	PACS='dialog wpa_supplicant wpa_actiond dhclient dhcpcd ifenslave bridge-utils ppp'
 	# зависимость для wpa_actiond
 	# wpa_supplicant
 #
