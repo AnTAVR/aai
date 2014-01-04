@@ -1,7 +1,9 @@
 [Unit]
 Description=TiMidity
 After=sound.target
+
 [Service]
 ExecStart=/usr/bin/timidity -iA -OO
+
 [Install]
 WantedBy=default.target

@@ -1,7 +1,9 @@
 [Unit]
 Description=JACK
 After=sound.target
+
 [Service]
 ExecStart=/usr/bin/dbus-launch /usr/bin/jackd -R -dalsa
+
 [Install]
 WantedBy=default.target
