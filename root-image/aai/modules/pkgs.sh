@@ -584,6 +584,16 @@ pkgs_pidgin()
 }
 APPS+=" 'pidgin' '$(gettext 'ICQ, QIP и т.п.') (+AUR)' 'on'"
 
+pkgs_kvirc()
+{
+	local PACS
+	#community
+	PACS='kvirc'
+	pacman_install "-S ${PACS}" '1'
+	git_commit
+}
+APPS+=" 'kvirc' '$(gettext 'IRC')' 'off'"
+
 pkgs_skype()
 {
 	local PACS
