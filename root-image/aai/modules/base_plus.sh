@@ -486,6 +486,8 @@ base_plus_install()
 	git_commit
 #-------------------------------------------------------------------------------
 
+	base_plus_dkms
+
 	base_plus_aspell_loc
 
 	base_plus_alsa
@@ -1158,3 +1160,18 @@ base_plus_ufw()
 # 
 # 	git_commit
 # }
+
+base_plus_dkms()
+{
+	local PACS
+	#core
+	PACS='linux-headers'
+	[[ "${SET_LTS}" ]] && PACS+=' linux-lts-headers'
+	#community
+	PACS+=' dkms'
+	pacman_install "-S ${PACS}" '1'
+
+	git_commit
+
+	SERVICES+=" 'dkms.service' '-' 'off'"
+}
