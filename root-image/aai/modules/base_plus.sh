@@ -29,7 +29,7 @@ RUN_BASE_PLUS=
 TXT_BASE_PLUS_MAIN="$(gettext 'Расширенная базовая система')"
 
 # Устанавливать ли lts
-SET_LTS=1
+SET_LTS=
 
 SERVICES=''
 
@@ -236,6 +236,31 @@ base_plus_install()
 	local SERVICE
 
 	local PACS
+
+
+#===============================================================================
+# Устанавливать ли lts
+#===============================================================================
+	dialog_yesno \
+		"$(gettext 'Установка lts')" \
+		"$(gettext 'Установить lts ядро?')"
+
+	case "${?}" in
+		'0') #Yes
+			SET_LTS=1
+			;;
+	esac
+
+	set_global_var 'SET_LTS' "${SET_LTS}"
+
+	if [[ "${SET_LTS}" ]]
+	then
+		#core
+		PACS='linux-lts'
+		pacman_install "-S ${PACS}" '1'
+		git_commit
+	fi
+#-------------------------------------------------------------------------------
 
 
 	base_plus_yaourt
@@ -508,6 +533,8 @@ base_plus_install()
 #	base_plus_timestamp
 
 	chroot_run mkinitcpio -p linux
+
+	[[ "${SET_LTS}" ]] && chroot_run mkinitcpio -p linux-lts
 
 	RUN_BASE_PLUS=1
 	return 0
@@ -1131,4 +1158,3 @@ base_plus_ufw()
 # 
 # 	git_commit
 # }
-

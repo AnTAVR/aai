@@ -793,11 +793,12 @@ pkgs_virtualbox()
 {
 	local PACS
 	#community
-	PACS='virtualbox virtualbox-host-modules'
+	PACS='virtualbox virtualbox-host-modules virtualbox-guest-iso'
+	[[ "${SET_LTS}" ]] && PACS+=' virtualbox-host-modules-lts'
 	pacman_install "-S ${PACS}" '1'
 	#aur
-	PACS='virtualbox-ext-oracle'
-	pacman_install "-S ${PACS}" '2'
+#	PACS='virtualbox-ext-oracle'
+#	pacman_install "-S ${PACS}" '2'
 	git_commit
 	msg_log "$(gettext 'Настраиваю') /etc/modules-load.d/vbox.conf"
 	cat "${DBDIR}modules/etc/modules-load.d/vbox.conf" > "${NS_PATH}/etc/modules-load.d/vbox.conf"

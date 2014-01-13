@@ -188,6 +188,7 @@ video_nvidia()
 	pacman_install "-Rdds lib32-mesa-libgl" '3' 'noexit'
 	#extra
 	PACS='nvidia nvidia-utils'
+	[[ "${SET_LTS}" ]] && PACS+=' nvidia-lts'
 #     PACS+=' opencl-nvidia'
 #     dkms-nvidia
 	pacman_install "-S ${PACS}" '1'
@@ -206,7 +207,8 @@ video_nvidia304()
 	pacman_install "-Rdds mesa-libgl" '3' 'noexit'
 	pacman_install "-Rdds lib32-mesa-libgl" '3' 'noexit'
 	#extra
-	PACS='nvidia nvidia-304xx-utils'
+	PACS='nvidia-304xx nvidia-304xx-utils'
+	[[ "${SET_LTS}" ]] && PACS+=' nvidia-304xx-lts'
 #     PACS+=' opencl-nvidia-304xx'
 	pacman_install "-S ${PACS}" '1'
 	PACS='lib32-nvidia-304xx-utils'
@@ -228,6 +230,7 @@ video_optimus()
 	PACS='bumblebee'
 	#extra
 	PACS=+' nvidia nvidia-utils'
+	[[ "${SET_LTS}" ]] && PACS+=' nvidia-lts'
 #     PACS+=' opencl-nvidia'
 #     dkms-nvidia
 	pacman_install "-S ${PACS}" '1'
@@ -257,7 +260,9 @@ video_ati()
 	pacman_install "-Rdds mesa-libgl" '3' 'noexit'
 	pacman_install "-Rdds lib32-mesa-libgl" '3' 'noexit'
 	#community
-	PACS='catalyst-dkms catalyst-utils'
+	PACS=''
+	#community
+	PACS+=' catalyst-dkms catalyst-utils'
 #     PACS+=' opencl-catalyst'
 	pacman_install "-S ${PACS}" '2'
 	PACS='lib32-catalyst-utils'
