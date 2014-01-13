@@ -786,6 +786,8 @@ base_plus_fs()
 	local PACS
 	#extra
 	PACS='avfs'
+	#community
+	PACS+=' fuse-exfat'
 	pacman_install "-S ${PACS}" '1'
 	git_commit
 }
