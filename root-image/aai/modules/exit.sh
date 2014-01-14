@@ -49,7 +49,7 @@ run_exit()
 		dialog_yesno \
 			"${TXT_EXIT_MAIN}" \
 			"$(gettext 'Подтвердите выход ПОВЕЛИТЕЛЬ...')\n${TEMP}" \
-			"--defaultno --yes-label '$(gettext 'Выполняй халлоп!')'"
+			"--defaultno --yes-label '$(gettext 'Выполняй холоп!')'"
 
 		case "${?}" in
 			'0') #Yes

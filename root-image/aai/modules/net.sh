@@ -262,8 +262,8 @@ net_dhcp()
 # Проверяем правильность ввода параметров, если не правильно введено,
 # то повторяем выбор, если отмена то выход
 	dialog_yesno \
-		"$(gettext 'Подтвердите свой выбор')" \
-		"
+		"${TXT_NET_MAIN}" \
+		"$(gettext 'Подтвердите свой выбор')\n\n
 \Zb\Z7IFACE=\Zn${P_IFACE}\n
 \Zb\Z7TYPE=\Zn${TYPE}\n
 \Zb\Z7HTTP_PROXY=\Zn${HTTP_PROXY}\n
@@ -382,8 +382,8 @@ net_static()
 # Проверяем правильность ввода параметров, если не правильно введено,
 # то повторяем выбор, если отмена то выход
 	dialog_yesno \
-		"$(gettext 'Подтвердите свой выбор')" \
-		"
+		"${TXT_NET_MAIN}" \
+		"$(gettext 'Подтвердите свой выбор')\n\n
 \Zb\Z7IFACE=\Zn${P_IFACE}\n
 \Zb\Z7TYPE=\Zn${TYPE}\n
 \Zb\Z7IP=\Zn${IP}\n

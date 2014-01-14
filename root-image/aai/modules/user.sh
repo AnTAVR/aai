@@ -181,8 +181,8 @@ user_ecryptfs()
 	local P_USER="${1}"
 	return
 	dialog_yesno \
-		"$(gettext 'Шифрование папки пользователя') \Zb\Z2\"${P_USER}\"\Zn" \
-		"$(gettext 'Зашифровать домашнюю папку?')"
+		"${TXT_USER_MAIN}" \
+		"$(gettext 'Зашифровать домашнюю папку пользователя') \Zb\Z2\"${P_USER}\"\Zn ?"
 	case "${?}" in
 		'0') #Yes
 			modprobe ecryptfs

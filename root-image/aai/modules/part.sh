@@ -288,7 +288,7 @@ part_mount_boot()
 	[[ ! -n "${PART}" ]] && return 1
 
 	dialog_yesno \
-		"$(gettext 'Форматирование')" \
+		"${TXT_PART_MAIN}" \
 		"$(gettext 'Форматировать раздел')\n \Zb\Z6${PART}\Zn ?" \
 		'--defaultno'
 
@@ -358,8 +358,9 @@ part_format()
 # Проверяем правильность ввода параметров, если не правильно введено,
 # то повторяем выбор, если отмена то выход
 		dialog_yesno \
-			"$(gettext 'Подтвердите свой выбор')" \
-			"\Zb\Z7${MKF} ${MKF_OPT} ${P_PART}\Zn\n
+			"${TXT_PART_MAIN}" \
+			"$(gettext 'Подтвердите свой выбор')\n\n
+\Zb\Z7${MKF} ${MKF_OPT} ${P_PART}\Zn\n
 \Zb\Z1$(gettext 'Изменение происходит сразу! Будьте внимательны!!!')\Zn" \
 			'--defaultno'
 
@@ -526,7 +527,7 @@ part_mount_home()
 	[[ ! -n "${PART}" ]] && return 1
 
 	dialog_yesno \
-		"$(gettext 'Форматирование')" \
+		"${TXT_PART_MAIN}" \
 		"$(gettext 'Форматировать раздел')\n \Zb\Z6${PART}\Zn ?" \
 		'--defaultno'
 
@@ -581,7 +582,7 @@ part_mount_root()
 	[[ ! -n "${PART}" ]] && return 1
 
 	dialog_yesno \
-		"$(gettext 'Форматирование')" \
+		"${TXT_PART_MAIN}" \
 		"$(gettext 'Форматировать раздел')\n \Zb\Z6${PART}\Zn ?" \
 		'--defaultno'
 
@@ -747,7 +748,7 @@ part_mount_swap()
 			[[ ! -n "${PART}" ]] && return 1
 
 			dialog_yesno \
-				"$(gettext 'Форматирование')" \
+				"${TXT_PART_MAIN}" \
 				"$(gettext 'Форматировать раздел')\n \Zb\Z6${PART}\Zn ?" \
 				'--defaultno'
 

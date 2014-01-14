@@ -79,7 +79,7 @@ run_de()
 		case "${DEF_MENU}" in
 			'no')
 				dialog_yesno \
-					"$(gettext 'Установить Xorg?')" \
+					"${TXT_DE_MAIN}" \
 					"$(gettext 'Установить комплект Xorg?')"
 				case "${?}" in
 					'0') #Yes
