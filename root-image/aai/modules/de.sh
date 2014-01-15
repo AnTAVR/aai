@@ -732,7 +732,7 @@ Server = http://repo.mate-desktop.org/archlinux/$arch
 	pacman_install '-Syy' '1'
 
 	#mate
-	PACS='mate mate-extras'
+	PACS='mate mate-extra'
 	pacman_install "-S ${PACS}" '1'
 	git_commit
 
