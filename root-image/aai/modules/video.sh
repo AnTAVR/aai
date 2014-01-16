@@ -171,6 +171,7 @@ video_dialog_def_menu()
 #     ITEMS+=" 'nvidia173' 'NVIDIA 173xx \Zb\Z3($(gettext 'Пока не поддерживается'))\Zn'"
 #     ITEMS+=" 'nvidia96' 'NVIDIA 96xx \Zb\Z3($(gettext 'Пока не поддерживается'))\Zn'"
 	ITEMS+=" 'ati' 'ATI Catalyst'"
+	ITEMS+=" 'innotek' 'VirtualBox Graphics Adapter'"
 
 	HELP_TXT+=" \Zb\Z7\"${DEFAULT_ITEM}\"\Zn\n"
 
@@ -271,6 +272,19 @@ video_ati()
 	chroot_run systemctl enable dkms.service
 
 	pacman_install "-Rnsc ati-dri intel-dri nouveau-dri" '3' 'noexit'
+
+	git_commit
+}
+
+video_innotek()
+{
+	local PACS
+
+	#community
+	PACS='virtualbox-guest-modules virtualbox-guest-utils'
+	[[ "${SET_LTS}" ]] && PACS+=' virtualbox-host-modules-lts'
+
+	pacman_install "-S ${PACS}" '1'
 
 	git_commit
 }
