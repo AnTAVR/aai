@@ -77,26 +77,8 @@ run_video()
 	do
 		DEF_MENU="$(video_dialog_def_menu "${VID}")"
 		case "${DEF_MENU}" in
-			'nvidia')
-				video_nvidia
-				set_global_var 'SET_VIDEO' "${DEF_MENU}"
-				RUN_VIDEO=1
-				return 0
-				;;
-			'nvidia304')
-				video_nvidia304
-				set_global_var 'SET_VIDEO' "${DEF_MENU}"
-				RUN_VIDEO=1
-				return 0
-				;;
-			'optimus')
-				video_optimus
-				set_global_var 'SET_VIDEO' "${DEF_MENU}"
-				RUN_VIDEO=1
-				return 0
-				;;
-			'ati')
-				video_ati
+			'nvidia' | 'nvidia304' | 'optimus' | 'ati' | 'innotek')
+				video_${DEF_MENU} || continue
 				set_global_var 'SET_VIDEO' "${DEF_MENU}"
 				RUN_VIDEO=1
 				return 0
