@@ -573,16 +573,16 @@ de_kde()
 		chroot_run systemctl enable 'kdm.service'
 	fi
 
-	msg_log "$(gettext 'Настраиваю') /usr/share/config/kdm/kdmrc"
-	sed -i "
-# Включаем NumLock
-/^NumLock=/s/^/#/;
-0,/^#NumLock=/{
-//{
-	a NumLock=On
-};
-};
-" "${NS_PATH}/usr/share/config/kdm/kdmrc"
+# 	msg_log "$(gettext 'Настраиваю') /usr/share/config/kdm/kdmrc"
+# 	sed -i "
+# # Включаем NumLock
+# /^NumLock=/s/^/#/;
+# 0,/^#NumLock=/{
+# //{
+# 	a NumLock=On
+# };
+# };
+# " "${NS_PATH}/usr/share/config/kdm/kdmrc"
 
 	git_commit
 
@@ -677,16 +677,16 @@ de_kde_mini()
 		chroot_run systemctl enable 'kdm.service'
 	fi
 
-	msg_log "$(gettext 'Настраиваю') /usr/share/config/kdm/kdmrc"
-	sed -i "
-# Включаем NumLock
-/^NumLock=/s/^/#/;
-0,/^#NumLock=/{
-//{
-	a NumLock=On
-};
-};
-" "${NS_PATH}/usr/share/config/kdm/kdmrc"
+# 	msg_log "$(gettext 'Настраиваю') /usr/share/config/kdm/kdmrc"
+# 	sed -i "
+# # Включаем NumLock
+# /^NumLock=/s/^/#/;
+# 0,/^#NumLock=/{
+# //{
+# 	a NumLock=On
+# };
+# };
+# " "${NS_PATH}/usr/share/config/kdm/kdmrc"
 
 	git_commit
 
