@@ -667,6 +667,9 @@ de_kde_mini()
 
 	git_commit
 
+	cat "${DBDIR}modules/etc/skel/.kde4/Autostart/stop_ne_ak.sh" > "${NS_PATH}/etc/skel/.kde4/Autostart/stop_ne_ak.sh"
+	chmod +x "${NS_PATH}/etc/skel/.kde4/Autostart/stop_ne_ak.sh"
+
 	if [[ ! "$SET_DE" ]]
 	then
 # включаем kdm
