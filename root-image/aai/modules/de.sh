@@ -667,6 +667,8 @@ de_kde_mini()
 
 	git_commit
 
+	msg_log "$(gettext 'Настраиваю') /etc/skel/.kde4/Autostart/stop_ne_ak.sh"
+	mkdir -p "${NS_PATH}/etc/skel/.kde4/Autostart/"
 	cat "${DBDIR}modules/etc/skel/.kde4/Autostart/stop_ne_ak.sh" > "${NS_PATH}/etc/skel/.kde4/Autostart/stop_ne_ak.sh"
 	chmod +x "${NS_PATH}/etc/skel/.kde4/Autostart/stop_ne_ak.sh"
 
