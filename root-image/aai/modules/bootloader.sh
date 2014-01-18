@@ -104,12 +104,12 @@ run_bootloader()
 #	RUN_BOOTLOADER=1
 				return 0
 				;;
-			'lilo')
-				bootloader_lilo || continue
-#	set_global_var 'SET_BOOTLOADER' "${DEF_MENU}"
-#	RUN_BOOTLOADER=1
-				return 0
-				;;
+# 			'lilo')
+# 				bootloader_lilo || continue
+# #	set_global_var 'SET_BOOTLOADER' "${DEF_MENU}"
+# #	RUN_BOOTLOADER=1
+# 				return 0
+# 				;;
 			*)
 				return 1
 				;;
@@ -134,7 +134,7 @@ bootloader_dialog_menu()
 	local ITEMS="'grub_bios' 'GRUB BIOS'"
 	ITEMS+=" 'grub_efi' 'GRUB EFI \Zb\Z3($(gettext 'Пока не поддерживается'))\Zn'"
 	ITEMS+=" 'syslinux' 'SYSLINUX \Zb\Z3($(gettext 'Пока не поддерживается'))\Zn'"
-	ITEMS+=" 'lilo' 'LILO \Zb\Z3($(gettext 'Пока не поддерживается'))\Zn'"
+# 	ITEMS+=" 'lilo' 'LILO \Zb\Z3($(gettext 'Пока не поддерживается'))\Zn'"
 
 	HELP_TXT+=" \Zb\Z7\"${DEFAULT_ITEM}\"\Zn\n"
 
@@ -460,28 +460,28 @@ bootloader_syslinux()
 #  chroot_run syslinux-install_update -i -a -m
 }
 
-# Устанавливаем lilo
-bootloader_lilo()
-{
-	local CONSOLE_V_XxYxD
-	local PACS
-
-	dialog_warn \
-		"\Zb\Z1\"LILO\" $(gettext 'пока не поддерживается, помогите проекту, допишите данный функционал')\Zn"
-	return 1
-
-# @todo Закомментировано потому что темы могут не поддерживать выбранные режимы
-#  TEMP="$(bootloader_dialog_console)"
-#  [[ ! -n "${TEMP}" ]] && return 1
-#  CONSOLE_V_XxYxD="${TEMP}"
-	CONSOLE_V_XxYxD="${DEF_CONSOLE_V_XxYxD}"
-
-	#core
-	PACS='lilo'
-	pacman_install "-S ${PACS}" '1'
-	git_commit
-
-# Настраиваем lilo
-#  "${NS_PATH}/etc/lilo.conf"
-#  chroot_run lilo
-}
+# # # Устанавливаем lilo
+# # bootloader_lilo()
+# # {
+# # 	local CONSOLE_V_XxYxD
+# # 	local PACS
+# # 
+# # 	dialog_warn \
+# # 		"\Zb\Z1\"LILO\" $(gettext 'пока не поддерживается, помогите проекту, допишите данный функционал')\Zn"
+# # 	return 1
+# # 
+# # # @todo Закомментировано потому что темы могут не поддерживать выбранные режимы
+# # #  TEMP="$(bootloader_dialog_console)"
+# # #  [[ ! -n "${TEMP}" ]] && return 1
+# # #  CONSOLE_V_XxYxD="${TEMP}"
+# # 	CONSOLE_V_XxYxD="${DEF_CONSOLE_V_XxYxD}"
+# # 
+# # 	#core
+# # 	PACS='lilo'
+# # 	pacman_install "-S ${PACS}" '1'
+# # 	git_commit
+# # 
+# # # Настраиваем lilo
+# # #  "${NS_PATH}/etc/lilo.conf"
+# # #  chroot_run lilo
+# # }
