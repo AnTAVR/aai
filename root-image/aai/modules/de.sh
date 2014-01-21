@@ -726,17 +726,17 @@ de_mate()
 
 # 	pacman_install "-Rnsc bluez" '3' 'noexit'
 
-	msg_log "$(gettext 'Добавляю') mate > /etc/pacman.conf"
-	grep 'mate' "${NS_PATH}/etc/pacman.conf" > /dev/null && echo '' || echo '
+# 	msg_log "$(gettext 'Добавляю') mate > /etc/pacman.conf"
+# 	grep 'mate' "${NS_PATH}/etc/pacman.conf" > /dev/null && echo '' || echo '
+# 
+# [mate]
+# SigLevel = Optional TrustAll
+# Server = http://repo.mate-desktop.org/archlinux/$arch
+# ' >> "${NS_PATH}/etc/pacman.conf"
+# 
+# 	pacman_install '-Syy' '1'
 
-[mate]
-SigLevel = Optional TrustAll
-Server = http://repo.mate-desktop.org/archlinux/$arch
-' >> "${NS_PATH}/etc/pacman.conf"
-
-	pacman_install '-Syy' '1'
-
-	#mate
+	#community
 	PACS='mate mate-extra'
 	pacman_install "-S ${PACS}" '1'
 	git_commit
