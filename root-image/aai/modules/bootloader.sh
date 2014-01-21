@@ -334,7 +334,7 @@ bootloader_grub_bios()
 " "${NS_PATH}/etc/default/grub"
 
 # исправляет ошибку в грубе
-echo 'GRUB_DISABLE_SUBMENU=y' >> "${NS_PATH}/etc/default/grub"
+#echo 'GRUB_DISABLE_SUBMENU=y' >> "${NS_PATH}/etc/default/grub"
 
 #echo "vga=${CONSOLE_V_XxYxD%_*}"
 	if [[ "${RUN_BASE_PLUS}" ]]
