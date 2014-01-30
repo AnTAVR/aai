@@ -235,9 +235,6 @@ base_plus_install()
 {
 	local SERVICE
 
-	local PACS
-
-
 #===============================================================================
 # Устанавливать ли lts
 #===============================================================================
@@ -253,17 +250,12 @@ base_plus_install()
 
 	set_global_var 'SET_LTS' "${SET_LTS}"
 
-	if [[ "${SET_LTS}" ]]
-	then
-		#core
-		PACS='linux-lts'
-		pacman_install "-S ${PACS}" '1'
-		git_commit
-	fi
+	[[ "${SET_LTS}" ]] && pacman_install "-S linux-lts" '1'
 #-------------------------------------------------------------------------------
 
 
 	base_plus_yaourt
+
 
 #===============================================================================
 # Создаем папки и перемещаем кеш пакетов для создания бэкапов.
@@ -295,6 +287,7 @@ base_plus_install()
 	a SRCPKGDEST=/home/sys-backup/srcpackages
 };
 ' "${NS_PATH}/etc/makepkg.conf"
+
 	git_commit
 #-------------------------------------------------------------------------------
 
@@ -351,6 +344,7 @@ base_plus_install()
 #===============================================================================
 	msg_log "$(gettext 'Настраиваю') /etc/tmpfiles.d/disable-wakeup-usb.conf"
 	cat "${DBDIR}modules/etc/tmpfiles.d/disable-wakeup-usb.conf" > "${NS_PATH}/etc/tmpfiles.d/disable-wakeup-usb.conf"
+
 	git_commit
 #-------------------------------------------------------------------------------
 
@@ -399,6 +393,7 @@ base_plus_install()
 #===============================================================================
 #	msg_log "$(gettext 'Включаю ') zcache2"
 #	cat "${DBDIR}modules/etc/modules-load.d/zcache.conf" > "${NS_PATH}/etc/modules-load.d/zcache.conf"
+
 #	git_commit
 #-------------------------------------------------------------------------------
 
@@ -409,6 +404,7 @@ base_plus_install()
 #===============================================================================
 	msg_log "$(gettext 'Настраиваю') /etc/udev/rules.d/60-schedulers.rules"
 	cat "${DBDIR}modules/etc/udev/rules.d/60-schedulers.rules" > "${NS_PATH}/etc/udev/rules.d/60-schedulers.rules"
+
 	git_commit
 #-------------------------------------------------------------------------------
 
@@ -422,6 +418,7 @@ base_plus_install()
 	msg_log "$(gettext 'Настраиваю') /etc/udev/all-vcs-set.sh"
 	cat "${DBDIR}modules/etc/udev/all-vcs-set.sh" > "${NS_PATH}/etc/udev/all-vcs-set.sh"
 	chmod +x "${NS_PATH}/etc/udev/all-vcs-set.sh"
+
 	git_commit
 #-------------------------------------------------------------------------------
 
@@ -641,17 +638,15 @@ base_plus_install()
 
 base_plus_yaourt()
 {
-	local PACS
 	#core
-	PACS='base-devel'
-	pacman_install "-S ${PACS}" '1'
-	git_commit
-
+	pacman_install "-S base-devel" '1'
 	#extra
-	PACS='namcap ccache pkgstats'
+	pacman_install "-S namcap" '1'
+	pacman_install "-S ccache" '1'
+	pacman_install "-S pkgstats" '1'
 	#community
-	PACS+=' upx'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S upx" '1'
+
 	git_commit
 
 
@@ -677,8 +672,8 @@ base_plus_yaourt()
 	pacman_install '-Syy' '1'
 
 	#aur
-	PACS='yaourt'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S yaourt" '1'
+
 	git_commit
 
 # удаляем репозиторий archlinuxfr добавленный ранее для установки yaourt
@@ -707,53 +702,75 @@ base_plus_yaourt()
 #    msg_log "$(gettext 'Добавляю') pacman-color > /etc/skel/.zshrc"
 #    echo 'which pacman-color 2>&1 > /dev/null && alias pacman="pacman-color"' >> "${NS_PATH}/etc/skel/.zshrc"
 #    cat "${NS_PATH}/etc/skel/.zshrc" > "${NS_PATH}/root/.zshrc"
+
 	git_commit
 
 # aurvote Нужно зарегистрироваться https://aur.archlinux.org/account.php
 	#aur
-	PACS='aurvote customizepkg downgrade pkgtools'
-	pacman_install "-S ${PACS}" '2'
+	pacman_install "-S aurvote" '2'
+	pacman_install "-S customizepkg" '2'
+	pacman_install "-S downgrade" '2'
+	pacman_install "-S pkgtools" '2'
+
 	git_commit
 #-------------------------------------------------------------------------------
 }
 
 base_plus_aspell_loc()
 {
-	local PACS
-	PACS="aspell-en"
-	pacman_install "-S ${PACS}" '1'
-	PACS="aspell-${SET_LOCAL%_*}"
-	pacman_install "-S ${PACS}" '2'
+	#extra
+	pacman_install "-S aspell-en" '1'
+	pacman_install "-S aspell-${SET_LOCAL%_*}" '2'
+
 	git_commit
 }
 
 base_plus_alsa()
 {
-	local PACS
 	#extra
-	PACS='alsa-utils alsa-firmware alsa-plugins alsa-tools'
-	PACS+=' alsa-oss'
-#	PACS+=' timidity++'
-	#community
-	PACS+=' jack2 ladspa-plugins'
-#	PACS+=' timidity-freepats'
-
-	pacman_install "-S ${PACS}" '1'
-	git_commit
-
+	pacman_install "-S alsa-utils" '1'
+	pacman_install "-S alsa-firmware" '1'
+	pacman_install "-S alsa-plugins" '1'
+	pacman_install "-S alsa-tools" '1'
+	pacman_install "-S alsa-oss" '1'
 	#multilib
-	PACS='lib32-alsa-plugins lib32-alsa-oss lib32-jack2'
-	pacman_install "-S ${PACS}" '2'
+	pacman_install "-S lib32-alsa-plugins" '2'
+	pacman_install "-S lib32-alsa-oss" '2'
+
 	git_commit
 
 	msg_log "$(gettext 'Настраиваю') /etc/modules-load.d/snd-alsa-oss.conf"
 	cat "${DBDIR}modules/etc/modules-load.d/snd-alsa-oss.conf" > "${NS_PATH}/etc/modules-load.d/snd-alsa-oss.conf"
-
-	cat "${DBDIR}modules/usr/local/lib/systemd/user/jack.service" > "${NS_PATH}/usr/local/lib/systemd/user/jack.service"
 #	cat "${DBDIR}modules/etc/skel/.asoundrc" > "${NS_PATH}/etc/skel/.asoundrc"
+
+	git_commit
+
+	#community
+	pacman_install "-S jack2" '1'
+	#multilib
+	pacman_install "-S lib32-jack2" '2'
+
+	git_commit
+
+	msg_log "$(gettext 'Настраиваю') /usr/local/lib/systemd/user/jack.service"
+	cat "${DBDIR}modules/usr/local/lib/systemd/user/jack.service" > "${NS_PATH}/usr/local/lib/systemd/user/jack.service"
+
+	git_commit
+
+	#extra
+#	pacman_install "-S timidity++" '1'
+	#community
+#	pacman_install "-S timidity-freepats" '1'
+
+#	git_commit
 
 #	cp -Pb "${NS_PATH}/etc/timidity++/timidity-freepats.cfg" "${NS_PATH}/etc/timidity++/timidity.cfg"
 #	cat "${DBDIR}modules/usr/local/lib/systemd/user/timidity.service" > "${NS_PATH}/usr/local/lib/systemd/user/timidity.service"
+
+#	git_commit
+
+	#community
+	pacman_install "-S ladspa-plugins" '1'
 
 	git_commit
 
@@ -765,11 +782,10 @@ base_plus_alsa()
 # @todo Нужно доделать!!!
 base_plus_squashfs()
 {
-	local PACS
 	#community
-	PACS='squashfs-tools'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S squashfs-tools" '1'
 #     pacman_install '-U /aai/db/my_pkgs/mkinitcpio-squashfs-usr-file-1.0-1-any.pkg.tar.xz' '0' 'noexit'
+
 	git_commit
 
 #     msg_log "$(gettext 'Добавляю') squashfs > /etc/mkinitcpio.conf"
@@ -801,32 +817,30 @@ base_plus_squashfs()
 
 base_plus_archives()
 {
-	local PACS
 	#extra
-	PACS='unzip cpio'
+	pacman_install "-S unzip" '1'
+	pacman_install "-S cpio" '1'
 	#community
-	PACS+=' unshield'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S unshield" '1'
+
 	git_commit
 }
 
 base_plus_fs()
 {
-	local PACS
 	#extra
-	PACS='avfs'
+	pacman_install "-S avfs" '1'
 	#community
-	PACS+=' fuse-exfat'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S fuse-exfat" '1'
+
 	git_commit
 }
 
 base_plus_crypt()
 {
-	local PACS
 	#community
-	PACS='encfs ecryptfs-utils'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S encfs" '1'
+	pacman_install "-S ecryptfs-utils" '1'
 
 	git_commit
 
@@ -854,10 +868,11 @@ i session   required  pam_ecryptfs.so unwrap # eCryptfs
 
 base_plus_cdemu()
 {
-	local PACS
-	PACS='cdemu-client'
-	pacman_install "-S ${PACS}" '1'
+	#community
+	pacman_install "-S cdemu-client" '1'
+
 	git_commit
+
 	SERVICES+=" 'cdemu-daemon.service' '-' 'off'"
 
 	SET_USER_GRUPS+=',cdemu'
@@ -865,22 +880,21 @@ base_plus_cdemu()
 
 base_plus_hd()
 {
-	local PACS
 	#core
-	PACS='sdparm'
+	pacman_install "-S sdparm" '1'
 	#extra
-	PACS+=' gpart'
+	pacman_install "-S gpart" '1'
 	#community
-	PACS+=' extundelete anyfs-tools'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S extundelete" '1'
+	pacman_install "-S anyfs-tools" '1'
+
 	git_commit
 }
 
 base_plus_man_pages_loc()
 {
-	local PACS
-	PACS="man-pages-${SET_LOCAL%_*}"
-	pacman_install "-S ${PACS}" '2'
+	pacman_install "-S man-pages-${SET_LOCAL%_*}" '2'
+
 	git_commit
 
 # Закомментировал потому что очень долго выполняется!!!
@@ -892,14 +906,16 @@ base_plus_man_pages_loc()
 
 base_plus_laptop()
 {
-	local PACS
 	#extra
-	PACS='upower'
-# 	PACS='bluez bluez-firmware'
+	pacman_install "-S upower" '1'
+#	pacman_install "-S bluez" '1'
+#	pacman_install "-S bluez-firmware" '1'
 	#community
-	PACS+=' laptop-mode-tools apcupsd powertop'
-	# acpi acpid
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S laptop-mode-tools" '1'
+	pacman_install "-S apcupsd" '1'
+	pacman_install "-S powertop" '1'
+#	pacman_install "-S acpi" '1'
+#	pacman_install "-S acpid" '1'
 
 	git_commit
 
@@ -911,14 +927,26 @@ base_plus_laptop()
 
 base_plus_utils()
 {
-	local PACS
 	#extra
-	PACS='beep whois rtkit irqbalance fbset'
-	PACS+=' htop lsof strace'
-	PACS+=' bc'
+	pacman_install "-S beep" '1'
+	pacman_install "-S whois" '1'
+	pacman_install "-S rtkit" '1'
+	pacman_install "-S irqbalance" '1'
+	pacman_install "-S fbset" '1'
+	pacman_install "-S htop" '1'
+	pacman_install "-S lsof" '1'
+	pacman_install "-S strace" '1'
+	pacman_install "-S bc" '1'
 	#community
-	PACS+=' collectd audit lshw hwinfo flashrom grc chrony mcelog iotop'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S collectd" '1'
+	pacman_install "-S audit" '1'
+	pacman_install "-S lshw" '1'
+	pacman_install "-S hwinfo" '1'
+	pacman_install "-S flashrom" '1'
+	pacman_install "-S grc" '1'
+	pacman_install "-S chrony" '1'
+	pacman_install "-S mcelog" '1'
+	pacman_install "-S iotop" '1'
 
 	git_commit
 
@@ -934,11 +962,13 @@ base_plus_utils()
 
 base_plus_linux_tools()
 {
-	local PACS
 	#community
-	PACS='cpupower libtraceevent perf usbip x86_energy_perf_policy'
-	# linux-tools
-	pacman_install "-S ${PACS}" '1'
+#	pacman_install "-S linux-tools" '1'
+	pacman_install "-S cpupower" '1'
+	pacman_install "-S libtraceevent" '1'
+	pacman_install "-S perf" '1'
+	pacman_install "-S usbip" '1'
+	pacman_install "-S x86_energy_perf_policy" '1'
 
 	git_commit
 
@@ -948,11 +978,9 @@ base_plus_linux_tools()
 
 base_plus_lirc()
 {
-	local PACS
 	#extra
-	PACS='lirc'
-	# lirc-utils
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S lirc" '1'
+#	pacman_install "-S lirc-utils" '1'
 
 	git_commit
 
@@ -964,11 +992,10 @@ base_plus_lirc()
 base_plus_postfix()
 {
 #  http://www.hypexr.org/linux_mail_server.php#postfix_install
-	local PACS
 	#extra
-	PACS='postfix dovecot'
-#    PACS+=' cyrus-sasl'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S postfix" '1'
+	pacman_install "-S dovecot" '1'
+#	pacman_install "-S cyrus-sasl" '1'
 
 	git_commit
 
@@ -983,10 +1010,8 @@ base_plus_postfix()
 
 base_plus_vsftpd()
 {
-	local PACS
 	#community
-	PACS='vsftpd'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S vsftpd" '1'
 
 	git_commit
 
@@ -1004,10 +1029,8 @@ base_plus_vsftpd()
 
 base_plus_mlocate()
 {
-	local PACS
 	#core
-	PACS='mlocate'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S mlocate" '1'
 
 	git_commit
 
@@ -1018,13 +1041,14 @@ base_plus_mlocate()
 
 base_plus_sensors()
 {
-	local PACS
 	#extra
-	PACS='lm_sensors dmidecode'
+	pacman_install "-S lm_sensors" '1'
+	pacman_install "-S dmidecode" '1'
 	#community
-	PACS+=' i2c-tools'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S i2c-tools" '1'
+
 	git_commit
+
 	chroot_run bash -c "'(while :; do echo \"\"; done ) | sensors-detect'"
 
 	git_commit
@@ -1038,10 +1062,9 @@ base_plus_sensors()
 # Убрал установку так как пакет переехал в Аур
 # base_plus_preload()
 # {
-# 	local PACS
 # 	#community
-# 	PACS='preload'
-# 	pacman_install "-S ${PACS}" '1'
+# 	pacman_install "-S preload" '1'
+# 
 # 	git_commit
 # 
 # 	SERVICES+=" 'preload.service' '-' 'off'"
@@ -1049,10 +1072,9 @@ base_plus_sensors()
 
 base_plus_aria2()
 {
-	local PACS
 	#community
-	PACS='aria2'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S aria2" '1'
+
 	git_commit
 
 # Добавляем пред настройки для aria2
@@ -1065,18 +1087,23 @@ base_plus_aria2()
 
 base_plus_net()
 {
-#@todo кто то из них тянет графику, нужно выяснить!!!
-	local PACS
 	#core
-	PACS='net-tools isdn4k-utils iw wireless-regdb'
+	pacman_install "-S net-tools" '1'
+	pacman_install "-S isdn4k-utils" '1'
+	pacman_install "-S iw" '1'
+	pacman_install "-S wireless-regdb" '1'
 	#extra
-	PACS+=' modemmanager nss-mdns mtr'
-# samba
+	pacman_install "-S modemmanager" '1'
+	pacman_install "-S nss-mdns" '1'
+	pacman_install "-S mtr" '1'
+#	pacman_install "-S samba" '1'
 	#community
-	PACS+=' openresolv arp-scan dsniff tor'
+	pacman_install "-S openresolv" '1'
+	pacman_install "-S arp-scan" '1'
+	pacman_install "-S dsniff" '1'
+	pacman_install "-S tor" '1'
 # убрал потому что тянет графику
-#	PACS+='ntop'
-	pacman_install "-S ${PACS}" '1'
+#	pacman_install "-S ntop" '1'
 
 	git_commit
 
@@ -1086,11 +1113,9 @@ base_plus_net()
 
 base_plus_iptables()
 {
-	local PACS
-
 	#core
-	PACS='iptables'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S iptables" '1'
+
 	git_commit
 
 # включаем iptables
@@ -1108,10 +1133,10 @@ base_plus_iptables()
 
 base_plus_ufw()
 {
-	local PACS
 	#community
-	PACS='ufw ufw-extras'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S ufw" '1'
+	pacman_install "-S ufw-extras" '1'
+
 	git_commit
 
 	msg_log "$(gettext 'Настраиваю') /etc/ufw/ufw.conf"
@@ -1139,11 +1164,11 @@ base_plus_ufw()
 
 # base_plus_timestamp()
 # {
-# 	local PACS
 # 	#extra
-# 	PACS='python2-gobject'
-# 	pacman_install "-S ${PACS}" '1'
+# 	pacman_install "-S python2-gobject" '1'
+# 
 # 	git_commit
+# 
 # 	msg_log "$(gettext 'Добавляю') timestamp > /etc/mkinitcpio.conf"
 # 	sed -i '
 # # Добавляем хук timestamp
@@ -1163,13 +1188,11 @@ base_plus_ufw()
 
 base_plus_dkms()
 {
-	local PACS
 	#core
-	PACS='linux-headers'
-	[[ "${SET_LTS}" ]] && PACS+=' linux-lts-headers'
+	pacman_install "-S linux-headers" '1'
+	[[ "${SET_LTS}" ]] && pacman_install "-S linux-lts-headers" '1'
 	#community
-	PACS+=' dkms'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S dkms" '1'
 
 	git_commit
 

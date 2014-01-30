@@ -165,18 +165,19 @@ video_dialog_def_menu()
 
 video_nvidia()
 {
-	local PACS
-
 	pacman_install "-Rdds mesa-libgl" '3' 'noexit'
 	pacman_install "-Rdds lib32-mesa-libgl" '3' 'noexit'
+
+	#aur
+#	pacman_install "-S nvidia-dkms" '2'
 	#extra
-	PACS='nvidia nvidia-utils'
-	[[ "${SET_LTS}" ]] && PACS+=' nvidia-lts'
-#     PACS+=' opencl-nvidia'
-#     dkms-nvidia
-	pacman_install "-S ${PACS}" '1'
-	PACS='lib32-nvidia-utils'
-	pacman_install "-S ${PACS}" '2'
+	pacman_install "-S nvidia" '1'
+	[[ "${SET_LTS}" ]] && pacman_install "-S nvidia-lts" '1'
+	pacman_install "-S nvidia-utils" '1'
+#	pacman_install "-S opencl-nvidia" '1'
+	#multilib
+	pacman_install "-S lib32-nvidia-utils" '2'
+#	pacman_install "-S lib32-opencl-nvidia" '2'
 
 	pacman_install "-Rnsc ati-dri intel-dri nouveau-dri" '3' 'noexit'
 
@@ -185,17 +186,17 @@ video_nvidia()
 
 video_nvidia304()
 {
-	local PACS
-
 	pacman_install "-Rdds mesa-libgl" '3' 'noexit'
 	pacman_install "-Rdds lib32-mesa-libgl" '3' 'noexit'
+
 	#extra
-	PACS='nvidia-304xx nvidia-304xx-utils'
-	[[ "${SET_LTS}" ]] && PACS+=' nvidia-304xx-lts'
-#     PACS+=' opencl-nvidia-304xx'
-	pacman_install "-S ${PACS}" '1'
-	PACS='lib32-nvidia-304xx-utils'
-	pacman_install "-S ${PACS}" '2'
+	pacman_install "-S nvidia-304xx" '1'
+	[[ "${SET_LTS}" ]] && pacman_install "-S nvidia-304xx-lts" '1'
+	pacman_install "-S nvidia-304xx-utils" '1'
+#	pacman_install "-S opencl-nvidia-304xx" '1'
+	#multilib
+	pacman_install "-S lib32-nvidia-304xx-utils" '2'
+#	pacman_install "-S lib32-opencl-nvidia-304xx" '2'
 
 	pacman_install "-Rnsc ati-dri intel-dri nouveau-dri" '3' 'noexit'
 
@@ -205,29 +206,32 @@ video_nvidia304()
 
 video_optimus()
 {
-	local PACS
-
 #	pacman_install "-Rdds mesa-libgl" '3' 'noexit'
 #	pacman_install "-Rdds lib32-mesa-libgl" '3' 'noexit'
+
 	#community
-	PACS='bumblebee'
+	pacman_install "-S bumblebee" '1'
+	#aur
+#	pacman_install "-S nvidia-dkms" '2'
 	#extra
-	PACS=+' nvidia nvidia-utils'
-	[[ "${SET_LTS}" ]] && PACS+=' nvidia-lts'
-#     PACS+=' opencl-nvidia'
-#     dkms-nvidia
-	pacman_install "-S ${PACS}" '1'
-	PACS='lib32-nvidia-utils'
-	pacman_install "-S ${PACS}" '2'
+	pacman_install "-S nvidia" '1'
+	[[ "${SET_LTS}" ]] && pacman_install "-S nvidia-lts" '1'
+	pacman_install "-S nvidia-utils" '1'
+#	pacman_install "-S opencl-nvidia" '1'
+	#multilib
+	pacman_install "-S lib32-nvidia-utils" '2'
+#	pacman_install "-S lib32-opencl-nvidia" '2'
 
 	pacman_install "-Rnsc ati-dri nouveau-dri" '3' 'noexit'
 
 	#community
-	PACS='virtualgl primus'
-	pacman_install "-S ${PACS}" '2'
+	pacman_install "-S virtualgl" '1'
+	pacman_install "-S primus" '1'
 	#multilib
-	PACS='lib32-virtualgl lib32-primus'
-	pacman_install "-S ${PACS}" '2'
+	pacman_install "-S lib32-virtualgl" '2'
+	pacman_install "-S lib32-primus" '2'
+
+	git_commit
 
 	chroot_run systemctl enable 'nvidia-enable.service'
 
@@ -238,19 +242,16 @@ video_optimus()
 
 video_ati()
 {
-	local PACS
-
 	pacman_install "-Rdds mesa-libgl" '3' 'noexit'
 	pacman_install "-Rdds lib32-mesa-libgl" '3' 'noexit'
-	#community
-	PACS=''
-	#community
-	PACS+=' catalyst-dkms catalyst-utils'
-#     PACS+=' opencl-catalyst'
-	pacman_install "-S ${PACS}" '2'
-	PACS='lib32-catalyst-utils'
-	pacman_install "-S ${PACS}" '2'
+	#aur
+	pacman_install "-S catalyst-dkms" '2'
+	pacman_install "-S catalyst-utils" '2'
+#	pacman_install "-S opencl-catalyst" '2'
+	pacman_install "-S lib32-catalyst-utils" '2'
+
 	git_commit
+
 	chroot_run systemctl enable dkms.service
 
 	pacman_install "-Rnsc ati-dri intel-dri nouveau-dri" '3' 'noexit'
@@ -260,13 +261,10 @@ video_ati()
 
 video_innotek()
 {
-	local PACS
-
 	#community
-	PACS='virtualbox-guest-modules virtualbox-guest-utils'
-	[[ "${SET_LTS}" ]] && PACS+=' virtualbox-host-modules-lts'
-
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S virtualbox-guest-modules" '1'
+	pacman_install "-S virtualbox-guest-utils" '1'
+	[[ "${SET_LTS}" ]] && pacman_install "-S virtualbox-host-modules-lts" '1'
 
 	git_commit
 }

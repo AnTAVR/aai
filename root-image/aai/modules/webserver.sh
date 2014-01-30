@@ -132,10 +132,8 @@ webserver_lampp()
 
 webserver_nginx()
 {
-	local PACS
 	#community
-	PACS='nginx'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S nginx" '1'
 
 	git_commit
 
@@ -161,6 +159,7 @@ webserver_nginx()
 	ln -sr "${NS_PATH}/usr/share/webapps/phppgadmin" "${NS_PATH}/srv/http/nginx/public/phppgadmin"
 
 	chroot_run systemctl enable nginx.service
+
 	git_commit
 
 	SET_USER_GRUPS+=',http'
@@ -168,31 +167,41 @@ webserver_nginx()
 
 webserver_php()
 {
-	local PACS
 	#extra
-	PACS='php php-sqlite php-apc php-gd php-mcrypt php-pear php-pspell php-snmp php-tidy php-xsl php-intl'
-	PACS+=' php-fpm'
-#    PACS+=' php-apache'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S php" '1'
+	pacman_install "-S php-sqlite" '1'
+	pacman_install "-S php-apc" '1'
+	pacman_install "-S php-gd" '1'
+	pacman_install "-S php-mcrypt" '1'
+	pacman_install "-S php-pear" '1'
+	pacman_install "-S php-pspell" '1'
+	pacman_install "-S php-snmp" '1'
+	pacman_install "-S php-tidy" '1'
+	pacman_install "-S php-xsl" '1'
+	pacman_install "-S php-intl" '1'
+	pacman_install "-S php-fpm" '1'
+#	pacman_install "-S php-apache" '1'
+
 	git_commit
 
 	cp -Pb "${DBDIR}modules/etc/php/php.ini" "${NS_PATH}/etc/php/php.ini"
 
 	chroot_run systemctl enable php-fpm.service
+
 	git_commit
 }
 
 webserver_mariadb()
 {
-	local PACS
 	#extra
-	PACS='mariadb'
+	pacman_install "-S mariadb" '1'
 	#community
-	PACS+=' phpmyadmin'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S phpmyadmin" '1'
+
 	git_commit
 
 	chroot_run systemctl enable mysqld.service
+
 	git_commit
 # Поменять в /etc/webapps/phpmyadmin/config.inc.php
 # $cfg['Servers'][$i]['AllowNoPassword'] = false;
@@ -201,13 +210,13 @@ webserver_mariadb()
 
 webserver_postgresql()
 {
-	local PACS
 	#extra
-	PACS='php-pgsql'
+	pacman_install "-S php-pgsql" '1'
 	#community
-	PACS+=' postgresql pgadmin3'
-#    phppgadmin
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S postgresql" '1'
+	pacman_install "-S pgadmin3" '1'
+#	pacman_install "-S phppgadmin" '1'
+
 	git_commit
 
 	mkdir -p "${NS_PATH}"/var/lib/postgres/data
@@ -215,6 +224,7 @@ webserver_postgresql()
 	chroot_run "bash -c \"su postgres -c 'initdb --locale en_US.UTF-8 -D /var/lib/postgres/data && exit'\""
 
 	chroot_run systemctl enable postgresql.service
+
 	git_commit
 
 # su root
@@ -229,10 +239,9 @@ webserver_postgresql()
 
 webserver_apache()
 {
-	local PACS
 	#extra
-	PACS='apache'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S apache" '1'
+
 	git_commit
 
 	mkdir -p "${NS_PATH}"/etc/httpd/conf/{sites-available,sites-enabled}

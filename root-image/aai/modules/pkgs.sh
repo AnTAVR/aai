@@ -90,10 +90,9 @@ pkgs_dialog_app()
 
 pkgs_appset()
 {
-	local PACS
 	#aur
-	PACS='appset-qt packer'
-	pacman_install "-S ${PACS}" '2'
+	pacman_install "-S appset-qt" '2'
+	pacman_install "-S packer" '2'
 
 	git_commit
 
@@ -105,17 +104,18 @@ APPS+=" 'appset' '$(gettext 'Графический менеджер пакет�
 
 pkgs_dolphin()
 {
-	local PACS
 	#extra
-	PACS='kdebase-dolphin kdesdk-dolphin-plugins kdemultimedia-ffmpegthumbs kdeutils-ark kdebase-konsole'
-	PACS+=' kdebase-kdialog kdeutils-kwallet'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S kdebase-dolphin" '1'
+	pacman_install "-S kdesdk-dolphin-plugins" '1'
+	pacman_install "-S kdemultimedia-ffmpegthumbs" '1'
+	pacman_install "-S kdeutils-ark" '1'
+	pacman_install "-S kdebase-konsole" '1'
+	pacman_install "-S kdebase-kdialog" '1'
+	pacman_install "-S kdeutils-kwallet" '1'
 	#aur
-#	PACS='kde-servicemenus-rootactions' # отключил потому что подвисает, и xauth зомбируется так что лучше использовать kdesu!
-#	pacman_install "-S ${PACS}" '2'
+#	pacman_install "-S kde-servicemenus-rootactions" '2' # отключил потому что подвисает, и xauth зомбируется так что лучше использовать kdesu!
 	#extra
-	PACS="kde-l10n-${SET_LOCAL%_*}"
-	pacman_install "-S ${PACS}" '2'
+	pacman_install "-S kde-l10n-${SET_LOCAL%_*}" '2'
 
 	git_commit
 }
@@ -123,13 +123,11 @@ APPS+=" 'dolphin' '$(gettext 'Файловый менеджер')' 'on'"
 
 pkgs_kate()
 {
-	local PACS
 	#extra
-	PACS=' kdesdk-kate kdebase-konsole'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S kdesdk-kate" '1'
+	pacman_install "-S kdebase-konsole" '1'
 	#extra
-	PACS="kde-l10n-${SET_LOCAL%_*}"
-	pacman_install "-S ${PACS}" '2'
+	pacman_install "-S kde-l10n-${SET_LOCAL%_*}" '2'
 
 	git_commit
 }
@@ -137,10 +135,9 @@ APPS+=" 'kate' '$(gettext 'Хороший текстовый редактор')'
 
 pkgs_geany()
 {
-	local PACS
 	#community
-	PACS='geany geany-plugins'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S geany" '1'
+	pacman_install "-S geany-plugins" '1'
 
 	git_commit
 }
@@ -148,10 +145,8 @@ APPS+=" 'geany' '$(gettext 'Текстовый редактор')' 'off'"
 
 pkgs_sublime()
 {
-	local PACS
 	#aur
-	PACS='sublime-text'
-	pacman_install "-S ${PACS}" '2'
+	pacman_install "-S sublime-text" '2'
 
 	git_commit
 }
@@ -159,15 +154,12 @@ APPS+=" 'sublime' '$(gettext 'Отличный текстовый редакто
 
 pkgs_vim()
 {
-	local PACS
 	#extra
-	PACS='vim'
+	pacman_install "-S vim" '1'
 	#community
-	PACS+=' vim-plugins'
-	pacman_install "-S ${PACS}" '1'
-
-	PACS="vim-spell-${SET_LOCAL%_*}"
-	pacman_install "-S ${PACS}" '2'
+	pacman_install "-S vim-plugins" '1'
+	#community
+	pacman_install "-S vim-spell-${SET_LOCAL%_*}" '2'
 
 	git_commit
 }
@@ -175,10 +167,9 @@ APPS+=" 'vim' '$(gettext 'Консольный текстовый редакто
 
 pkgs_acestream()
 {
-	local PACS
 	#aur
-	PACS='acestream-player acestream-mozilla-plugin'
-	pacman_install "-S ${PACS}" '2'
+	pacman_install "-S acestream-player" '2'
+	pacman_install "-S acestream-mozilla-plugin" '2'
 
 	git_commit
 }
@@ -186,12 +177,11 @@ APPS+=" 'acestream' '$(gettext 'Медиа-платформа нового по�
 
 pkgs_smplayer()
 {
-	local PACS
 	#extra
-	PACS='smplayer smplayer-themes'
+	pacman_install "-S smplayer" '1'
+	pacman_install "-S smplayer-themes" '1'
 	#community
-	PACS+=' smtube'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S smtube" '1'
 
 	git_commit
 }
@@ -199,10 +189,8 @@ APPS+=" 'smplayer' '$(gettext 'Видео плеер')' 'on'"
 
 pkgs_bino()
 {
-	local PACS
 	#aur
-	PACS='bino'
-	pacman_install "-S ${PACS}" '2'
+	pacman_install "-S bino" '2'
 
 	git_commit
 }
@@ -210,10 +198,9 @@ APPS+=" 'bino' '$(gettext '3D Видео плеер') (AUR)' 'off'"
 
 pkgs_audacious()
 {
-	local PACS
 	#extra
-	PACS='audacious rhythmbox'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S audacious" '1'
+	pacman_install "-S rhythmbox" '1'
 
 	git_commit
 }
@@ -221,25 +208,28 @@ APPS+=" 'audacious' '$(gettext 'Аудио плеер')' 'on'"
 
 pkgs_tvtime()
 {
-	local PACS
 	#community
-	PACS='tvtime'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S tvtime" '1'
 	#aur
-	PACS='alevt kradio'
-	pacman_install "-S ${PACS}" '2'
+	pacman_install "-S alevt" '2'
+	pacman_install "-S kradio" '2'
+
 	git_commit
 }
 APPS+=" 'tvtime' '$(gettext 'ТВ и РАДИО тюнер, Телетекст') (+AUR)' 'off'"
 
 pkgs_k3b()
 {
-	local PACS
 	#extra
-	PACS='k3b dvd+rw-tools vcdimager transcode emovix cdrdao cdparanoia'
+	pacman_install "-S k3b" '1'
+	pacman_install "-S dvd+rw-tools" '1'
+	pacman_install "-S vcdimager" '1'
+	pacman_install "-S transcode" '1'
+	pacman_install "-S emovix" '1'
+	pacman_install "-S cdrdao" '1'
+	pacman_install "-S cdparanoia" '1'
 	#community
-	PACS+=' nrg2iso'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S nrg2iso" '1'
 
 	git_commit
 }
@@ -247,12 +237,12 @@ APPS+=" 'k3b' '$(gettext 'Запись CD')' 'on'"
 
 pkgs_avidemux()
 {
-	local PACS
 	#extra
-	PACS='avidemux-qt mkvtoolnix-gtk mencoder'
+	pacman_install "-S avidemux-qt" '1'
+	pacman_install "-S mkvtoolnix-gtk" '1'
+	pacman_install "-S mencoder" '1'
 	#community
-	PACS+=' mediainfo-gui'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S mediainfo-gui" '1'
 
 	git_commit
 }
@@ -260,40 +250,51 @@ APPS+=" 'avidemux' '$(gettext 'Конвертер видео')' 'off'"
 
 pkgs_openshot()
 {
-	local PACS
 	#community
-	PACS='openshot'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S openshot" '1'
+
 	git_commit
 }
 APPS+=" 'openshot' '$(gettext 'Редактор видео')' 'off'"
 
 pkgs_soundkonverter()
 {
-	local PACS
 	#extra
-	PACS='cdrkit faac faad2 ffmpeg flac lame mplayer speex vorbis-tools wavpack'
-	PACS+=' fluidsynth'
+	pacman_install "-S cdrkit" '1'
+	pacman_install "-S faac" '1'
+	pacman_install "-S faad2" '1'
+	pacman_install "-S ffmpeg" '1'
+	pacman_install "-S flac" '1'
+	pacman_install "-S lame" '1'
+	pacman_install "-S mplayer" '1'
+	pacman_install "-S speex" '1'
+	pacman_install "-S vorbis-tools" '1'
+	pacman_install "-S wavpack" '1'
+	pacman_install "-S fluidsynth" '1'
 	#community
-	PACS+=' rubyripper ruby-gtk2 soundkonverter mac mp3gain twolame vorbisgain opus-tools'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S rubyripper" '1'
+	pacman_install "-S ruby-gtk2" '1'
+	pacman_install "-S soundkonverter" '1'
+	pacman_install "-S mac" '1'
+	pacman_install "-S mp3gain" '1'
+	pacman_install "-S twolame" '1'
+	pacman_install "-S vorbisgain" '1'
+	pacman_install "-S opus-tools" '1'
 	#aur
-	PACS='split2flac-git isomaster'
-	PACS+=' fluidr3' # для fluidsynth
-	pacman_install "-S ${PACS}" '2'
+	pacman_install "-S split2flac-git" '2'
+	pacman_install "-S isomaster" '2'
+	pacman_install "-S fluidr3" '2' # для fluidsynth
+
 	git_commit
 }
 APPS+=" 'soundkonverter' '$(gettext 'Конвертер аудио') (+AUR)' 'off'"
 
 pkgs_snapshot()
 {
-	local PACS
 	#extra
-	PACS='kdegraphics-ksnapshot'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S kdegraphics-ksnapshot" '1'
 	#extra
-	PACS="kde-l10n-${SET_LOCAL%_*}"
-	pacman_install "-S ${PACS}" '2'
+	pacman_install "-S kde-l10n-${SET_LOCAL%_*}" '2'
 
 	git_commit
 }
@@ -301,23 +302,22 @@ APPS+=" 'snapshot' '$(gettext 'Снимки экрана')' 'on'"
 
 pkgs_xvidcap()
 {
-	local PACS
 	#aur
-	PACS='xvidcap'
-	pacman_install "-S ${PACS}" '2'
+	pacman_install "-S xvidcap" '2'
+
 	git_commit
 }
-APPS+=" 'xvidcap' '$(gettext 'Запись видео с экрана') (AUR)' 'on'"
+APPS+=" 'xvidcap' '$(gettext 'Запись видео с экрана') (AUR)' 'off'"
 
 pkgs_okular()
 {
-	local PACS
 	#extra
-	PACS='kdegraphics-okular kdegraphics-mobipocket kdegraphics-gwenview kipi-plugins'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S kdegraphics-okular" '1'
+	pacman_install "-S kdegraphics-mobipocket" '1'
+	pacman_install "-S kdegraphics-gwenview" '1'
+	pacman_install "-S kipi-plugins" '1'
 	#extra
-	PACS="kde-l10n-${SET_LOCAL%_*}"
-	pacman_install "-S ${PACS}" '2'
+	pacman_install "-S kde-l10n-${SET_LOCAL%_*}" '2'
 
 	git_commit
 }
@@ -325,118 +325,117 @@ APPS+=" 'okular' '$(gettext 'Просмотр документов')' 'on'"
 
 pkgs_hardinfo()
 {
-	local PACS
 	#community
-	PACS='hardinfo'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S hardinfo" '1'
+
 	git_commit
 }
 APPS+=" 'hardinfo' '$(gettext 'Информация о системе')' 'on'"
 
 pkgs_diffuse()
 {
-	local PACS
 	#community
-	PACS='diffuse qgit'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S diffuse" '1'
+	pacman_install "-S qgit" '1'
+
 	git_commit
 }
 APPS+=" 'diffuse' '$(gettext 'Работа с git репозиторием')' 'on'"
 
 pkgs_smartgithg()
 {
-	local PACS
 	#aur
-	PACS='smartgithg'
-	pacman_install "-S ${PACS}" '2'
+	pacman_install "-S smartgithg" '2'
+
 	git_commit
 }
 APPS+=" 'smartgithg' '$(gettext 'GUI клиент Git, Mercurial и Subversion') (AUR)' 'off'"
 
 pkgs_gparted()
 {
-	local PACS
 	#extra
-	PACS='gparted'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S gparted" '1'
+
 	git_commit
 }
 APPS+=" 'gparted' '$(gettext 'Работа с разделами')' 'on'"
 
 pkgs_tesseract()
 {
-	local PACS
 	#community
-	PACS='tesseract tesseract-data cuneiform'
-	PACS+=' ocrfeeder yagf'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S tesseract" '1'
+	pacman_install "-S tesseract-data" '1'
+	pacman_install "-S cuneiform" '1'
+	pacman_install "-S ocrfeeder" '1'
+	pacman_install "-S yagf" '1'
 # 	#aur
-# 	PACS='tesseract-gui'
-# 	pacman_install "-S ${PACS}" '2'
+# 	pacman_install "-S tesseract-gui" '2'
+
 	git_commit
 }
 APPS+=" 'tesseract' '$(gettext 'Система распознавания текста')' 'off'"
 
 pkgs_libreoffice()
 {
-	local PACS
 	#extra
-	PACS='libreoffice libreoffice-extensions jdk7-openjdk'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S jdk7-openjdk" '1'
+	pacman_install "-S libreoffice" '1'
+	pacman_install "-S libreoffice-extensions" '1'
 	#extra
-	PACS="libreoffice-${SET_LOCAL%_*}"
-	pacman_install "-S ${PACS}" '2'
+	pacman_install "-S libreoffice-${SET_LOCAL%_*}" '2'
+
 	git_commit
 }
 APPS+=" 'libreoffice' '$(gettext 'Офисные программы')' 'on'"
 
 pkgs_gimp()
 {
-	local PACS
 	#extra
-	PACS='gimp'
+	pacman_install "-S gimp" '1'
+	pacman_install "-S gimp-help-${SET_LOCAL%_*}" '2'
 	#community
-	PACS+=' gimp-ufraw gimp-plugin-fblur gimp-plugin-gmic gimp-plugin-lqr gimp-plugin-mathmap'
-	PACS+=' gimp-plugin-wavelet-decompose gimp-plugin-wavelet-denoise gimp-refocus'
-	pacman_install "-S ${PACS}" '1'
-	#extra
-	PACS="gimp-help-${SET_LOCAL%_*}"
-	pacman_install "-S ${PACS}" '2'
+	pacman_install "-S gimp-ufraw" '1'
+	pacman_install "-S gimp-plugin-fblur" '1'
+	pacman_install "-S gimp-plugin-gmic" '1'
+	pacman_install "-S gimp-plugin-lqr" '1'
+	pacman_install "-S gimp-plugin-mathmap" '1'
+	pacman_install "-S gimp-plugin-wavelet-decompose" '1'
+	pacman_install "-S gimp-plugin-wavelet-denoise" '1'
+	pacman_install "-S gimp-refocus" '1'
+
 	git_commit
 }
 APPS+=" 'gimp' '$(gettext 'Графический редактор')' 'on'"
 
 pkgs_inkscape()
 {
-	local PACS
 	#extra
-	PACS='inkscape'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S inkscape" '1'
+
 	git_commit
 }
 APPS+=" 'inkscape' '$(gettext 'Векторный редактор')' 'on'"
 
 pkgs_xmind()
 {
-	local PACS
 	#aur
-	PACS='xmind'
-	pacman_install "-S ${PACS}" '2'
+	pacman_install "-S xmind" '2'
+
 	git_commit
 }
-APPS+=" 'xmind' '$(gettext 'Редактор интеллект-карт и диаграмм') (AUR)' 'on'"
+APPS+=" 'xmind' '$(gettext 'Редактор интеллект-карт и диаграмм') (AUR)' 'off'"
 
 pkgs_firefox()
 {
-	local PACS
 	#extra
-	PACS='firefox flashplugin icedtea-web-java7'
+	pacman_install "-S flashplugin" '1'
+	pacman_install "-S icedtea-web-java7" '1'
 	#community
-	PACS+=' gecko-mediaplayer'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S gecko-mediaplayer" '1'
 	#extra
-	PACS="firefox-i18n-${SET_LOCAL%_*}"
-	pacman_install "-S ${PACS}" '2'
+	pacman_install "-S firefox" '1'
+	pacman_install "-S firefox-i18n-${SET_LOCAL%_*}" '2'
+
 	git_commit
 # http://adblockplus.org/ru/
 # https://addons.mozilla.org/ru/firefox/addon/adblock-plus-pop-up-addon/
@@ -466,39 +465,42 @@ APPS+=" 'firefox' '$(gettext 'Интернет браузер (Mozilla)')' 'on'"
 
 pkgs_thunderbird()
 {
-	local PACS
 	#extra
-	PACS='thunderbird'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S thunderbird" '1'
 	#extra
-	PACS="thunderbird-i18n-${SET_LOCAL%_*}"
-	pacman_install "-S ${PACS}" '2'
+	pacman_install "-S thunderbird-i18n-${SET_LOCAL%_*}" '2'
+
 	git_commit
 }
 APPS+=" 'thunderbird' '$(gettext 'Почтовая программа (Mozilla)')' 'off'"
 
 pkgs_opera()
 {
-	local PACS
 	#extra
-	PACS='flashplugin icedtea-web-java7'
+	pacman_install "-S flashplugin" '1'
+	pacman_install "-S icedtea-web-java7" '1'
 	#community
-	PACS+=' opera gecko-mediaplayer'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S gecko-mediaplayer" '1'
+	#community
+	pacman_install "-S opera" '1'
+
 	git_commit
 }
 APPS+=" 'opera' '$(gettext 'Интернет браузер')' 'off'"
 
 pkgs_claws()
 {
-	local PACS
 	#extra
-	PACS='claws-mail claws-mail-themes'
-	PACS+=' spamassassin razor'
+	pacman_install "-S claws-mail" '1'
+	pacman_install "-S claws-mail-themes" '1'
+	pacman_install "-S spamassassin" '1'
+	pacman_install "-S razor" '1'
 	#community
-	PACS+=' dspam p3scan'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S dspam" '1'
+	pacman_install "-S p3scan" '1'
+
 	git_commit
+
 	chroot_run /usr/bin/vendor_perl/sa-update
 	chroot_run /usr/bin/vendor_perl/sa-compile
 
@@ -539,20 +541,18 @@ APPS+=" 'claws' '$(gettext 'EMAIL клиент')' 'on'"
 
 pkgs_filezilla()
 {
-	local PACS
 	#extra
-	PACS='filezilla'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S filezilla" '1'
+
 	git_commit
 }
 APPS+=" 'filezilla' '$(gettext 'FTP клиент')' 'on'"
 
 pkgs_linuxdcpp()
 {
-	local PACS
 	#community
-	PACS='linuxdcpp'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S linuxdcpp" '1'
+
 	git_commit
 }
 APPS+=" 'linuxdcpp' '$(gettext 'DC++ клиент')' 'off'"
@@ -561,127 +561,117 @@ APPS+=" 'linuxdcpp' '$(gettext 'DC++ клиент')' 'off'"
 # kernel: qbittorrent[5140]: segfault at 680000003f ip 00007f963956ad63 sp 00007f962c55ba00 error 4 in libc-2.17.so[7f96394ef000+1a4000]
 pkgs_qbittorrent()
 {
-	local PACS
 	#aur
-	PACS='qbittorrent'
-	pacman_install "-S ${PACS}" '2'
+	pacman_install "-S qbittorrent" '2'
+
 	git_commit
 }
 APPS+=" 'qbittorrent' '$(gettext 'TORRENT клиент') (AUR)' 'off'"
 
 pkgs_pidgin()
 {
-	local PACS
 	#extra
-	PACS='pidgin'
+	pacman_install "-S pidgin" '1'
 	#community
-	PACS+=' pidgin-encryption pidgin-libnotify pidgin-toobars'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S pidgin-encryption" '1'
+	pacman_install "-S pidgin-libnotify" '1'
+	pacman_install "-S pidgin-toobars" '1'
 	#aur
-	PACS='pidgin-bot-sentry'
-	pacman_install "-S ${PACS}" '2'
+	pacman_install "-S pidgin-bot-sentry" '2'
+
 	git_commit
 }
 APPS+=" 'pidgin' '$(gettext 'ICQ, QIP и т.п.') (+AUR)' 'on'"
 
 pkgs_kvirc()
 {
-	local PACS
 	#community
-	PACS='kvirc'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S kvirc" '1'
+
 	git_commit
 }
 APPS+=" 'kvirc' '$(gettext 'IRC')' 'off'"
 
 pkgs_skype()
 {
-	local PACS
 	#community
-	PACS='skype-call-recorder'
+	pacman_install "-S skype-call-recorder" '1'
 	#multilib
-	PACS+=' skype'
-# lib32-libcanberra-pulse lib32-libcanberra lib32-libpulse
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S skype" '1'
+#	pacman_install "-S lib32-libcanberra-pulse" '2'
+#	pacman_install "-S lib32-libcanberra" '2'
+#	pacman_install "-S lib32-libpulse" '2'
+
 	git_commit
 }
 APPS+=" 'skype' '$(gettext 'Skype IP-телефония')' 'on'"
 
 pkgs_ekiga()
 {
-	local PACS
 	#extra
-	PACS='ekiga'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S ekiga" '1'
+
 	git_commit
 }
 APPS+=" 'ekiga' '$(gettext 'Ekiga IP-телефония')' 'off'"
 
 pkgs_truecrypt()
 {
-	local PACS
 	#extra
-	PACS='truecrypt'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S truecrypt" '1'
+
 	git_commit
 }
 APPS+=" 'truecrypt' '$(gettext 'TrueCrypt шифрование на лету')' 'on'"
 
 pkgs_cryptkeeper()
 {
-	local PACS
 	#community
-	PACS='gpg-crypter'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S gpg-crypter" '1'
 	#aur
-	PACS='cryptkeeper'
-	pacman_install "-S ${PACS}" '2'
+	pacman_install "-S cryptkeeper" '2'
+
 	git_commit
 }
 APPS+=" 'cryptkeeper' '$(gettext 'GUI для шифрования папок') (+AUR)' 'on'"
 
 pkgs_keepassx()
 {
-	local PACS
 	#community
-	PACS='keepassx'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S keepassx" '1'
 	#aur
-#     PACS='keepass'
-#     pacman_install "-S ${PACS}" '2'
+#     pacman_install "-S keepass" '2'
 # Локализация закоментированна потому что можно вручную скачать файл с сайта.
 # А установка задает вопросы!
-#     PACS="keepass-${SET_LOCAL%_*}"
-#     pacman_install "-S ${PACS}" '2'
+#     pacman_install "-S keepass-${SET_LOCAL%_*}" '2'
+
+	git_commit
 }
 APPS+=" 'keepassx' '$(gettext 'программа для хранения паролей')' 'on'"
 
 pkgs_mmex()
 {
-	local PACS
 	#aur
-	PACS='mmex'
-	pacman_install "-S ${PACS}" '2'
+	pacman_install "-S mmex" '2'
+
 	git_commit
 }
 APPS+=" 'mmex' '$(gettext 'Менеджер личных финансов') (AUR)' 'off'"
 
 pkgs_teamviewer()
 {
-	local PACS
 	#aur
-	PACS='teamviewer'
-	pacman_install "-S ${PACS}" '2'
+	pacman_install "-S teamviewer" '2'
+
 	git_commit
 }
-APPS+=" 'teamviewer' '$(gettext 'Удаенный доступ и поддержка через Интернет') (AUR)' 'off'"
+APPS+=" 'teamviewer' '$(gettext 'Удаленный доступ и поддержка через Интернет') (AUR)' 'off'"
 
 pkgs_clamav()
 {
-	local PACS
 	#extra
-	PACS='clamav'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S clamav" '1'
+
 	git_commit
 
 	msg_log "$(gettext 'Настраиваю') /etc/clamav/clamd.conf"
@@ -699,51 +689,48 @@ pkgs_clamav()
 
 	msg_info "$(gettext 'Пожалуйста, подождите')..."
 	chroot_run freshclam
+
 	git_commit
 }
 APPS+=" 'clamav' '$(gettext 'Антивирус')' 'off'"
 
 pkgs_stardict()
 {
-	local PACS
 	#community
-	PACS='stardict goldendict'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S stardict" '1'
+	pacman_install "-S goldendict" '1'
+
 	git_commit
 }
 APPS+=" 'stardict' '$(gettext 'Словарь')' 'off'"
 
 pkgs_mixxx()
 {
-	local PACS
 	#community
-	PACS='mixxx'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S mixxx" '1'
+
 	git_commit
 }
 APPS+=" 'mixxx' '$(gettext 'DJ система')' 'off'"
 
 pkgs_ardour()
 {
-	local PACS
 	#extra
-	PACS='ardour qjackctl'
+	pacman_install "-S ardour" '1'
+	pacman_install "-S qjackctl" '1'
 	#community
-	PACS+=' calf'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S calf" '1'
+
 	git_commit
 }
 APPS+=" 'ardour' '$(gettext 'Аудио станция')' 'off'"
 
 pkgs_hydrogen()
 {
-	local PACS
 	#extra
-	PACS='hydrogen'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S hydrogen" '1'
 	#aur
-	PACS='hydrogen-drumkits'
-	pacman_install "-S ${PACS}" '2'
+	pacman_install "-S hydrogen-drumkits" '2'
 	
 	git_commit
 }
@@ -751,55 +738,52 @@ APPS+=" 'hydrogen' '$(gettext 'Драм-машина +drumkits') (+AUR)' 'off'"
 
 # pkgs_rosegarden()
 # {
-# 	local PACS
 # 	#extra
-# 	PACS='rosegarden'
-# 	pacman_install "-S ${PACS}" '1'
+# 	pacman_install "-S rosegarden" '1'
+
 # 	git_commit
 # }
 # APPS+=" 'rosegarden' '$(gettext 'MIDI-секвенсер')' 'off'"
 
 pkgs_myrulib()
 {
-	local PACS
 	#aur
-	PACS='myrulib'
-	pacman_install "-S ${PACS}" '2'
+	pacman_install "-S myrulib" '2'
+
 	git_commit
 }
 APPS+=" 'myrulib' '$(gettext 'Домашняя библиотека') (AUR)' 'off'"
 
 pkgs_blender()
 {
-	local PACS
 	#community
-	PACS='blender'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S blender" '1'
+
 	git_commit
 }
 APPS+=" 'blender' '$(gettext '3D моделирование')' 'off'"
 
 pkgs_sweethome3d()
 {
-	local PACS
 	#aur
-	PACS='sweethome3d'
-	pacman_install "-S ${PACS}" '2'
+	pacman_install "-S sweethome3d" '2'
+
 	git_commit
 }
 APPS+=" 'sweethome3d' '$(gettext '3D дизайн интерьера') (AUR)' 'off'"
 
 pkgs_virtualbox()
 {
-	local PACS
 	#community
-	PACS='virtualbox virtualbox-host-modules virtualbox-guest-iso'
-	[[ "${SET_LTS}" ]] && PACS+=' virtualbox-host-modules-lts'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S virtualbox" '1'
+	pacman_install "-S virtualbox-host-modules" '1'
+	pacman_install "-S virtualbox-guest-iso" '1'
+	[[ "${SET_LTS}" ]] && pacman_install "-S virtualbox-host-modules-lts" '1'
 	#aur
-#	PACS='virtualbox-ext-oracle'
-#	pacman_install "-S ${PACS}" '2'
+#	pacman_install "-S virtualbox-ext-oracle" '2'
+
 	git_commit
+
 	msg_log "$(gettext 'Настраиваю') /etc/modules-load.d/vbox.conf"
 	cat "${DBDIR}modules/etc/modules-load.d/vbox.conf" > "${NS_PATH}/etc/modules-load.d/vbox.conf"
 
@@ -811,25 +795,25 @@ APPS+=" 'virtualbox' '$(gettext 'Виртуальная машина') (+AUR)' '
 
 pkgs_ettercap()
 {
-	local PACS
 	#community
-	PACS='ettercap-gtk'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S ettercap-gtk" '1'
 	#aur
-	PACS='netdiscover hydra nikto'
-	pacman_install "-S ${PACS}" '2'
+	pacman_install "-S netdiscover" '2'
+	pacman_install "-S hydra" '2'
+	pacman_install "-S nikto" '2'
+
 	git_commit
+
 	chroot_run nikto -update
+
 	git_commit
 }
 APPS+=" 'ettercap' '$(gettext 'Анализ безопасности сети') (+AUR)' 'off'"
 
 pkgs_wireshark()
 {
-	local PACS
 	#extra
-	PACS='wireshark-gtk'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S wireshark-gtk" '1'
 
 	SET_USER_GRUPS+=',wireshark'
 
@@ -839,116 +823,103 @@ APPS+=" 'wireshark' '$(gettext 'Анализатор трафика для се�
 
 pkgs_eric()
 {
-	local PACS
 	#extra
-	PACS='eric'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S eric" '1'
 	#aur
-	PACS='eric5-i18n'
-	pacman_install "-S ${PACS}" '2'
+	pacman_install "-S eric5-i18n" '2'
+
 	git_commit
 }
 APPS+=" 'eric' '$(gettext 'Python редактор') (+AUR)' 'off'"
 
 pkgs_netbeans()
 {
-	local PACS
 	#community
-	PACS='netbeans'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S netbeans" '1'
+
 	git_commit
 }
 APPS+=" 'netbeans' '$(gettext 'Java, PHP, C, C++ редактор')' 'off'"
 
 pkgs_kpatience()
 {
-	local PACS
-	#community
-	PACS='kdegames-kpatience'
-	pacman_install "-S ${PACS}" '1'
 	#extra
-	PACS="kde-l10n-${SET_LOCAL%_*}"
-	pacman_install "-S ${PACS}" '2'
+	pacman_install "-S kdegames-kpatience" '1'
+	pacman_install "-S kde-l10n-${SET_LOCAL%_*}" '2'
+
 	git_commit
 }
 APPS+=" 'kpatience' '$(gettext 'Игра. Пасьянсы')' 'on'"
 
 pkgs_urbanterror()
 {
-	local PACS
 	#community
-	PACS='urbanterror'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S urbanterror" '1'
+
 	git_commit
 }
 APPS+=" 'urbanterror' '$(gettext 'Игра. 3D Шутер от первого лица')' 'off'"
 
 pkgs_spring()
 {
-	local PACS
 	#community
-	PACS='springlobby spring'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S springlobby" '1'
+	pacman_install "-S spring" '1'
+
 	git_commit
 }
 APPS+=" 'spring' '$(gettext 'Игра. 3D Стратегия')' 'off'"
 
 pkgs_ufoai()
 {
-	local PACS
 	#community
-	PACS='ufoai'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S ufoai" '1'
+
 	git_commit
 }
 APPS+=" 'ufoai' '$(gettext 'Игра. Смесь ролевой игры и стратегии')' 'off'"
 
 pkgs_0ad()
 {
-	local PACS
 	#community
-	PACS='0ad'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S 0ad" '1'
+
 	git_commit
 }
 APPS+=" '0ad' '$(gettext 'Игра. 3D Стратегия')' 'off'"
 
 pkgs_warsow()
 {
-	local PACS
 	#community
-	PACS='warsow'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S warsow" '1'
+
 	git_commit
 }
 APPS+=" 'warsow' '$(gettext 'Игра. Киберспортивная игра')' 'off'"
 
 pkgs_minetest()
 {
-	local PACS
 	#community
-	PACS='minetest'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S minetest" '1'
+
 	git_commit
 }
 APPS+=" 'minetest' '$(gettext 'Игра. Аналог Minecraft')' 'off'"
 
 pkgs_neverball()
 {
-	local PACS
 	#community
-	PACS='neverball'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S neverball" '1'
+
 	git_commit
 }
 APPS+=" 'neverball' '$(gettext 'Игра. Neverball')' 'off'"
 
 pkgs_xboard()
 {
-	local PACS
 	#community
-	PACS='xboard'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S xboard" '1'
+
 	git_commit
 }
 APPS+=" 'xboard' '$(gettext 'Игра. Шахматы')' 'on'"

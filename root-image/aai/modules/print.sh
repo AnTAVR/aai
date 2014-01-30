@@ -113,8 +113,6 @@ print_dialog_menu()
 
 print_scan()
 {
-	local PACS
-
 	if [[ "$SET_SCAN" ]]
 	then
 		dialog_warn \
@@ -123,8 +121,8 @@ print_scan()
 	fi
 
 	#extra
-	PACS='xsane'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S xsane" '1'
+
 	git_commit
 
 	SET_USER_GRUPS+=',scanner'
@@ -136,8 +134,6 @@ print_scan()
 # @todo Нужно доделать!!!
 print_print()
 {
-# 	local PACS
-
 	dialog_warn \
 		"\Zb\Z1$(gettext 'пока не поддерживается, помогите проекту, допишите данный функционал')\Zn"
 	return 1
@@ -150,8 +146,8 @@ print_print()
 	fi
 
 # 	#extra
-# 	PACS='xsane'
-# 	pacman_install "-S ${PACS}" '1'
+# 	pacman_install "-S xsane" '1'
+
 # 	git_commit
 
 	SET_USER_GRUPS+=',lp'

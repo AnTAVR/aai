@@ -573,8 +573,6 @@ base_dialog_hostname()
 # Устанавливаем и настраиваем базовую систему
 base_install()
 {
-	local PACS
-
 #===============================================================================
 # Тестируем зеркала и выбираем 6 самых быстрых
 #===============================================================================
@@ -614,8 +612,7 @@ d;
 
 # Устанавливаем базовые пакеты
 	#core
-	PACS='base'
-	pacman_install "-S ${PACS}" '0'
+	pacman_install "-S base" '0'
 
 	SERVICES+=" 'cronie.service' '-' 'on'"
 	SERVICES+=" 'dmeventd.service' '-' 'off'"
@@ -660,8 +657,10 @@ s/^/#/;
 # Устанавливаем git
 #===============================================================================
 	#extra
-	PACS='git tk'
-	pacman_install "-S ${PACS}" '0'
+	pacman_install "-S git" '0'
+	pacman_install "-S tk" '0'
+
+	git_commit
 
 # Создаем git репозиторий /etc/
 	chroot_run bash -c "'cd /etc; git init; git config --global user.email root@${SET_HOSTNAME}; git config --global user.name root'"
@@ -670,7 +669,6 @@ s/^/#/;
 	echo '*.bak' > "${NS_PATH}/etc/.gitignore"
 	echo '*~' >> "${NS_PATH}/etc/.gitignore"
 #-------------------------------------------------------------------------------
-
 
 	git_commit
 
@@ -870,16 +868,20 @@ s/^/#/;
 
 base_netctl()
 {
-	local PACS
 	#core
-#	PACS='netctl'
-	PACS='dialog wpa_supplicant wpa_actiond dhclient dhcpcd ifenslave bridge-utils ppp'
+#	pacman_install "-S netctl" '0'
+	pacman_install "-S dialog" '0'
+	pacman_install "-S wpa_supplicant" '0'
+	pacman_install "-S wpa_actiond" '0'
+	pacman_install "-S dhclient" '0'
+	pacman_install "-S dhcpcd" '0'
+	pacman_install "-S ifenslave" '0'
+	pacman_install "-S bridge-utils" '0'
+	pacman_install "-S ppp" '0'
 	# зависимость для wpa_actiond
-	# wpa_supplicant
-#
+#	pacman_install "-S wpa_supplicant" '0'
 	#extra
-	PACS+=' ifplugd'
-	pacman_install "-S ${PACS}" '0'
+	pacman_install "-S ifplugd" '0'
 
 	git_commit
 
@@ -888,16 +890,34 @@ base_netctl()
 
 base_netutils()
 {
-	local PACS
 	#core
-	PACS='dnsutils pptpclient openvpn rp-pppoe linux-atm b43-fwcutter'
-	PACS+=' crda ipw2100-fw ipw2200-fw zd1211-firmware rfkill openssh wireless_tools'
-	PACS+=' traceroute'
+	pacman_install "-S dnsutils" '0'
+	pacman_install "-S pptpclient" '0'
+	pacman_install "-S openvpn" '0'
+	pacman_install "-S rp-pppoe" '0'
+	pacman_install "-S linux-atm" '0'
+	pacman_install "-S b43-fwcutter" '0'
+	pacman_install "-S crda" '0'
+	pacman_install "-S ipw2100-fw" '0'
+	pacman_install "-S ipw2200-fw" '0'
+	pacman_install "-S zd1211-firmware" '0'
+	pacman_install "-S rfkill" '0'
+	pacman_install "-S openssh" '0'
+	pacman_install "-S wireless_tools" '0'
+	pacman_install "-S traceroute" '0'
 	#extra
-	PACS+=' openconnect dnsmasq ethtool vpnc gnu-netcat nmap speedtouch tcpdump'
+	pacman_install "-S openconnect" '0'
+	pacman_install "-S dnsmasq" '0'
+	pacman_install "-S ethtool" '0'
+	pacman_install "-S vpnc" '0'
+	pacman_install "-S gnu-netcat" '0'
+	pacman_install "-S nmap" '0'
+	pacman_install "-S speedtouch" '0'
+	pacman_install "-S tcpdump" '0'
 	#community
-	PACS+=' usb_modeswitch xl2tpd wvdial'
-	pacman_install "-S ${PACS}" '0'
+	pacman_install "-S usb_modeswitch" '0'
+	pacman_install "-S xl2tpd" '0'
+	pacman_install "-S wvdial" '0'
 
 	git_commit
 
@@ -909,11 +929,8 @@ base_netutils()
 
 base_ntp()
 {
-	local PACS
 	#extra
-	PACS='ntp'
-
-	pacman_install "-S ${PACS}" '0'
+	pacman_install "-S ntp" '0'
 
 	git_commit
 
@@ -923,24 +940,33 @@ base_ntp()
 
 base_mc()
 {
-	local PACS
 	#core
-	PACS='gpm'
+	pacman_install "-S gpm" '1'
 	#extra
-	PACS+=' p7zip zip unrar smbclient mtools cvs aspell cdrkit cdparanoia'
+	pacman_install "-S p7zip" '1'
+	pacman_install "-S zip" '1'
+	pacman_install "-S unrar" '1'
+	pacman_install "-S smbclient" '1'
+	pacman_install "-S mtools" '1'
+	pacman_install "-S cvs" '1'
+	pacman_install "-S aspell" '1'
+	pacman_install "-S cdrkit" '1'
+	pacman_install "-S cdparanoia" '1'
 	#community
-	PACS+=' mc unarj unace python2-pytz python2-boto cabextract'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S mc" '1'
+	pacman_install "-S unarj" '1'
+	pacman_install "-S unace" '1'
+	pacman_install "-S python2-pytz" '1'
+	pacman_install "-S python2-boto" '1'
+	pacman_install "-S cabextract" '1'
 
 	git_commit
 }
 
 base_sudo()
 {
-	local PACS
 	#core
-	PACS='sudo'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S sudo" '1'
 
 	git_commit
 
@@ -963,14 +989,18 @@ base_sudo()
 
 base_hd()
 {
-	local PACS
 	#core
-	PACS='hdparm'
+	pacman_install "-S hdparm" '1'
 	#extra
-	PACS+=' smartmontools parted gptfdisk fsarchiver testdisk ddrescue'
+	pacman_install "-S smartmontools" '1'
+	pacman_install "-S parted" '1'
+	pacman_install "-S gptfdisk" '1'
+	pacman_install "-S fsarchiver" '1'
+	pacman_install "-S testdisk" '1'
+	pacman_install "-S ddrescue" '1'
 	#community
-	PACS+=' partclone partimage'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S partimage" '1'
+	pacman_install "-S partclone" '1'
 
 	git_commit
 
@@ -980,14 +1010,18 @@ base_hd()
 
 base_fs()
 {
-	local PACS
 	#core
-	PACS='mkinitcpio-nfs-utils nfs-utils nilfs-utils dmraid'
+	pacman_install "-S mkinitcpio-nfs-utils" '1'
+	pacman_install "-S nfs-utils" '1'
+	pacman_install "-S nilfs-utils" '1'
+	pacman_install "-S dmraid" '1'
 	#extra
-	PACS+=' dosfstools ntfs-3g f2fs-tools'
+	pacman_install "-S dosfstools" '1'
+	pacman_install "-S ntfs-3g" '1'
+	pacman_install "-S f2fs-tools" '1'
 	#community
-	PACS+=' nbd exfat-utils'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S nbd" '1'
+	pacman_install "-S exfat-utils" '1'
 
 	git_commit
 
@@ -1004,10 +1038,8 @@ base_fs()
 
 base_btrfs()
 {
-	local PACS
 	#core
-	PACS='btrfs-progs'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S btrfs-progs" '1'
 
 	git_commit
 
@@ -1025,18 +1057,21 @@ base_btrfs()
 # };
 # ' "${NS_PATH}/etc/mkinitcpio.conf"
 # 
-
 #     git_commit
 }
 
 base_utils()
 {
-	local PACS
 	#extra
-	PACS='lftp irssi rsync wget'
+	pacman_install "-S lftp" '1'
+	pacman_install "-S irssi" '1'
+	pacman_install "-S rsync" '1'
+	pacman_install "-S wget" '1'
 	#community
-	PACS+=' darkhttpd elinks js haveged'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S darkhttpd" '1'
+	pacman_install "-S elinks" '1'
+	pacman_install "-S js" '1'
+	pacman_install "-S haveged" '1'
 
 	git_commit
 
@@ -1046,10 +1081,9 @@ base_utils()
 
 base_zsh()
 {
-	local PACS
 	#extra
-	PACS='zsh grml-zsh-config'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S zsh" '1'
+	pacman_install "-S grml-zsh-config" '1'
 
 	git_commit
 
@@ -1063,10 +1097,9 @@ base_zsh()
 
 base_pkgfile()
 {
-	local PACS
 	#community
-	PACS='pkgfile'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S pkgfile" '1'
+
 	git_commit
 
 # Добавляем определение в каком пакете можно найти не существующую команду

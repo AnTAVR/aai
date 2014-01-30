@@ -211,7 +211,6 @@ bootloader_grub_bios()
 {
 	local CONSOLE_V_XxYxD
 	local PART
-	local PACS
 	local FILE_TXT
 
 	local TEMP
@@ -220,12 +219,12 @@ bootloader_grub_bios()
 # Устанавливаем grub
 #===============================================================================
 	#core
-	PACS='grub'
+	pacman_install "-S grub" '1'
 	#extra
-	PACS+=' memtest86+'
+	pacman_install "-S memtest86+" '1'
 	#community
-	PACS+=' os-prober'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S os-prober" '1'
+
 	git_commit
 
 # @todo Закомментировано потому что темы могут не поддерживать выбранные режимы
@@ -340,8 +339,8 @@ bootloader_grub_bios()
 	if [[ "${RUN_BASE_PLUS}" ]]
 	then
 		#aur
-		PACS='grub2-theme-archxion'
-		pacman_install "-S ${PACS}" '2'
+		pacman_install "-S grub2-theme-archxion" '2'
+
 		git_commit
 
 #    cp -Pbr "${NS_PATH}/usr/share/grub/themes/Archxion" "${NS_PATH}/boot/grub/themes/Archxion"
@@ -364,6 +363,7 @@ bootloader_grub_bios()
 
 	msg_info "$(gettext 'Пожалуйста, подождите')..."
 	chroot_run grub-mkconfig -o /boot/grub/grub.cfg
+
 	git_commit
 #-------------------------------------------------------------------------------
 }
@@ -372,7 +372,6 @@ bootloader_grub_bios()
 bootloader_grub_efi()
 {
 	local CONSOLE_V_XxYxD
-	local PACS
 
 	dialog_warn \
 		"\Zb\Z1\"GRUB EFI\" $(gettext 'пока не поддерживается, помогите проекту, допишите данный функционал')\Zn"
@@ -386,19 +385,23 @@ bootloader_grub_efi()
 	CONSOLE_V_XxYxD="${DEF_CONSOLE_V_XxYxD}"
 
 	#core
-	PACS='grub efibootmgr gummiboot'
+	pacman_install "-S grub" '1'
+	pacman_install "-S efibootmgr" '1'
+	pacman_install "-S gummiboot" '1'
 	#extra
-	PACS+=' refind-efi prebootloader memtest86+'
+	pacman_install "-S refind-efi" '1'
+	pacman_install "-S prebootloader" '1'
+	pacman_install "-S memtest86+" '1'
 	#community
-	PACS+=' os-prober'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S os-prober" '1'
+
 	git_commit
 
 	if [[ "${RUN_BASE_PLUS}" ]]
 	then
 		#aur
-		PACS='grub2-theme-archxion'
-		pacman_install "-S ${PACS}" '2'
+		pacman_install "-S grub2-theme-archxion" '2'
+
 		git_commit
 
 #    cp -Pbr "${NS_PATH}/usr/share/grub/themes/Archxion" "${NS_PATH}/boot/grub/themes/Archxion"
@@ -428,6 +431,7 @@ bootloader_grub_efi()
 
 	msg_info "$(gettext 'Пожалуйста, подождите')..."
 	chroot_run grub-mkconfig -o /boot/grub/grub.cfg
+
 	git_commit
 #-------------------------------------------------------------------------------
 }
@@ -436,7 +440,6 @@ bootloader_grub_efi()
 bootloader_syslinux()
 {
 	local CONSOLE_V_XxYxD
-	local PACS
 
 	dialog_warn \
 		"\Zb\Z1\"SYSLINUX\" $(gettext 'пока не поддерживается, помогите проекту, допишите данный функционал')\Zn"
@@ -449,10 +452,10 @@ bootloader_syslinux()
 	CONSOLE_V_XxYxD="${DEF_CONSOLE_V_XxYxD}"
 
 	#core
-	PACS='syslinux'
+	pacman_install "-S syslinux" '1'
 	#extra
-	PACS+=' mksyslinux'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S mksyslinux" '1'
+
 	git_commit
 
 # Настраиваем syslinux
@@ -460,28 +463,27 @@ bootloader_syslinux()
 #  chroot_run syslinux-install_update -i -a -m
 }
 
-# # # Устанавливаем lilo
-# # bootloader_lilo()
-# # {
-# # 	local CONSOLE_V_XxYxD
-# # 	local PACS
-# # 
-# # 	dialog_warn \
-# # 		"\Zb\Z1\"LILO\" $(gettext 'пока не поддерживается, помогите проекту, допишите данный функционал')\Zn"
-# # 	return 1
-# # 
-# # # @todo Закомментировано потому что темы могут не поддерживать выбранные режимы
-# # #  TEMP="$(bootloader_dialog_console)"
-# # #  [[ ! -n "${TEMP}" ]] && return 1
-# # #  CONSOLE_V_XxYxD="${TEMP}"
-# # 	CONSOLE_V_XxYxD="${DEF_CONSOLE_V_XxYxD}"
-# # 
-# # 	#core
-# # 	PACS='lilo'
-# # 	pacman_install "-S ${PACS}" '1'
-# # 	git_commit
-# # 
-# # # Настраиваем lilo
-# # #  "${NS_PATH}/etc/lilo.conf"
-# # #  chroot_run lilo
-# # }
+# # Устанавливаем lilo
+# bootloader_lilo()
+# {
+# 	local CONSOLE_V_XxYxD
+# 
+# 	dialog_warn \
+# 		"\Zb\Z1\"LILO\" $(gettext 'пока не поддерживается, помогите проекту, допишите данный функционал')\Zn"
+# 	return 1
+# 
+# # @todo Закомментировано потому что темы могут не поддерживать выбранные режимы
+# #  TEMP="$(bootloader_dialog_console)"
+# #  [[ ! -n "${TEMP}" ]] && return 1
+# #  CONSOLE_V_XxYxD="${TEMP}"
+# 	CONSOLE_V_XxYxD="${DEF_CONSOLE_V_XxYxD}"
+# 
+# 	#core
+# 	pacman_install "-S lilo" '1'
+# 
+# 	git_commit
+# 
+# # Настраиваем lilo
+# #  "${NS_PATH}/etc/lilo.conf"
+# #  chroot_run lilo
+# }

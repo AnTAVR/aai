@@ -184,19 +184,18 @@ de_dialog_xorg()
 # Устанавливаем openbox
 de_openbox()
 {
-	local PACS
-
 #===============================================================================
 # Устанавливаем openbox
 #===============================================================================
 	#community
-	PACS='obconf obmenu openbox openbox-themes'
-	pacman_install "-S ${PACS}" '1'
-	git_commit
+	pacman_install "-S obconf" '1'
+	pacman_install "-S obmenu" '1'
+	pacman_install "-S openbox" '1'
+	pacman_install "-S openbox-themes" '1'
 	#aur
-	PACS='obkey-git'
-#3ddesktop
-	pacman_install "-S ${PACS}" '2'
+	pacman_install "-S obkey-git" '2'
+#	pacman_install "-S 3ddesktop" '2'
+
 	git_commit
 
 	mkdir -p "${NS_PATH}/etc/skel/.config/openbox"
@@ -229,25 +228,24 @@ s/<number>4<\/number>/<number>2<\/number>/;
 	git_commit
 
 	#aur
-	PACS='archlinux-artwork'
-	pacman_install "-S ${PACS}" '2'
+	pacman_install "-S archlinux-artwork" '2'
+
 	git_commit
 
 #===============================================================================
 # Устанавливаем archlinux-xdg-menu
 #===============================================================================
 	#community
-	PACS='archlinux-xdg-menu'
-	pacman_install "-S ${PACS}" '1'
-	git_commit
+	pacman_install "-S archlinux-xdg-menu" '1'
 	#aur
-#  PACS='arch-bubble-icons'
-#3ddesktop
-#	pacman_install "-S ${PACS}" '2'
-#	git_commit
+#	pacman_install "-S arch-bubble-icons" '2'
+#	pacman_install "-S 3ddesktop" '2'
+
+	git_commit
 
 	msg_log "$(gettext 'Настраиваю') /etc/skel/.config/openbox/menu.xml"
 	cat "${DBDIR}modules/etc/skel/.config/openbox/menu.xml" > "${NS_PATH}/etc/skel/.config/openbox/menu.xml"
+
 	git_commit
 #-------------------------------------------------------------------------------
 
@@ -256,13 +254,14 @@ s/<number>4<\/number>/<number>2<\/number>/;
 # Устанавливаем xterm и добавляем настройки Xorg
 #===============================================================================
 	#extra
-	PACS='xterm'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S xterm" '1'
+
 	git_commit
 
 	msg_log "$(gettext 'Добавляю') Xresources > /etc/skel/.config/openbox/autostart"
 	echo '([[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources) &' >> "${NS_PATH}/etc/skel/.config/openbox/autostart"
 	echo '([[ -f ~/.Xmodmap ]] && xmodmap ~/.Xmodmap) &' >> "${NS_PATH}/etc/skel/.config/openbox/autostart"
+
 	git_commit
 #-------------------------------------------------------------------------------
 
@@ -271,12 +270,10 @@ s/<number>4<\/number>/<number>2<\/number>/;
 # Устанавливаем oblogout
 #===============================================================================
 	#community
-	PACS='oblogout'
-	pacman_install "-S ${PACS}" '1'
-
+	pacman_install "-S oblogout" '1'
 	#aur
-#    PACS='obsession'
-#    pacman_install "-S ${PACS}" '2'
+#	pacman_install "-S obsession" '2'
+
 	git_commit
 #-------------------------------------------------------------------------------
 
@@ -284,9 +281,9 @@ s/<number>4<\/number>/<number>2<\/number>/;
 #===============================================================================
 # Устанавливаем compton
 #===============================================================================
-#     #aur
-	PACS='compton-git'
-	pacman_install "-S ${PACS}" '2'
+	#aur
+	pacman_install "-S compton-git" '2'
+
 	git_commit
 
 	mkdir -p "${NS_PATH}/etc/skel/.config/compton"
@@ -299,6 +296,7 @@ s/<number>4<\/number>/<number>2<\/number>/;
 
 	msg_log "$(gettext 'Добавляю') compton > /etc/skel/.config/openbox/autostart"
 	echo 'compton --config ~/.config/compton/compton.conf -b &' >> "${NS_PATH}/etc/skel/.config/openbox/autostart"
+
 	git_commit
 #-------------------------------------------------------------------------------
 
@@ -306,15 +304,16 @@ s/<number>4<\/number>/<number>2<\/number>/;
 #===============================================================================
 # Устанавливаем notify-osd
 #===============================================================================
-#  #extra
-#  PACS='xfce4-notifyd'
+	#extra
+#	pacman_install "-S xfce4-notifyd" '1'
 	#community
-	PACS='notify-osd'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S notify-osd" '1'
+
 	git_commit
 
 	msg_log "$(gettext 'Добавляю') notify-osd > /etc/skel/.config/openbox/autostart"
 	echo '/usr/lib/notify-osd/notify-osd &' >> "${NS_PATH}/etc/skel/.config/openbox/autostart"
+
 	git_commit
 #-------------------------------------------------------------------------------
 
@@ -322,10 +321,10 @@ s/<number>4<\/number>/<number>2<\/number>/;
 # Устанавливаем nitrogen
 #===============================================================================
 	#extra
-	PACS='nitrogen'
+	pacman_install "-S nitrogen" '1'
 	#community
-	PACS+=' archlinux-wallpaper'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S archlinux-wallpaper" '1'
+
 	git_commit
 
 	mkdir -p "${NS_PATH}/etc/skel/.config/nitrogen"
@@ -345,15 +344,13 @@ s/<number>4<\/number>/<number>2<\/number>/;
 # Устанавливаем tint2
 #===============================================================================
 	#extra
-	PACS='orage'
+	pacman_install "-S orage" '1'
 	#community
-	PACS+=' tint2'
-	pacman_install "-S ${PACS}" '1'
-	git_commit
+	pacman_install "-S tint2" '1'
 	#aur
-#  PACS='tintwizard'
-#	pacman_install "-S ${PACS}" '2'
-#	git_commit
+#	pacman_install "-S tintwizard" '2'
+
+	git_commit
 
 	mkdir -p "${NS_PATH}/etc/skel/.config/tint2"
 
@@ -371,8 +368,8 @@ s/<number>4<\/number>/<number>2<\/number>/;
 # Устанавливаем volumeicon
 #===============================================================================
 	#community
-	PACS='volumeicon'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S volumeicon" '1'
+
 	git_commit
 
 	mkdir -p "${NS_PATH}/etc/skel/.config/volumeicon"
@@ -391,8 +388,8 @@ s/<number>4<\/number>/<number>2<\/number>/;
 # Устанавливаем numlockx
 #===============================================================================
 	#community
-	PACS='numlockx'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S numlockx" '1'
+
 	git_commit
 
 	msg_log "$(gettext 'Добавляю') numlockx > /etc/skel/.config/openbox/autostart"
@@ -406,8 +403,8 @@ s/<number>4<\/number>/<number>2<\/number>/;
 # Устанавливаем gmrun
 #===============================================================================
 	#community
-	PACS='gmrun'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S gmrun" '1'
+
 	git_commit
 
 	msg_log "$(gettext 'Настраиваю') /etc/skel/.config/openbox/rc.xml"
@@ -418,6 +415,7 @@ s/<number>4<\/number>/<number>2<\/number>/;
 };
 };
 ' "${NS_PATH}/etc/skel/.config/openbox/rc.xml"
+
 	git_commit
 #-------------------------------------------------------------------------------
 
@@ -426,8 +424,8 @@ s/<number>4<\/number>/<number>2<\/number>/;
 # Устанавливаем conky
 #===============================================================================
 	#extra
-	PACS='conky'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S conky" '1'
+
 	git_commit
 
 	mkdir -p "${NS_PATH}/etc/skel/.config/conky"
@@ -450,6 +448,7 @@ s/<number>4<\/number>/<number>2<\/number>/;
 	echo '(sleep 2 && conky -c ~/.config/conky/conkyrc1 -q) &' >> "${NS_PATH}/etc/skel/.config/openbox/autostart"
 	echo '(sleep 3 && conky -c ~/.config/conky/conkyrc2 -q) &' >> "${NS_PATH}/etc/skel/.config/openbox/autostart"
 	echo '(sleep 4 && conky -c ~/.config/conky/conkyrc3 -q) &' >> "${NS_PATH}/etc/skel/.config/openbox/autostart"
+
 	git_commit
 #-------------------------------------------------------------------------------
 
@@ -458,8 +457,8 @@ s/<number>4<\/number>/<number>2<\/number>/;
 # Устанавливаем sbxkb
 #===============================================================================
 	#community
-	PACS='sbxkb'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S sbxkb" '1'
+
 	git_commit
 
 	msg_log "$(gettext 'Добавляю') sbxkb > /etc/skel/.config/openbox/autostart"
@@ -483,11 +482,9 @@ s/<number>4<\/number>/<number>2<\/number>/;
 # Устанавливаем lxde
 de_lxde()
 {
-	local PACS
-
 	#community
-	PACS='lxde'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S lxde" '1'
+
 	git_commit
 
 	if [[ ! "$SET_DE" ]]
@@ -505,11 +502,10 @@ de_lxde()
 # Устанавливаем xfce4
 de_xfce4()
 {
-	local PACS
-
 	#extra
-	PACS='xfce4 xfce4-goodies'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S xfce4" '1'
+	pacman_install "-S xfce4-goodies" '1'
+
 	git_commit
 
 	if [[ ! "$SET_DE" ]]
@@ -528,11 +524,9 @@ de_xfce4()
 # Устанавливаем e17
 de_e17()
 {
-	local PACS
-
 	#extra
-	PACS='enlightenment17'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S enlightenment17" '1'
+
 	git_commit
 
 	if [[ ! "$SET_DE" ]]
@@ -551,18 +545,17 @@ de_e17()
 # Устанавливаем kde
 de_kde()
 {
-	local PACS
-
 	#extra
-#	PACS='kdebase-plasma kde-wallpapers kdeartwork'
-	PACS='kde'
-	PACS+=' oxygen-gtk2 oxygen-gtk3'
+	pacman_install "-S kde" '1'
+#	pacman_install "-S kdebase-plasma" '1'
+#	pacman_install "-S kde-wallpapers" '1'
+#	pacman_install "-S kdeartwork" '1'
+	pacman_install "-S oxygen-gtk2" '1'
+	pacman_install "-S oxygen-gtk3" '1'
 	#community
-	PACS+=' kde-gtk-config'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S kde-gtk-config" '1'
 	#extra
-	PACS="kde-l10n-${SET_LOCAL%_*}"
-	pacman_install "-S ${PACS}" '2'
+	pacman_install "-S kde-l10n-${SET_LOCAL%_*}" '2'
 
 	git_commit
 
@@ -586,13 +579,13 @@ de_kde()
 
 	git_commit
 
-#     #extra
-#     PACS='archlinux-themes-kdm'
-#     pacman_install "-S ${PACS}" '1'
-#     #aur
-#     PACS='ksplash-archpaint2'
-#     pacman_install "-S ${PACS}" '2'
-# 
+#	#extra
+#	pacman_install "-S archlinux-themes-kdm" '1'
+#	#aur
+#	pacman_install "-S ksplash-archpaint2" '2'
+
+#	git_commit
+
 #     msg_log "$(gettext 'Настраиваю') /usr/share/config/kdm/kdmrc"
 #     sed -i "
 # # Добавляем скин
@@ -615,55 +608,30 @@ de_kde()
 }
 
 # Устанавливаем kde
-# @todo нужно доделать, отключить аконади и не помук!
 de_kde_mini()
 {
-	local PACS
-
 	#extra
-	PACS='kdebase-workspace kde-wallpapers appmenu-qt'
-	PACS+=' kdegraphics-strigi-analyzer kdenetwork-strigi-analyzers kdesdk-strigi-analyzers'
-	PACS+=' kdebase-plasma kdemultimedia-kmix'
-	PACS+=' oxygen-gtk2 oxygen-gtk3'
-	PACS+=' kdeutils-kcalc kdeutils-kgpg'
-	PACS+=' kdeadmin kdeadmin-kcron kdeadmin-ksystemlog kdeadmin-kuser kdebase-kdepasswd'
-
+	pacman_install "-S kdebase-workspace" '1'
+	pacman_install "-S kde-wallpapers" '1'
+	pacman_install "-S appmenu-qt" '1'
+	pacman_install "-S kdegraphics-strigi-analyzer" '1'
+	pacman_install "-S kdenetwork-strigi-analyzers" '1'
+	pacman_install "-S kdesdk-strigi-analyzers" '1'
+	pacman_install "-S kdebase-plasma" '1'
+	pacman_install "-S kdemultimedia-kmix" '1'
+	pacman_install "-S oxygen-gtk2" '1'
+	pacman_install "-S oxygen-gtk3" '1'
+	pacman_install "-S kdeutils-kcalc" '1'
+	pacman_install "-S kdeutils-kgpg" '1'
+	pacman_install "-S kdeadmin" '1'
+	pacman_install "-S kdeadmin-kcron" '1'
+	pacman_install "-S kdeadmin-ksystemlog" '1'
+	pacman_install "-S kdeadmin-kuser" '1'
+	pacman_install "-S kdebase-kdepasswd" '1'
 	#community
-	PACS+=' kde-gtk-config'
-	pacman_install "-S ${PACS}" '1'
-
+	pacman_install "-S kde-gtk-config" '1'
 	#extra
-	PACS="kde-l10n-${SET_LOCAL%_*}"
-	pacman_install "-S ${PACS}" '2'
-
-# kdebase-dolphin
-# kdesdk-dolphin-plugins
-# 	kdemultimedia-ffmpegthumbs
-# 	kdeutils-ark
-# kdebase-konsole
-# kdebase-kdialog
-# kdeutils-kwallet
-	pkgs_dolphin
-
-
-# kdegames-kpatience
-	pkgs_kpatience
-
-# kdesdk-kate
-# 	kdebase-konsole
-	pkgs_kate
-
-# kdegraphics-ksnapshot
-	pkgs_snapshot
-
-# kdegraphics-okular
-# kdegraphics-mobipocket
-# kdegraphics-gwenview
-# 	kipi-plugins
-	pkgs_okular
-
-
-# 	pkgs_kdesdk
+	pacman_install "-S kde-l10n-${SET_LOCAL%_*}" '2'
 
 	git_commit
 
@@ -692,19 +660,26 @@ de_kde_mini()
 
 	git_commit
 
+	pkgs_dolphin
+	pkgs_kpatience
+	pkgs_kate
+	pkgs_snapshot
+	pkgs_okular
+# 	pkgs_kdesdk
+
 	return 0
 }
 
 # Устанавливаем gnome
 de_gnome()
 {
-	local PACS
-
 # 	pacman_install "-Rnsc bluez" '3' 'noexit'
 
 	#extra
-	PACS='gnome gnome-extra gnome-tweak-tool'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S gnome" '1'
+	pacman_install "-S gnome-extra" '1'
+	pacman_install "-S gnome-tweak-tool" '1'
+
 	git_commit
 
 
@@ -722,8 +697,6 @@ de_gnome()
 # Устанавливаем mate
 de_mate()
 {
-	local PACS
-
 # 	pacman_install "-Rnsc bluez" '3' 'noexit'
 
 # 	msg_log "$(gettext 'Добавляю') mate > /etc/pacman.conf"
@@ -737,8 +710,9 @@ de_mate()
 # 	pacman_install '-Syy' '1'
 
 	#community
-	PACS='mate mate-extra'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S mate" '1'
+	pacman_install "-S mate-extra" '1'
+
 	git_commit
 
 	if [[ ! "$SET_DE" ]]
@@ -757,13 +731,14 @@ de_mate()
 # Устанавливаем cinnamon
 de_cinnamon()
 {
-	local PACS
-
 # 	pacman_install "-Rnsc bluez" '3' 'noexit'
 
 	#community
-	PACS='cinnamon cinnamon-control-center cinnamon-screensaver nemo'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S cinnamon" '1'
+	pacman_install "-S cinnamon-control-center" '1'
+	pacman_install "-S cinnamon-screensaver" '1'
+	pacman_install "-S nemo" '1'
+
 	git_commit
 
 
@@ -783,11 +758,9 @@ de_cinnamon()
 # Устанавливаем awesome
 de_awesome()
 {
-	local PACS
-
 	#community
-	PACS='awesome'
-	pacman_install "-S ${PACS}" '1'
+	pacman_install "-S awesome" '1'
+
 	git_commit
 
 
@@ -806,22 +779,29 @@ de_awesome()
 
 de_xorg()
 {
-	local PACS
 #===============================================================================
 # Устанавливаем xorg
 #===============================================================================
 	#extra
-	PACS='xorg xorg-xinit xdg-user-dirs xdg-utils xorg-server-utils'
-	PACS+=' ttf-dejavu ttf-freefont ttf-linux-libertine ttf-bitstream-vera'
-	PACS+=' xscreensaver'
-	PACS+=' gstreamer0.10-plugins phonon-gstreamer'
+	pacman_install "-S xorg" '1'
+	pacman_install "-S xorg-xinit" '1'
+	pacman_install "-S xdg-user-dirs" '1'
+	pacman_install "-S xdg-utils" '1'
+	pacman_install "-S xorg-server-utils" '1'
+	pacman_install "-S ttf-dejavu" '1'
+	pacman_install "-S ttf-freefont" '1'
+	pacman_install "-S ttf-linux-libertine" '1'
+	pacman_install "-S ttf-bitstream-vera" '1'
+	pacman_install "-S xscreensaver" '1'
+	pacman_install "-S gstreamer0.10-plugins" '1'
+	pacman_install "-S phonon-gstreamer" '1'
 	#community
-	PACS+=' ttf-liberation ttf-droid xcursor-vanilla-dmz'
-	pacman_install "-S ${PACS}" '1'
-#   #aur
-#   PACS='ttf-ms-fonts'
-# #  PACS='ttf-vista-fonts'
-#    pacman_install "-S ${PACS}" '2'
+	pacman_install "-S ttf-liberation" '1'
+	pacman_install "-S ttf-droid" '1'
+	pacman_install "-S xcursor-vanilla-dmz" '1'
+	#aur
+#	pacman_install "-S ttf-ms-fonts" '2'
+#	pacman_install "-S ttf-vista-fonts" '2'
 
 	git_commit
 
@@ -891,30 +871,29 @@ de_xorg()
 	echo -e '\tEndSubSection'
 	echo -e 'EndSection'
 	} > "${NS_PATH}/etc/X11/xorg.conf.d/00-monitor.conf"
+
 	git_commit
 }
 
 de_mesa()
 {
-	local PACS
 	#extra
-	PACS='mesa-demos mesa-libgl'
-	pacman_install "-S ${PACS}" '2'
+	pacman_install "-S mesa-demos" '1'
+	pacman_install "-S mesa-libgl" '1'
 	#multilib
-	PACS='lib32-mesa-demos lib32-mesa-libgl'
-	pacman_install "-S ${PACS}" '2'
+	pacman_install "-S lib32-mesa-demos" '2'
+	pacman_install "-S lib32-mesa-libgl" '2'
+
 	git_commit
 }
 
 # pkgs_kdesdk()
 # {
-# 	local PACS
 # 	#extra
-# 	PACS='kdesdk jre7-openjdk'
-# 	pacman_install "-S ${PACS}" '1'
+# 	pacman_install "-S jre7-openjdk" '1'
+# 	pacman_install "-S kdesdk" '1'
 # 	#extra
-# 	PACS="kde-l10n-${SET_LOCAL%_*}"
-# 	pacman_install "-S ${PACS}" '2'
-# 
+# 	pacman_install "-S kde-l10n-${SET_LOCAL%_*}" '2'
+
 # 	git_commit
 # }
