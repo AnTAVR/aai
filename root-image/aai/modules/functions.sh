@@ -138,16 +138,7 @@ pacman_install()
 				${P_PACS}
 			RET=${?}
 			chroot_umount
-			if [[ "${RET}" != '0' ]]
-			then
-				if [[ ! ${P_NO_EXIT} ]]
-				then
-					msg_info "$(gettext 'Не гневись ВЛАДЫКА. Это не Я...')"
-					msg_error "$(gettext 'Ошибка pacman! Смотрите подробнее в') ${LOG_FILE}" ${RET}
-				else
-					msg_log "$(gettext 'Ошибка pacman! Смотрите подробнее в') ${LOG_FILE}"
-				fi
-			fi
+			pacman_install_err "${RET}" "${P_PACS}" "${P_NO_EXIT}"
 			;;
 		'yaourt')
 			chroot_run yaourt --noconfirm --needed ${P_PACS}
@@ -158,34 +149,49 @@ pacman_install()
 		'noneeded')
 			chroot_run pacman --noconfirm ${P_PACS}
 			RET=${?}
-			if [[ "${RET}" != '0' ]]
-			then
-				if [[ ! ${P_NO_EXIT} ]]
-				then
-					msg_info "$(gettext 'Не гневись ВЛАДЫКА. Это не Я...')"
-					msg_error "$(gettext 'Ошибка pacman! Смотрите подробнее в') ${LOG_FILE}" ${RET}
-				else
-					msg_log "$(gettext 'Ошибка pacman! Смотрите подробнее в') ${LOG_FILE}"
-				fi
-			fi
+			pacman_install_err "${RET}" "${P_PACS}" "${P_NO_EXIT}"
 			;;
 		*)
 			chroot_run pacman --noconfirm --needed ${P_PACS}
 			RET=${?}
-			if [[ "${RET}" != '0' ]]
-			then
-				if [[ ! ${P_NO_EXIT} ]]
-				then
-					msg_info "$(gettext 'Не гневись ВЛАДЫКА. Это не Я...')"
-					msg_error "$(gettext 'Ошибка pacman! Смотрите подробнее в') ${LOG_FILE}" ${RET}
-				else
-					msg_log "$(gettext 'Ошибка pacman! Смотрите подробнее в') ${LOG_FILE}"
-				fi
-			fi
+			pacman_install_err "${RET}" "${P_PACS}" "${P_NO_EXIT}"
 			;;
 	esac
 
 	return ${RET}
+}
+
+pacman_install_err()
+{
+	local P_RET="${1}"
+	local P_PACS="${2}"
+	local P_NO_EXIT="${3}"
+
+	local TXT="$(gettext 'Ошибка') #${P_RET} pacman ${P_PACS} ! $(gettext 'Смотрите подробнее в') ${LOG_FILE}"
+
+	if [[ "${P_RET}" != '0' ]]
+	then
+		
+		if [[ ! ${P_NO_EXIT} ]]
+		then
+			dialog_yesno \
+				"pacman" \
+				"\Zb\Z1${TXT}\Zn\n\n$(gettext 'Продолжить установку?')" \
+				'--defaultno'
+
+			case "${?}" in
+				'0') #Yes
+					msg_error "${TXT}" ${P_RET} 1
+					;;
+				*) #No
+					msg_info "$(gettext 'Не гневись ВЛАДЫКА. Это не Я...')"
+					msg_error "${TXT}" ${P_RET}
+					;;
+			esac
+		else
+			msg_log "${TXT}"
+		fi
+	fi
 }
 
 # Сохраняем изменения в git репозиторий /etc/
