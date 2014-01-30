@@ -79,40 +79,40 @@ chroot_run()
 
 msg_info()
 {
-	local MSG="${1}"
+	local P_MSG="${1}"
 
-	echo -e "${BLDGRN}[${SCRNAME}] INFO: ${MSG}${TXTRST}"
+	echo -e "${BLDGRN}[${SCRNAME}] INFO: ${P_MSG}${TXTRST}"
 	echo '' >&2
-	echo "[${SCRNAME}] INFO ($(date +%Y-%m-%d-%T,%N)): ${MSG}" >&2
+	echo "[${SCRNAME}] INFO ($(date +%Y-%m-%d-%T,%N)): ${P_MSG}" >&2
 }
 
 msg_log()
 {
-	local MSG="${1}"
-	local NO_ECHO=${2}
+	local P_MSG="${1}"
+	local P_NO_ECHO=${2}
 
-	[[ ! ${NO_ECHO} ]] && echo -e "${BLDYLW}[${SCRNAME}] LOG: ${MSG}${TXTRST}"
+	[[ ! ${P_NO_ECHO} ]] && echo -e "${BLDYLW}[${SCRNAME}] LOG: ${P_MSG}${TXTRST}"
 	echo '' >&2
-	echo "[${SCRNAME}] LOG ($(date +%Y-%m-%d-%T,%N)): ${MSG}" >&2
+	echo "[${SCRNAME}] LOG ($(date +%Y-%m-%d-%T,%N)): ${P_MSG}" >&2
 }
 
 msg_error()
 {
-	local MSG="${1}"
-	local ERROR=${2}
-	local EXIT=1
+	local P_MSG="${1}"
+	local P_ERROR=${2}
+	local P_EXIT=1
 
 	local TEMP='WARNING'
 
-	[[ ${3} ]] && EXIT=
+	[[ ${3} ]] && P_EXIT=
 
-	[[ ${ERROR} -gt 0 ]] && TEMP='ERROR'
+	[[ ${P_ERROR} -gt 0 ]] && TEMP='ERROR'
 
-	echo -e "${BLDRED}[${SCRNAME}] ${TEMP} (${ERROR}): ${MSG}${TXTRST}"
+	echo -e "${BLDRED}[${SCRNAME}] ${TEMP} (${P_ERROR}): ${P_MSG}${TXTRST}"
 	echo '' >&2
-	echo "[${SCRNAME}]($(date +%Y-%m-%d-%T,%N)) ${TEMP} (${ERROR}): ${MSG}" >&2
+	echo "[${SCRNAME}]($(date +%Y-%m-%d-%T,%N)) ${TEMP} (${P_ERROR}): ${P_MSG}" >&2
 
-	[[ ${ERROR} -gt 0 ]] && [[ ${EXIT} ]] && run_exit ${ERROR}
+	[[ ${P_ERROR} -gt 0 ]] && [[ ${P_EXIT} ]] && run_exit ${P_ERROR}
 }
 
 pacman_install()
