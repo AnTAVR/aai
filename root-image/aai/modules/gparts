@@ -1,0 +1,177 @@
+#!/bin/sh
+get_parts()
+{
+	local TEMP
+
+	local I386_SYS_TYPES=(
+		['0x00']='Empty'
+		['0x01']='FAT12'
+		['0x02']='XENIX root'
+		['0x03']='XENIX usr'
+		['0x04']='FAT16 <32M'
+		['0x05']='Extended'
+		['0x06']='FAT16'
+		['0x07']='HPFS/NTFS/exFAT'
+		['0x08']='AIX'
+		['0x09']='AIX bootable'
+		['0x0a']='OS/2 Boot Manager'
+		['0x0b']='W95 FAT32'
+		['0x0c']='W95 FAT32 (LBA)'
+		['0x0e']='W95 FAT16 (LBA)'
+		['0x0f']='W95 Ext`d (LBA)'
+		['0x10']='OPUS'
+		['0x11']='Hidden FAT12'
+		['0x12']='Compaq diagnostics'
+		['0x14']='Hidden FAT16 <32M'
+		['0x16']='Hidden FAT16'
+		['0x17']='Hidden HPFS/NTFS'
+		['0x18']='AST SmartSleep'
+		['0x1b']='Hidden W95 FAT32'
+		['0x1c']='Hidden W95 FAT32 (LBA)'
+		['0x1e']='Hidden W95 FAT16 (LBA)'
+		['0x24']='NEC DOS'
+		['0x27']='Hidden NTFS WinRE'
+		['0x39']='Plan 9'
+		['0x3c']='PartitionMagic recovery'
+		['0x40']='Venix 80286'
+		['0x41']='PPC PReP Boot'
+		['0x42']='SFS'
+		['0x4d']='QNX4.x'
+		['0x4e']='QNX4.x 2nd part'
+		['0x4f']='QNX4.x 3rd part'
+		['0x50']='OnTrack DM'
+		['0x51']='OnTrack DM6 Aux1'
+		['0x52']='CP/M'
+		['0x53']='OnTrack DM6 Aux3'
+		['0x54']='OnTrackDM6'
+		['0x55']='EZ-Drive'
+		['0x56']='Golden Bow'
+		['0x5c']='Priam Edisk'
+		['0x61']='SpeedStor'
+		['0x63']='GNU HURD or SysV'
+		['0x64']='Novell Netware 286'
+		['0x65']='Novell Netware 386'
+		['0x70']='DiskSecure Multi-Boot'
+		['0x75']='PC/IX'
+		['0x80']='Old Minix'
+		['0x81']='Minix / old Linux'
+		['0x82']='Linux swap / Solaris'
+		['0x83']='Linux'
+		['0x84']='OS/2 hidden C: drive'
+		['0x85']='Linux extended'
+		['0x86']='NTFS volume set'
+		['0x87']='NTFS volume set'
+		['0x88']='Linux plaintext'
+		['0x8e']='Linux LVM'
+		['0x93']='Amoeba'
+		['0x94']='Amoeba BBT'
+		['0x9f']='BSD/OS'
+		['0xa0']='IBM Thinkpad hibernation'
+		['0xa5']='FreeBSD'
+		['0xa6']='OpenBSD'
+		['0xa7']='NeXTSTEP'
+		['0xa8']='Darwin UFS'
+		['0xa9']='NetBSD'
+		['0xab']='Darwin boot'
+		['0xaf']='HFS / HFS+'
+		['0xb7']='BSDI fs'
+		['0xb8']='BSDI swap'
+		['0xbb']='Boot Wizard hidden'
+		['0xbe']='Solaris boot'
+		['0xbf']='Solaris'
+		['0xc1']='DRDOS/sec (FAT-12)'
+		['0xc4']='DRDOS/sec (FAT-16 < 32M)'
+		['0xc6']='DRDOS/sec (FAT-16)'
+		['0xc7']='Syrinx'
+		['0xda']='Non-FS data'
+		['0xdb']='CP/M / CTOS / ...'
+		['0xde']='Dell Utility'
+		['0xdf']='BootIt'
+		['0xe1']='DOS access'
+		['0xe3']='DOS R/O'
+		['0xe4']='SpeedStor'
+		['0xeb']='BeOS fs'
+		['0xee']='GPT'
+		['0xef']='EFI (FAT-12/16/32)'
+		['0xf0']='Linux/PA-RISC boot'
+		['0xf1']='SpeedStor'
+		['0xf4']='SpeedStor'
+		['0xf2']='DOS secondary'
+		['0xfb']='VMware VMFS'
+		['0xfc']='VMware VMKCORE'
+		['0xfd']='Linux raid autodetect'
+		['0xfe']='LANstep'
+		['0xff']='BBT'
+	)
+	#		|		|					|		|			|			|		|					|	|			|
+	echo -e "DEVNAME\tID_PART_ENTRY_FLAGS\tMOUNT\tID_FS_TYPE\tID_FS_LABEL\tSIZE\tID_PART_ENTRY_TYPE\tTYPE\tID_SERIAL"
+	#sed '1,2d' /proc/partitions |
+	lsblk -Snr |
+	while read TEMP
+	do
+		NAME=
+		TYPE=
+		VENDOR=
+		MODEL=
+		TRAN=
+
+		eval "$(awk 'BEGIN {FS = " "};{print "NAME=$(echo \"" $1 "\"); TYPE=$(echo \"" $3 "\"); VENDOR=$(echo \"" $4 "\"); MODEL=$(echo \"" $5 "\"); TRAN=$(echo \"" $7 "\")"}' <<< "${TEMP}")"
+#		eval "$(awk '{print "NAME=" $1 "; SIZE=" $4 "; TYPE=" $6 "; MOUNTPOINT=" $7}' <<< "${TEMP}")"
+
+		
+		TEMP="$(udevadm info --query=property --name="${NAME}")"
+
+		DEVNAME="$(sed -n '/^DEVNAME=/{s/^DEVNAME=//; p}' <<< "${TEMP}")"
+		[ ! "${DEVNAME}" ] && DEVNAME='-'
+
+		ID_FS_TYPE="$(sed -n '/^ID_FS_TYPE=/{s/^ID_FS_TYPE=//; p}' <<< "${TEMP}")"
+		[ ! "${ID_FS_TYPE}" ] && ID_FS_TYPE='-'
+
+		ID_FS_LABEL="$(sed -n '/^ID_FS_LABEL=/{s/^ID_FS_LABEL=//; p}' <<< "${TEMP}")"
+		[ ! "${ID_FS_LABEL}" ] && ID_FS_LABEL='-'
+
+		ID_MODEL="$(sed -n '/^ID_MODEL=/{s/^ID_MODEL=//; p}' <<< "${TEMP}")"
+		[ ! "${ID_MODEL}" ] && ID_MODEL='-'
+
+		ID_PART_ENTRY_FLAGS="$(sed -n '/^ID_PART_ENTRY_FLAGS=/{s/^ID_PART_ENTRY_FLAGS=//; p}' <<< "${TEMP}")"
+		[ ! "${ID_PART_ENTRY_FLAGS}" ] && ID_PART_ENTRY_FLAGS='-'
+
+		ID_SERIAL="$(sed -n '/^ID_SERIAL=/{s/^ID_SERIAL=//; p}' <<< "${TEMP}")"
+		[ ! "${ID_SERIAL}" ] && ID_SERIAL='-'
+
+		ID_PART_ENTRY_TYPE="$(sed -n '/^ID_PART_ENTRY_TYPE=/{s/^ID_PART_ENTRY_TYPE=//; p}' <<< "${TEMP}")"
+		if [ ! "${ID_PART_ENTRY_TYPE}" ]
+		then
+			ID_PART_ENTRY_TYPE='-'
+			TYPE='-'
+		else
+			TYPE="${I386_SYS_TYPES[${ID_PART_ENTRY_TYPE}]}"
+		fi
+
+		if [ ! "${TYPE}" ]
+		then
+			TYPE='-'
+		fi
+
+	
+		if [ "${ID_PART_ENTRY_TYPE}" == '0x82' ]
+		then
+			MOUNT="$(swapon -s | grep "^${DEVNAME} ")"
+		else
+			MOUNT="$(mount | grep "^${DEVNAME} ")"
+		fi
+
+		if [ ! "${MOUNT}" ]
+		then
+			MOUNT='-'
+		else
+			MOUNT='*'
+		fi
+
+		[ "${ID_PART_ENTRY_FLAGS}" == '0x80' ] && ID_PART_ENTRY_FLAGS='*'
+
+		echo -e "${DEVNAME}\t${ID_PART_ENTRY_FLAGS}\t${MOUNT}\t${ID_FS_TYPE}\t${ID_FS_LABEL}\t${SIZE}\t${ID_PART_ENTRY_TYPE}\t${TYPE}\t${ID_SERIAL}"
+	done
+}
+
+get_parts
