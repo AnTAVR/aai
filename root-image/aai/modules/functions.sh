@@ -127,7 +127,7 @@ pacman_install()
 	[[ ! -d "${NS_PATH}/var/cache/pacman" ]] && mkdir -p "${NS_PATH}/var/"{cache/pacman/pkg,lib/pacman}
 
 	case "${P_INCHROOTC}" in
-		'0')
+		'nochroot')
 			chroot_mount
 			msg_log "pacman ${P_PACS}"
 			pacman \
@@ -149,27 +149,13 @@ pacman_install()
 				fi
 			fi
 			;;
-		'1')
-			chroot_run pacman --noconfirm --needed ${P_PACS}
-			RET=${?}
-			if [[ "${RET}" != '0' ]]
-			then
-				if [[ ! ${P_NO_EXIT} ]]
-				then
-					msg_info "$(gettext 'Не гневись ВЛАДЫКА. Это не Я...')"
-					msg_error "$(gettext 'Ошибка pacman! Смотрите подробнее в') ${LOG_FILE}" ${RET}
-				else
-					msg_log "$(gettext 'Ошибка pacman! Смотрите подробнее в') ${LOG_FILE}"
-				fi
-			fi
-			;;
-		'2')
+		'yaourt')
 			chroot_run yaourt --noconfirm --needed ${P_PACS}
 			RET=${?}
 			msg_error "$(gettext 'Предупреждение yaourt! Смотрите подробнее в') ${LOG_FILE}" ${RET} 1
 			rm -rf "${NS_PATH}/tmp/yaourt-tmp-root"
 			;;
-		'3')
+		'noneeded')
 			chroot_run pacman --noconfirm ${P_PACS}
 			RET=${?}
 			if [[ "${RET}" != '0' ]]
@@ -183,8 +169,20 @@ pacman_install()
 				fi
 			fi
 			;;
-#	*)
-#	    ;;
+		*)
+			chroot_run pacman --noconfirm --needed ${P_PACS}
+			RET=${?}
+			if [[ "${RET}" != '0' ]]
+			then
+				if [[ ! ${P_NO_EXIT} ]]
+				then
+					msg_info "$(gettext 'Не гневись ВЛАДЫКА. Это не Я...')"
+					msg_error "$(gettext 'Ошибка pacman! Смотрите подробнее в') ${LOG_FILE}" ${RET}
+				else
+					msg_log "$(gettext 'Ошибка pacman! Смотрите подробнее в') ${LOG_FILE}"
+				fi
+			fi
+			;;
 	esac
 
 	return ${RET}

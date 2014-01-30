@@ -219,11 +219,11 @@ bootloader_grub_bios()
 # Устанавливаем grub
 #===============================================================================
 	#core
-	pacman_install "-S grub" '1'
+	pacman_install "-S grub"
 	#extra
-	pacman_install "-S memtest86+" '1'
+	pacman_install "-S memtest86+"
 	#community
-	pacman_install "-S os-prober" '1'
+	pacman_install "-S os-prober"
 
 	git_commit
 
@@ -339,7 +339,7 @@ bootloader_grub_bios()
 	if [[ "${RUN_BASE_PLUS}" ]]
 	then
 		#aur
-		pacman_install "-S grub2-theme-archxion" '2'
+		pacman_install "-S grub2-theme-archxion" 'yaourt'
 
 		git_commit
 
@@ -385,22 +385,22 @@ bootloader_grub_efi()
 	CONSOLE_V_XxYxD="${DEF_CONSOLE_V_XxYxD}"
 
 	#core
-	pacman_install "-S grub" '1'
-	pacman_install "-S efibootmgr" '1'
-	pacman_install "-S gummiboot" '1'
+	pacman_install "-S grub"
+	pacman_install "-S efibootmgr"
+	pacman_install "-S gummiboot"
 	#extra
-	pacman_install "-S refind-efi" '1'
-	pacman_install "-S prebootloader" '1'
-	pacman_install "-S memtest86+" '1'
+	pacman_install "-S refind-efi"
+	pacman_install "-S prebootloader"
+	pacman_install "-S memtest86+"
 	#community
-	pacman_install "-S os-prober" '1'
+	pacman_install "-S os-prober"
 
 	git_commit
 
 	if [[ "${RUN_BASE_PLUS}" ]]
 	then
 		#aur
-		pacman_install "-S grub2-theme-archxion" '2'
+		pacman_install "-S grub2-theme-archxion" 'yaourt'
 
 		git_commit
 
@@ -452,9 +452,9 @@ bootloader_syslinux()
 	CONSOLE_V_XxYxD="${DEF_CONSOLE_V_XxYxD}"
 
 	#core
-	pacman_install "-S syslinux" '1'
+	pacman_install "-S syslinux"
 	#extra
-	pacman_install "-S mksyslinux" '1'
+	pacman_install "-S mksyslinux"
 
 	git_commit
 
@@ -479,7 +479,7 @@ bootloader_syslinux()
 # 	CONSOLE_V_XxYxD="${DEF_CONSOLE_V_XxYxD}"
 # 
 # 	#core
-# 	pacman_install "-S lilo" '1'
+# 	pacman_install "-S lilo"
 # 
 # 	git_commit
 # 

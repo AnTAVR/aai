@@ -165,40 +165,40 @@ video_dialog_def_menu()
 
 video_nvidia()
 {
-	pacman_install "-Rdds mesa-libgl" '3' 'noexit'
-	pacman_install "-Rdds lib32-mesa-libgl" '3' 'noexit'
+	pacman_install "-Rdds mesa-libgl" 'noneeded' 'noexit'
+	pacman_install "-Rdds lib32-mesa-libgl" 'noneeded' 'noexit'
 
 	#aur
-#	pacman_install "-S nvidia-dkms" '2'
+#	pacman_install "-S nvidia-dkms" 'yaourt'
 	#extra
-	pacman_install "-S nvidia" '1'
-	[[ "${SET_LTS}" ]] && pacman_install "-S nvidia-lts" '1'
-	pacman_install "-S nvidia-utils" '1'
-#	pacman_install "-S opencl-nvidia" '1'
+	pacman_install "-S nvidia"
+	[[ "${SET_LTS}" ]] && pacman_install "-S nvidia-lts"
+	pacman_install "-S nvidia-utils"
+#	pacman_install "-S opencl-nvidia"
 	#multilib
-	pacman_install "-S lib32-nvidia-utils" '2'
-#	pacman_install "-S lib32-opencl-nvidia" '2'
+	pacman_install "-S lib32-nvidia-utils" 'yaourt'
+#	pacman_install "-S lib32-opencl-nvidia" 'yaourt'
 
-	pacman_install "-Rnsc ati-dri intel-dri nouveau-dri" '3' 'noexit'
+	pacman_install "-Rnsc ati-dri intel-dri nouveau-dri" 'noneeded' 'noexit'
 
 	git_commit
 }
 
 video_nvidia304()
 {
-	pacman_install "-Rdds mesa-libgl" '3' 'noexit'
-	pacman_install "-Rdds lib32-mesa-libgl" '3' 'noexit'
+	pacman_install "-Rdds mesa-libgl" 'noneeded' 'noexit'
+	pacman_install "-Rdds lib32-mesa-libgl" 'noneeded' 'noexit'
 
 	#extra
-	pacman_install "-S nvidia-304xx" '1'
-	[[ "${SET_LTS}" ]] && pacman_install "-S nvidia-304xx-lts" '1'
-	pacman_install "-S nvidia-304xx-utils" '1'
-#	pacman_install "-S opencl-nvidia-304xx" '1'
+	pacman_install "-S nvidia-304xx"
+	[[ "${SET_LTS}" ]] && pacman_install "-S nvidia-304xx-lts"
+	pacman_install "-S nvidia-304xx-utils"
+#	pacman_install "-S opencl-nvidia-304xx"
 	#multilib
-	pacman_install "-S lib32-nvidia-304xx-utils" '2'
-#	pacman_install "-S lib32-opencl-nvidia-304xx" '2'
+	pacman_install "-S lib32-nvidia-304xx-utils" 'yaourt'
+#	pacman_install "-S lib32-opencl-nvidia-304xx" 'yaourt'
 
-	pacman_install "-Rnsc ati-dri intel-dri nouveau-dri" '3' 'noexit'
+	pacman_install "-Rnsc ati-dri intel-dri nouveau-dri" 'noneeded' 'noexit'
 
 	git_commit
 
@@ -206,30 +206,30 @@ video_nvidia304()
 
 video_optimus()
 {
-#	pacman_install "-Rdds mesa-libgl" '3' 'noexit'
-#	pacman_install "-Rdds lib32-mesa-libgl" '3' 'noexit'
+#	pacman_install "-Rdds mesa-libgl" 'noneeded' 'noexit'
+#	pacman_install "-Rdds lib32-mesa-libgl" 'noneeded' 'noexit'
 
 	#community
-	pacman_install "-S bumblebee" '1'
+	pacman_install "-S bumblebee"
 	#aur
-#	pacman_install "-S nvidia-dkms" '2'
+#	pacman_install "-S nvidia-dkms" 'yaourt'
 	#extra
-	pacman_install "-S nvidia" '1'
-	[[ "${SET_LTS}" ]] && pacman_install "-S nvidia-lts" '1'
-	pacman_install "-S nvidia-utils" '1'
-#	pacman_install "-S opencl-nvidia" '1'
+	pacman_install "-S nvidia"
+	[[ "${SET_LTS}" ]] && pacman_install "-S nvidia-lts"
+	pacman_install "-S nvidia-utils"
+#	pacman_install "-S opencl-nvidia"
 	#multilib
-	pacman_install "-S lib32-nvidia-utils" '2'
-#	pacman_install "-S lib32-opencl-nvidia" '2'
+	pacman_install "-S lib32-nvidia-utils" 'yaourt'
+#	pacman_install "-S lib32-opencl-nvidia" 'yaourt'
 
-	pacman_install "-Rnsc ati-dri nouveau-dri" '3' 'noexit'
+	pacman_install "-Rnsc ati-dri nouveau-dri" 'noneeded' 'noexit'
 
 	#community
-	pacman_install "-S virtualgl" '1'
-	pacman_install "-S primus" '1'
+	pacman_install "-S virtualgl"
+	pacman_install "-S primus"
 	#multilib
-	pacman_install "-S lib32-virtualgl" '2'
-	pacman_install "-S lib32-primus" '2'
+	pacman_install "-S lib32-virtualgl" 'yaourt'
+	pacman_install "-S lib32-primus" 'yaourt'
 
 	git_commit
 
@@ -242,19 +242,19 @@ video_optimus()
 
 video_ati()
 {
-	pacman_install "-Rdds mesa-libgl" '3' 'noexit'
-	pacman_install "-Rdds lib32-mesa-libgl" '3' 'noexit'
+	pacman_install "-Rdds mesa-libgl" 'noneeded' 'noexit'
+	pacman_install "-Rdds lib32-mesa-libgl" 'noneeded' 'noexit'
 	#aur
-	pacman_install "-S catalyst-dkms" '2'
-	pacman_install "-S catalyst-utils" '2'
-#	pacman_install "-S opencl-catalyst" '2'
-	pacman_install "-S lib32-catalyst-utils" '2'
+	pacman_install "-S catalyst-dkms" 'yaourt'
+	pacman_install "-S catalyst-utils" 'yaourt'
+#	pacman_install "-S opencl-catalyst" 'yaourt'
+	pacman_install "-S lib32-catalyst-utils" 'yaourt'
 
 	git_commit
 
 	chroot_run systemctl enable dkms.service
 
-	pacman_install "-Rnsc ati-dri intel-dri nouveau-dri" '3' 'noexit'
+	pacman_install "-Rnsc ati-dri intel-dri nouveau-dri" 'noneeded' 'noexit'
 
 	git_commit
 }
@@ -262,9 +262,9 @@ video_ati()
 video_innotek()
 {
 	#community
-	pacman_install "-S virtualbox-guest-modules" '1'
-	pacman_install "-S virtualbox-guest-utils" '1'
-	[[ "${SET_LTS}" ]] && pacman_install "-S virtualbox-host-modules-lts" '1'
+	pacman_install "-S virtualbox-guest-modules"
+	pacman_install "-S virtualbox-guest-utils"
+	[[ "${SET_LTS}" ]] && pacman_install "-S virtualbox-host-modules-lts"
 
 	git_commit
 }
