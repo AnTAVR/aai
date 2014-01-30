@@ -332,25 +332,35 @@ bootloader_grub_bios()
 };
 " "${NS_PATH}/etc/default/grub"
 
+	git_commit
+
 # исправляет ошибку в грубе
 #echo 'GRUB_DISABLE_SUBMENU=y' >> "${NS_PATH}/etc/default/grub"
 
 #echo "vga=${CONSOLE_V_XxYxD%_*}"
 	if [[ "${RUN_BASE_PLUS}" ]]
 	then
-		#aur
-		pacman_install "-S grub2-theme-archxion" 'yaourt'
-
-		git_commit
-
-#    cp -Pbr "${NS_PATH}/usr/share/grub/themes/Archxion" "${NS_PATH}/boot/grub/themes/Archxion"
 		msg_log "$(gettext 'Настраиваю') /usr/local/bin/update-grub"
 		mkdir -p "${NS_PATH}/usr/local/bin"
 		cat "${DBDIR}modules/usr/local/bin/update-grub" > "${NS_PATH}/usr/local/bin/update-grub"
 		chmod +x "${NS_PATH}/usr/local/bin/update-grub"
 
-		msg_log "$(gettext 'Настраиваю') /etc/default/grub"
-		sed -i "
+		git_commit
+
+		dialog_yesno \
+			"${TXT_BOOTLOADER_MAIN}" \
+			"$(gettext 'Установеть тему для grub?')"
+
+		case "${?}" in
+			'0') #Yes
+				#aur
+				pacman_install "-S grub2-theme-archxion" 'yaourt'
+
+				git_commit
+
+#				cp -Pbr "${NS_PATH}/usr/share/grub/themes/Archxion" "${NS_PATH}/boot/grub/themes/Archxion"
+				msg_log "$(gettext 'Настраиваю') /etc/default/grub"
+				sed -i "
 # Добавляем скин
 /^GRUB_THEME=/s/^/#/;
 0,/^#GRUB_THEME=/{
@@ -359,6 +369,11 @@ bootloader_grub_bios()
 };
 };
 " "${NS_PATH}/etc/default/grub"
+
+				git_commit
+				;;
+		esac
+
 	fi
 
 	msg_info "$(gettext 'Пожалуйста, подождите')..."
