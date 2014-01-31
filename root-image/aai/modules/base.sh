@@ -658,7 +658,7 @@ s/^/#/;
 #===============================================================================
 	#extra
 	pacman_install "-S git" 'nochroot'
-	pacman_install "-S tk" 'nochroot'
+#	pacman_install "-S tk" 'nochroot'
 
 	git_commit
 

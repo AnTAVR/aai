@@ -78,15 +78,7 @@ run_de()
 		DEF_MENU="$(de_dialog_menu "${DEF_MENU}")"
 		case "${DEF_MENU}" in
 			'no')
-				dialog_yesno \
-					"${TXT_DE_MAIN}" \
-					"$(gettext 'Установить комплект Xorg?')"
-				case "${?}" in
-					'0') #Yes
-						de_install_xorg || continue
-						[[ ! "$SET_DE" ]] && set_global_var 'SET_DE' "${DEF_MENU}"
-					;;
-				esac
+				de_${DEF_MENU} || continue
 				RUN_DE=1
 				return 0
 				;;
@@ -180,6 +172,19 @@ de_dialog_xorg()
 	msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
 }
 
+
+de_no()
+{
+	dialog_yesno \
+		"${TXT_DE_MAIN}" \
+		"$(gettext 'Установить комплект Xorg?')"
+	case "${?}" in
+		'0') #Yes
+			de_install_xorg || return 1
+		;;
+	esac
+	return 0
+}
 
 # Устанавливаем openbox
 de_openbox()
@@ -802,6 +807,14 @@ de_xorg()
 	#aur
 #	pacman_install "-S ttf-ms-fonts" 'yaourt'
 #	pacman_install "-S ttf-vista-fonts" 'yaourt'
+
+	#extra
+	pacman_install "-S tk" #для git
+	pacman_install "-S fltk" #для alsa-tools
+	pacman_install "-S gtk2"
+	pacman_install "-S gtk3"
+	pacman_install "-S qt4"
+#	pacman_install "-S qt5"
 
 	git_commit
 

@@ -733,6 +733,7 @@ base_plus_alsa()
 	pacman_install "-S alsa-firmware"
 	pacman_install "-S alsa-plugins"
 	pacman_install "-S alsa-tools"
+#	pacman_install "-S fltk"
 	pacman_install "-S alsa-oss"
 	#multilib
 	pacman_install "-S lib32-alsa-plugins" 'yaourt'
