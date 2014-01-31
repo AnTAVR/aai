@@ -210,13 +210,28 @@ pkgs_tvtime()
 {
 	#community
 	pacman_install "-S tvtime"
+
+	git_commit
+}
+APPS+=" 'tvtime' '$(gettext 'ТВ тюнер')' 'off'"
+
+pkgs_kradio()
+{
 	#aur
-	pacman_install "-S alevt" 'yaourt'
 	pacman_install "-S kradio" 'yaourt'
 
 	git_commit
 }
-APPS+=" 'tvtime' '$(gettext 'ТВ и РАДИО тюнер, Телетекст') (+AUR)' 'off'"
+APPS+=" 'kradio' '$(gettext 'РАДИО тюнер') (AUR)' 'off'"
+
+pkgs_alevt()
+{
+	#aur
+	pacman_install "-S alevt" 'yaourt'
+
+	git_commit
+}
+APPS+=" 'alevt' '$(gettext 'Телетекст') (AUR)' 'off'"
 
 pkgs_k3b()
 {
@@ -280,6 +295,13 @@ pkgs_soundkonverter()
 	pacman_install "-S twolame"
 	pacman_install "-S vorbisgain"
 	pacman_install "-S opus-tools"
+
+	git_commit
+}
+APPS+=" 'soundkonverter' '$(gettext 'Конвертер аудио')' 'off'"
+
+pkgs_soundkonv-utils()
+{
 	#aur
 	pacman_install "-S split2flac-git" 'yaourt'
 	pacman_install "-S isomaster" 'yaourt'
@@ -287,7 +309,7 @@ pkgs_soundkonverter()
 
 	git_commit
 }
-APPS+=" 'soundkonverter' '$(gettext 'Конвертер аудио') (+AUR)' 'off'"
+APPS+=" 'soundkonv-utils' '$(gettext 'Утилиты для soundkonverter') (AUR)' 'off'"
 
 pkgs_snapshot()
 {
@@ -576,12 +598,20 @@ pkgs_pidgin()
 	pacman_install "-S pidgin-encryption"
 	pacman_install "-S pidgin-libnotify"
 	pacman_install "-S pidgin-toobars"
+
+	git_commit
+}
+APPS+=" 'pidgin' '$(gettext 'ICQ, QIP и т.п.')' 'on'"
+
+pkgs_pidgin-bot-sentry()
+{
+	pkgs_pidgin
 	#aur
 	pacman_install "-S pidgin-bot-sentry" 'yaourt'
 
 	git_commit
 }
-APPS+=" 'pidgin' '$(gettext 'ICQ, QIP и т.п.') (+AUR)' 'on'"
+APPS+=" 'pidgin-bot-sentry' '$(gettext 'АнтиБот для pidgin') (AUR)' 'off'"
 
 pkgs_kvirc()
 {
@@ -626,14 +656,21 @@ APPS+=" 'truecrypt' '$(gettext 'TrueCrypt шифрование на лету')' 
 
 pkgs_cryptkeeper()
 {
-	#community
-	pacman_install "-S gpg-crypter"
 	#aur
 	pacman_install "-S cryptkeeper" 'yaourt'
 
 	git_commit
 }
-APPS+=" 'cryptkeeper' '$(gettext 'GUI для шифрования папок') (+AUR)' 'on'"
+APPS+=" 'cryptkeeper' '$(gettext 'GUI для EncFS шифрование') (AUR)' 'off'"
+
+pkgs_gpg-crypter()
+{
+	#community
+	pacman_install "-S gpg-crypter"
+
+	git_commit
+}
+APPS+=" 'gpg-crypter' '$(gettext 'GUI для GnuPG(GPG) шифрование')' 'on'"
 
 pkgs_keepassx()
 {
@@ -729,12 +766,19 @@ pkgs_hydrogen()
 {
 	#extra
 	pacman_install "-S hydrogen"
+	
+	git_commit
+}
+APPS+=" 'hydrogen' '$(gettext 'Драм-машина')' 'off'"
+
+pkgs_drumkits()
+{
 	#aur
 	pacman_install "-S hydrogen-drumkits" 'yaourt'
 	
 	git_commit
 }
-APPS+=" 'hydrogen' '$(gettext 'Драм-машина +drumkits') (+AUR)' 'off'"
+APPS+=" 'drumkits' '$(gettext 'drumkits для hydrogen') (AUR)' 'off'"
 
 # pkgs_rosegarden()
 # {
@@ -791,12 +835,19 @@ pkgs_virtualbox()
 
 	git_commit
 }
-APPS+=" 'virtualbox' '$(gettext 'Виртуальная машина') (+AUR)' 'off'"
+APPS+=" 'virtualbox' '$(gettext 'Виртуальная машина')' 'off'"
 
 pkgs_ettercap()
 {
 	#community
 	pacman_install "-S ettercap-gtk"
+
+	git_commit
+}
+APPS+=" 'ettercap' '$(gettext 'Анализ безопасности сети')' 'off'"
+
+pkgs_netdiscover()
+{
 	#aur
 	pacman_install "-S netdiscover" 'yaourt'
 	pacman_install "-S hydra" 'yaourt'
@@ -808,7 +859,7 @@ pkgs_ettercap()
 
 	git_commit
 }
-APPS+=" 'ettercap' '$(gettext 'Анализ безопасности сети') (+AUR)' 'off'"
+APPS+=" 'netdiscover' '$(gettext 'Анализ безопасности сети') (AUR)' 'off'"
 
 pkgs_wireshark()
 {
@@ -825,12 +876,46 @@ pkgs_eric()
 {
 	#extra
 	pacman_install "-S eric"
+
+	git_commit
+}
+APPS+=" 'eric' '$(gettext 'Python редактор')' 'off'"
+
+pkgs_eric5-i18n()
+{
 	#aur
 	pacman_install "-S eric5-i18n" 'yaourt'
 
 	git_commit
 }
-APPS+=" 'eric' '$(gettext 'Python редактор') (+AUR)' 'off'"
+APPS+=" 'eric5-i18n' '$(gettext 'Перевод для eric') (AUR)' 'off'"
+
+pkgs_pycharm()
+{
+	#aur
+	pacman_install "-S pycharm-professional" 'yaourt'
+
+	git_commit
+}
+APPS+=" 'pycharm' '$(gettext 'Python и Django редактор JetBrains (Free 30-day trial)') (AUR)' 'off'"
+
+pkgs_webstorm()
+{
+	#aur
+	pacman_install "-S webstorm" 'yaourt'
+
+	git_commit
+}
+APPS+=" 'webstorm' '$(gettext 'HTML, JavaScript и CSS редактор JetBrains') (AUR)' 'off'"
+
+pkgs_phpstorm()
+{
+	#aur
+	pacman_install "-S phpstorm" 'yaourt'
+
+	git_commit
+}
+APPS+=" 'phpstorm' '$(gettext 'PHP редактор JetBrains (Free 30-day trial)') (AUR)' 'off'"
 
 pkgs_netbeans()
 {
