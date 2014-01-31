@@ -300,7 +300,7 @@ pkgs_soundkonverter()
 }
 APPS+=" 'soundkonverter' '$(gettext 'Конвертер аудио')' 'off'"
 
-pkgs_soundkonv-utils()
+pkgs_soundkonv_utils()
 {
 	#aur
 	pacman_install "-S split2flac-git" 'yaourt'
@@ -309,7 +309,7 @@ pkgs_soundkonv-utils()
 
 	git_commit
 }
-APPS+=" 'soundkonv-utils' '$(gettext 'Утилиты для soundkonverter') (AUR)' 'off'"
+APPS+=" 'soundkonv_utils' '$(gettext 'Утилиты для soundkonverter') (AUR)' 'off'"
 
 pkgs_snapshot()
 {
@@ -603,7 +603,7 @@ pkgs_pidgin()
 }
 APPS+=" 'pidgin' '$(gettext 'ICQ, QIP и т.п.')' 'on'"
 
-pkgs_pidgin-bot-sentry()
+pkgs_pidgin_bot_sentry()
 {
 	pkgs_pidgin
 	#aur
@@ -611,7 +611,7 @@ pkgs_pidgin-bot-sentry()
 
 	git_commit
 }
-APPS+=" 'pidgin-bot-sentry' '$(gettext 'АнтиБот для pidgin') (AUR)' 'off'"
+APPS+=" 'pidgin_bot_sentry' '$(gettext 'АнтиБот для pidgin') (AUR)' 'off'"
 
 pkgs_kvirc()
 {
@@ -663,14 +663,14 @@ pkgs_cryptkeeper()
 }
 APPS+=" 'cryptkeeper' '$(gettext 'GUI для EncFS шифрование') (AUR)' 'off'"
 
-pkgs_gpg-crypter()
+pkgs_gpg_crypter()
 {
 	#community
 	pacman_install "-S gpg-crypter"
 
 	git_commit
 }
-APPS+=" 'gpg-crypter' '$(gettext 'GUI для GnuPG(GPG) шифрование')' 'on'"
+APPS+=" 'gpg_crypter' '$(gettext 'GUI для GnuPG(GPG) шифрование')' 'on'"
 
 pkgs_keepassx()
 {
@@ -881,14 +881,14 @@ pkgs_eric()
 }
 APPS+=" 'eric' '$(gettext 'Python редактор')' 'off'"
 
-pkgs_eric5-i18n()
+pkgs_eric5_i18n()
 {
 	#aur
 	pacman_install "-S eric5-i18n" 'yaourt'
 
 	git_commit
 }
-APPS+=" 'eric5-i18n' '$(gettext 'Перевод для eric') (AUR)' 'off'"
+APPS+=" 'eric5_i18n' '$(gettext 'Перевод для eric') (AUR)' 'off'"
 
 pkgs_pycharm()
 {
