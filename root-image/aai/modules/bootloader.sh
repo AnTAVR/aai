@@ -380,6 +380,8 @@ bootloader_grub_bios()
 	chroot_run grub-mkconfig -o /boot/grub/grub.cfg
 
 	git_commit
+
+	return 0
 #-------------------------------------------------------------------------------
 }
 

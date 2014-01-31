@@ -912,7 +912,7 @@ base_plus_laptop()
 #	pacman_install "-S bluez"
 #	pacman_install "-S bluez-firmware"
 	#community
-	pacman_install "-S laptop-mode-tools"
+#	pacman_install "-S laptop-mode-tools" #Переехало в AUR замена может быть tlp-rdw
 	pacman_install "-S apcupsd"
 	pacman_install "-S powertop"
 #	pacman_install "-S acpi"

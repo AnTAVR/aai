@@ -485,17 +485,6 @@ pkgs_firefox()
 }
 APPS+=" 'firefox' '$(gettext 'Интернет браузер (Mozilla)')' 'on'"
 
-pkgs_thunderbird()
-{
-	#extra
-	pacman_install "-S thunderbird"
-	#extra
-	pacman_install "-S thunderbird-i18n-${SET_LOCAL%_*}" 'yaourt'
-
-	git_commit
-}
-APPS+=" 'thunderbird' '$(gettext 'Почтовая программа (Mozilla)')' 'off'"
-
 pkgs_opera()
 {
 	#extra
@@ -509,57 +498,6 @@ pkgs_opera()
 	git_commit
 }
 APPS+=" 'opera' '$(gettext 'Интернет браузер')' 'off'"
-
-pkgs_claws()
-{
-	#extra
-	pacman_install "-S claws-mail"
-	pacman_install "-S claws-mail-themes"
-	pacman_install "-S spamassassin"
-	pacman_install "-S razor"
-	#community
-	pacman_install "-S dspam"
-	pacman_install "-S p3scan"
-
-	git_commit
-
-	chroot_run /usr/bin/vendor_perl/sa-update
-	chroot_run /usr/bin/vendor_perl/sa-compile
-
-	cat "${DBDIR}modules/usr/local/bin/sa-run" > "${NS_PATH}/usr/local/bin/sa-run"
-	chmod +x "${NS_PATH}/usr/local/bin/sa-run"
-
-	git_commit
-
-# iptables -t nat -A PREROUTING -p tcp --dport pop3 -j REDIRECT --to 8110
-
-# *nat
-# :PREROUTING ACCEPT [0:0]
-# :INPUT ACCEPT [0:0]
-# :OUTPUT ACCEPT [0:0]
-# :POSTROUTING ACCEPT [0:0]
-# -A PREROUTING -p tcp -m tcp --dport 110 -j REDIRECT --to-ports 8110
-# COMMIT
-
-# ~/.claws-mail/accountrc
-# spam: %as{execute "spamassassin -R --local -e < %F" execute "sa-learn --spam %F" move "#mh/Mail/spam!!!" mark_as_spam}
-# nospam: %as{execute "spamassassin -W --local -e < %F" execute "sa-learn --ham %F" copy "#mh/Mail/spamNO" mark_as_ham}
-
-# ~/.claws-mail/matcherrc
-# [filtering]
-# enabled rulename "sa-run" test "!(sa-run %F)" move "#mh/Mail/spam"
-
-# ~/.claws-mail/toolbar_msgview.xml
-# ~/.claws-mail/toolbar_main.xml
-# <toolbar>
-# 	<separator/>
-# 	<item file="spam_btn" text="spam" action="A_CLAWS_ACTIONS"/>
-# 	<item file="ham_btn" text="nospam" action="A_CLAWS_ACTIONS"/>
-# </toolbar>
-
-
-}
-APPS+=" 'claws' '$(gettext 'EMAIL клиент')' 'on'"
 
 pkgs_filezilla()
 {
@@ -589,6 +527,27 @@ pkgs_qbittorrent()
 	git_commit
 }
 APPS+=" 'qbittorrent' '$(gettext 'TORRENT клиент') (AUR)' 'off'"
+
+pkgs_thunderbird()
+{
+	#extra
+	pacman_install "-S thunderbird"
+	#extra
+	pacman_install "-S thunderbird-i18n-${SET_LOCAL%_*}" 'yaourt'
+
+	git_commit
+}
+APPS+=" 'thunderbird' '$(gettext 'Почтовая программа (Mozilla)')' 'off'"
+
+pkgs_claws()
+{
+	#extra
+	pacman_install "-S claws-mail"
+	pacman_install "-S claws-mail-themes"
+
+	git_commit
+}
+APPS+=" 'claws' '$(gettext 'EMAIL клиент')' 'on'"
 
 pkgs_pidgin()
 {
@@ -704,6 +663,55 @@ pkgs_teamviewer()
 }
 APPS+=" 'teamviewer' '$(gettext 'Удаленный доступ и поддержка через Интернет') (AUR)' 'off'"
 
+pkgs_spamassassin()
+{
+	#extra
+	pacman_install "-S spamassassin"
+	pacman_install "-S razor"
+	#community
+	pacman_install "-S dspam"
+	pacman_install "-S p3scan"
+
+	git_commit
+
+	chroot_run /usr/bin/vendor_perl/sa-update
+	chroot_run /usr/bin/vendor_perl/sa-compile
+
+	cat "${DBDIR}modules/usr/local/bin/sa-run" > "${NS_PATH}/usr/local/bin/sa-run"
+	chmod +x "${NS_PATH}/usr/local/bin/sa-run"
+
+	git_commit
+
+# iptables -t nat -A PREROUTING -p tcp --dport pop3 -j REDIRECT --to 8110
+
+# *nat
+# :PREROUTING ACCEPT [0:0]
+# :INPUT ACCEPT [0:0]
+# :OUTPUT ACCEPT [0:0]
+# :POSTROUTING ACCEPT [0:0]
+# -A PREROUTING -p tcp -m tcp --dport 110 -j REDIRECT --to-ports 8110
+# COMMIT
+
+# ~/.claws-mail/accountrc
+# spam: %as{execute "spamassassin -R --local -e < %F" execute "sa-learn --spam %F" move "#mh/Mail/spam!!!" mark_as_spam}
+# nospam: %as{execute "spamassassin -W --local -e < %F" execute "sa-learn --ham %F" copy "#mh/Mail/spamNO" mark_as_ham}
+
+# ~/.claws-mail/matcherrc
+# [filtering]
+# enabled rulename "sa-run" test "!(sa-run %F)" move "#mh/Mail/spam"
+
+# ~/.claws-mail/toolbar_msgview.xml
+# ~/.claws-mail/toolbar_main.xml
+# <toolbar>
+# 	<separator/>
+# 	<item file="spam_btn" text="spam" action="A_CLAWS_ACTIONS"/>
+# 	<item file="ham_btn" text="nospam" action="A_CLAWS_ACTIONS"/>
+# </toolbar>
+
+
+}
+APPS+=" 'spamassassin' '$(gettext 'АнтиСпам')' 'on'"
+
 pkgs_clamav()
 {
 	#extra
@@ -729,7 +737,7 @@ pkgs_clamav()
 
 	git_commit
 }
-APPS+=" 'clamav' '$(gettext 'Антивирус')' 'off'"
+APPS+=" 'clamav' '$(gettext 'АнтиВирус')' 'off'"
 
 pkgs_stardict()
 {
