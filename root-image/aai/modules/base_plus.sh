@@ -226,7 +226,7 @@ base_plus_dialog_service()
 }
 
 #yaourt -S vlc
-#yaourt -Si avahi libdvdcss libavc1394 libdc1394 kdelibs libva-vdpau-driver libva-intel-driver libbluray flac oss portaudio twolame  projectm libcaca libgme librsvg gnome-vfs libgoom2 vcdimager xosd aalib libmtp fluidsynth smbclient libcdio opus libssh2
+#yaourt -Si libdvdcss libavc1394 libdc1394 kdelibs libva-vdpau-driver libva-intel-driver libbluray flac oss portaudio twolame  projectm libcaca libgme librsvg gnome-vfs libgoom2 vcdimager xosd aalib libmtp fluidsynth smbclient libcdio opus libssh2
 #ошибка: пакет 'libva-vdpau-driver' не найден
 #ошибка: пакет 'libva-intel-driver' не найден
 
@@ -1094,6 +1094,7 @@ base_plus_net()
 	pacman_install "-S isdn4k-utils"
 	pacman_install "-S iw"
 	pacman_install "-S wireless-regdb"
+	pacman_install "-S avahi"
 	#extra
 	pacman_install "-S modemmanager"
 	pacman_install "-S nss-mdns"
@@ -1104,13 +1105,15 @@ base_plus_net()
 	pacman_install "-S arp-scan"
 	pacman_install "-S dsniff"
 	pacman_install "-S tor"
-# убрал потому что тянет графику
-#	pacman_install "-S ntop"
-
+#	pacman_install "-S ntop"# убрал потому что тянет графику
+ 
 	git_commit
 
-#	SERVICES+=" 'ntop.service' '-' 'off'"
+	SERVICES+=" 'avahi-daemon.service' '-' 'off'"
+	SERVICES+=" 'avahi-daemon.socket' '-' 'off'"
+	SERVICES+=" 'avahi-dnsconfd.service' '-' 'off'"
 	SERVICES+=" 'tor.service' '-' 'off'"
+#	SERVICES+=" 'ntop.service' '-' 'off'"
 }
 
 base_plus_iptables()
