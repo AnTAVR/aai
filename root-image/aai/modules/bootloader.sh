@@ -40,7 +40,7 @@ str_bootloader()
 	local TEMP="\Zb\Z1($(gettext 'ОБЯЗАТЕЛЬНО!!!'))\Zn"
 
 	[[ "${RUN_BOOTLOADER}" ]] && TEMP="\Zb\Z2($(gettext 'ВЫПОЛНЕНО'))\Zn"
-	echo "${TXT_BOOTLOADER_MAIN} ${TEMP}"
+	echo "${TXT_BOOTLOADER_MAIN} (~45M) ${TEMP}"
 }
 
 # Функция выполнения из главного меню

@@ -42,7 +42,7 @@ str_de()
 	local TEMP
 
 	[[ "${RUN_DE}" ]] && TEMP="\Zb\Z2($(gettext 'ВЫПОЛНЕНО'))\Zn"
-	echo "${TXT_DE_MAIN} ${TEMP}"
+	echo "${TXT_DE_MAIN} (~905M+) ${TEMP}"
 }
 
 # Функция выполнения из главного меню
@@ -111,14 +111,14 @@ de_dialog_menu()
 
 	local DEFAULT_ITEM="${P_DEF_MENU}"
 	local ITEMS="'no' '$(gettext 'Сам установлю, потом...')'"
-	ITEMS+=" 'openbox' 'Open Box ($(gettext 'консольный вход'))'"
+	ITEMS+=" 'openbox' 'Open Box (~145M) ($(gettext 'консольный вход'))'"
 	ITEMS+=" 'kde_mini' 'KDE Mini'"
 	ITEMS+=" 'kde' 'KDE'"
 	ITEMS+=" 'xfce4' 'Xfce4 ($(gettext 'консольный вход'))'"
 	ITEMS+=" 'lxde' 'LXDE'"
 	ITEMS+=" 'e17' 'Enlightenment ($(gettext 'консольный вход'))'"
 	ITEMS+=" 'gnome' 'GNOME'"
-	ITEMS+=" 'mate' 'Mate ($(gettext 'консольный вход'))'"
+	ITEMS+=" 'mate' 'Mate (~905M) ($(gettext 'консольный вход'))'"
 	ITEMS+=" 'cinnamon' 'Cinnamon ($(gettext 'консольный вход'))'"
 	ITEMS+=" 'awesome' 'Awesome ($(gettext 'консольный вход'))'"
 

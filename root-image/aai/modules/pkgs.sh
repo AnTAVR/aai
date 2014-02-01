@@ -38,7 +38,7 @@ str_pkgs()
 	local TEMP
 
 	[[ "${RUN_PKGS}" ]] && TEMP="\Zb\Z2($(gettext 'ВЫПОЛНЕНО'))\Zn"
-	echo "${TXT_PKGS_MAIN} ${TEMP}"
+	echo "${TXT_PKGS_MAIN} (~2665M) ${TEMP}"
 }
 
 # Функция выполнения из главного меню

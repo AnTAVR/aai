@@ -41,7 +41,7 @@ str_base_plus()
 	local TEMP
 
 	[[ "${RUN_BASE_PLUS}" ]] && TEMP="\Zb\Z2($(gettext 'ВЫПОЛНЕНО'))\Zn"
-	echo "${TXT_BASE_PLUS_MAIN} ${TEMP}"
+	echo "${TXT_BASE_PLUS_MAIN} (~680M) ${TEMP}"
 }
 
 # Функция выполнения из главного меню
