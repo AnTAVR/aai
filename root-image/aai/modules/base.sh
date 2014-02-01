@@ -1001,6 +1001,7 @@ base_hd()
 	#community
 	pacman_install "-S partimage"
 	pacman_install "-S partclone"
+	pacman_install "-S clonezilla"
 
 	git_commit
 
