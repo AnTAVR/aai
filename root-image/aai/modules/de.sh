@@ -256,13 +256,8 @@ s/<number>4<\/number>/<number>2<\/number>/;
 
 
 #===============================================================================
-# Устанавливаем xterm и добавляем настройки Xorg
+# Добавляем настройки Xorg
 #===============================================================================
-	#extra
-	pacman_install "-S xterm"
-
-	git_commit
-
 	msg_log "$(gettext 'Добавляю') Xresources > /etc/skel/.config/openbox/autostart"
 	echo '([[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources) &' >> "${NS_PATH}/etc/skel/.config/openbox/autostart"
 	echo '([[ -f ~/.Xmodmap ]] && xmodmap ~/.Xmodmap) &' >> "${NS_PATH}/etc/skel/.config/openbox/autostart"
@@ -793,13 +788,12 @@ de_xorg()
 	pacman_install "-S xdg-user-dirs"
 	pacman_install "-S xdg-utils"
 	pacman_install "-S xorg-server-utils"
+	pacman_install "-S xterm"
 	pacman_install "-S ttf-dejavu"
 	pacman_install "-S ttf-freefont"
 	pacman_install "-S ttf-linux-libertine"
 	pacman_install "-S ttf-bitstream-vera"
 	pacman_install "-S xscreensaver"
-	pacman_install "-S gstreamer0.10-plugins"
-	pacman_install "-S phonon-gstreamer"
 	#community
 	pacman_install "-S ttf-liberation"
 	pacman_install "-S ttf-droid"
@@ -809,12 +803,18 @@ de_xorg()
 #	pacman_install "-S ttf-vista-fonts" 'yaourt'
 
 	#extra
+	pacman_install "-S gstreamer0.10-plugins"
+	pacman_install "-S phonon-gstreamer"
 	pacman_install "-S tk" #для git
 	pacman_install "-S fltk" #для alsa-tools
 	pacman_install "-S gtk2"
 	pacman_install "-S gtk3"
 	pacman_install "-S qt4"
 #	pacman_install "-S qt5"
+	pacman_install "-S wxgtk2.8" #для p7zip
+
+	git_commit
+
 
 	git_commit
 
