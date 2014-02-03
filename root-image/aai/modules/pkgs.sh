@@ -175,6 +175,17 @@ pkgs_acestream()
 }
 APPS+=" 'acestream' '$(gettext 'Медиа-платформа нового поколения') (AUR)' 'off'"
 
+pkgs_xbmc()
+{
+	#community
+	pacman_install "-S xbmc"
+	pacman_install "-S xbmc-pvr-addons"
+	pacman_install "-S mythtv"
+
+	git_commit
+}
+APPS+=" 'xbmc' '$(gettext 'Медиа Центр')' 'off'"
+
 pkgs_smplayer()
 {
 	#extra
