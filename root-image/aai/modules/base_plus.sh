@@ -383,6 +383,10 @@ base_plus_install()
 	cat "${DBDIR}modules/etc/profile.d/less.sh" > "${NS_PATH}/etc/profile.d/less.sh"
 	chmod +x "${NS_PATH}/etc/profile.d/less.sh"
 
+# 
+	msg_log "$(gettext 'Настраиваю') /etc/skel/.zshenv"
+	cat "${DBDIR}modules/etc/skel/.zshenv" > "${NS_PATH}/etc/skel/.zshenv"
+
 	git_commit
 #-------------------------------------------------------------------------------
 
