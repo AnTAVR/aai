@@ -1084,8 +1084,14 @@ base_zsh()
 	#extra
 	pacman_install "-S zsh"
 	pacman_install "-S grml-zsh-config"
+	#community
+	pacman_install "-S zsh-syntax-highlighting"
 
 	git_commit
+
+	msg_log "$(gettext 'Добавляю') zsh-syntax-highlighting > /etc/skel/.zshrc"
+	echo '[ -r /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh' >> "${NS_PATH}/etc/skel/.zshrc"
+	cat "${NS_PATH}/etc/skel/.zshrc" > "${NS_PATH}/root/.zshrc"
 
 # Меняем оболочку по умолчанию для новых пользователей
 	chroot_run useradd -D --shell /usr/bin/zsh
