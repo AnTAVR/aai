@@ -215,8 +215,8 @@ s/<number>4<\/number>/<number>2<\/number>/;
 
 	if [[ ! "$SET_DE" ]]
 	then
-		msg_log "$(gettext 'Настраиваю') /etc/skel/.zprofile"
-		echo '[[ -z ${DISPLAY} && ${XDG_VTNR} -eq 1 ]] && exec startx &> ~/.xlog' >> "${NS_PATH}/etc/skel/.zprofile"
+		msg_log "$(gettext 'Настраиваю') /etc/skel/.zlogin"
+		cat "${DBDIR}modules/etc/skel/.zlogin" > "${NS_PATH}/etc/skel/.zlogin"
 
 		msg_log "$(gettext 'Настраиваю') /etc/skel/.xinitrc"
 		echo 'exec openbox-session' >> "${NS_PATH}/etc/skel/.xinitrc"
@@ -510,8 +510,8 @@ de_xfce4()
 
 	if [[ ! "$SET_DE" ]]
 	then
-		msg_log "$(gettext 'Настраиваю') /etc/skel/.zprofile"
-		echo '[[ -z ${DISPLAY} && ${XDG_VTNR} -eq 1 ]] && exec startx &> ~/.xlog' >> "${NS_PATH}/etc/skel/.zprofile"
+		msg_log "$(gettext 'Настраиваю') /etc/skel/.zlogin"
+		cat "${DBDIR}modules/etc/skel/.zlogin" > "${NS_PATH}/etc/skel/.zlogin"
 
 		msg_log "$(gettext 'Настраиваю') /etc/skel/.xinitrc"
 		echo 'exec startxfce4' >> "${NS_PATH}/etc/skel/.xinitrc"
@@ -531,8 +531,8 @@ de_e17()
 
 	if [[ ! "$SET_DE" ]]
 	then
-		msg_log "$(gettext 'Настраиваю') /etc/skel/.zprofile"
-		echo '[[ -z ${DISPLAY} && ${XDG_VTNR} -eq 1 ]] && exec startx &> ~/.xlog' >> "${NS_PATH}/etc/skel/.zprofile"
+		msg_log "$(gettext 'Настраиваю') /etc/skel/.zlogin"
+		cat "${DBDIR}modules/etc/skel/.zlogin" > "${NS_PATH}/etc/skel/.zlogin"
 
 		msg_log "$(gettext 'Настраиваю') /etc/skel/.xinitrc"
 		echo 'exec enlightenment_start' >> "${NS_PATH}/etc/skel/.xinitrc"
@@ -717,8 +717,8 @@ de_mate()
 
 	if [[ ! "$SET_DE" ]]
 	then
-		msg_log "$(gettext 'Настраиваю') /etc/skel/.zprofile"
-		echo '[[ -z ${DISPLAY} && ${XDG_VTNR} -eq 1 ]] && exec startx &> ~/.xlog' >> "${NS_PATH}/etc/skel/.zprofile"
+		msg_log "$(gettext 'Настраиваю') /etc/skel/.zlogin"
+		cat "${DBDIR}modules/etc/skel/.zlogin" > "${NS_PATH}/etc/skel/.zlogin"
 
 		msg_log "$(gettext 'Настраиваю') /etc/skel/.xinitrc"
 		echo 'exec mate-session' >> "${NS_PATH}/etc/skel/.xinitrc"
@@ -744,8 +744,8 @@ de_cinnamon()
 
 	if [[ ! "$SET_DE" ]]
 	then
-		msg_log "$(gettext 'Настраиваю') /etc/skel/.zprofile"
-		echo '[[ -z ${DISPLAY} && ${XDG_VTNR} -eq 1 ]] && exec startx &> ~/.xlog' >> "${NS_PATH}/etc/skel/.zprofile"
+		msg_log "$(gettext 'Настраиваю') /etc/skel/.zlogin"
+		cat "${DBDIR}modules/etc/skel/.zlogin" > "${NS_PATH}/etc/skel/.zlogin"
 
 		msg_log "$(gettext 'Настраиваю') /etc/skel/.xinitrc"
 		echo 'exec gnome-session-cinnamon' >> "${NS_PATH}/etc/skel/.xinitrc"
@@ -766,8 +766,8 @@ de_awesome()
 
 	if [[ ! "$SET_DE" ]]
 	then
-		msg_log "$(gettext 'Настраиваю') /etc/skel/.zprofile"
-		echo '[[ -z ${DISPLAY} && ${XDG_VTNR} -eq 1 ]] && exec startx &> ~/.xlog' >> "${NS_PATH}/etc/skel/.zprofile"
+		msg_log "$(gettext 'Настраиваю') /etc/skel/.zlogin"
+		cat "${DBDIR}modules/etc/skel/.zlogin" > "${NS_PATH}/etc/skel/.zlogin"
 
 		msg_log "$(gettext 'Настраиваю') /etc/skel/.xinitrc"
 		echo 'exec awesome' >> "${NS_PATH}/etc/skel/.xinitrc"
