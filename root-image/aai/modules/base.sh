@@ -666,8 +666,7 @@ s/^/#/;
 	chroot_run bash -c "'cd /etc; git init; git config --global user.email root@${SET_HOSTNAME}; git config --global user.name root'"
 #Добавляем исключения
 	msg_log "$(gettext 'Настраиваю') /etc/.gitignore"
-	echo '*.bak' > "${NS_PATH}/etc/.gitignore"
-	echo '*~' >> "${NS_PATH}/etc/.gitignore"
+	cat "${DBDIR}modules/etc/.gitignore" > "${NS_PATH}/etc/.gitignore"
 #-------------------------------------------------------------------------------
 
 	git_commit
