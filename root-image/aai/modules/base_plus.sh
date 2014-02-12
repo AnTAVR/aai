@@ -431,8 +431,11 @@ base_plus_install()
 #===============================================================================
 # Для монтирования не смонтированных дисков кликом мышки
 #===============================================================================
+	#extra
+	pacman_install "-S polkit"
+
 	msg_log "$(gettext 'Настраиваю') /etc/polkit-1/rules.d/10-enable-mount.rules"
-	mkdir -p "${NS_PATH}/etc/polkit-1/rules.d"
+#	mkdir -p "${NS_PATH}/etc/polkit-1/rules.d"
 	cat "${DBDIR}modules/etc/polkit-1/rules.d/10-enable-mount.rules" > "${NS_PATH}/etc/polkit-1/rules.d/10-enable-mount.rules"
 
 	SET_USER_GRUPS+=',storage'
