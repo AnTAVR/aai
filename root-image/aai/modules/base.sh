@@ -660,8 +660,6 @@ s/^/#/;
 	pacman_install "-S git" 'nochroot'
 #	pacman_install "-S tk" 'nochroot'
 
-	git_commit
-
 # Создаем git репозиторий /etc/
 	chroot_run bash -c "'cd /etc; git init; git config --global user.email root@${SET_HOSTNAME}; git config --global user.name root'"
 #Добавляем исключения

@@ -108,9 +108,9 @@ msg_error()
 
 	[[ ${P_ERROR} -gt 0 ]] && TEMP='ERROR'
 
-	echo -e "${BLDRED}[${SCRNAME}] ${TEMP} (${P_ERROR}): ${P_MSG}${TXTRST}"
+	echo -e "${BLDRED}[${SCRNAME}] ${TEMP} <${P_ERROR}>: ${P_MSG}${TXTRST}"
 	echo '' >&2
-	echo "[${SCRNAME}]($(date +%Y-%m-%d-%T,%N)) ${TEMP} (${P_ERROR}): ${P_MSG}" >&2
+	echo "[${SCRNAME}] ${TEMP} <${P_ERROR}> ($(date +%Y-%m-%d-%T,%N)): ${P_MSG}" >&2
 
 	[[ ${P_ERROR} -gt 0 ]] && [[ ${P_EXIT} ]] && run_exit ${P_ERROR}
 }

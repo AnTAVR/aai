@@ -81,6 +81,7 @@ run_base_plus()
 	local MODULE
 
 	TEMP="$(base_plus_dialog_sound)"
+#@todo /aai/modules/base_plus.sh: line 109: global: command not found
 	if [[ ! -n "${TEMP}" ]]
 	then
 		msg_log "$(gettext 'Настраиваю') /etc/modprobe.d/alsa-base.conf"
