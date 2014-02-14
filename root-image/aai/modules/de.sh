@@ -159,11 +159,11 @@ de_dialog_xorg()
 
 	local DEFAULT_ITEM='1280x1024x24'
 	local ITEMS="$(hwinfo --framebuffer | grep ' Mode ' |  awk -F ' ' '{print sq $3 "x" $5 sq " " sq $0 sq}' sq=\')"
-#  local ITEMS="
-#'640x480x8' '-' '800x600x8' '-' '1024x768x8' '-' '1280x1024x8' '-'
-#'640x480x16' '-' '800x600x16' '-' '1024x768x16' '-' '1280x1024x16' '-'
-#'640x480x24' '-' '800x600x24' '-' '1024x768x24' '-' '1280x1024x24' '-'
-#"
+	[[ ! -n "${ITEMS}" ]] && ITEMS="
+'640x480x8' '-' '800x600x8' '-' '1024x768x8' '-' '1280x1024x8' '-'
+'640x480x16' '-' '800x600x16' '-' '1024x768x16' '-' '1280x1024x16' '-'
+'640x480x24' '-' '800x600x24' '-' '1024x768x24' '-' '1280x1024x24' '-'
+"
 	HELP_TXT+=" \Zb\Z7\"${DEFAULT_ITEM}\"\Zn\n"
 
 	RETURN="$(dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}")"
