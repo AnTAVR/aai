@@ -689,6 +689,8 @@ s/^/#/;
 /^#/!d;
 ' "${NS_PATH}/etc/locale.gen"
 	echo "${SET_LOCAL}" >> "${NS_PATH}/etc/locale.gen"
+	echo "en_US.UTF-8 UTF-8" >> "${NS_PATH}/etc/locale.gen"
+#	echo "en_US ISO-8859-1" >> "${NS_PATH}/etc/locale.gen"
 	chroot_run locale-gen
 #-------------------------------------------------------------------------------
 
