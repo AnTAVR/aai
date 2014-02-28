@@ -129,7 +129,7 @@ CO	America/Bogota	es_CO.UTF-8 UTF-8
 CR	America/Costa_Rica	es_CR.UTF-8 UTF-8		
 CU	America/Havana	es_CU UTF-8		
 CV	Atlantic/Cape_Verde			
-CW	America/Curacao			
+CW	America/Curacao	pap_CW UTF-8		
 CX	Indian/Christmas			
 CY	Asia/Nicosia	tr_CY.UTF-8 UTF-8		
 CZ	Europe/Prague	cs_CZ.UTF-8 UTF-8		
@@ -164,7 +164,7 @@ GD	America/Grenada
 GE	Asia/Tbilisi	ka_GE.UTF-8 UTF-8		
 GF	America/Cayenne			
 GG	Europe/Guernsey			
-GH	Africa/Accra			
+GH	Africa/Accra	ak_GH UTF-8		
 GI	Europe/Gibraltar			
 GL	America/Danmarkshavn	kl_GL.UTF-8 UTF-8	+7646-01840	east coast, north of Scoresbysund
 GL	America/Godthab	kl_GL.UTF-8 UTF-8	+6411-05144	most locations
@@ -193,7 +193,7 @@ ID	Asia/Pontianak	id_ID.UTF-8 UTF-8	-0002+10920	west & central Borneo
 IE	Europe/Dublin	en_IE.UTF-8 UTF-8		
 IL	Asia/Jerusalem	he_IL.UTF-8 UTF-8		
 IM	Europe/Isle_of_Man			
-IN	Asia/Kolkata	doi_IN UTF-8		
+IN	Asia/Kolkata	anp_IN UTF-8		
 IO	Indian/Chagos			
 IQ	Asia/Baghdad	ar_IQ.UTF-8 UTF-8		
 IR	Asia/Tehran	fa_IR UTF-8		
@@ -340,7 +340,7 @@ SM	Europe/San_Marino
 SN	Africa/Dakar	ff_SN UTF-8		
 SO	Africa/Mogadishu	so_SO.UTF-8 UTF-8		
 SR	America/Paramaribo			
-SS	Africa/Juba			
+SS	Africa/Juba	ar_SS UTF-8		
 ST	Africa/Sao_Tome			
 SV	America/El_Salvador	es_SV.UTF-8 UTF-8		
 SX	America/Lower_Princes			
@@ -360,7 +360,7 @@ TO	Pacific/Tongatapu
 TR	Europe/Istanbul	tr_TR.UTF-8 UTF-8		
 TT	America/Port_of_Spain			
 TV	Pacific/Funafuti			
-TW	Asia/Taipei	nan_TW@latin UTF-8		
+TW	Asia/Taipei	cmn_TW UTF-8		
 TZ	Africa/Dar_es_Salaam	sw_TZ UTF-8		
 UA	Europe/Kiev	uk_UA.UTF-8 UTF-8	+5026+03031	most locations
 UA	Europe/Simferopol	ru_RU.UTF-8 UTF-8	+4457+03406	central Crimea

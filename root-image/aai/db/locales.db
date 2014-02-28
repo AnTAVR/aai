@@ -21,6 +21,7 @@ AT	de_AT@euro ISO-8859-15	de
 AU	en_AU ISO-8859-1	us	
 AU	en_AU.UTF-8 UTF-8	us	
 AW	nl_AW UTF-8	nl	
+AW	pap_AW UTF-8		
 AX			
 AZ	az_AZ UTF-8		
 BA	bs_BA ISO-8859-2		
@@ -99,7 +100,7 @@ CR	es_CR ISO-8859-1	es
 CR	es_CR.UTF-8 UTF-8	es	
 CU	es_CU UTF-8	es	
 CV			
-CW			
+CW	pap_CW UTF-8		
 CX			
 CY	el_CY ISO-8859-7		
 CY	el_CY.UTF-8 UTF-8		
@@ -206,7 +207,7 @@ GE	ka_GE GEORGIAN-PS
 GE	ka_GE.UTF-8 UTF-8		
 GF			
 GG			
-GH			
+GH	ak_GH UTF-8		
 GI			
 GL	kl_GL ISO-8859-1		
 GL	kl_GL.UTF-8 UTF-8		
@@ -248,6 +249,7 @@ IL	he_IL.UTF-8 UTF-8	il
 IL	iw_IL ISO-8859-8	il	
 IL	iw_IL.UTF-8 UTF-8	il	
 IM			
+IN	anp_IN UTF-8		
 IN	ar_IN UTF-8		
 IN	as_IN UTF-8		
 IN	bho_IN UTF-8		
@@ -391,6 +393,7 @@ NO	nn_NO ISO-8859-1	no
 NO	nn_NO.UTF-8 UTF-8	no	
 NO	se_NO UTF-8	no	
 NP	ne_NP UTF-8		
+NP	the_NP UTF-8		
 NR			
 NU	niu_NU UTF-8		
 NZ	en_NZ ISO-8859-1	us	
@@ -405,6 +408,7 @@ PA	es_PA.UTF-8 UTF-8	es
 PE	ayc_PE UTF-8		
 PE	es_PE ISO-8859-1	es	
 PE	es_PE.UTF-8 UTF-8	es	
+PE	quz_PE UTF-8		
 PF			
 PG			
 PH	en_PH ISO-8859-1	us	
@@ -471,7 +475,7 @@ SN	wo_SN UTF-8
 SO	so_SO ISO-8859-1		
 SO	so_SO.UTF-8 UTF-8		
 SR			
-SS			
+SS	ar_SS UTF-8		
 ST			
 SV	es_SV ISO-8859-1	sv-latin1	
 SV	es_SV.UTF-8 UTF-8	sv-latin1	
@@ -499,6 +503,10 @@ TR	tr_TR ISO-8859-9
 TR	tr_TR.UTF-8 UTF-8		
 TT			
 TV			
+TW	cmn_TW UTF-8		
+TW	hak_TW UTF-8		
+TW	lzh_TW UTF-8		
+TW	nan_TW UTF-8		
 TW	nan_TW@latin UTF-8		
 TW	zh_TW BIG5		
 TW	zh_TW.EUC-TW EUC-TW		
