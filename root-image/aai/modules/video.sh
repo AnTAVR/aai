@@ -19,6 +19,17 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+#gtf 1280 1024 85 получить соответствующий Modeline
+#Section "Monitor"
+# 1280x1024 @ 85.00 Hz (GTF) hsync: 91.38 kHz; pclk: 159.36 MHz
+#  Modeline "1280x1024_85.00"  159.36  1280 1376 1512 1744  1024 1025 1028 1075  -HSync +Vsync
+#EndSection
+#Section "Screen"
+#        SubSection "Display"
+#              Modes     "1280x1024_85.00"
+#        EndSubSection
+#EndSection
+
 # Добавляем функцию модуля в главное меню, пробел в конце обязательно!
 MAIN_CASE+=('video')
 
@@ -242,17 +253,27 @@ video_optimus()
 
 video_ati()
 {
+#Key-ID: 653C3094
+#[catalyst]
+#Server = http://catalyst.wirephire.com/repo/catalyst/$arch
+#pacman-key -r Key-ID
+#pacman-key --lsign-key Key-ID
+
 	pacman_install "-Rdds mesa-libgl" 'noneeded' 'noexit'
 	pacman_install "-Rdds lib32-mesa-libgl" 'noneeded' 'noexit'
 	#aur
-	pacman_install "-S catalyst-dkms" 'yaourt'
 	pacman_install "-S catalyst-utils" 'yaourt'
 #	pacman_install "-S opencl-catalyst" 'yaourt'
 	pacman_install "-S lib32-catalyst-utils" 'yaourt'
+	pacman_install "-S catalyst-hook" 'yaourt'
 
 	git_commit
 
-	chroot_run systemctl enable dkms.service
+	chroot_run systemctl enable catalyst-hook
+	chroot_run systemctl enable atieventsd
+	chroot_run systemctl enable temp-links-catalyst
+
+	#aticonfig --initial
 
 	pacman_install "-Rnsc ati-dri intel-dri nouveau-dri" 'noneeded' 'noexit'
 
