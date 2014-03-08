@@ -111,7 +111,7 @@ pkgs_dolphin()
 	pacman_install "-S kdeutils-ark"
 	pacman_install "-S kdebase-konsole"
 	pacman_install "-S kdebase-kdialog"
-	pacman_install "-S kdeutils-kwallet"
+	pacman_install "-S kdeutils-kwalletmanager"
 	#aur
 #	pacman_install "-S kde-servicemenus-rootactions" 'yaourt' # отключил потому что подвисает, и xauth зомбируется так что лучше использовать kdesu!
 	#extra
