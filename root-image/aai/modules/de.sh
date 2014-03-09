@@ -208,8 +208,10 @@ de_openbox()
 
 	msg_log "$(gettext 'Настраиваю') /etc/skel/.config/openbox/rc.xml"
 	sed -i "
+#Меняем тему
 s/<name>Clearlooks<\/name>/<name>Simple-Aubergine<\/name>/;
-s/<number>4<\/number>/<number>2<\/number>/;
+#Меняем количество рабочих сталов
+#s/<number>4<\/number>/<number>2<\/number>/;
 #s/entry in parent menu -->/entry in parent menu --\&gt;/;
 " "${NS_PATH}/etc/skel/.config/openbox/rc.xml"
 
@@ -343,8 +345,6 @@ s/<number>4<\/number>/<number>2<\/number>/;
 #===============================================================================
 # Устанавливаем tint2
 #===============================================================================
-	#extra
-	pacman_install "-S orage"
 	#community
 	pacman_install "-S tint2"
 	#aur
@@ -358,9 +358,44 @@ s/<number>4<\/number>/<number>2<\/number>/;
 	cat "${DBDIR}modules/etc/skel/.config/tint2/tint2rc" > "${NS_PATH}/etc/skel/.config/tint2/tint2rc"
 
 	msg_log "$(gettext 'Добавляю') tint2 > /etc/skel/.config/openbox/autostart"
-	echo 'tint2 &' >> "${NS_PATH}/etc/skel/.config/openbox/autostart"
+	echo '#tint2 &' >> "${NS_PATH}/etc/skel/.config/openbox/autostart"
 
 	git_commit
+#-------------------------------------------------------------------------------
+
+
+#===============================================================================
+# Устанавливаем stalonetray
+#===============================================================================
+	#community
+	pacman_install "-S stalonetray"
+
+	git_commit
+
+	msg_log "$(gettext 'Добавляю') stalonetray > /etc/skel/.config/openbox/autostart"
+	echo 'stalonetray --dockapp-mode simple &' >> "${NS_PATH}/etc/skel/.config/openbox/autostart"
+
+	msg_log "$(gettext 'Настраиваю') /etc/skel/.config/openbox/rc.xml"
+	sed -i "
+#Делаем отступ сверху что бы был доступ к меню openbox
+s/<top>0<\/top>/<top>2<\/top>/;
+#Включаем автоскрытие
+s/<autoHide>no<\/autoHide>/<autoHide>yes<\/autoHide>/;
+#Разрешаем окнам быть в области уведомлений
+s/<noStrut>no<\/noStrut>/<noStrut>yes<\/noStrut>/;
+" "${NS_PATH}/etc/skel/.config/openbox/rc.xml"
+
+	git_commit
+#-------------------------------------------------------------------------------
+
+
+#===============================================================================
+# Устанавливаем orage
+#===============================================================================
+	#extra
+	pacman_install "-S orage"
+
+
 #-------------------------------------------------------------------------------
 
 
