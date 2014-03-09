@@ -120,7 +120,7 @@ run_user()
 					fi
 				fi
 
-				NAME="$(user_dialog_name 'newUser')"
+				NAME="$(user_dialog_name 'newuser')"
 				[[ ! -n "${NAME}" ]] && continue
 
 				chroot_run useradd -m -G users -U "${NAME}"
@@ -222,7 +222,11 @@ user_dialog_name()
 
 	local P_NAME="${1}"
 
-	local HELP_TXT="\n$(gettext 'Введите логин нового пользователя')\n"
+	local TITLE="${TXT_USER_MAIN}"
+	local HELP_TXT="\n$(gettext 'Логин может содержать лат. буквы в нижнем регистре и цифры.')\n"
+	HELP_TXT+=" \Zb\Z1$(gettext 'Использование других символов не рекомендуется!!!')\Zn\n"
+
+	HELP_TXT+="\n$(gettext 'Введите пароль')\n"
 	HELP_TXT+="$(gettext 'По умолчанию'):"
 
 	local TEXT=${P_NAME}
@@ -244,9 +248,9 @@ user_dialog_password()
 	local P_S="${1}"
 
 	local TITLE="${TXT_USER_MAIN}"
-	local HELP_TXT="  $(gettext 'Сильный пароль должен состоять более чем из 8 символов,')\n"
-	HELP_TXT+="  $(gettext 'содержать цифры и лат. буквы в нижнем и верхнем регистре.')\n"
-	HELP_TXT+="  \Zb\Z1$(gettext 'Использование других символов не рекомендуется!!!')\Zn\n"
+	local HELP_TXT="\n$(gettext 'Сильный пароль должен состоять более чем из 8 символов,')\n"
+	HELP_TXT+=" $(gettext 'содержать цифры и лат. буквы в нижнем и верхнем регистре.')\n"
+	HELP_TXT+=" \Zb\Z1$(gettext 'Использование других символов не рекомендуется!!!')\Zn\n"
 
 	local TEXT=''
 
