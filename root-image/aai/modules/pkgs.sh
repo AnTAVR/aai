@@ -283,6 +283,15 @@ pkgs_openshot()
 }
 APPS+=" 'openshot' '$(gettext 'Редактор видео')' 'off'"
 
+pkgs_kdenlive()
+{
+	#community
+	pacman_install "-S kdenlive"
+
+	git_commit
+}
+APPS+=" 'kdenlive' '$(gettext 'Редактор видео')' 'off'"
+
 pkgs_soundkonverter()
 {
 	#extra
