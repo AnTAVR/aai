@@ -292,6 +292,15 @@ pkgs_kdenlive()
 }
 APPS+=" 'kdenlive' '$(gettext 'Редактор видео')' 'off'"
 
+pkgs_kamoso()
+{
+	#aur
+	pacman_install "-S kamoso" 'yaourt'
+
+	git_commit
+}
+APPS+=" 'kamoso' '$(gettext 'Запись с вебкамеры')' 'off'"
+
 pkgs_soundkonverter()
 {
 	#extra
