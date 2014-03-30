@@ -91,7 +91,7 @@ print_dialog_menu()
 
 	local RETURN
 
-	local TITLE="${TXT_DE_MAIN}"
+	local TITLE="${TXT_PRINT_MAIN}"
 	local HELP_TXT="\n$(gettext 'Выберите установку устройства')\n"
 
 	local DEFAULT_ITEM=
