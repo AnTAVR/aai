@@ -276,12 +276,12 @@ bootloader_grub_bios()
 #Настройка яркости экрана : GRUB_CMDLINE_LINUX_DEFAULT=acpi_backlight=vendor
 	sed -i "
 # Добавляем параметр nomodeset
-#/^GRUB_CMDLINE_LINUX+=\" *nomodeset/s/^/#/;
-#0,/^GRUB_CMDLINE_LINUX=/{
-#  //{
-#    a GRUB_CMDLINE_LINUX+=\" nomodeset\"
-#  };
-#};
+/^GRUB_CMDLINE_LINUX+=\" *nomodeset/s/^/#/;
+0,/^GRUB_CMDLINE_LINUX=/{
+//{
+  a GRUB_CMDLINE_LINUX+=\" nomodeset\"
+};
+};
 # Добавляем параметр zswap.enabled=1
 /^GRUB_CMDLINE_LINUX+=\" *zswap/s/^/#/;
 0,/^GRUB_CMDLINE_LINUX=/{
