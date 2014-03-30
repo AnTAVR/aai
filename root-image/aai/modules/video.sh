@@ -263,14 +263,18 @@ video_ati()
 	pacman_install "-Rdds lib32-mesa-libgl" 'noneeded' 'noexit'
 	#aur
 	pacman_install "-S catalyst-utils" 'yaourt'
+	pacman_install "-S catalyst-libgl" 'yaourt'
 #	pacman_install "-S opencl-catalyst" 'yaourt'
 	pacman_install "-S lib32-catalyst-utils" 'yaourt'
+	pacman_install "-S lib32-catalyst-libgl" 'yaourt'
+#	pacman_install "-S lib32-opencl-catalyst" 'yaourt'
 	pacman_install "-S catalyst-hook" 'yaourt'
+	pacman_install "-S acpid"
 
 	git_commit
 
-	chroot_run systemctl enable catalyst-hook
 	chroot_run systemctl enable atieventsd
+	chroot_run systemctl enable catalyst-hook
 	chroot_run systemctl enable temp-links-catalyst
 
 	#aticonfig --initial
