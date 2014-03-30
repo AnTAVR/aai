@@ -65,7 +65,7 @@ run_video()
 # Проверяем выполнен ли base
 		[[ ! "${RUN_BASE}" ]] && TEMP+=" $(str_base)\n"
 # Проверяем выполнен ли de пункт меню
-		[[ ! "${RUN_DE}" ]] && TEMP+=" $(str_de)\n"
+		[[ ! "${RUN_XORG}" ]] && TEMP+=" $(str_xorg)\n"
 
 		if [[ "${TEMP}" ]]
 		then

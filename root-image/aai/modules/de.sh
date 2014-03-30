@@ -48,7 +48,7 @@ run_de()
 
 	if [[ "${NO_DEBUG}" ]]
 	then
-# Проверяем выполнен ли base_plus
+# Проверяем выполнен ли xorg
 		[[ ! "${RUN_XORG}" ]] && TEMP+=" $(str_xorg)\n"
 
 		if [[ "${TEMP}" ]]
