@@ -993,6 +993,9 @@ base_plus_lirc()
 #	pacman_install "-S lirc-utils"
 
 	git_commit
+#http://lirc.org/html/table.html
+#	cat "${DBDIR}modules/etc/modules-load.d/lirc.conf" > "${NS_PATH}/etc/modules-load.d/lirc.conf"
+#	git_commit
 
 	SERVICES+=" 'irexec.service' '-' 'off'"
 	SERVICES+=" 'lirc.service' '-' 'off'"
