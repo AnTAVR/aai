@@ -1,3 +1,3 @@
 #!/usr/bin/env sh
-nepomukctl stop
+#nepomukctl stop
 akonadictl stop
