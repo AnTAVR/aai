@@ -587,9 +587,10 @@ de_kde_mini()
 	pacman_install "-S kdebase-workspace"
 	pacman_install "-S kde-wallpapers"
 	pacman_install "-S appmenu-qt"
-	pacman_install "-S kdegraphics-strigi-analyzer"
-	pacman_install "-S kdenetwork-strigi-analyzers"
-	pacman_install "-S kdesdk-strigi-analyzers"
+# @todo а нужны ли эти strigi?
+#	pacman_install "-S kdegraphics-strigi-analyzer"
+#	pacman_install "-S kdenetwork-strigi-analyzers"
+#	pacman_install "-S kdesdk-strigi-analyzers"
 	pacman_install "-S kdebase-plasma"
 	pacman_install "-S kdemultimedia-kmix"
 	pacman_install "-S oxygen-gtk2"
