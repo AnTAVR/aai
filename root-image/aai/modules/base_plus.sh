@@ -1090,10 +1090,15 @@ base_plus_aria2()
 
 	git_commit
 
-# Добавляем пред настройки для aria2
-	msg_log "$(gettext 'Настраиваю') /etc/skel/.aria2/aria2.conf"
-	mkdir -p "${NS_PATH}/etc/skel/.aria2"
-	cat "${DBDIR}modules/etc/skel/.aria2/aria2.conf" > "${NS_PATH}/etc/skel/.aria2/aria2.conf"
+	cp -Pb "${DBDIR}modules/usr/local/bin/aria2c-run" "${NS_PATH}/usr/local/bin/aria2c-run"
+	chmod +x "${NS_PATH}/usr/local/bin/aria2c-run"
+	ln -srf "${NS_PATH}/usr/local/bin/aria2c-run" "${NS_PATH}/usr/local/bin/aria2c-run-onBtComplete"
+	ln -srf "${NS_PATH}/usr/local/bin/aria2c-run" "${NS_PATH}/usr/local/bin/aria2c-run-onComplete"
+	ln -srf "${NS_PATH}/usr/local/bin/aria2c-run" "${NS_PATH}/usr/local/bin/aria2c-run-onError"
+	ln -srf "${NS_PATH}/usr/local/bin/aria2c-run" "${NS_PATH}/usr/local/bin/aria2c-run-onPause"
+	ln -srf "${NS_PATH}/usr/local/bin/aria2c-run" "${NS_PATH}/usr/local/bin/aria2c-run-onStart"
+	ln -srf "${NS_PATH}/usr/local/bin/aria2c-run" "${NS_PATH}/usr/local/bin/aria2c-run-onStop"
+	ln -srf "${NS_PATH}/usr/local/bin/aria2c-run" "${NS_PATH}/usr/local/bin/aria2c-run-list"
 
 	git_commit
 }

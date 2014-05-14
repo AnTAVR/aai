@@ -1,0 +1,79 @@
+#!/bin/sh
+#~/.aria2/aria2.conf
+#extra/libnotify
+#community/aria2
+
+PATH_DOWNLOAD="$(xdg-user-dir DOWNLOAD)/aria2c"
+PATH_TORRENTS="${PATH_DOWNLOAD}/torrents"
+NOTIFY_SEND='notify-send --urgency normal'
+#NOTIFY_SEND='notify-send --urgency normal --expire-time=500 -i pidgin -h int:x:500 -h int:y:500'
+
+[ -f /etc/aria2c/aria2c-run ] && source /etc/aria2c/aria2c-run
+[ -f ~/aria2c/aria2c-run ] && source ~/aria2c/aria2c-run
+
+if [ ! -f ~/.aria2/aria2.conf ]
+then
+	mkdir -p ~/.aria2
+	echo '#create aria2c-run
+auto-save-interval=180
+continue=true
+seed-time=0
+check-integrity=true
+rpc-save-upload-metadata=true
+on-bt-download-complete=aria2c-run-onBtComplete
+on-download-complete=aria2c-run-onComplete
+on-download-pause=aria2c-run-onPause
+on-download-error=aria2c-run-onError
+on-download-start=aria2c-run-onStart
+on-download-stop=aria2c-run-onStop
+' > ~/.aria2/aria2.conf
+fi
+
+SCRDIR="$(dirname ${0})"
+
+case "$(basename "${0}")" in
+	'aria2c-run-onBtComplete')
+		${NOTIFY_SEND} 'aria2c-run-onBtComplete' "<b>GID=</b>${1}<br />\n<b>N=</b>${2}<br />\n<b>PATH=</b>${3}"
+		;;
+	'aria2c-run-onComplete')
+		${NOTIFY_SEND} 'aria2c-run-onComplete' "<b>GID=</b>${1}<br />\n<b>N=</b>${2}<br />\n<b>PATH=</b>${3}"
+		;;
+	'aria2c-run-onError')
+		${NOTIFY_SEND} 'aria2c-run-onError' "<b>GID=</b>${1}<br />\n<b>N=</b>${2}<br />\n<b>PATH=</b>${3}"
+		;;
+	'aria2c-run-onPause')
+		${NOTIFY_SEND} 'aria2c-run-onPause' "<b>GID=</b>${1}<br />\n<b>N=</b>${2}<br />\n<b>PATH=</b>${3}"
+		;;
+	'aria2c-run-onStart')
+		${NOTIFY_SEND} 'aria2c-run-onStart' "<b>GID=</b>${1}<br />\n<b>N=</b>${2}<br />\n<b>PATH=</b>${3}"
+		;;
+	'aria2c-run-onStop')
+		${NOTIFY_SEND} 'aria2c-run-onStop' "<b>GID=</b>${1}<br />\n<b>N=</b>${2}<br />\n<b>PATH=</b>${3}"
+		;;
+	'aria2c-run')
+
+		mkdir -p "${PATH_DOWNLOAD}"
+		mkdir -p "${PATH_TORRENTS}"
+
+		TORRENT="${PATH_TORRENTS}/$(basename "${1}")"
+		mv "${1}" "${TORRENT}"
+		
+		shift
+
+		aria2c -d "${PATH_DOWNLOAD}" "${TORRENT}" ${@}  && rm "${TORRENT}"
+
+		;;
+	'aria2c-run-list')
+
+		mkdir -p "${PATH_DOWNLOAD}"
+		mkdir -p "${PATH_TORRENTS}"
+
+		LIST="${PATH_TORRENTS}/$(basename "${1}")"
+		mv "${1}" "${LIST}"
+
+		shift
+		
+		aria2c -d "${PATH_DOWNLOAD}" -i "${LIST}" ${@} && rm "${LIST}"
+
+		;;
+esac
