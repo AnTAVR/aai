@@ -498,6 +498,8 @@ base_plus_install()
 
 	base_plus_alsa
 
+#	base_plus_alsa_oss
+
 	base_plus_squashfs
 
 	base_plus_archives
@@ -743,16 +745,8 @@ base_plus_alsa()
 	pacman_install "-S alsa-plugins"
 	pacman_install "-S alsa-tools"
 #	pacman_install "-S fltk"
-	pacman_install "-S alsa-oss"
 	#multilib
 	pacman_install "-S lib32-alsa-plugins" 'yaourt'
-	pacman_install "-S lib32-alsa-oss" 'yaourt'
-
-	git_commit
-
-	msg_log "$(gettext 'Настраиваю') /etc/modules-load.d/snd-alsa-oss.conf"
-	cat "${DBDIR}modules/etc/modules-load.d/snd-alsa-oss.conf" > "${NS_PATH}/etc/modules-load.d/snd-alsa-oss.conf"
-#	cat "${DBDIR}modules/etc/skel/.asoundrc" > "${NS_PATH}/etc/skel/.asoundrc"
 
 	git_commit
 
@@ -788,6 +782,22 @@ base_plus_alsa()
 #	SERVICES+=" 'timidity.service' '-' 'on'"
 
 	SET_USER_GRUPS+=',audio'
+}
+
+base_plus_alsa_oss()
+{
+	#extra
+	pacman_install "-S alsa-oss"
+	#multilib
+	pacman_install "-S lib32-alsa-oss" 'yaourt'
+
+	git_commit
+
+	msg_log "$(gettext 'Настраиваю') /etc/modules-load.d/snd-alsa-oss.conf"
+	cat "${DBDIR}modules/etc/modules-load.d/snd-alsa-oss.conf" > "${NS_PATH}/etc/modules-load.d/snd-alsa-oss.conf"
+#	cat "${DBDIR}modules/etc/skel/.asoundrc" > "${NS_PATH}/etc/skel/.asoundrc"
+
+	git_commit
 }
 
 # @todo Нужно доделать!!!
