@@ -32,6 +32,7 @@ TXT_BASE_PLUS_MAIN="$(gettext 'Расширенная базовая систе�
 SET_LTS=
 
 SERVICES=''
+SERVICES_USER=''
 
 #===============================================================================
 
@@ -500,6 +501,8 @@ base_plus_install()
 
 #	base_plus_alsa_oss
 
+#	base_plus_alsa_jack2
+
 	base_plus_squashfs
 
 	base_plus_archives
@@ -750,18 +753,6 @@ base_plus_alsa()
 
 	git_commit
 
-	#community
-	pacman_install "-S jack2"
-	#multilib
-	pacman_install "-S lib32-jack2" 'yaourt'
-
-	git_commit
-
-	msg_log "$(gettext 'Настраиваю') /usr/local/lib/systemd/user/jack.service"
-	cat "${DBDIR}modules/usr/local/lib/systemd/user/jack.service" > "${NS_PATH}/usr/local/lib/systemd/user/jack.service"
-
-	git_commit
-
 	#extra
 #	pacman_install "-S timidity++"
 	#community
@@ -782,6 +773,23 @@ base_plus_alsa()
 #	SERVICES+=" 'timidity.service' '-' 'on'"
 
 	SET_USER_GRUPS+=',audio'
+}
+
+base_plus_alsa_jack2()
+{
+	#community
+	pacman_install "-S jack2"
+	#multilib
+	pacman_install "-S lib32-jack2" 'yaourt'
+
+	git_commit
+
+	msg_log "$(gettext 'Настраиваю') /usr/local/lib/systemd/user/jack.service"
+	cat "${DBDIR}modules/usr/local/lib/systemd/user/jack.service" > "${NS_PATH}/usr/local/lib/systemd/user/jack.service"
+
+	SERVICES_USER+=" 'jack.service' '-' 'on'"
+
+	git_commit
 }
 
 base_plus_alsa_oss()
