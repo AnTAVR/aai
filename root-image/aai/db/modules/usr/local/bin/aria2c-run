@@ -8,8 +8,8 @@ PATH_TORRENTS="${PATH_DOWNLOAD}/torrents"
 NOTIFY_SEND='notify-send --urgency normal'
 #NOTIFY_SEND='notify-send --urgency normal --expire-time=500 -i pidgin -h int:x:500 -h int:y:500'
 
-[ -f /etc/aria2c/aria2c-run ] && source /etc/aria2c/aria2c-run
-[ -f ~/aria2c/aria2c-run ] && source ~/aria2c/aria2c-run
+[ -f /etc/aria2c/aria2c-run.conf ] && source /etc/aria2c/aria2c-run.conf
+[ -f ~/aria2c/aria2c-run.conf ] && source ~/aria2c/aria2c-run.conf
 
 if [ ! -f ~/.aria2/aria2.conf ]
 then
