@@ -503,6 +503,8 @@ base_plus_install()
 
 #	base_plus_alsa_jack2
 
+#	base_plus_alsa_timidity
+
 	base_plus_squashfs
 
 	base_plus_archives
@@ -748,31 +750,32 @@ base_plus_alsa()
 	pacman_install "-S alsa-plugins"
 	pacman_install "-S alsa-tools"
 #	pacman_install "-S fltk"
+	#community
+	pacman_install "-S ladspa-plugins"
 	#multilib
 	pacman_install "-S lib32-alsa-plugins" 'yaourt'
 
 	git_commit
 
+	SET_USER_GRUPS+=',audio'
+}
+
+base_plus_alsa_timidity()
+{
 	#extra
-#	pacman_install "-S timidity++"
+	pacman_install "-S timidity++"
 	#community
-#	pacman_install "-S timidity-freepats"
-
-#	git_commit
-
-#	cp -Pb "${NS_PATH}/etc/timidity++/timidity-freepats.cfg" "${NS_PATH}/etc/timidity++/timidity.cfg"
-#	cat "${DBDIR}modules/usr/local/lib/systemd/user/timidity.service" > "${NS_PATH}/usr/local/lib/systemd/user/timidity.service"
-
-#	git_commit
-
-	#community
-	pacman_install "-S ladspa-plugins"
+	pacman_install "-S timidity-freepats"
 
 	git_commit
 
-#	SERVICES+=" 'timidity.service' '-' 'on'"
+	cp -Pb "${NS_PATH}/etc/timidity++/timidity-freepats.cfg" "${NS_PATH}/etc/timidity++/timidity.cfg"
+	cat "${DBDIR}modules/usr/local/lib/systemd/user/timidity.service" > "${NS_PATH}/usr/local/lib/systemd/user/timidity.service"
 
-	SET_USER_GRUPS+=',audio'
+	SERVICES+=" 'timidity.service' '-' 'on'"
+	SERVICES_USER+=" 'timidity.service' '-' 'off'"
+
+	git_commit
 }
 
 base_plus_alsa_jack2()
