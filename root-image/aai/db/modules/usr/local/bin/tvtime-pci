@@ -1,0 +1,74 @@
+#!/bin/env sh
+#
+#
+#
+#   Copyright (c) 2014 Anthony Lyappiev <archlinux@antavr.ru>
+#   http://archlinux.antavr.ru
+#
+#   This program is free software; you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation; either version 2 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+RUN_AS=
+RATE=
+ALSA_SOURCE=
+ALSA_SINK=
+PULSE_SOURCE=
+PULSE_SINK=
+
+if [ ! -f ~/.tvtime/tvtime-pci.conf ]
+then
+	mkdir -p ~/.tvtime
+	echo "#create tvtime-pci
+# метод воспроизведения звука (pulse,alsa)
+RUN_AS='pulse'
+# по умолчанию 32000
+RATE='32000'
+
+# имя исходящего устройства
+# arecord -L
+ALSA_SOURCE='sysdefault:CARD=SAA7134'
+# имя устройства воспроизведения
+# aplay -L
+ALSA_SINK='default'
+
+# имя исходящего устройства
+# pacmd info | grep alsa_input
+PULSE_SOURCE='alsa_input.pci-0000_01_06.0.analog-stereo'
+# имя устройства воспроизведения
+# pacmd info | grep alsa_output
+PULSE_SINK='alsa_output.pci-0000_00_14.2.analog-stereo'
+" > ~/.tvtime/tvtime-pci.conf
+fi
+
+[ -f /etc/tvtime/tvtime-pci.conf ] && source /etc/tvtime/tvtime-pci.conf
+[ -f ~/.tvtime/tvtime-pci.conf ] && source ~/.tvtime/tvtime-pci.conf
+
+case ${RUN_AS} in
+	'alsa')
+		alsaloop -C ${ALSA_SOURCE} -P ${ALSA_SINK} -r ${RATE} &
+		SPID=$!
+
+#		sleep 1
+		tvtime ${@}
+
+		kill ${SPID}
+		;;
+	'pulse')
+		SPID=$(pactl load-module module-loopback source=${PULSE_SOURCE} sink=${PULSE_SINK} rate=${RATE})
+
+#		sleep 1
+		tvtime ${@}
+
+		pactl unload-module ${SPID}
+		;;
+esac

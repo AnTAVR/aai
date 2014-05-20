@@ -222,6 +222,9 @@ pkgs_tvtime()
 	#community
 	pacman_install "-S tvtime"
 
+	cat "${DBDIR}modules/usr/local/bin/tvtime-pci" > "${NS_PATH}/usr/local/bin/tvtime-pci"
+	chmod +x "${NS_PATH}/usr/local/bin/tvtime-pci"
+
 	git_commit
 }
 APPS+=" 'tvtime' '$(gettext 'ТВ тюнер')' 'off'"
