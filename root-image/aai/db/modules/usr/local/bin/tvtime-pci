@@ -18,6 +18,10 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
+# extra/alsa-utils
+# extra/pulseaudio
+# extra/libpulse
+# community/tvtime
 RUN_AS=
 RATE=
 ALSA_SOURCE=

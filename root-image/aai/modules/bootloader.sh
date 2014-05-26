@@ -349,7 +349,7 @@ bootloader_grub_bios()
 
 		dialog_yesno \
 			"${TXT_BOOTLOADER_MAIN}" \
-			"$(gettext 'Установеть тему для grub?')"
+			"$(gettext 'Установить тему для grub?')"
 
 		case "${?}" in
 			'0') #Yes
