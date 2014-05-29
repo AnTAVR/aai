@@ -277,6 +277,25 @@ video_ati()
 	chroot_run systemctl enable catalyst-hook
 	chroot_run systemctl enable temp-links-catalyst
 
+#===============================================================================
+# Добавляю fglrx в mkinitcpio
+#===============================================================================
+	msg_log "$(gettext 'Добавляю') fglrx > /etc/mkinitcpio.conf"
+	sed -i '
+# Добавляем хук fglrx
+/^HOOKS=/{
+	h;
+	s/^/#/;
+	P;g;
+	//{
+	s/fglrx//g;s/ \{1,\}/ /g;
+	s/fsck/fsck fglrx/;
+	};
+};
+' "${NS_PATH}/etc/mkinitcpio.conf"
+
+	git_commit
+
 	#aticonfig --initial
 
 	pacman_install "-Rnsc ati-dri intel-dri nouveau-dri" 'noneeded' 'noexit'
