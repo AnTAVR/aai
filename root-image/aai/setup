@@ -33,7 +33,7 @@ NO_MINI=1
 # @todo Нужно доделать!!!
 AAI_VER='Arch AnTAVR Installer ver. 3.8.2'
 setfont 'cyr-sun16'
-#systemctl start gpm
+systemctl start gpm
 
 # Цвет и вид текста сообщений
 BLDRED='\e[1;31m' # Red
@@ -130,7 +130,6 @@ source "${LIBDIR}/base.sh"
 [[ "${NO_MINI}" ]] && source "${LIBDIR}/base_plus.sh"
 source "${LIBDIR}/bootloader.sh"
 [[ "${NO_MINI}" ]] && source "${LIBDIR}/xorg.sh"
-[[ "${NO_MINI}" ]] && source "${LIBDIR}/video.sh"
 [[ "${NO_MINI}" ]] && source "${LIBDIR}/de.sh"
 [[ "${NO_MINI}" ]] && source "${LIBDIR}/print.sh"
 [[ "${NO_MINI}" ]] && source "${LIBDIR}/pkgs.sh"
