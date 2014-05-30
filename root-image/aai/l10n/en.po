@@ -1,2 +1,0 @@
-#msgid "Greeting"
-#msgstr "Hello, I can generate a random number between 2 numbers that you provide"
