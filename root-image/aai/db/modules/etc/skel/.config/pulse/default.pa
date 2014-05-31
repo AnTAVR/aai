@@ -4,6 +4,6 @@
 
 .include /etc/pulse/default.pa
 
-load-module module-ladspa-sink sink_name=ladspa_output.fastLookaheadLimiter sink_properties=device.description="Limiter"   plugin=fast_lookahead_limiter_1913 label=fastLookaheadLimiter control=10,-10,0.5
-load-module module-ladspa-sink sink_name=ladspa_output.dysonCompress        sink_properties=device.description="Compress"  plugin=dyson_compress_1403         label=dysonCompress        control=0,0.25,0.5,0.5                      master=Limiter
-load-module module-ladspa-sink sink_name=ladspa_output.eq                   sink_properties=device.description="Equalizer" plugin=mbeq_1197                   label=mbeq                 control=-24,-24,-24,0,0,0,0,0,0,0,0,0,0,0,0 master=Equalizer
+load-module module-ladspa-sink sink_name=ladspa_output.eq                   sink_properties=device.description="Equalizer" plugin=mbeq_1197                   label=mbeq                 control=-24,-24,-24,0,0,0,0,0,0,0,0,0,0,0,0
+load-module module-ladspa-sink sink_name=ladspa_output.dysonCompress        sink_properties=device.description="Compress"  plugin=dyson_compress_1403         label=dysonCompress        control=0,0.25,0.5,0.5                      master=ladspa_output.eq
+load-module module-ladspa-sink sink_name=ladspa_output.fastLookaheadLimiter sink_properties=device.description="Limiter"   plugin=fast_lookahead_limiter_1913 label=fastLookaheadLimiter control=10,-10,0.5                          master=ladspa_output.dysonCompress
