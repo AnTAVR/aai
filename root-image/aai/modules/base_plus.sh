@@ -679,11 +679,12 @@ base_plus_yaourt()
 # cd ..
 	msg_log "$(gettext 'Добавляю') archlinuxfr > /etc/pacman.conf"
 	cp -Pb "${NS_PATH}/etc/pacman.conf" "${NS_PATH}/etc/pacman.conf.bak"
-	echo '' >> "${NS_PATH}/etc/pacman.conf"
-	echo '[archlinuxfr]' >> "${NS_PATH}/etc/pacman.conf"
-	echo '# The French Arch Linux communities packages.' >> "${NS_PATH}/etc/pacman.conf"
-	echo 'SigLevel = PackageOptional' >> "${NS_PATH}/etc/pacman.conf"
-	echo 'Server = http://repo.archlinux.fr/$arch' >> "${NS_PATH}/etc/pacman.conf"
+ 	grep 'archlinuxfr' "${NS_PATH}/etc/pacman.conf" > /dev/null && echo '' || echo '
+[archlinuxfr]
+# The French Arch Linux communities packages.
+SigLevel = PackageOptional
+Server = http://repo.archlinux.fr/$arch
+' >> "${NS_PATH}/etc/pacman.conf"
 
 	pacman_install '-Syy'
 
