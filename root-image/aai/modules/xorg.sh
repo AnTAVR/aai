@@ -29,7 +29,7 @@ RUN_XORG=
 TXT_XORG_MAIN="$(gettext 'Xorg')"
 
 # Выбранный драйвер
-SET_VIDEO=
+SET_VIDEO_DRV=
 # Разрешение Xorg
 SET_XORG_XxYxD=
 #===============================================================================
@@ -46,11 +46,13 @@ str_xorg()
 # Функция выполнения из главного меню
 run_xorg()
 {
-	local VIDEO
+	local VIDEO_DRV
 	local XORG_XxYxD
 	local INPUTS
 	local APPS
+	local LIBS
 
+	local PKG
 	local TEMP
 
 	if [[ "${NO_DEBUG}" ]]
@@ -76,9 +78,16 @@ run_xorg()
 
 	while true
 	do
-		TEMP="$(xorg_dialog_video "${VIDEO}")"
+		TEMP="$(xorg_dialog_video)"
 		[[ ! -n "${TEMP}" ]] && return 1
-		VIDEO="${TEMP}"
+		if [[ "${TEMP}" == 'free' ]]
+		then
+			TEMP="$(xorg_dialog_video_free)"
+			[[ ! -n "${TEMP}" ]] && return 1
+			VIDEO_DRV="${TEMP}"
+		else
+			VIDEO_DRV="${TEMP}"
+		fi
 
 		TEMP="$(xorg_dialog_xorg "${XORG_XxYxD}")"
 		[[ ! -n "${TEMP}" ]] && return 1
@@ -86,24 +95,23 @@ run_xorg()
 
 		INPUTS="$(xorg_dialog_inputs)"
 		APPS="$(xorg_dialog_apps)"
-		
+		LIBS="$(xorg_dialog_libs)"
+
 		dialog_yesno \
 			"$(gettext 'Подтвердите свой выбор')" \
 			"
-\Zb\Z7VIDEO=\Zn${VIDEO}\n
+\Zb\Z7VIDEO_DRV=\Zn${VIDEO_DRV}\n
 \Zb\Z7XORG_XxYxD=\Zn${XORG_XxYxD}\n
 \Zb\Z7INPUTS=\Zn${INPUTS}\n
 \Zb\Z7APPS=\Zn${APPS}\n
+\Zb\Z7LIBS=\Zn${LIBS}\n
 " \
 			'--defaultno'
 		case "${?}" in
 			'0') #Yes
 # Устанавливаем выбранные переменные в глобальные
-				set_global_var 'SET_VIDEO' "${VIDEO}"
+				set_global_var 'SET_VIDEO_DRV' "${VIDEO_DRV}"
 				set_global_var 'SET_XORG_XxYxD' "${XORG_XxYxD}"
-
-
-				xorg_mesa
 
 				xorg_xorg
 
@@ -119,11 +127,43 @@ run_xorg()
 					pacman_install "-S ${PKG}"
 				done
 
+				for PKG in ${LIBS}
+				do
+					pacman_install "-S ${PKG}"
+				done
+
 				RUN_XORG=1
 				return 0
 				;;
 		esac
 	done
+}
+
+xorg_dialog_libs()
+{
+	msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for ((TEMP=1; TEMP<=${#}; TEMP++)); do echo -n " \$${TEMP}='$(eval "echo \"\${${TEMP}}\"")'"; done)\"" 'noecho'
+
+	local RETURN
+
+	local TITLE="${TXT_VIDEO_MAIN}"
+	local HELP_TXT="\n$(gettext 'Выберите дополнительные библиотеки для XORG')\n"
+
+	local ITEMS=
+	#extra
+	ITEMS+=" 'tk' '$(gettext 'для') git' 'on'"
+	ITEMS+=" 'fltk' '$(gettext 'для') alsa-tools' 'on'"
+	ITEMS+=" 'wxgtk2.8' '$(gettext 'для') p7zip' 'on'"
+	ITEMS+=" 'gstreamer0.10-plugins' '-' 'off'"
+	ITEMS+=" 'phonon-gstreamer' '-' 'off'"
+	ITEMS+=" 'gtk2' '-' 'off'"
+	ITEMS+=" 'gtk3' '-' 'off'"
+	ITEMS+=" 'qt4' '-' 'off'"
+	ITEMS+=" 'qt5' '-' 'off'"
+
+	RETURN="$(dialog_checklist "${TITLE}" "${HELP_TXT}" "${ITEMS}" "--cancel-label '${TXT_MAIN_MENU}'")"
+
+	echo "${RETURN}"
+	msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
 }
 
 xorg_dialog_inputs()
@@ -132,7 +172,7 @@ xorg_dialog_inputs()
 
 	local RETURN
 
-	local TITLE="${TXT_PKGS_MAIN}"
+	local TITLE="${TXT_VIDEO_MAIN}"
 	local HELP_TXT="\n$(gettext 'Выберите дополнительные драйвера для XORG')\n"
 
 	local ITEMS=
@@ -156,7 +196,7 @@ xorg_dialog_apps()
 
 	local RETURN
 
-	local TITLE="${TXT_PKGS_MAIN}"
+	local TITLE="${TXT_VIDEO_MAIN}"
 	local HELP_TXT="\n$(gettext 'Выберите дополнительные утилиты для XORG')\n"
 
 	local ITEMS=
@@ -192,54 +232,106 @@ xorg_dialog_apps()
 	msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
 }
 
+xorg_dialog_video_free()
+{
+	msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for ((TEMP=1; TEMP<=${#}; TEMP++)); do echo -n " \$${TEMP}='$(eval "echo \"\${${TEMP}}\"")'"; done)\"" 'noecho'
+
+	local RETURN
+
+	local TITLE="${TXT_VIDEO_MAIN}"
+	local HELP_TXT="\n$(gettext 'Выберите свободный видео драйвер для установки')\n"
+	HELP_TXT+="$(gettext 'По умолчанию'):"
+
+	local DEFAULT_ITEM=$(xorg_video_drv)
+	local ITEMS="'xf86-video-vesa' 'FREE' 'off'"
+
+	if [[ "${DEFAULT_ITEM}" == 'catalyst' ]]
+	then
+		DEFAULT_ITEM='xf86-video-ati'
+		ITEMS+=" 'xf86-video-ati' 'ATI Catalyst' 'on'"
+	elif [[ "${DEFAULT_ITEM}" == 'catalystPxp' ]]
+		DEFAULT_ITEM='xf86-video-ati'
+		ITEMS+=" 'xf86-video-ati' 'ATI Catalyst' 'on'"
+	else
+		ITEMS+=" 'xf86-video-ati' 'ATI Catalyst' 'off'"
+	fi
+
+	if [[ "${DEFAULT_ITEM}" == 'optimus' ]]
+	then
+		DEFAULT_ITEM='xf86-video-nouveau xf86-video-intel'
+		ITEMS+=" 'xf86-video-nouveau' 'NVIDIA' 'on'"
+		ITEMS+=" 'xf86-video-intel' 'FREE Intel' 'on'"
+	else
+		if [[ "${DEFAULT_ITEM}" == 'nvidia' ]]
+		then
+			DEFAULT_ITEM='xf86-video-nouveau'
+			ITEMS+=" 'xf86-video-nouveau' 'NVIDIA' 'on'"
+		elif [[ "${DEFAULT_ITEM}" == 'nvidia304' ]]
+			DEFAULT_ITEM='xf86-video-nouveau'
+			ITEMS+=" 'xf86-video-nouveau' 'NVIDIA' 'on'"
+		else
+			ITEMS+=" 'xf86-video-nouveau' 'NVIDIA' 'off'"
+		fi
+
+		if [[ "${DEFAULT_ITEM}" == 'intel' ]]
+		then
+			DEFAULT_ITEM='xf86-video-intel'
+			ITEMS+=" 'xf86-video-intel' 'FREE Intel' 'on'"
+		else
+			ITEMS+=" 'xf86-video-intel' 'FREE Intel' 'off'"
+		fi
+	fi
+
+	ITEMS+=" 'xf86-video-ark' '-' 'off'"
+	ITEMS+=" 'xf86-video-ast' '-' 'off'"
+	ITEMS+=" 'xf86-video-cirrus' '-' 'off'"
+	ITEMS+=" 'xf86-video-dummy' '-' 'off'"
+	ITEMS+=" 'xf86-video-fbdev' '-' 'off'"
+	ITEMS+=" 'xf86-video-glint' '-' 'off'"
+	ITEMS+=" 'xf86-video-i128' '-' 'off'"
+	ITEMS+=" 'xf86-video-mach64' '-' 'off'"
+	ITEMS+=" 'xf86-video-mga' '-' 'off'"
+	ITEMS+=" 'xf86-video-modesetting' '-' 'off'"
+	ITEMS+=" 'xf86-video-neomagic' '-' 'off'"
+	ITEMS+=" 'xf86-video-nv' '-' 'off'"
+	ITEMS+=" 'xf86-video-openchrome' '-' 'off'"
+	ITEMS+=" 'xf86-video-r128' '-' 'off'"
+	ITEMS+=" 'xf86-video-savage' '-' 'off'"
+	ITEMS+=" 'xf86-video-siliconmotion' '-' 'off'"
+	ITEMS+=" 'xf86-video-sis' '-' 'off'"
+	ITEMS+=" 'xf86-video-tdfx' '-' 'off'"
+	ITEMS+=" 'xf86-video-trident' '-' 'off'"
+	ITEMS+=" 'xf86-video-v4l' '-' 'off'"
+	ITEMS+=" 'xf86-video-vmware' '-' 'off'"
+	ITEMS+=" 'xf86-video-voodoo' '-' 'off'"
+
+	HELP_TXT+=" \Zb\Z7\"${DEFAULT_ITEM}\"\Zn\n"
+
+	RETURN="$(dialog_checklist "${TITLE}" "${HELP_TXT}" "${ITEMS}" "--cancel-label '${TXT_MAIN_MENU}'")"
+
+	echo "${RETURN}"
+	msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
+}
+
 xorg_dialog_video()
 {
 	msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for ((TEMP=1; TEMP<=${#}; TEMP++)); do echo -n " \$${TEMP}='$(eval "echo \"\${${TEMP}}\"")'"; done)\"" 'noecho'
 
 	local RETURN
 
-	local P_VID="${1}"
-
 	local TITLE="${TXT_VIDEO_MAIN}"
 	local HELP_TXT="\n$(gettext 'Выберите видео драйвер для установки')\n"
 	HELP_TXT+="$(gettext 'По умолчанию'):"
 
 	local DEFAULT_ITEM=$(xorg_video_drv)
-	local ITEMS="'nvidia' 'NVIDIA'"
+	local ITEMS="'free' '$(gettext 'Установить свободный драйвер')'"
+	ITEMS+=" 'nvidia' 'NVIDIA'"
 	ITEMS+=" 'nvidia304' 'NVIDIA 304xx'"
 	ITEMS+=" 'optimus' 'Bumblebee NVIDIA Optimus'"
 #	ITEMS+=" 'nvidia173' 'NVIDIA 173xx \Zb\Z3($(gettext 'Пока не поддерживается'))\Zn'"
 #	ITEMS+=" 'nvidia96' 'NVIDIA 96xx \Zb\Z3($(gettext 'Пока не поддерживается'))\Zn'"
 	ITEMS+=" 'catalyst' 'ATI Catalyst'"
 	ITEMS+=" 'innotek' 'VirtualBox Graphics Adapter'"
-
-	ITEMS+=" 'xf86-video-vesa' 'FREE'"
-	ITEMS+=" 'xf86-video-intel' 'FREE Intel'"
-	ITEMS+=" 'xf86-video-nouveau' 'FREE Nvidia'"
-	ITEMS+=" 'xf86-video-ati' 'FREE 'Ati"
-
-	ITEMS+=" 'xf86-video-ark' 'FREE'"
-	ITEMS+=" 'xf86-video-ast' 'FREE'"
-	ITEMS+=" 'xf86-video-cirrus' 'FREE'"
-	ITEMS+=" 'xf86-video-dummy' 'FREE'"
-	ITEMS+=" 'xf86-video-fbdev' 'FREE'"
-	ITEMS+=" 'xf86-video-glint' 'FREE'"
-	ITEMS+=" 'xf86-video-i128' 'FREE'"
-	ITEMS+=" 'xf86-video-mach64' 'FREE'"
-	ITEMS+=" 'xf86-video-mga' 'FREE'"
-	ITEMS+=" 'xf86-video-modesetting' 'FREE'"
-	ITEMS+=" 'xf86-video-neomagic' 'FREE'"
-	ITEMS+=" 'xf86-video-nv' 'FREE'"
-	ITEMS+=" 'xf86-video-openchrome' 'FREE'"
-	ITEMS+=" 'xf86-video-r128' 'FREE'"
-	ITEMS+=" 'xf86-video-savage' 'FREE'"
-	ITEMS+=" 'xf86-video-siliconmotion' 'FREE'"
-	ITEMS+=" 'xf86-video-sis' 'FREE'"
-	ITEMS+=" 'xf86-video-tdfx' 'FREE'"
-	ITEMS+=" 'xf86-video-trident' 'FREE'"
-	ITEMS+=" 'xf86-video-v4l' 'FREE'"
-	ITEMS+=" 'xf86-video-vmware' 'FREE'"
-	ITEMS+=" 'xf86-video-voodoo' 'FREE'"
 
 	HELP_TXT+=" \Zb\Z7\"${DEFAULT_ITEM}\"\Zn\n"
 
@@ -326,17 +418,6 @@ xorg_xorg()
 #	pacman_install "-S ttf-ms-fonts" 'yaourt'
 #	pacman_install "-S ttf-vista-fonts" 'yaourt'
 
-	#extra
-	pacman_install "-S gstreamer0.10-plugins"
-	pacman_install "-S phonon-gstreamer"
-	pacman_install "-S tk" #для git
-	pacman_install "-S fltk" #для alsa-tools
-	pacman_install "-S gtk2"
-	pacman_install "-S gtk3"
-	pacman_install "-S qt4"
-#	pacman_install "-S qt5"
-	pacman_install "-S wxgtk2.8" #для p7zip
-
 	git_commit
 
 	xorg_xterm
@@ -417,43 +498,47 @@ xterm*geometry: 105x35
 xorg_video()
 {
 	local DRIVER
+	local PKG
 
-	case "${SET_VIDEO}" in
+	case "${SET_VIDEO_DRV}" in
 		'nvidia')
-			pacman_install "-Rdds mesa-libgl" 'noneeded' 'noexit'
-			pacman_install "-Rdds lib32-mesa-libgl" 'noneeded' 'noexit'
-
 			#aur
 #			pacman_install "-S nvidia-dkms" 'yaourt'
 			#extra
 			pacman_install "-S nvidia"
 			[[ "${SET_LTS}" ]] && pacman_install "-S nvidia-lts"
 			pacman_install "-S nvidia-utils"
+			pacman_install "-S nvidia-libgl"
 #			pacman_install "-S opencl-nvidia"
 			#multilib
 			pacman_install "-S lib32-nvidia-utils" 'yaourt'
+			pacman_install "-S lib32-nvidia-libgl" 'yaourt'
 #			pacman_install "-S lib32-opencl-nvidia" 'yaourt'
 
-			pacman_install "-Rnsc ati-dri intel-dri nouveau-dri" 'noneeded' 'noexit'
+			#nvidia-xconfig
+
+#			DRIVER='nvidia'
 			;;
 		'nvidia304')
-			pacman_install "-Rdds mesa-libgl" 'noneeded' 'noexit'
-			pacman_install "-Rdds lib32-mesa-libgl" 'noneeded' 'noexit'
-
 			#extra
 			pacman_install "-S nvidia-304xx"
 			[[ "${SET_LTS}" ]] && pacman_install "-S nvidia-304xx-lts"
 			pacman_install "-S nvidia-304xx-utils"
+			pacman_install "-S nvidia-304xx-libgl"
 #			pacman_install "-S opencl-nvidia-304xx"
 			#multilib
 			pacman_install "-S lib32-nvidia-304xx-utils" 'yaourt'
+			pacman_install "-S lib32-nvidia-304xx-libgl" 'yaourt'
 #			pacman_install "-S lib32-opencl-nvidia-304xx" 'yaourt'
 
-			pacman_install "-Rnsc ati-dri intel-dri nouveau-dri" 'noneeded' 'noexit'
+			#nvidia-xconfig
+
+#			DRIVER='nvidia'
 			;;
 		'optimus')
-#			pacman_install "-Rdds mesa-libgl" 'noneeded' 'noexit'
-#			pacman_install "-Rdds lib32-mesa-libgl" 'noneeded' 'noexit'
+			#extra
+			pacman_install "-S xf86-video-intel"
+			pacman_install "-S lib32-intel-dri" 'yaourt'
 
 			#community
 			pacman_install "-S bumblebee"
@@ -463,12 +548,12 @@ xorg_video()
 			pacman_install "-S nvidia"
 			[[ "${SET_LTS}" ]] && pacman_install "-S nvidia-lts"
 			pacman_install "-S nvidia-utils"
+			pacman_install "-S nvidia-libgl"
 #			pacman_install "-S opencl-nvidia"
 			#multilib
 			pacman_install "-S lib32-nvidia-utils" 'yaourt'
+			pacman_install "-S lib32-nvidia-libgl" 'yaourt'
 #			pacman_install "-S lib32-opencl-nvidia" 'yaourt'
-
-			pacman_install "-Rnsc ati-dri nouveau-dri" 'noneeded' 'noexit'
 
 			#community
 			pacman_install "-S virtualgl"
@@ -484,25 +569,34 @@ xorg_video()
 			SET_USER_GRUPS+=',bumblebee'
 			;;
 		'catalyst')
-#Key-ID: 653C3094
-#[catalyst]
-#Server = http://catalyst.wirephire.com/repo/catalyst/$arch
-#pacman-key -r Key-ID
-#pacman-key --lsign-key Key-ID
+			msg_log "$(gettext 'Добавляю') mate > /etc/pacman.conf"
+			grep 'catalyst' "${NS_PATH}/etc/pacman.conf" > /dev/null && echo '' || echo '
+# Key-ID: 653C3094
+[catalyst]
+Server = http://catalyst.wirephire.com/repo/catalyst/$arch
+# pacman-key -r Key-ID
+# pacman-key --lsign-key Key-ID
+' >> "${NS_PATH}/etc/pacman.conf"
 
-			pacman_install "-Rdds mesa-libgl" 'noneeded' 'noexit'
-			pacman_install "-Rdds lib32-mesa-libgl" 'noneeded' 'noexit'
+			chroot_run pacman-key -r 653C3094
+			chroot_run pacman-key --lsign-key 653C3094
+
+			pacman_install '-Syy'
+
 			#aur
 			pacman_install "-S catalyst-utils" 'yaourt'
 			pacman_install "-S catalyst-libgl" 'yaourt'
 #			pacman_install "-S opencl-catalyst" 'yaourt'
+
 			pacman_install "-S lib32-catalyst-utils" 'yaourt'
 			pacman_install "-S lib32-catalyst-libgl" 'yaourt'
 #			pacman_install "-S lib32-opencl-catalyst" 'yaourt'
+
 			pacman_install "-S catalyst-hook" 'yaourt'
 			pacman_install "-S acpid"
 
 			git_commit
+
 			DRIVER='fglrx'
 
 			chroot_run systemctl enable atieventsd
@@ -512,46 +606,93 @@ xorg_video()
 #===============================================================================
 # Добавляю fglrx в mkinitcpio
 #===============================================================================
-			msg_log "$(gettext 'Добавляю') fglrx > /etc/mkinitcpio.conf"
-			sed -i '
+#			msg_log "$(gettext 'Добавляю') fglrx > /etc/mkinitcpio.conf"
+#			sed -i '
 # Добавляем хук fglrx
-/^HOOKS=/{
-	h;
-	s/^/#/;
-	P;g;
-	//{
-	s/fglrx//g;s/ \{1,\}/ /g;
-	s/fsck/fsck fglrx/;
-	};
-};
-' "${NS_PATH}/etc/mkinitcpio.conf"
+#/^HOOKS=/{
+#	h;
+#	s/^/#/;
+#	P;g;
+#	//{
+#	s/fglrx//g;s/ \{1,\}/ /g;
+#	s/fsck/fsck fglrx/;
+#	};
+#};
+#' "${NS_PATH}/etc/mkinitcpio.conf"
 
 			#aticonfig --initial
-
-			pacman_install "-Rnsc ati-dri intel-dri nouveau-dri" 'noneeded' 'noexit'
 			;;
 		'innotek')
 			#community
 			pacman_install "-S virtualbox-guest-modules"
 			pacman_install "-S virtualbox-guest-utils"
 			[[ "${SET_LTS}" ]] && pacman_install "-S virtualbox-host-modules-lts"
+
+			#extra
+			pacman_install "-S mesa-libgl"
+			#multilib
+			pacman_install "-S lib32-mesa-libgl" 'yaourt'
 			;;
 		'xf86-video-ati')
 			pacman_install "-S xf86-video-ati"
 			pacman_install "-S lib32-ati-dri" 'yaourt'
+
+			#extra
+			pacman_install "-S mesa-libgl"
+			#multilib
+			pacman_install "-S lib32-mesa-libgl" 'yaourt'
 			;;
 		'xf86-video-intel')
 			pacman_install "-S xf86-video-intel"
 			pacman_install "-S lib32-intel-dri" 'yaourt'
+
+			#extra
+			pacman_install "-S mesa-libgl"
+			#multilib
+			pacman_install "-S lib32-mesa-libgl" 'yaourt'
+
+#			DRIVER='intel'
 			;;
 		'xf86-video-nouveau')
 			pacman_install "-S xf86-video-nouveau"
 			pacman_install "-S lib32-nouveau-dri" 'yaourt'
+
+			#extra
+			pacman_install "-S mesa-libgl"
+			#multilib
+			pacman_install "-S lib32-mesa-libgl" 'yaourt'
+			;;
+		'xf86-video-nouveau xf86-video-intel')
+			pacman_install "-S xf86-video-nouveau"
+			pacman_install "-S lib32-nouveau-dri" 'yaourt'
+
+			pacman_install "-S xf86-video-intel"
+			pacman_install "-S lib32-intel-dri" 'yaourt'
+
+			#extra
+			pacman_install "-S mesa-libgl"
+			#multilib
+			pacman_install "-S lib32-mesa-libgl" 'yaourt'
 			;;
 		*)
-			pacman_install "-S ${SET_VIDEO}"
+			for PKG in ${SET_VIDEO_DRV}
+			do
+				pacman_install "-S ${PKG}"
+			done
+
+			#extra
+			pacman_install "-S mesa-libgl"
+			#multilib
+			pacman_install "-S lib32-mesa-libgl" 'yaourt'
 			;;
 	esac
+
+	git_commit
+
+	#extra
+	pacman_install "-S mesa-demos"
+	#multilib
+	pacman_install "-S lib32-mesa-demos" 'yaourt'
 
 	git_commit
 
@@ -576,7 +717,9 @@ xorg_video()
 	echo "
 Section \"ServerLayout\"
     Identifier    \"Layout[0]\"
-    Screen        0 \"Screen[0]-0\" 0 0
+    Screen      0 \"Screen[0]-0\"
+#    Screen      1 \"Screen[0]-1\" RightOf \"Screen[0]-0\" # Screen[0]-1 at the right of Screen[0]-0
+#    Option        \"Xinerama\" \"1\" # To move windows between screens
 EndSection
 
 Section \"Module\"
@@ -586,38 +729,56 @@ Section \"Monitor\"
     Identifier    \"Monitor[0]-0\"
     Option        \"VendorName\" \"Unknown\"
     Option        \"DPMS\" \"true\"
+    Option        \"Enable\" \"true\"
 EndSection
+
+#Section \"Monitor\"
+#    Identifier    \"Monitor[0]-1\"
+#    Option        \"VendorName\" \"Unknown\"
+#    Option        \"DPMS\" \"true\"
+#    Option        \"Enable\" \"true\"
+#EndSection
 
 Section \"Device\"
     Identifier    \"Device[0]-0\"
-${TEMP}    Driver        \"${DRIVER}\" #Choose the driver used for this monitor
+${TEMP}    Driver        \"${DRIVER}\" # Choose the driver used for this monitor
 #    BusID       \"PCI:0:1:0\" #lspci | grep VGA
+#    Screen      0
 EndSection
+
+#Section \"Device\"
+#    Identifier  \"Device[0]-1\"
+#    Driver      \"\" # Choose the driver used for this monitor
+#    BusID       \"PCI:0:1:0\" #lspci | grep VGA
+#    Screen      1
+#EndSection
 
 Section \"Screen\"
     Identifier    \"Screen[0]-0\"
     Device        \"Device[0]-0\"
     Monitor       \"Monitor[0]-0\"
-    DefaultDepth  ${SET_XORG_XxYxD##*x} #Choose the depth (16||24)
+    DefaultDepth  ${SET_XORG_XxYxD##*x} # Choose the depth (16||24)
+#    Option        \"TwinView\" \"false\"
     SubSection \"Display\"
         Viewport    0 0
-        Depth       ${SET_XORG_XxYxD##*x} #Choose the depth (16||24)
-        Modes       \"${SET_XORG_XxYxD%x*}\" #Choose the resolution
+        Depth       ${SET_XORG_XxYxD##*x} # Choose the depth (16||24)
+        Modes       \"${SET_XORG_XxYxD%x*}\" # Choose the resolution
     EndSubSection
 EndSection
+
+#Section \"Screen\"
+#    Identifier    \"Screen[0]-1\"
+#    Device        \"Device[0]-1\"
+#    Monitor       \"Monitor[0]-1\"
+#    DefaultDepth  24 # Choose the depth (16||24)
+#    Option        \"TwinView\" \"false\"
+#    SubSection \"Display\"
+#        Viewport    0 0
+#        Depth       24 # Choose the depth (16||24)
+#        Modes       \"1280x800_75.00\" # Choose the resolution
+#    EndSubSection
+#EndSection
 " > "${NS_PATH}/etc/X11/xorg.conf.d/00-monitor.conf"
-	git_commit
-}
-
-xorg_mesa()
-{
-	#extra
-	pacman_install "-S mesa-demos"
-	pacman_install "-S mesa-libgl"
-	#multilib
-	pacman_install "-S lib32-mesa-demos" 'yaourt'
-	pacman_install "-S lib32-mesa-libgl" 'yaourt'
-
 	git_commit
 }
 
@@ -656,6 +817,10 @@ xorg_video_drv()
 				;;
 			'ati')
 				echo 'catalyst'
+				return 0
+				;;
+			'intel')
+				echo 'intel'
 				return 0
 				;;
 			*)
