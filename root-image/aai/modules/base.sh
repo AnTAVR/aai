@@ -1114,8 +1114,7 @@ base_pkgfile()
 	cat "${NS_PATH}/etc/skel/.zshrc" > "${NS_PATH}/root/.zshrc"
 
 # Включаем ежедневное обновление базы по крону
-	cat "${DBDIR}modules/etc/cron.daily/pkgfile" > "${NS_PATH}/etc/cron.daily/pkgfile"
-	chmod +x "${NS_PATH}/etc/cron.daily/pkgfile"
+	SERVICES+=" 'pkgfile-update.timer'  '-' 'on'"
 
 # Обновляем базу pkgfile
 	chroot_run pkgfile --update
