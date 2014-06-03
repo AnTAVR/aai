@@ -735,14 +735,12 @@ Section \"Monitor\"
     Identifier    \"Monitor[0]-0\"
     Option        \"VendorName\" \"Unknown\"
     Option        \"DPMS\" \"true\"
-    Option        \"Enable\" \"true\"
 EndSection
 
 #Section \"Monitor\"
 #    Identifier    \"Monitor[0]-1\"
 #    Option        \"VendorName\" \"Unknown\"
 #    Option        \"DPMS\" \"true\"
-#    Option        \"Enable\" \"true\"
 #EndSection
 
 Section \"Device\"
