@@ -748,14 +748,14 @@ EndSection
 Section \"Device\"
     Identifier    \"Device[0]-0\"
 ${TEMP}    Driver        \"${DRIVER}\" # Choose the driver used for this monitor
-#    BusID       \"PCI:0:1:0\" #lspci | grep VGA
+#    BusID       \"PCI:0:1:0\" # lspci | grep VGA
 #    Screen      0
 EndSection
 
 #Section \"Device\"
 #    Identifier  \"Device[0]-1\"
 #    Driver      \"\" # Choose the driver used for this monitor
-#    BusID       \"PCI:0:1:0\" #lspci | grep VGA
+#    BusID       \"PCI:0:1:0\" # lspci | grep VGA
 #    Screen      1
 #EndSection
 
@@ -781,7 +781,7 @@ EndSection
 #    SubSection \"Display\"
 #        Viewport    0 0
 #        Depth       24 # Choose the depth (16||24)
-#        Modes       \"1280x800_75.00\" # Choose the resolution
+#        Modes       \"1920x1080_60.00\" # Choose the resolution
 #    EndSubSection
 #EndSection
 " > "${NS_PATH}/etc/X11/xorg.conf.d/00-monitor.conf"
