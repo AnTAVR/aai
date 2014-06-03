@@ -32,6 +32,9 @@ TXT_XORG_MAIN="$(gettext 'Xorg')"
 SET_VIDEO_DRV=
 # Разрешение Xorg
 SET_XORG_XxYxD=
+SET_XORG_INPUTS=
+SET_XORG_APPS=
+SET_XORG_LIBS=
 #===============================================================================
 
 # Выводим строку пункта главного меню
@@ -112,22 +115,25 @@ run_xorg()
 # Устанавливаем выбранные переменные в глобальные
 				set_global_var 'SET_VIDEO_DRV' "${VIDEO_DRV}"
 				set_global_var 'SET_XORG_XxYxD' "${XORG_XxYxD}"
+				set_global_var 'SET_XORG_INPUTS' "${INPUTS}"
+				set_global_var 'SET_XORG_APPS' "${APPS}"
+				set_global_var 'SET_XORG_LIBS' "${LIBS}"
 
 				xorg_xorg
 
 				xorg_video
 
-				for PKG in ${INPUTS}
+				for PKG in ${SET_XORG_INPUTS}
 				do
 					pacman_install "-S ${PKG}"
 				done
 
-				for PKG in ${APPS}
+				for PKG in ${SET_XORG_APPS}
 				do
 					pacman_install "-S ${PKG}"
 				done
 
-				for PKG in ${LIBS}
+				for PKG in ${SET_XORG_LIBS}
 				do
 					pacman_install "-S ${PKG}"
 				done
