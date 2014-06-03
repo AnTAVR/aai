@@ -701,8 +701,8 @@ pkgs_spamassassin()
 	pacman_install "-S spamassassin"
 	pacman_install "-S razor"
 	#community
-	pacman_install "-S dspam"
-	pacman_install "-S p3scan"
+#	pacman_install "-S dspam"
+#	pacman_install "-S p3scan"
 
 	git_commit
 
