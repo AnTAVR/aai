@@ -140,7 +140,7 @@ i386/qwerty	sk-prog-qwerty
 i386/qwerty	sk-qwerty	sk	pc105	-	terminate:ctrl_alt_bksp,qwerty
 i386/qwerty	sr-cy	rs	pc105	-	terminate:ctrl_alt_bksp
 i386/qwerty	sv-latin1	se	pc105	-	terminate:ctrl_alt_bksp
-i386/qwerty	tj_alt-UTF8				
+i386/qwerty	tj_alt-UTF8	tj	pc105	-	terminate:ctrl_alt_bksp
 i386/qwerty	tralt				
 i386/qwerty	trf				
 i386/qwerty	trq	tr	pc105	-	terminate:ctrl_alt_bksp

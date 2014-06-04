@@ -15,6 +15,7 @@ AQ	Antarctica/McMurdo		-7750+16636	McMurdo, South Pole, Scott (New Zealand time)
 AQ	Antarctica/Palmer		-6448-06406	Palmer Station, Anvers Island
 AQ	Antarctica/Rothera		-6734-06808	Rothera Station, Adelaide Island
 AQ	Antarctica/Syowa		-690022+0393524	Syowa Station, E Ongul I
+AQ	Antarctica/Troll		-720041+0023206	Troll Station, Queen Maud Land
 AQ	Antarctica/Vostok		-7824+10654	Vostok Station, Lake Vostok
 AR	America/Argentina/Buenos_Aires	es_AR.UTF-8 UTF-8	-3436-05827	Buenos Aires (BA, CF)
 AR	America/Argentina/Catamarca	es_AR.UTF-8 UTF-8	-2828-06547	Catamarca (CT), Chubut (CH)
@@ -323,6 +324,7 @@ RU	Asia/Yekaterinburg	ru_RU.UTF-8 UTF-8	+5651+06036	Moscow+02 - Urals
 RU	Europe/Kaliningrad	ru_RU.UTF-8 UTF-8	+5443+02030	Moscow-01 - Kaliningrad
 RU	Europe/Moscow	ru_RU.UTF-8 UTF-8	+5545+03735	Moscow+00 - west Russia
 RU	Europe/Samara	ru_RU.UTF-8 UTF-8	+5312+05009	Moscow+00 - Samara, Udmurtia
+RU	Europe/Simferopol	ru_RU.UTF-8 UTF-8	+4457+03406	Moscow+00 - Crimea
 RU	Europe/Volgograd	ru_RU.UTF-8 UTF-8	+4844+04425	Moscow+00 - Caspian Sea
 RW	Africa/Kigali	rw_RW UTF-8		
 SA	Asia/Riyadh	ar_SA.UTF-8 UTF-8		
@@ -363,7 +365,6 @@ TV	Pacific/Funafuti
 TW	Asia/Taipei	cmn_TW UTF-8		
 TZ	Africa/Dar_es_Salaam	sw_TZ UTF-8		
 UA	Europe/Kiev	uk_UA.UTF-8 UTF-8	+5026+03031	most locations
-UA	Europe/Simferopol	ru_RU.UTF-8 UTF-8	+4457+03406	central Crimea
 UA	Europe/Uzhgorod	uk_UA.UTF-8 UTF-8	+4837+02218	Ruthenia
 UA	Europe/Zaporozhye	uk_UA.UTF-8 UTF-8	+4750+03510	Zaporozh'ye, E Lugansk / Zaporizhia, E Luhansk
 UG	Africa/Kampala	lg_UG.UTF-8 UTF-8		
