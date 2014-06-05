@@ -55,81 +55,72 @@ fi
 SCRDIR="$(dirname ${0})"
 SCRNAME="$(basename "${0}")"
 
+URI="${1}"
+shift
+
 case "${SCRNAME}" in
 	'aria2c-onComplete' | 'aria2c-onBtComplete' | 'aria2c-onError' | 'aria2c-onPause' | 'aria2c-onStart' | 'aria2c-onStop')
-		F_GID="${1}"
-		F_N="${2}"
-		F_PATH="${3}"
-		${NOTIFY_SEND} "${SCRNAME}" "<b>GID=</b>${F_GID}<br />\n<b>N=</b>${F_N}<br />\n<b>PATH=</b>${F_PATH}"
-		case "${SCRNAME}" in
-			'aria2c-onComplete')
-				if [[ ${DAEMON} ]]
-				then
-					# если все загрузки выполнены то удаляем демона
-					[[ ! -z "$(pidof aria2c)" ]] && [[ "$(ruby /usr/share/doc/aria2/xmlrpc/aria2mon | wc -l)" == "1" ]] && kill -s INT -- "$(pidof aria2c)"
-				fi
-				;;
-		esac
+		F_N="${1}"
+		F_PATH="${2}"
+
+		${NOTIFY_SEND} "${SCRNAME}" "<b>GID=</b>${URI}<br />\n<b>N=</b>${F_N}<br />\n<b>PATH=</b>${F_PATH}"
+
+		# если все загрузки выполнены то удаляем демона
+		[[ ${SCRNAME} == 'aria2c-onComplete' ]] && [[ ${DAEMON} ]] && [[ ! -z "$(pidof aria2c)" ]] && [[ "$(ruby /usr/share/doc/aria2/xmlrpc/aria2mon | wc -l)" == "1" ]] && kill -s INT -- "$(pidof aria2c)"
 		;;
-	'aria2c-list' | 'aria2c-metalink' | 'aria2c-torrent')
+	'aria2c-list' | 'aria2c-metalink' | 'aria2c-torrent' | 'aria2c-uri')
+		LIST="${PATH_TORRENTS}/$(basename "${URI}")"
 
 		mkdir -p "${PATH_DOWNLOAD}"
 		mkdir -p "${PATH_TORRENTS}"
 
-		LIST="${PATH_TORRENTS}/$(basename "${1}")"
-		mv "${1}" "${LIST}"
+		[[ ${DAEMON} ]] && [[ -z "$(pidof aria2c)" ]] && aria2c -d "${PATH_DOWNLOAD}" -D --enable-rpc=true
 
-		shift
+		if [[ ${SCRNAME} == 'aria2c-uri' ]]
+		then
+			LIST+='.urls'
+			echo "${URI}" > "${LIST}"
+		else
+			mv "${URI}" "${LIST}"
+		fi
 
 		case "${SCRNAME}" in
 			'aria2c-torrent')
 				if [[ ${DAEMON} ]]
 				then
-					[[ -z "$(pidof aria2c)" ]] && aria2c -d "${PATH_DOWNLOAD}" -D --enable-rpc=true
 					ruby /usr/share/doc/aria2/xmlrpc/aria2rpc addTorrent "${LIST}" ${@}
 				else
-					aria2c -T "${LIST}" -d "${PATH_DOWNLOAD}" ${@}  && rm "${LIST}"
+					aria2c -d "${PATH_DOWNLOAD}" -T "${LIST}" ${@}  && rm "${LIST}"
 				fi
 				;;
 			'aria2c-metalink')
 				if [[ ${DAEMON} ]]
 				then
-					[[ -z "$(pidof aria2c)" ]] && aria2c -d "${PATH_DOWNLOAD}" -D --enable-rpc=true
 					ruby /usr/share/doc/aria2/xmlrpc/aria2rpc addMetalink "${LIST}" ${@}
 				else
-					aria2c -M "${LIST}" -d "${PATH_DOWNLOAD}" ${@}  && rm "${LIST}"
+					aria2c -d "${PATH_DOWNLOAD}" -M "${LIST}" ${@}  && rm "${LIST}"
 				fi
 				;;
 			'aria2c-list')
 				if [[ ${DAEMON} ]]
 				then
-					[[ -z "$(pidof aria2c)" ]] && aria2c -d "${PATH_DOWNLOAD}" -D --enable-rpc=true
 					while read URI
 					do
 						ruby /usr/share/doc/aria2/xmlrpc/aria2rpc addUri ${URI} ${@}
 					done < "${LIST}"
 				else
-					aria2c -i "${LIST}" -d "${PATH_DOWNLOAD}" ${@} && rm "${LIST}"
+					aria2c -d "${PATH_DOWNLOAD}" -i "${LIST}" ${@} && rm "${LIST}"
+				fi
+				;;
+			'aria2c-uri')
+				if [[ ${DAEMON} ]]
+				then
+					ruby /usr/share/doc/aria2/xmlrpc/aria2rpc addUri "${URI}" ${@}
+				else
+					aria2c -d "${PATH_DOWNLOAD}" -i "${LIST}" ${@} && rm "${LIST}"
 				fi
 				;;
 		esac
-		;;
-	'aria2c-uri')
-		mkdir -p "${PATH_DOWNLOAD}"
-		mkdir -p "${PATH_TORRENTS}"
-
-		LIST="${PATH_TORRENTS}/$(basename "${1}").urls"
-		URI="${1}"
-
-		echo "${URI}" > "${LIST}"
-
-		if [[ ${DAEMON} ]]
-		then
-			[[ -z "$(pidof aria2c)" ]] && aria2c -d "${PATH_DOWNLOAD}" -D --enable-rpc=true
-			ruby /usr/share/doc/aria2/xmlrpc/aria2rpc addUri "${URI}" ${@}
-		else
-			aria2c -i "${LIST}" -d "${PATH_DOWNLOAD}" ${@} && rm "${LIST}"
-		fi
 		;;
 	*)
 		echo "
