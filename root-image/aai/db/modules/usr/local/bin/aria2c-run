@@ -21,11 +21,12 @@
 #~/.aria2/aria2.conf
 #extra/libnotify
 #community/aria2
+#extra/ruby
+#core/coreutils
 
 PATH_DOWNLOAD="$(xdg-user-dir DOWNLOAD)/aria2c"
 PATH_TORRENTS="${PATH_DOWNLOAD}/torrents"
 NOTIFY_SEND='notify-send --urgency normal'
-#NOTIFY_SEND='notify-send --urgency normal --expire-time=500 -i pidgin -h int:x:500 -h int:y:500'
 
 [ -f /etc/aria2c/aria2c-run.conf ] && source /etc/aria2c/aria2c-run.conf
 [ -f ~/aria2c/aria2c-run.conf ] && source ~/aria2c/aria2c-run.conf
@@ -38,49 +39,34 @@ auto-save-interval=180
 continue=true
 seed-time=0
 check-integrity=true
-rpc-save-upload-metadata=true
-on-bt-download-complete=aria2c-run-onBtComplete
-on-download-complete=aria2c-run-onComplete
-on-download-pause=aria2c-run-onPause
-on-download-error=aria2c-run-onError
-on-download-start=aria2c-run-onStart
-on-download-stop=aria2c-run-onStop
+rpc-save-upload-metadata=false
+http-accept-gzip=true
+on-bt-download-complete=aria2c-onBtComplete
+on-download-complete=aria2c-onComplete
+on-download-pause=aria2c-onPause
+on-download-error=aria2c-onError
+on-download-start=aria2c-onStart
+on-download-stop=aria2c-onStop
+#create aria2c-run
 ' > ~/.aria2/aria2.conf
 fi
 
-case "$(basename "${0}")" in
-	'aria2c-run-onBtComplete')
-		${NOTIFY_SEND} 'aria2c-run-onBtComplete' "<b>GID=</b>${1}<br />\n<b>N=</b>${2}<br />\n<b>PATH=</b>${3}"
-		;;
-	'aria2c-run-onComplete')
-		${NOTIFY_SEND} 'aria2c-run-onComplete' "<b>GID=</b>${1}<br />\n<b>N=</b>${2}<br />\n<b>PATH=</b>${3}"
-		;;
-	'aria2c-run-onError')
-		${NOTIFY_SEND} 'aria2c-run-onError' "<b>GID=</b>${1}<br />\n<b>N=</b>${2}<br />\n<b>PATH=</b>${3}"
-		;;
-	'aria2c-run-onPause')
-		${NOTIFY_SEND} 'aria2c-run-onPause' "<b>GID=</b>${1}<br />\n<b>N=</b>${2}<br />\n<b>PATH=</b>${3}"
-		;;
-	'aria2c-run-onStart')
-		${NOTIFY_SEND} 'aria2c-run-onStart' "<b>GID=</b>${1}<br />\n<b>N=</b>${2}<br />\n<b>PATH=</b>${3}"
-		;;
-	'aria2c-run-onStop')
-		${NOTIFY_SEND} 'aria2c-run-onStop' "<b>GID=</b>${1}<br />\n<b>N=</b>${2}<br />\n<b>PATH=</b>${3}"
-		;;
-	'aria2c-run')
+SCRDIR="$(dirname ${0})"
+SCRNAME="$(basename "${0}")"
 
-		mkdir -p "${PATH_DOWNLOAD}"
-		mkdir -p "${PATH_TORRENTS}"
-
-		TORRENT="${PATH_TORRENTS}/$(basename "${1}")"
-		mv "${1}" "${TORRENT}"
-		
-		shift
-
-		aria2c -d "${PATH_DOWNLOAD}" "${TORRENT}" ${@}  && rm "${TORRENT}"
-
+case "${SCRNAME}" in
+	'aria2c-onComplete' | 'aria2c-onBtComplete' | 'aria2c-onError' | 'aria2c-onPause' | 'aria2c-onStart' | 'aria2c-onStop')
+		F_GID="${1}"
+		F_N="${2}"
+		F_PATH="${3}"
+		${NOTIFY_SEND} "${SCRNAME}" "<b>GID=</b>${F_GID}<br />\n<b>N=</b>${F_N}<br />\n<b>PATH=</b>${F_PATH}"
+		case "${SCRNAME}" in
+			'aria2c-onComplete')
+				[[ ! -z "$(pidof aria2c)" ]] && [[ "$(ruby /usr/share/doc/aria2/xmlrpc/aria2mon | wc -l)" == "1" ]] && kill -s INT -- "$(pidof aria2c)"
+				;;
+		esac
 		;;
-	'aria2c-run-list')
+	'aria2c-list' | 'aria2c-metalink' | 'aria2c-torrent')
 
 		mkdir -p "${PATH_DOWNLOAD}"
 		mkdir -p "${PATH_TORRENTS}"
@@ -89,8 +75,48 @@ case "$(basename "${0}")" in
 		mv "${1}" "${LIST}"
 
 		shift
-		
-		aria2c -d "${PATH_DOWNLOAD}" -i "${LIST}" ${@} && rm "${LIST}"
 
+		case "${SCRNAME}" in
+			'aria2c-torrent')
+				[[ -z "$(pidof aria2c)" ]] && aria2c -d "${PATH_DOWNLOAD}" -D --enable-rpc=true
+				ruby /usr/share/doc/aria2/xmlrpc/aria2rpc addTorrent "${LIST}" ${@}
+#				aria2c -T "${LIST}" -d "${PATH_DOWNLOAD}" ${@}  && rm "${LIST}"
+				;;
+			'aria2c-metalink')
+				[[ -z "$(pidof aria2c)" ]] && aria2c -d "${PATH_DOWNLOAD}" -D --enable-rpc=true
+				ruby /usr/share/doc/aria2/xmlrpc/aria2rpc addMetalink "${LIST}" ${@}
+#				aria2c -T "${LIST}" -d "${PATH_DOWNLOAD}" ${@}  && rm "${LIST}"
+				;;
+			'aria2c-list')
+				aria2c -i "${LIST}" -d "${PATH_DOWNLOAD}" ${@} && rm "${LIST}"
+				;;
+		esac
+		;;
+	'aria2c-uri')
+		mkdir -p "${PATH_DOWNLOAD}"
+		mkdir -p "${PATH_TORRENTS}"
+
+		LIST="${PATH_TORRENTS}/$(basename "${1}").urls"
+		URI="${1}"
+
+		echo "${URI}" > "${LIST}"
+
+		[[ -z "$(pidof aria2c)" ]] && aria2c -d "${PATH_DOWNLOAD}" -D --enable-rpc=true
+		ruby /usr/share/doc/aria2/xmlrpc/aria2rpc addUri "${URI}" ${@}
+		;;
+	*)
+		echo "
+cd ${SCRDIR}
+ln -srf ${SCRNAME} aria2c-onBtComplete
+ln -srf ${SCRNAME} aria2c-onComplete
+ln -srf ${SCRNAME} aria2c-onError
+ln -srf ${SCRNAME} aria2c-onPause
+ln -srf ${SCRNAME} aria2c-onStart
+ln -srf ${SCRNAME} aria2c-onStop
+ln -srf ${SCRNAME} aria2c-list
+ln -srf ${SCRNAME} aria2c-metalink
+ln -srf ${SCRNAME} aria2c-torrent
+ln -srf ${SCRNAME} aria2c-uri
+"
 		;;
 esac

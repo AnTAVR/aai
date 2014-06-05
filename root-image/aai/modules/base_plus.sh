@@ -1115,14 +1115,16 @@ base_plus_aria2()
 
 	cp -Pb "${DBDIR}modules/usr/local/bin/aria2c-run" "${NS_PATH}/usr/local/bin/aria2c-run"
 	chmod +x "${NS_PATH}/usr/local/bin/aria2c-run"
-	ln -srf "${NS_PATH}/usr/local/bin/aria2c-run" "${NS_PATH}/usr/local/bin/aria2c-run-onBtComplete"
-	ln -srf "${NS_PATH}/usr/local/bin/aria2c-run" "${NS_PATH}/usr/local/bin/aria2c-run-onComplete"
-	ln -srf "${NS_PATH}/usr/local/bin/aria2c-run" "${NS_PATH}/usr/local/bin/aria2c-run-onError"
-	ln -srf "${NS_PATH}/usr/local/bin/aria2c-run" "${NS_PATH}/usr/local/bin/aria2c-run-onPause"
-	ln -srf "${NS_PATH}/usr/local/bin/aria2c-run" "${NS_PATH}/usr/local/bin/aria2c-run-onStart"
-	ln -srf "${NS_PATH}/usr/local/bin/aria2c-run" "${NS_PATH}/usr/local/bin/aria2c-run-onStop"
-	ln -srf "${NS_PATH}/usr/local/bin/aria2c-run" "${NS_PATH}/usr/local/bin/aria2c-run-list"
-
+	ln -srf "${NS_PATH}/usr/local/bin/aria2c-run" "${NS_PATH}/usr/local/bin/aria2c-onBtComplete"
+	ln -srf "${NS_PATH}/usr/local/bin/aria2c-run" "${NS_PATH}/usr/local/bin/aria2c-onComplete"
+	ln -srf "${NS_PATH}/usr/local/bin/aria2c-run" "${NS_PATH}/usr/local/bin/aria2c-onError"
+	ln -srf "${NS_PATH}/usr/local/bin/aria2c-run" "${NS_PATH}/usr/local/bin/aria2c-onPause"
+	ln -srf "${NS_PATH}/usr/local/bin/aria2c-run" "${NS_PATH}/usr/local/bin/aria2c-onStart"
+	ln -srf "${NS_PATH}/usr/local/bin/aria2c-run" "${NS_PATH}/usr/local/bin/aria2c-onStop"
+	ln -srf "${NS_PATH}/usr/local/bin/aria2c-run" "${NS_PATH}/usr/local/bin/aria2c-list"
+	ln -srf "${NS_PATH}/usr/local/bin/aria2c-run" "${NS_PATH}/usr/local/bin/aria2c-metalink"
+	ln -srf "${NS_PATH}/usr/local/bin/aria2c-run" "${NS_PATH}/usr/local/bin/aria2c-torrent"
+	ln -srf "${NS_PATH}/usr/local/bin/aria2c-run" "${NS_PATH}/usr/local/bin/aria2c-uri"
 	git_commit
 }
 
