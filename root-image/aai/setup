@@ -2,7 +2,7 @@
 #
 #
 #
-#   Copyright (c) 2012-2013 Anthony Lyappiev <archlinux@antavr.ru>
+#   Copyright (c) 2012-2014 Anthony Lyappiev <archlinux@antavr.ru>
 #   http://archlinux.antavr.ru
 #
 #   This program is free software; you can redistribute it and/or modify
