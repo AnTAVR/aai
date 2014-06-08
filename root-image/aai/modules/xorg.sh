@@ -337,6 +337,7 @@ xorg_dialog_video()
 #	ITEMS+=" 'nvidia173' 'NVIDIA 173xx \Zb\Z3($(gettext 'Пока не поддерживается'))\Zn'"
 #	ITEMS+=" 'nvidia96' 'NVIDIA 96xx \Zb\Z3($(gettext 'Пока не поддерживается'))\Zn'"
 	ITEMS+=" 'catalyst' 'ATI Catalyst'"
+	ITEMS+=" 'catalyst_pxp' 'ATI Catalyst powerXpress'"
 	ITEMS+=" 'innotek' 'VirtualBox Graphics Adapter'"
 
 	HELP_TXT+=" \Zb\Z7\"${DEFAULT_ITEM}\"\Zn\n"
@@ -575,13 +576,13 @@ xorg_video()
 			SET_USER_GRUPS+=',bumblebee'
 			;;
 		'catalyst')
-			msg_log "$(gettext 'Добавляю') mate > /etc/pacman.conf"
+			msg_log "$(gettext 'Добавляю') catalyst > /etc/pacman.conf"
 			grep 'catalyst' "${NS_PATH}/etc/pacman.conf" > /dev/null && echo '' || echo '
 # Key-ID: 653C3094
-[catalyst]
-Server = http://catalyst.wirephire.com/repo/catalyst/$arch
 # pacman-key -r Key-ID
 # pacman-key --lsign-key Key-ID
+[catalyst]
+Server = http://catalyst.wirephire.com/repo/catalyst/$arch
 ' >> "${NS_PATH}/etc/pacman.conf"
 
 			chroot_run pacman-key -r 653C3094
@@ -627,6 +628,41 @@ Server = http://catalyst.wirephire.com/repo/catalyst/$arch
 #' "${NS_PATH}/etc/mkinitcpio.conf"
 
 			#aticonfig --initial
+			;;
+		'catalyst_pxp')
+			msg_log "$(gettext 'Добавляю') catalyst > /etc/pacman.conf"
+			grep 'catalyst' "${NS_PATH}/etc/pacman.conf" > /dev/null && echo '' || echo '
+# Key-ID: 653C3094
+# pacman-key -r Key-ID
+# pacman-key --lsign-key Key-ID
+[catalyst]
+Server = http://catalyst.wirephire.com/repo/catalyst/$arch
+' >> "${NS_PATH}/etc/pacman.conf"
+
+			chroot_run pacman-key -r 653C3094
+			chroot_run pacman-key --lsign-key 653C3094
+
+			pacman_install '-Syy'
+
+			#aur
+			pacman_install "-S catalyst-utils-pxp" 'yaourt'
+			pacman_install "-S catalyst-libgl" 'yaourt'
+#			pacman_install "-S opencl-catalyst" 'yaourt'
+
+			pacman_install "-S lib32-catalyst-utils-pxp" 'yaourt'
+			pacman_install "-S lib32-catalyst-libgl" 'yaourt'
+#			pacman_install "-S lib32-opencl-catalyst" 'yaourt'
+
+			pacman_install "-S catalyst-hook" 'yaourt'
+			pacman_install "-S acpid"
+
+			git_commit
+
+			DRIVER='fglrx'
+
+			chroot_run systemctl enable atieventsd
+			chroot_run systemctl enable catalyst-hook
+			chroot_run systemctl enable temp-links-catalyst
 			;;
 		'innotek')
 			#community
