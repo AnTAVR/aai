@@ -255,11 +255,14 @@ xorg_dialog_video_free()
 	then
 		DEFAULT_ITEM='xf86-video-ati'
 		ITEMS+=" 'xf86-video-ati' 'ATI Catalyst' 'on'"
-	elif [[ "${DEFAULT_ITEM}" == 'catalystPxp' ]]
-		DEFAULT_ITEM='xf86-video-ati'
-		ITEMS+=" 'xf86-video-ati' 'ATI Catalyst' 'on'"
 	else
-		ITEMS+=" 'xf86-video-ati' 'ATI Catalyst' 'off'"
+		if [[ "${DEFAULT_ITEM}" == 'catalystPxp' ]]
+		then
+			DEFAULT_ITEM='xf86-video-ati'
+			ITEMS+=" 'xf86-video-ati' 'ATI Catalyst' 'on'"
+		else
+			ITEMS+=" 'xf86-video-ati' 'ATI Catalyst' 'off'"
+		fi
 	fi
 
 	if [[ "${DEFAULT_ITEM}" == 'optimus' ]]
@@ -272,19 +275,22 @@ xorg_dialog_video_free()
 		then
 			DEFAULT_ITEM='xf86-video-nouveau'
 			ITEMS+=" 'xf86-video-nouveau' 'NVIDIA' 'on'"
-		elif [[ "${DEFAULT_ITEM}" == 'nvidia304' ]]
-			DEFAULT_ITEM='xf86-video-nouveau'
-			ITEMS+=" 'xf86-video-nouveau' 'NVIDIA' 'on'"
 		else
-			ITEMS+=" 'xf86-video-nouveau' 'NVIDIA' 'off'"
-		fi
+			if [[ "${DEFAULT_ITEM}" == 'nvidia304' ]]
+			then
+				DEFAULT_ITEM='xf86-video-nouveau'
+				ITEMS+=" 'xf86-video-nouveau' 'NVIDIA' 'on'"
+			else
+				ITEMS+=" 'xf86-video-nouveau' 'NVIDIA' 'off'"
+			fi
 
-		if [[ "${DEFAULT_ITEM}" == 'intel' ]]
-		then
-			DEFAULT_ITEM='xf86-video-intel'
-			ITEMS+=" 'xf86-video-intel' 'FREE Intel' 'on'"
-		else
-			ITEMS+=" 'xf86-video-intel' 'FREE Intel' 'off'"
+			if [[ "${DEFAULT_ITEM}" == 'intel' ]]
+			then
+				DEFAULT_ITEM='xf86-video-intel'
+				ITEMS+=" 'xf86-video-intel' 'FREE Intel' 'on'"
+			else
+				ITEMS+=" 'xf86-video-intel' 'FREE Intel' 'off'"
+			fi
 		fi
 	fi
 
