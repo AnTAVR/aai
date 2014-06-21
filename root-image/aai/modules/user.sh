@@ -28,8 +28,17 @@ MAIN_CASE+=('user')
 RUN_USER=
 TXT_USER_MAIN="$(gettext 'Пользователи')"
 
-SET_USER_GRUPS='users,adm,systemd-journal,log,power,floppy,optical,disk'
-SET_USER_GRUPS+=',games,video'
+SET_USER_GRUPS='users' # User group
+#SET_USER_GRUPS+=',adm' # Deprecated or unused group
+SET_USER_GRUPS+=',systemd-journal' # System group
+#SET_USER_GRUPS+=',log' # Deprecated or unused group
+#SET_USER_GRUPS+=',power' # Pre-systemd group
+#SET_USER_GRUPS+=',floppy' # Pre-systemd group
+#SET_USER_GRUPS+=',optical' # Pre-systemd group
+#SET_USER_GRUPS+=',disk' # Pre-systemd group
+
+SET_USER_GRUPS+=',games' # User group
+#SET_USER_GRUPS+=',video' # Pre-systemd group
 
 #===============================================================================
 

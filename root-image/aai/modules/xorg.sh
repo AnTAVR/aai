@@ -579,7 +579,7 @@ xorg_video()
 
 			chroot_run systemctl enable 'nvidia-enable.service'
 
-			SET_USER_GRUPS+=',bumblebee'
+			SET_USER_GRUPS+=',bumblebee' # Software group
 			;;
 		'catalyst')
 			msg_log "$(gettext 'Добавляю') catalyst > /etc/pacman.conf"
@@ -861,7 +861,7 @@ xorg_video_drv()
 				echo 'nvidia'
 				return 0
 				;;
-			'ati')
+			'ati' | 'advanced')
 				echo 'catalyst'
 				return 0
 				;;

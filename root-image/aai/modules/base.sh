@@ -884,7 +884,7 @@ base_netctl()
 
 	git_commit
 
-	SET_USER_GRUPS+=',network'
+#	SET_USER_GRUPS+=',network' # Pre-systemd group
 }
 
 base_netutils()
@@ -923,7 +923,7 @@ base_netutils()
 	SERVICES+=" 'sshd.service' '-' 'off'"
 	SERVICES+=" 'sshdgenkeys.service' '-' 'off'"
 
-	SET_USER_GRUPS+=',rfkill'
+	SET_USER_GRUPS+=',rfkill' # User group
 }
 
 base_ntp()
@@ -981,7 +981,7 @@ base_sudo()
 };
 ' "${NS_PATH}/etc/sudoers"
 
-	SET_USER_GRUPS+=',wheel'
+	SET_USER_GRUPS+=',wheel' # User group
 
 	git_commit
 }

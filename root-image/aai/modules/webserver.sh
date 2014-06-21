@@ -162,7 +162,7 @@ webserver_nginx()
 
 	git_commit
 
-	SET_USER_GRUPS+=',http'
+#	SET_USER_GRUPS+=',http' # System group
 }
 
 webserver_php()
@@ -248,5 +248,5 @@ webserver_apache()
 
 	git_commit
 
-	SET_USER_GRUPS+=',http'
+#	SET_USER_GRUPS+=',http' # System group
 }

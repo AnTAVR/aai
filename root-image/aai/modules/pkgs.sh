@@ -871,7 +871,7 @@ pkgs_virtualbox()
 	msg_log "$(gettext 'Настраиваю') /etc/modules-load.d/vbox.conf"
 	cat "${DBDIR}modules/etc/modules-load.d/vbox.conf" > "${NS_PATH}/etc/modules-load.d/vbox.conf"
 
-	SET_USER_GRUPS+=',vboxusers'
+	SET_USER_GRUPS+=',vboxusers' # Software group
 
 	git_commit
 }
@@ -906,7 +906,7 @@ pkgs_wireshark()
 	#extra
 	pacman_install "-S wireshark-gtk"
 
-	SET_USER_GRUPS+=',wireshark'
+	SET_USER_GRUPS+=',wireshark' # Software group
 
 	git_commit
 }

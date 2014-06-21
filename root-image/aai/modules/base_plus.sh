@@ -441,7 +441,7 @@ base_plus_install()
 #	mkdir -p "${NS_PATH}/etc/polkit-1/rules.d"
 	cat "${DBDIR}modules/etc/polkit-1/rules.d/10-enable-mount.rules" > "${NS_PATH}/etc/polkit-1/rules.d/10-enable-mount.rules"
 
-	SET_USER_GRUPS+=',storage'
+#	SET_USER_GRUPS+=',storage' # Pre-systemd group
 
 	git_commit
 #-------------------------------------------------------------------------------
@@ -758,7 +758,7 @@ base_plus_alsa()
 
 	git_commit
 
-	SET_USER_GRUPS+=',audio'
+#	SET_USER_GRUPS+=',audio' # Pre-systemd group
 }
 
 base_plus_alsa_timidity()
@@ -894,7 +894,7 @@ i session   required  pam_ecryptfs.so unwrap # eCryptfs
 
 	chroot_run groupadd ecryptfs
 
-	SET_USER_GRUPS+=',ecryptfs'
+	SET_USER_GRUPS+=',ecryptfs' # Software group
 
 	git_commit
 }
@@ -908,7 +908,7 @@ base_plus_cdemu()
 
 	SERVICES+=" 'cdemu-daemon.service' '-' 'off'"
 
-	SET_USER_GRUPS+=',cdemu'
+	SET_USER_GRUPS+=',cdemu' # Software group
 }
 
 base_plus_hd()
@@ -1060,7 +1060,7 @@ base_plus_vsftpd()
 	SERVICES+=" 'vsftpd-ssl.service' '-' 'off'"
 	SERVICES+=" 'vsftpd-ssl.socket' '-' 'off'"
 
-	SET_USER_GRUPS+=',ftp'
+#	SET_USER_GRUPS+=',ftp' # System group
 }
 
 base_plus_mlocate()

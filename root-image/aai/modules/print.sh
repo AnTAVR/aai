@@ -125,7 +125,7 @@ print_scan()
 
 	git_commit
 
-	SET_USER_GRUPS+=',scanner'
+#	SET_USER_GRUPS+=',scanner' # Pre-systemd group
 	SET_SCAN='sane'
 	set_global_var 'SET_SCAN' "${SET_SCAN}"
 	return 0
@@ -150,7 +150,7 @@ print_print()
 
 # 	git_commit
 
-	SET_USER_GRUPS+=',lp'
+#	SET_USER_GRUPS+=',lp' # Pre-systemd group
 	SET_PRINT='print'
 	set_global_var 'SET_PRINT' "${SET_PRINT}"
 	return 0
