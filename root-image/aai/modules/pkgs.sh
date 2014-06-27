@@ -96,7 +96,7 @@ pkgs_appset()
 
 	git_commit
 
-	chroot_run systemctl appset-helper.service
+	chroot_run systemctl enable appset-helper.service
 
 	git_commit
 }
@@ -770,8 +770,10 @@ pkgs_clamav()
 " "${NS_PATH}/etc/clamav/freshclam.conf"
 
 # Включаем ежедневное обновление базы по крону
-	cat "${DBDIR}modules/etc/cron.daily/freshclam" > "${NS_PATH}/etc/cron.daily/freshclam"
-	chmod +x "${NS_PATH}/etc/cron.daily/freshclam"
+	cat "${DBDIR}modules/usr/local/lib/systemd/system/freshclam-update.timer" > "${NS_PATH}/usr/local/lib/systemd/system/freshclam-update.timer"
+	cat "${DBDIR}modules/usr/local/lib/systemd/system/freshclam-update.service" > "${NS_PATH}/usr/local/lib/systemd/system/freshclam-update.service"
+
+	chroot_run systemctl enable freshclam-update.timer
 
 	msg_info "$(gettext 'Пожалуйста, подождите')..."
 	chroot_run freshclam

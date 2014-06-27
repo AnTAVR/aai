@@ -1,0 +1,9 @@
+[Unit]
+Description=freshclam database update for Clam AntiVirus
+
+[Service]
+Type=oneshot
+Nice=19
+IOSchedulingClass=best-effort
+IOSchedulingPriority=7
+ExecStart=/usr/bin/freshclam
