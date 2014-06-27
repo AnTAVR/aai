@@ -304,6 +304,15 @@ pkgs_kamoso()
 }
 APPS+=" 'kamoso' '$(gettext 'Запись с вебкамеры')' 'off'"
 
+pkgs_guvcview()
+{
+	#community
+	pacman_install "-S guvcview"
+
+	git_commit
+}
+APPS+=" 'guvcview' '$(gettext 'Запись с вебкамеры')' 'off'"
+
 pkgs_soundkonverter()
 {
 	#extra
