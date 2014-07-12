@@ -518,6 +518,7 @@ pkgs_firefox()
 # https://addons.mozilla.org/ru/firefox/addon/imacros-for-firefox/
 # https://addons.mozilla.org/ru/firefox/addon/validator/
 # https://addons.mozilla.org/ru/firefox/addon/kde-wallet-password-integratio/
+# исправление бага с kde-wallet-password-integratio. about:config javascript.options.baselinejit true => false
 # https://addons.mozilla.org/ru/firefox/addon/total-validator/
 # https://addons.mozilla.org/ru/firefox/addon/simple-markup-validator/
 # https://addons.mozilla.org/ru/firefox/addon/showip/
