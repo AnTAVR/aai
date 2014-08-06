@@ -1085,6 +1085,7 @@ base_plus_sensors()
 	pacman_install "-S dmidecode"
 	#community
 	pacman_install "-S i2c-tools"
+	pacman_install "-S read-edid"
 
 	git_commit
 
