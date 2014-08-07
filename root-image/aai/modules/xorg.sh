@@ -119,9 +119,9 @@ run_xorg()
 				set_global_var 'SET_XORG_APPS' "${APPS}"
 				set_global_var 'SET_XORG_LIBS' "${LIBS}"
 
-				xorg_xorg
-
 				xorg_video
+
+				xorg_xorg
 
 				for PKG in ${SET_XORG_INPUTS}
 				do
@@ -583,13 +583,28 @@ xorg_video()
 			;;
 		'catalyst')
 			msg_log "$(gettext 'Добавляю') catalyst > /etc/pacman.conf"
-			grep 'catalyst' "${NS_PATH}/etc/pacman.conf" > /dev/null && echo '' || echo '
-# Key-ID: 653C3094
-# pacman-key -r Key-ID
-# pacman-key --lsign-key Key-ID
-[catalyst]
-Server = http://catalyst.wirephire.com/repo/catalyst/$arch
-' >> "${NS_PATH}/etc/pacman.conf"
+			
+			
+			grep 'catalyst' "${NS_PATH}/etc/pacman.conf" > /dev/null && echo '' || sed -i '
+0,/^#\[testing\]/{
+//{
+	i # pacman-key -r Key-ID
+	i # pacman-key --lsign-key Key-ID
+	i
+	i # Key-ID: 653C3094
+	i [xorg115]
+	i Server = http://catalyst.wirephire.com/repo/xorg115/$arch
+	i ## Mirrors, if the primary server does not work or is too slow:
+	i #Server = http://mirror.rts-informatique.fr/archlinux-catalyst/repo/xorg115/$arch
+	i #Server = http://mirror.hactar.bz/Vi0L0/xorg115/$arch
+	i
+	i # Key-ID: 653C3094
+	i [catalyst]
+	i Server = http://catalyst.wirephire.com/repo/catalyst/$arch
+	i
+};
+};
+' "${NS_PATH}/etc/pacman.conf"
 
 			chroot_run pacman-key -r 653C3094
 			chroot_run pacman-key --lsign-key 653C3094
@@ -637,13 +652,26 @@ Server = http://catalyst.wirephire.com/repo/catalyst/$arch
 			;;
 		'catalyst_pxp')
 			msg_log "$(gettext 'Добавляю') catalyst > /etc/pacman.conf"
-			grep 'catalyst' "${NS_PATH}/etc/pacman.conf" > /dev/null && echo '' || echo '
-# Key-ID: 653C3094
-# pacman-key -r Key-ID
-# pacman-key --lsign-key Key-ID
-[catalyst]
-Server = http://catalyst.wirephire.com/repo/catalyst/$arch
-' >> "${NS_PATH}/etc/pacman.conf"
+			grep 'catalyst' "${NS_PATH}/etc/pacman.conf" > /dev/null && echo '' || sed -i '
+0,/^#\[testing\]/{
+//{
+	i # pacman-key -r Key-ID
+	i # pacman-key --lsign-key Key-ID
+	i
+	i # Key-ID: 653C3094
+	i [xorg115]
+	i Server = http://catalyst.wirephire.com/repo/xorg115/$arch
+	i ## Mirrors, if the primary server does not work or is too slow:
+	i #Server = http://mirror.rts-informatique.fr/archlinux-catalyst/repo/xorg115/$arch
+	i #Server = http://mirror.hactar.bz/Vi0L0/xorg115/$arch
+	i
+	i # Key-ID: 653C3094
+	i [catalyst]
+	i Server = http://catalyst.wirephire.com/repo/catalyst/$arch
+	i
+};
+};
+' "${NS_PATH}/etc/pacman.conf"
 
 			chroot_run pacman-key -r 653C3094
 			chroot_run pacman-key --lsign-key 653C3094
