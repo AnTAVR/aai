@@ -1067,6 +1067,8 @@ base_utils()
 	pacman_install "-S irssi"
 	pacman_install "-S rsync"
 	pacman_install "-S wget"
+	pacman_install "-S intel-ucode"
+
 	#community
 	pacman_install "-S darkhttpd"
 	pacman_install "-S elinks"
