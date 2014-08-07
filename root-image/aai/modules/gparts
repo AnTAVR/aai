@@ -6,49 +6,49 @@ get_part_txt()
 # https://github.com/karelzak/util-linux/blob/cbebd20d26b8d06e28e67a07050967668af7ce08/libfdisk/src/gpt.c
 # http://git.kernel.org/cgit/utils/util-linux/util-linux.git/tree/libfdisk/src/gpt.c
 	case "${1}" in
-		'0x00')
+		'0x00' | '0x0')
 			echo 'Empty'
 			;;
-		'0x01')
+		'0x01' | '0x1')
 			echo 'FAT12'
 			;;
-		'0x02')
+		'0x02' | '0x2')
 			echo 'XENIX root'
 			;;
-		'0x03')
+		'0x03' | '0x3')
 			echo 'XENIX usr'
 			;;
-		'0x04')
+		'0x04' | '0x4')
 			echo 'FAT16 <32M'
 			;;
 		'0x05' | '0x5')
 			echo 'Extended' 					# DOS 3.3+ extended partition
 			;;
-		'0x06')
+		'0x06' | '0x6')
 			echo 'FAT16'						# DOS 16-bit >=32M
 			;;
-		'0x07')
+		'0x07' | '0x7')
 			echo 'HPFS/NTFS/exFAT'				# OS/2 IFS, eg, HPFS or NTFS or QNX
 			;;
-		'0x08')
+		'0x08' | '0x8')
 			echo 'AIX'							# AIX boot (AIX -- PS/2 port) or SplitDrive
 			;;
-		'0x09')
+		'0x09' | '0x9')
 			echo 'AIX bootable'					# AIX data or Coherent
 			;;
-		'0x0a')
+		'0x0a' | '0xa')
 			echo 'OS/2 Boot Manager'			# OS/2 Boot Manager
 			;;
-		'0x0b')
+		'0x0b' | '0xb')
 			echo 'W95 FAT32'
 			;;
-		'0x0c')
+		'0x0c' | '0xc')
 			echo 'W95 FAT32 (LBA)'				#LBA really is `Extended Int 13h'
 			;;
-		'0x0e')
+		'0x0e' | '0xe')
 			echo 'W95 FAT16 (LBA)'
 			;;
-		'0x0f')
+		'0x0f' | '0xf')
 			echo 'W95 Ext`d (LBA)'
 			;;
 		'0x10')
@@ -544,7 +544,12 @@ get_part_txt()
 	esac
 }
 
-get_parts()
+get_part_param()
+{
+	sed -n "/^${1}=/{s/^${1}=//; p}" | sed "s/'//g"
+}
+
+get_part_info()
 {
 	local TEMP
 
@@ -554,27 +559,81 @@ get_parts()
 	local SIZE
 	local ROTA
 	local TRAN
+
 	local ID_PART_ENTRY_TYPE
 	local PART_TABLE_TYPE_NAME
 
-	lsblk -nsro NAME,MOUNTPOINT,RM,SIZE,ROTA,TRAN "${1}" | tr ' ' '\r' |
+	local ID_PART_ENTRY_NAME
+	local ID_FS_LABEL
+
+	lsblk -ndro NAME,MOUNTPOINT,RM,SIZE,ROTA,TRAN "${1}" | tr ' ' '\r' |
 	while IFS=$'\r' read -r NAME MOUNTPOINT RM SIZE ROTA TRAN
 	do
-		[[ -n "${NAME}" ]] && echo "NAME='${NAME}'"
-		[[ -n "${MOUNTPOINT}" ]] && echo "MOUNTPOINT='${MOUNTPOINT}'"
-		[[ -n "${RM}" ]] && echo "RM='${RM}'"
-		[[ -n "${SIZE}" ]] && echo "SIZE='${SIZE}'"
-		[[ -n "${ROTA}" ]] && echo "ROTA='${ROTA}'"
-		[[ -n "${TRAN}" ]] && echo "TRAN='${TRAN}'"
+		[[ -n "${NAME}" ]] && echo -e "NAME='${NAME}'"
+		[[ -n "${MOUNTPOINT}" ]] && echo -e "MOUNTPOINT='${MOUNTPOINT}'"
+		[[ -n "${RM}" ]] && echo -e "RM='${RM}'"
+		[[ -n "${SIZE}" ]] && echo -e "SIZE='${SIZE}'"
+		[[ -n "${ROTA}" ]] && echo -e "ROTA='${ROTA}'"
+		[[ -n "${TRAN}" ]] && echo -e "TRAN='${TRAN}'"
 
 		TEMP="$(udevadm info --query=property -x --name="${NAME}")"
-		ID_PART_ENTRY_TYPE="$(sed -n "/^ID_PART_ENTRY_TYPE=/{s/^ID_PART_ENTRY_TYPE=//; p}" <<< "${TEMP}" | sed "s/'//g")"
+		TEMP="$(echo -e "${TEMP}" | sed '
+s/ \{1,\}/ /g;
+s/^[ \t]*//;
+s/[ \t]*$//;
+')"
 
+		ID_PART_ENTRY_TYPE="$(get_part_param 'ID_PART_ENTRY_TYPE' <<< "${TEMP}")"
 		PART_TABLE_TYPE_NAME="$(get_part_txt "${ID_PART_ENTRY_TYPE}")"
 		[[ -n "${PART_TABLE_TYPE_NAME}" ]] && echo "PART_TABLE_TYPE_NAME='${PART_TABLE_TYPE_NAME}'"
+
+#		ID_FS_LABEL="$(get_part_param 'ID_FS_LABEL' <<< "${TEMP}")"
+#		if [[ ! -n "${ID_FS_LABEL}" ]]
+#		then
+#			ID_PART_ENTRY_NAME="$(get_part_param 'ID_PART_ENTRY_NAME' <<< "${TEMP}")"
+#			ID_FS_LABEL="${ID_PART_ENTRY_NAME}"
+#			[[ -n "${ID_FS_LABEL}" ]] && echo "ID_FS_LABEL='${ID_PART_ENTRY_NAME}'"
+#		fi
+
 		echo "${TEMP}"
-		echo '-----------------'
 	done
 }
 
-get_parts "${1}"
+lsblk -nro NAME | tr ' ' '\r' |
+while IFS=$'\r' read -r NAME
+do
+	TEMP="$(get_part_info "/dev/${NAME}")"
+	echo "${TEMP}"
+#	echo "NAME=$(get_part_param 'NAME' <<< "${TEMP}")"
+#	echo "ID_PART_ENTRY_NAME=$(get_part_param 'ID_PART_ENTRY_NAME' <<< "${TEMP}")"
+#	echo "ID_FS_LABEL=$(get_part_param 'ID_FS_LABEL' <<< "${TEMP}")"
+#
+	echo '-----------------'
+done
+runs()
+{
+	local NAME
+
+	local ITEMS="$(lsblk -nro NAME | tr ' ' '\r' |
+	while IFS=$'\r' read -r NAME
+	do
+		local TEMP="$(get_part_info "/dev/${NAME}")"
+
+		local MOUNTPOINT="$(get_part_param 'MOUNTPOINT' <<< "${TEMP}")"
+		local ID_FS_TYPE="$(get_part_param 'ID_FS_TYPE' <<< "${TEMP}")"
+
+		if [[ ! -n "${MOUNTPOINT}" ]] && [[ "${ID_FS_TYPE}" == 'swap' ]]
+		then
+			local DEVNAME="$(get_part_param 'DEVNAME' <<< "${TEMP}")"
+
+			local PART_TABLE_TYPE_NAME="$(get_part_param 'PART_TABLE_TYPE_NAME' <<< "${TEMP}")"
+			local SIZE="$(get_part_param 'SIZE' <<< "${TEMP}")"
+			local ID_FS_LABEL="$(get_part_param 'ID_FS_LABEL' <<< "${TEMP}")"
+
+			echo -e "'${DEVNAME}' '\"${PART_TABLE_TYPE_NAME}\" ${SIZE} ${ID_FS_TYPE} \"${ID_FS_LABEL}\"'"
+		fi
+
+	done)"
+	echo "${ITEMS}"
+}
+runs

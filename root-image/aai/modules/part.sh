@@ -190,10 +190,32 @@ part_part_dialog_dev()
 	HELP_TXT+="\n$(gettext 'Выберите устройство для разметки')\n"
 
 	local DEFAULT_ITEM="${P_DEV}"
-	local ITEMS="$(get_parts | sed '1,1d' | awk '
-$1 ~ /\/dev\/[hs]d[a-z]$/{
-print sq $1 sq " " sq $6 "\t" $9 sq
-}' sq=\')"
+
+	local NAME
+
+	ITEMS="$(lsblk -nro NAME | tr ' ' '\r' |
+	while IFS=$'\r' read -r NAME
+	do
+		local TEMP="$(get_part_info "/dev/${NAME}")"
+
+		local DEVTYPE="$(get_part_param 'DEVTYPE' <<< "${TEMP}")"
+		local ID_TYPE="$(get_part_param 'ID_TYPE' <<< "${TEMP}")"
+
+		if [[ "${DEVTYPE}" == 'disk' ]] && [[ "${ID_TYPE}" == 'disk' ]]
+		then
+			local DEVNAME="$(get_part_param 'DEVNAME' <<< "${TEMP}")"
+			local ID_BUS="$(get_part_param 'ID_BUS' <<< "${TEMP}")"
+			local ID_PART_TABLE_TYPE="$(get_part_param 'ID_PART_TABLE_TYPE' <<< "${TEMP}")"
+			local SIZE="$(get_part_param 'SIZE' <<< "${TEMP}")"
+			local ID_SERIAL="$(get_part_param 'ID_SERIAL' <<< "${TEMP}")"
+
+			echo -e "'${DEVNAME}' '${ID_BUS} ${ID_PART_TABLE_TYPE} ${SIZE} ${ID_SERIAL}'"
+		fi
+	done)"
+#	local ITEMS="$(get_part_info | sed '1,1d' | awk '
+#$1 ~ /\/dev\/[hs]d[a-z]$/{
+#print sq $1 sq " " sq $6 "\t" $9 sq
+#}' sq=\')"
 
 	RETURN="$(dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}" "--cancel-label '$(gettext 'Назад')'")"
 
@@ -652,11 +674,41 @@ part_mount_dialog_dev_part()
 
 	local DEFAULT_ITEM=' '
 
-	local ITEMS="$(get_parts | sed '1,1d' | awk '
-$1 ~ /\/dev\/[hs]d[a-z][0-9]/{
-if ($3 != "*" && $7 != "0x82" && $7 != "0x5")
-	print sq $1 sq " " sq $2 " " $6 "\t" $4 " " $5 "\t" $8 sq
-}' sq=\')"
+	local NAME
+
+	local ITEMS="$(lsblk -nro NAME | tr ' ' '\r' |
+	while IFS=$'\r' read -r NAME
+	do
+		local TEMP="$(get_part_info "/dev/${NAME}")"
+
+		local MOUNTPOINT="$(get_part_param 'MOUNTPOINT' <<< "${TEMP}")"
+		local ID_PART_ENTRY_TYPE="$(get_part_param 'ID_PART_ENTRY_TYPE' <<< "${TEMP}")"
+		local ID_FS_TYPE="$(get_part_param 'ID_FS_TYPE' <<< "${TEMP}")"
+
+		if [[ ! -n "${MOUNTPOINT}" ]] && [[ "${ID_FS_TYPE}" ]] && [[ "${ID_PART_ENTRY_TYPE}" ]] &&
+			[[ "${ID_PART_ENTRY_TYPE}" != '0x0' ]] && [[ "${ID_PART_ENTRY_TYPE}" != "0x82" ]] &&
+			[[ "${ID_PART_ENTRY_TYPE}" != "0x5" ]]
+		then
+			local DEVNAME="$(get_part_param 'DEVNAME' <<< "${TEMP}")"
+
+			local PART_TABLE_TYPE_NAME="$(get_part_param 'PART_TABLE_TYPE_NAME' <<< "${TEMP}")"
+			local SIZE="$(get_part_param 'SIZE' <<< "${TEMP}")"
+			local ID_FS_LABEL="$(get_part_param 'ID_FS_LABEL' <<< "${TEMP}")"
+
+			local ID_PART_ENTRY_FLAGS="$(get_part_param 'ID_PART_ENTRY_FLAGS' <<< "${TEMP}")"
+
+			local BOOTM=
+			[[ "${ID_PART_ENTRY_FLAGS}" == '0x8000000000000000' ]] || [[ "${ID_PART_ENTRY_FLAGS}" == '0x80' ]] && BOOTM='* '
+
+			echo -e "'${DEVNAME}' '${BOOTM}\"${PART_TABLE_TYPE_NAME}\" ${SIZE} ${ID_FS_TYPE} \"${ID_FS_LABEL}\"'"
+		fi
+
+	done)"
+#	local ITEMS="$(get_part_info | sed '1,1d' | awk '
+#$1 ~ /\/dev\/[hs]d[a-z][0-9]/{
+#if ($3 != "*" && $7 != "0x82" && $7 != "0x5")
+#	print sq $1 sq " " sq $2 " " $6 "\t" $4 " " $5 "\t" $8 sq
+#}' sq=\')"
 
 	if [[ ! -n "${ITEMS}" ]]
 	then
@@ -846,11 +898,34 @@ part_mount_dialog_swap_dev()
 	HELP_TXT+="\n$(gettext 'Выберите раздел для монтирования')\n"
 
 	local DEFAULT_ITEM=' '
-	local ITEMS="$(get_parts | sed '1,1d' | awk '
-$1 ~ /\/dev\/[hs]d[a-z][0-9]/{
-if ($3 != "*" && $7 == "0x82")
-	print sq $1 sq " " sq $2 " " $6 "\t" $4 " " $5 "\t" $8 sq
-}' sq=\')"
+
+	local NAME
+
+	local ITEMS="$(lsblk -nro NAME | tr ' ' '\r' |
+	while IFS=$'\r' read -r NAME
+	do
+		local TEMP="$(get_part_info "/dev/${NAME}")"
+
+		local MOUNTPOINT="$(get_part_param 'MOUNTPOINT' <<< "${TEMP}")"
+		local ID_FS_TYPE="$(get_part_param 'ID_FS_TYPE' <<< "${TEMP}")"
+
+		if [[ ! -n "${MOUNTPOINT}" ]] && [[ "${ID_FS_TYPE}" == 'swap' ]]
+		then
+			local DEVNAME="$(get_part_param 'DEVNAME' <<< "${TEMP}")"
+
+			local PART_TABLE_TYPE_NAME="$(get_part_param 'PART_TABLE_TYPE_NAME' <<< "${TEMP}")"
+			local SIZE="$(get_part_param 'SIZE' <<< "${TEMP}")"
+			local ID_FS_LABEL="$(get_part_param 'ID_FS_LABEL' <<< "${TEMP}")"
+
+			echo -e "'${DEVNAME}' '\"${PART_TABLE_TYPE_NAME}\" ${SIZE} ${ID_FS_TYPE} \"${ID_FS_LABEL}\"'"
+		fi
+
+	done)"
+#	local ITEMS="$(get_part_info | sed '1,1d' | awk '
+#$1 ~ /\/dev\/[hs]d[a-z][0-9]/{
+#if ($3 != "*" && $7 == "0x82")
+#	print sq $1 sq " " sq $2 " " $6 "\t" $4 " " $5 "\t" $8 sq
+#}' sq=\')"
 
 	if [[ ! -n "${ITEMS}" ]]
 	then
