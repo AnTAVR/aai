@@ -320,10 +320,10 @@ base_plus_install()
 #===============================================================================
 # Добавляем некоторые параметры ядра
 #===============================================================================
-	msg_log "$(gettext 'Настраиваю') /etc/sysctl.d/kernel.conf"
-	cat "${DBDIR}modules/etc/sysctl.d/kernel.conf" > "${NS_PATH}/etc/sysctl.d/kernel.conf"
-#     msg_log "$(gettext 'Настраиваю') /etc/sysctl.d/net.conf"
-#     cat "${DBDIR}modules/etc/sysctl.d/net.conf" > "${NS_PATH}/etc/sysctl.d/net.conf"
+	msg_log "$(gettext 'Настраиваю') /etc/sysctl.d/50-kernel.conf"
+	cat "${DBDIR}modules/etc/sysctl.d/50-kernel.conf" > "${NS_PATH}/etc/sysctl.d/50-kernel.conf"
+#     msg_log "$(gettext 'Настраиваю') /etc/sysctl.d/50-net.conf"
+#     cat "${DBDIR}modules/etc/sysctl.d/50-net.conf" > "${NS_PATH}/etc/sysctl.d/50-net.conf"
 #-------------------------------------------------------------------------------
 
 
