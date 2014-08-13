@@ -72,7 +72,7 @@ run_part()
 			*)
 				[[ "${RUN_PART}" ]] && return 0
 				return 1
-			;;
+				;;
 		esac
 	done
 }
@@ -200,7 +200,6 @@ part_part_dialog_dev()
 
 		local DEVTYPE="$(get_part_param 'DEVTYPE' <<< "${TEMP}")"
 		local ID_TYPE="$(get_part_param 'ID_TYPE' <<< "${TEMP}")"
-
 		if [[ "${DEVTYPE}" == 'disk' ]] && [[ "${ID_TYPE}" == 'disk' ]]
 		then
 			local DEVNAME="$(get_part_param 'DEVNAME' <<< "${TEMP}")"
@@ -212,10 +211,6 @@ part_part_dialog_dev()
 			echo -e "'${DEVNAME}' '${ID_BUS} ${ID_PART_TABLE_TYPE} ${SIZE} ${ID_SERIAL}'"
 		fi
 	done)"
-#	local ITEMS="$(get_part_info | sed '1,1d' | awk '
-#$1 ~ /\/dev\/[hs]d[a-z]$/{
-#print sq $1 sq " " sq $6 "\t" $9 sq
-#}' sq=\')"
 
 	RETURN="$(dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}" "--cancel-label '$(gettext 'Назад')'")"
 
@@ -393,7 +388,7 @@ part_format()
 				${MKF} ${MKF_OPT} "${P_PART}" 2>&1
 				partprobe "${P_PART}"
 				return 0
-			;;
+				;;
 		esac
 	done
 }
@@ -561,7 +556,7 @@ part_mount_home()
 #      ;;
 		'255') #ESC
 			return 1
-		;;
+			;;
 	esac
 
 	part_mount_test_fs "${PART}" || return 1
@@ -682,33 +677,34 @@ part_mount_dialog_dev_part()
 		local TEMP="$(get_part_info "/dev/${NAME}")"
 
 		local MOUNTPOINT="$(get_part_param 'MOUNTPOINT' <<< "${TEMP}")"
-		local ID_PART_ENTRY_TYPE="$(get_part_param 'ID_PART_ENTRY_TYPE' <<< "${TEMP}")"
-		local ID_FS_TYPE="$(get_part_param 'ID_FS_TYPE' <<< "${TEMP}")"
-
-		if [[ ! -n "${MOUNTPOINT}" ]] && [[ "${ID_FS_TYPE}" ]] && [[ "${ID_PART_ENTRY_TYPE}" ]] &&
-			[[ "${ID_PART_ENTRY_TYPE}" != '0x0' ]] && [[ "${ID_PART_ENTRY_TYPE}" != "0x82" ]] &&
-			[[ "${ID_PART_ENTRY_TYPE}" != "0x5" ]]
+		if [[ ! -n "${MOUNTPOINT}" ]]
 		then
-			local DEVNAME="$(get_part_param 'DEVNAME' <<< "${TEMP}")"
+			local ID_PART_ENTRY_TYPE="$(get_part_param 'ID_PART_ENTRY_TYPE' <<< "${TEMP}")"
+			if [[ -n "${ID_PART_ENTRY_TYPE}" ]]
+			then
+				case "${ID_PART_ENTRY_TYPE}" in
+					# список типов разделов которые нельзя использовать
+					'0x00' | '0x0' | '0x05' | '0x5' | '0x82')
+						;;
+					*)
+						local DEVNAME="$(get_part_param 'DEVNAME' <<< "${TEMP}")"
+						local ID_FS_TYPE="$(get_part_param 'ID_FS_TYPE' <<< "${TEMP}")"
+						local PART_TABLE_TYPE_NAME="$(get_part_param 'PART_TABLE_TYPE_NAME' <<< "${TEMP}")"
+						local SIZE="$(get_part_param 'SIZE' <<< "${TEMP}")"
+						local ID_FS_LABEL="$(get_part_param 'ID_FS_LABEL' <<< "${TEMP}")"
 
-			local PART_TABLE_TYPE_NAME="$(get_part_param 'PART_TABLE_TYPE_NAME' <<< "${TEMP}")"
-			local SIZE="$(get_part_param 'SIZE' <<< "${TEMP}")"
-			local ID_FS_LABEL="$(get_part_param 'ID_FS_LABEL' <<< "${TEMP}")"
+						local ID_PART_ENTRY_FLAGS="$(get_part_param 'ID_PART_ENTRY_FLAGS' <<< "${TEMP}")"
 
-			local ID_PART_ENTRY_FLAGS="$(get_part_param 'ID_PART_ENTRY_FLAGS' <<< "${TEMP}")"
+						local BOOTM=
+						[[ "${ID_PART_ENTRY_FLAGS}" == '0x8000000000000000' ]] || [[ "${ID_PART_ENTRY_FLAGS}" == '0x80' ]] && BOOTM='* '
 
-			local BOOTM=
-			[[ "${ID_PART_ENTRY_FLAGS}" == '0x8000000000000000' ]] || [[ "${ID_PART_ENTRY_FLAGS}" == '0x80' ]] && BOOTM='* '
-
-			echo -e "'${DEVNAME}' '${BOOTM}\"${PART_TABLE_TYPE_NAME}\" ${SIZE} ${ID_FS_TYPE} \"${ID_FS_LABEL}\"'"
+						echo -e "'${DEVNAME}' '${BOOTM}\"${PART_TABLE_TYPE_NAME}\" ${SIZE} ${ID_FS_TYPE} \"${ID_FS_LABEL}\"'"
+						;;
+				esac
+			fi
 		fi
 
 	done)"
-#	local ITEMS="$(get_part_info | sed '1,1d' | awk '
-#$1 ~ /\/dev\/[hs]d[a-z][0-9]/{
-#if ($3 != "*" && $7 != "0x82" && $7 != "0x5")
-#	print sq $1 sq " " sq $2 " " $6 "\t" $4 " " $5 "\t" $8 sq
-#}' sq=\')"
 
 	if [[ ! -n "${ITEMS}" ]]
 	then
@@ -907,25 +903,27 @@ part_mount_dialog_swap_dev()
 		local TEMP="$(get_part_info "/dev/${NAME}")"
 
 		local MOUNTPOINT="$(get_part_param 'MOUNTPOINT' <<< "${TEMP}")"
-		local ID_FS_TYPE="$(get_part_param 'ID_FS_TYPE' <<< "${TEMP}")"
-
-		if [[ ! -n "${MOUNTPOINT}" ]] && [[ "${ID_FS_TYPE}" == 'swap' ]]
+		if [[ ! -n "${MOUNTPOINT}" ]]
 		then
-			local DEVNAME="$(get_part_param 'DEVNAME' <<< "${TEMP}")"
+			local ID_PART_ENTRY_TYPE="$(get_part_param 'ID_PART_ENTRY_TYPE' <<< "${TEMP}")"
+			if [[ -n "${ID_PART_ENTRY_TYPE}" ]]
+			then
+				case "${ID_PART_ENTRY_TYPE}" in
+					# типы свап разделов
+					'0x82' | '0657fd6d-a4ab-43c4-84e5-0933c84b4f4f')
+						local DEVNAME="$(get_part_param 'DEVNAME' <<< "${TEMP}")"
 
-			local PART_TABLE_TYPE_NAME="$(get_part_param 'PART_TABLE_TYPE_NAME' <<< "${TEMP}")"
-			local SIZE="$(get_part_param 'SIZE' <<< "${TEMP}")"
-			local ID_FS_LABEL="$(get_part_param 'ID_FS_LABEL' <<< "${TEMP}")"
+						local PART_TABLE_TYPE_NAME="$(get_part_param 'PART_TABLE_TYPE_NAME' <<< "${TEMP}")"
+						local SIZE="$(get_part_param 'SIZE' <<< "${TEMP}")"
+						local ID_FS_LABEL="$(get_part_param 'ID_FS_LABEL' <<< "${TEMP}")"
 
-			echo -e "'${DEVNAME}' '\"${PART_TABLE_TYPE_NAME}\" ${SIZE} ${ID_FS_TYPE} \"${ID_FS_LABEL}\"'"
+						echo -e "'${DEVNAME}' '\"${PART_TABLE_TYPE_NAME}\" ${SIZE} \"${ID_FS_LABEL}\"'"
+						;;
+				esac
+			fi
 		fi
 
 	done)"
-#	local ITEMS="$(get_part_info | sed '1,1d' | awk '
-#$1 ~ /\/dev\/[hs]d[a-z][0-9]/{
-#if ($3 != "*" && $7 == "0x82")
-#	print sq $1 sq " " sq $2 " " $6 "\t" $4 " " $5 "\t" $8 sq
-#}' sq=\')"
 
 	if [[ ! -n "${ITEMS}" ]]
 	then

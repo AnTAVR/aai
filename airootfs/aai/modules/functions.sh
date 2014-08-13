@@ -777,7 +777,7 @@ get_part_info()
 	local ID_PART_ENTRY_NAME
 	local ID_FS_LABEL
 
-	lsblk -ndro NAME,MOUNTPOINT,RM,SIZE,ROTA,TRAN "${1}" | tr ' ' '\r' |
+	lsblk -ndaro NAME,MOUNTPOINT,RM,SIZE,ROTA,TRAN "${1}" | tr ' ' '\r' |
 	while IFS=$'\r' read -r NAME MOUNTPOINT RM SIZE ROTA TRAN
 	do
 		[[ -n "${NAME}" ]] && echo -e "NAME='${NAME}'"
