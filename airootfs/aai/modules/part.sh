@@ -683,8 +683,7 @@ part_mount_dialog_dev_part()
 			if [[ -n "${ID_PART_ENTRY_TYPE}" ]]
 			then
 				case "${ID_PART_ENTRY_TYPE}" in
-					# список типов разделов которые нельзя использовать
-					'0x00' | '0x0' | '0x05' | '0x5' | '0x82')
+					'0x00' | '0x0' | '0x05' | '0x5' | '0x82') # список типов разделов которые нельзя использовать
 						;;
 					*)
 						local DEVNAME="$(get_part_param 'DEVNAME' <<< "${TEMP}")"
