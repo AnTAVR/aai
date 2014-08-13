@@ -99,7 +99,7 @@ run_base_plus()
 	else
 		case "${TEMP}" in
 			'none')
-				echo ''
+#				echo ''
 				;;
 			*)
 				msg_log "$(gettext 'Настраиваю') /etc/modprobe.d/alsa-base.conf"
