@@ -386,50 +386,50 @@ xorg_xorg()
 #===============================================================================
 	#extra
 #xorg
-	pacman_install "-S xorg-server"
+	pacman_install '-S xorg-server'
 #xorg-server-utils
-	pacman_install "-S xorg-iceauth"
-	pacman_install "-S xorg-sessreg"
-	pacman_install "-S xorg-xbacklight"
-	pacman_install "-S xorg-xcmsdb"
-	pacman_install "-S xorg-xgamma"
-	pacman_install "-S xorg-xhost"
-	pacman_install "-S xorg-xinput"
-	pacman_install "-S xorg-xmodmap"
-	pacman_install "-S xorg-xrandr"
-	pacman_install "-S xorg-xrdb"
-	pacman_install "-S xorg-xrefresh"
-	pacman_install "-S xorg-xset"
-	pacman_install "-S xorg-xsetroot"
+	pacman_install '-S xorg-iceauth'
+	pacman_install '-S xorg-sessreg'
+	pacman_install '-S xorg-xbacklight'
+	pacman_install '-S xorg-xcmsdb'
+	pacman_install '-S xorg-xgamma'
+	pacman_install '-S xorg-xhost'
+	pacman_install '-S xorg-xinput'
+	pacman_install '-S xorg-xmodmap'
+	pacman_install '-S xorg-xrandr'
+	pacman_install '-S xorg-xrdb'
+	pacman_install '-S xorg-xrefresh'
+	pacman_install '-S xorg-xset'
+	pacman_install '-S xorg-xsetroot'
 #xorg-fonts
-	pacman_install "-S font-misc-ethiopic"
-	pacman_install "-S xorg-font-util"
-	pacman_install "-S xorg-fonts-encodings"
+	pacman_install '-S font-misc-ethiopic'
+	pacman_install '-S xorg-font-util'
+	pacman_install '-S xorg-fonts-encodings'
 
-	pacman_install "-S xorg-xinit"
-	pacman_install "-S xdg-user-dirs"
-	pacman_install "-S xdg-utils"
+	pacman_install '-S xorg-xinit'
+	pacman_install '-S xdg-user-dirs'
+	pacman_install '-S xdg-utils'
 
  #xorg
-#	pacman_install "-S xorg-docs"
-	pacman_install "-S xorg-fonts-100dpi"
-	pacman_install "-S xorg-fonts-75dpi"
+#	pacman_install '-S xorg-docs'
+	pacman_install '-S xorg-fonts-100dpi'
+	pacman_install '-S xorg-fonts-75dpi'
 
-	pacman_install "-S ttf-dejavu"
-	pacman_install "-S ttf-freefont"
-	pacman_install "-S ttf-linux-libertine"
-	pacman_install "-S ttf-bitstream-vera"
+	pacman_install '-S ttf-dejavu'
+	pacman_install '-S ttf-freefont'
+	pacman_install '-S ttf-linux-libertine'
+	pacman_install '-S ttf-bitstream-vera'
 
-	pacman_install "-S xscreensaver"
+	pacman_install '-S xscreensaver'
 
 	#community
-	pacman_install "-S ttf-liberation"
-	pacman_install "-S ttf-droid"
+	pacman_install '-S ttf-liberation'
+	pacman_install '-S ttf-droid'
 
-	pacman_install "-S xcursor-vanilla-dmz"
+	pacman_install '-S xcursor-vanilla-dmz'
 	#aur
-#	pacman_install "-S ttf-ms-fonts" 'yaourt'
-#	pacman_install "-S ttf-vista-fonts" 'yaourt'
+#	pacman_install '-S ttf-ms-fonts' 'yaourt'
+#	pacman_install '-S ttf-vista-fonts' 'yaourt'
 
 	git_commit
 
@@ -481,7 +481,7 @@ EndSection
 
 xorg_xterm()
 {
-	pacman_install "-S xterm"
+	pacman_install '-S xterm'
 
 	git_commit
 
@@ -516,17 +516,17 @@ xorg_video()
 	case "${SET_VIDEO_DRV}" in
 		'nvidia')
 			#aur
-#			pacman_install "-S nvidia-dkms" 'yaourt'
+#			pacman_install '-S nvidia-dkms' 'yaourt'
 			#extra
-			pacman_install "-S nvidia"
-			[[ "${SET_LTS}" ]] && pacman_install "-S nvidia-lts"
-			pacman_install "-S nvidia-utils"
-			pacman_install "-S nvidia-libgl"
-#			pacman_install "-S opencl-nvidia"
+			pacman_install '-S nvidia'
+			[[ "${SET_LTS}" ]] && pacman_install '-S nvidia-lts'
+			pacman_install '-S nvidia-utils'
+			pacman_install '-S nvidia-libgl'
+#			pacman_install '-S opencl-nvidia'
 			#multilib
-			pacman_install "-S lib32-nvidia-utils" 'yaourt'
-			pacman_install "-S lib32-nvidia-libgl" 'yaourt'
-#			pacman_install "-S lib32-opencl-nvidia" 'yaourt'
+			pacman_install '-S lib32-nvidia-utils' 'yaourt'
+			pacman_install '-S lib32-nvidia-libgl' 'yaourt'
+#			pacman_install '-S lib32-opencl-nvidia' 'yaourt'
 
 			#nvidia-xconfig
 
@@ -534,15 +534,15 @@ xorg_video()
 			;;
 		'nvidia304')
 			#extra
-			pacman_install "-S nvidia-304xx"
-			[[ "${SET_LTS}" ]] && pacman_install "-S nvidia-304xx-lts"
-			pacman_install "-S nvidia-304xx-utils"
-			pacman_install "-S nvidia-304xx-libgl"
-#			pacman_install "-S opencl-nvidia-304xx"
+			pacman_install '-S nvidia-304xx'
+			[[ "${SET_LTS}" ]] && pacman_install '-S nvidia-304xx-lts'
+			pacman_install '-S nvidia-304xx-utils'
+			pacman_install '-S nvidia-304xx-libgl'
+#			pacman_install '-S opencl-nvidia-304xx'
 			#multilib
-			pacman_install "-S lib32-nvidia-304xx-utils" 'yaourt'
-			pacman_install "-S lib32-nvidia-304xx-libgl" 'yaourt'
-#			pacman_install "-S lib32-opencl-nvidia-304xx" 'yaourt'
+			pacman_install '-S lib32-nvidia-304xx-utils' 'yaourt'
+			pacman_install '-S lib32-nvidia-304xx-libgl' 'yaourt'
+#			pacman_install '-S lib32-opencl-nvidia-304xx' 'yaourt'
 
 			#nvidia-xconfig
 
@@ -550,30 +550,30 @@ xorg_video()
 			;;
 		'optimus')
 			#extra
-			pacman_install "-S xf86-video-intel"
-			pacman_install "-S lib32-intel-dri" 'yaourt'
+			pacman_install '-S xf86-video-intel'
+			pacman_install '-S lib32-intel-dri' 'yaourt'
 
 			#community
-			pacman_install "-S bumblebee"
+			pacman_install '-S bumblebee'
 			#aur
-#			pacman_install "-S nvidia-dkms" 'yaourt'
+#			pacman_install '-S nvidia-dkms' 'yaourt'
 			#extra
-			pacman_install "-S nvidia"
-			[[ "${SET_LTS}" ]] && pacman_install "-S nvidia-lts"
-			pacman_install "-S nvidia-utils"
-			pacman_install "-S nvidia-libgl"
-#			pacman_install "-S opencl-nvidia"
+			pacman_install '-S nvidia'
+			[[ "${SET_LTS}" ]] && pacman_install '-S nvidia-lts'
+			pacman_install '-S nvidia-utils'
+			pacman_install '-S nvidia-libgl'
+#			pacman_install '-S opencl-nvidia'
 			#multilib
-			pacman_install "-S lib32-nvidia-utils" 'yaourt'
-			pacman_install "-S lib32-nvidia-libgl" 'yaourt'
-#			pacman_install "-S lib32-opencl-nvidia" 'yaourt'
+			pacman_install '-S lib32-nvidia-utils' 'yaourt'
+			pacman_install '-S lib32-nvidia-libgl' 'yaourt'
+#			pacman_install '-S lib32-opencl-nvidia' 'yaourt'
 
 			#community
-			pacman_install "-S virtualgl"
-			pacman_install "-S primus"
+			pacman_install '-S virtualgl'
+			pacman_install '-S primus'
 			#multilib
-			pacman_install "-S lib32-virtualgl" 'yaourt'
-			pacman_install "-S lib32-primus" 'yaourt'
+			pacman_install '-S lib32-virtualgl' 'yaourt'
+			pacman_install '-S lib32-primus' 'yaourt'
 
 			git_commit
 
@@ -612,16 +612,16 @@ xorg_video()
 			pacman_install '-Syy'
 
 			#aur
-			pacman_install "-S catalyst-utils" 'yaourt'
-			pacman_install "-S catalyst-libgl" 'yaourt'
-#			pacman_install "-S opencl-catalyst" 'yaourt'
+			pacman_install '-S catalyst-utils' 'yaourt'
+			pacman_install '-S catalyst-libgl' 'yaourt'
+#			pacman_install '-S opencl-catalyst' 'yaourt'
 
-			pacman_install "-S lib32-catalyst-utils" 'yaourt'
-			pacman_install "-S lib32-catalyst-libgl" 'yaourt'
-#			pacman_install "-S lib32-opencl-catalyst" 'yaourt'
+			pacman_install '-S lib32-catalyst-utils' 'yaourt'
+			pacman_install '-S lib32-catalyst-libgl' 'yaourt'
+#			pacman_install '-S lib32-opencl-catalyst' 'yaourt'
 
-			pacman_install "-S catalyst-hook" 'yaourt'
-			pacman_install "-S acpid"
+			pacman_install '-S catalyst-hook' 'yaourt'
+			pacman_install '-S acpid'
 
 			git_commit
 
@@ -679,16 +679,16 @@ xorg_video()
 			pacman_install '-Syy'
 
 			#aur
-			pacman_install "-S catalyst-utils-pxp" 'yaourt'
-			pacman_install "-S catalyst-libgl" 'yaourt'
-#			pacman_install "-S opencl-catalyst" 'yaourt'
+			pacman_install '-S catalyst-utils-pxp' 'yaourt'
+			pacman_install '-S catalyst-libgl' 'yaourt'
+#			pacman_install '-S opencl-catalyst' 'yaourt'
 
-			pacman_install "-S lib32-catalyst-utils-pxp" 'yaourt'
-			pacman_install "-S lib32-catalyst-libgl" 'yaourt'
-#			pacman_install "-S lib32-opencl-catalyst" 'yaourt'
+			pacman_install '-S lib32-catalyst-utils-pxp' 'yaourt'
+			pacman_install '-S lib32-catalyst-libgl' 'yaourt'
+#			pacman_install '-S lib32-opencl-catalyst' 'yaourt'
 
-			pacman_install "-S catalyst-hook" 'yaourt'
-			pacman_install "-S acpid"
+			pacman_install '-S catalyst-hook' 'yaourt'
+			pacman_install '-S acpid'
 
 			git_commit
 
@@ -700,55 +700,55 @@ xorg_video()
 			;;
 		'innotek')
 			#community
-			pacman_install "-S virtualbox-guest-modules"
-			pacman_install "-S virtualbox-guest-utils"
-			[[ "${SET_LTS}" ]] && pacman_install "-S virtualbox-host-modules-lts"
+			pacman_install '-S virtualbox-guest-modules'
+			pacman_install '-S virtualbox-guest-utils'
+			[[ "${SET_LTS}" ]] && pacman_install '-S virtualbox-host-modules-lts'
 
 			#extra
-			pacman_install "-S mesa-libgl"
+			pacman_install '-S mesa-libgl'
 			#multilib
-			pacman_install "-S lib32-mesa-libgl" 'yaourt'
+			pacman_install '-S lib32-mesa-libgl' 'yaourt'
 			;;
 		'xf86-video-ati')
-			pacman_install "-S xf86-video-ati"
-			pacman_install "-S lib32-ati-dri" 'yaourt'
+			pacman_install '-S xf86-video-ati'
+			pacman_install '-S lib32-ati-dri' 'yaourt'
 
 			#extra
-			pacman_install "-S mesa-libgl"
+			pacman_install '-S mesa-libgl'
 			#multilib
-			pacman_install "-S lib32-mesa-libgl" 'yaourt'
+			pacman_install '-S lib32-mesa-libgl' 'yaourt'
 			;;
 		'xf86-video-intel')
-			pacman_install "-S xf86-video-intel"
-			pacman_install "-S lib32-intel-dri" 'yaourt'
+			pacman_install '-S xf86-video-intel'
+			pacman_install '-S lib32-intel-dri' 'yaourt'
 
 			#extra
-			pacman_install "-S mesa-libgl"
+			pacman_install '-S mesa-libgl'
 			#multilib
-			pacman_install "-S lib32-mesa-libgl" 'yaourt'
+			pacman_install '-S lib32-mesa-libgl' 'yaourt'
 
 #			DRIVER='intel'
 			;;
 		'xf86-video-nouveau')
-			pacman_install "-S xf86-video-nouveau"
-			pacman_install "-S lib32-nouveau-dri" 'yaourt'
+			pacman_install '-S xf86-video-nouveau'
+			pacman_install '-S lib32-nouveau-dri' 'yaourt'
 
 			#extra
-			pacman_install "-S mesa-libgl"
+			pacman_install '-S mesa-libgl'
 			#multilib
-			pacman_install "-S lib32-mesa-libgl" 'yaourt'
+			pacman_install '-S lib32-mesa-libgl' 'yaourt'
 			;;
 		'xf86-video-nouveau xf86-video-intel')
-			pacman_install "-S xf86-video-nouveau"
-			pacman_install "-S lib32-nouveau-dri" 'yaourt'
+			pacman_install '-S xf86-video-nouveau'
+			pacman_install '-S lib32-nouveau-dri' 'yaourt'
 
-			pacman_install "-S xf86-video-intel"
-			pacman_install "-S lib32-intel-dri" 'yaourt'
+			pacman_install '-S xf86-video-intel'
+			pacman_install '-S lib32-intel-dri' 'yaourt'
 
 			#extra
-			pacman_install "-S mesa-libgl"
+			pacman_install '-S mesa-libgl'
 			#multilib
-			pacman_install "-S lib32-mesa-libgl" 'yaourt'
+			pacman_install '-S lib32-mesa-libgl' 'yaourt'
 			;;
 		*)
 			for PKG in ${SET_VIDEO_DRV}
@@ -757,18 +757,18 @@ xorg_video()
 			done
 
 			#extra
-			pacman_install "-S mesa-libgl"
+			pacman_install '-S mesa-libgl'
 			#multilib
-			pacman_install "-S lib32-mesa-libgl" 'yaourt'
+			pacman_install '-S lib32-mesa-libgl' 'yaourt'
 			;;
 	esac
 
 	git_commit
 
 	#extra
-	pacman_install "-S mesa-demos"
+	pacman_install '-S mesa-demos'
 	#multilib
-	pacman_install "-S lib32-mesa-demos" 'yaourt'
+	pacman_install '-S lib32-mesa-demos' 'yaourt'
 
 	git_commit
 

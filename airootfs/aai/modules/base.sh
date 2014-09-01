@@ -612,7 +612,7 @@ d;
 
 # Устанавливаем базовые пакеты
 	#core
-	pacman_install "-S base" 'nochroot'
+	pacman_install '-S base' 'nochroot'
 
 	SERVICES+=" 'cronie.service' '-' 'on'"
 	SERVICES+=" 'dmeventd.service' '-' 'off'"
@@ -657,8 +657,8 @@ s/^/#/;
 # Устанавливаем git
 #===============================================================================
 	#extra
-	pacman_install "-S git" 'nochroot'
-#	pacman_install "-S tk" 'nochroot'
+	pacman_install '-S git' 'nochroot'
+#	pacman_install '-S tk' 'nochroot'
 
 # Создаем git репозиторий /etc/
 	chroot_run bash -c "'cd /etc; git init; git config --global user.email root@${SET_HOSTNAME}; git config --global user.name root'"
@@ -868,19 +868,19 @@ s/^/#/;
 base_netctl()
 {
 	#core
-#	pacman_install "-S netctl" 'nochroot'
-	pacman_install "-S dialog" 'nochroot'
-	pacman_install "-S wpa_supplicant" 'nochroot'
-	pacman_install "-S wpa_actiond" 'nochroot'
-	pacman_install "-S dhclient" 'nochroot'
-	pacman_install "-S dhcpcd" 'nochroot'
-	pacman_install "-S ifenslave" 'nochroot'
-	pacman_install "-S bridge-utils" 'nochroot'
-	pacman_install "-S ppp" 'nochroot'
+#	pacman_install '-S netctl' 'nochroot'
+	pacman_install '-S dialog' 'nochroot'
+	pacman_install '-S wpa_supplicant' 'nochroot'
+	pacman_install '-S wpa_actiond' 'nochroot'
+	pacman_install '-S dhclient' 'nochroot'
+	pacman_install '-S dhcpcd' 'nochroot'
+	pacman_install '-S ifenslave' 'nochroot'
+	pacman_install '-S bridge-utils' 'nochroot'
+	pacman_install '-S ppp' 'nochroot'
 	# зависимость для wpa_actiond
-#	pacman_install "-S wpa_supplicant" 'nochroot'
+#	pacman_install '-S wpa_supplicant' 'nochroot'
 	#extra
-	pacman_install "-S ifplugd" 'nochroot'
+	pacman_install '-S ifplugd' 'nochroot'
 
 	git_commit
 
@@ -890,33 +890,33 @@ base_netctl()
 base_netutils()
 {
 	#core
-	pacman_install "-S dnsutils" 'nochroot'
-	pacman_install "-S pptpclient" 'nochroot'
-	pacman_install "-S openvpn" 'nochroot'
-	pacman_install "-S rp-pppoe" 'nochroot'
-	pacman_install "-S linux-atm" 'nochroot'
-	pacman_install "-S b43-fwcutter" 'nochroot'
-	pacman_install "-S crda" 'nochroot'
-	pacman_install "-S ipw2100-fw" 'nochroot'
-	pacman_install "-S ipw2200-fw" 'nochroot'
-	pacman_install "-S zd1211-firmware" 'nochroot'
-	pacman_install "-S rfkill" 'nochroot'
-	pacman_install "-S openssh" 'nochroot'
-	pacman_install "-S wireless_tools" 'nochroot'
-	pacman_install "-S traceroute" 'nochroot'
+	pacman_install '-S dnsutils' 'nochroot'
+	pacman_install '-S pptpclient' 'nochroot'
+	pacman_install '-S openvpn' 'nochroot'
+	pacman_install '-S rp-pppoe' 'nochroot'
+	pacman_install '-S linux-atm' 'nochroot'
+	pacman_install '-S b43-fwcutter' 'nochroot'
+	pacman_install '-S crda' 'nochroot'
+	pacman_install '-S ipw2100-fw' 'nochroot'
+	pacman_install '-S ipw2200-fw' 'nochroot'
+	pacman_install '-S zd1211-firmware' 'nochroot'
+	pacman_install '-S rfkill' 'nochroot'
+	pacman_install '-S openssh' 'nochroot'
+	pacman_install '-S wireless_tools' 'nochroot'
+	pacman_install '-S traceroute' 'nochroot'
 	#extra
-	pacman_install "-S openconnect" 'nochroot'
-	pacman_install "-S dnsmasq" 'nochroot'
-	pacman_install "-S ethtool" 'nochroot'
-	pacman_install "-S vpnc" 'nochroot'
-	pacman_install "-S gnu-netcat" 'nochroot'
-	pacman_install "-S nmap" 'nochroot'
-	pacman_install "-S speedtouch" 'nochroot'
-	pacman_install "-S tcpdump" 'nochroot'
+	pacman_install '-S openconnect' 'nochroot'
+	pacman_install '-S dnsmasq' 'nochroot'
+	pacman_install '-S ethtool' 'nochroot'
+	pacman_install '-S vpnc' 'nochroot'
+	pacman_install '-S gnu-netcat' 'nochroot'
+	pacman_install '-S nmap' 'nochroot'
+	pacman_install '-S speedtouch' 'nochroot'
+	pacman_install '-S tcpdump' 'nochroot'
 	#community
-	pacman_install "-S usb_modeswitch" 'nochroot'
-	pacman_install "-S xl2tpd" 'nochroot'
-	pacman_install "-S wvdial" 'nochroot'
+	pacman_install '-S usb_modeswitch' 'nochroot'
+	pacman_install '-S xl2tpd' 'nochroot'
+	pacman_install '-S wvdial' 'nochroot'
 
 	git_commit
 
@@ -929,7 +929,7 @@ base_netutils()
 base_ntp()
 {
 	#extra
-	pacman_install "-S ntp" 'nochroot'
+	pacman_install '-S ntp' 'nochroot'
 
 	git_commit
 
@@ -940,24 +940,24 @@ base_ntp()
 base_mc()
 {
 	#core
-	pacman_install "-S gpm"
+	pacman_install '-S gpm'
 	#extra
-	pacman_install "-S p7zip"
-	pacman_install "-S zip"
-	pacman_install "-S unrar"
-	pacman_install "-S smbclient"
-	pacman_install "-S mtools"
-	pacman_install "-S cvs"
-	pacman_install "-S aspell"
-	pacman_install "-S cdrkit"
-	pacman_install "-S cdparanoia"
+	pacman_install '-S p7zip'
+	pacman_install '-S zip'
+	pacman_install '-S unrar'
+	pacman_install '-S smbclient'
+	pacman_install '-S mtools'
+	pacman_install '-S cvs'
+	pacman_install '-S aspell'
+	pacman_install '-S cdrkit'
+	pacman_install '-S cdparanoia'
 	#community
-	pacman_install "-S mc"
-	pacman_install "-S unarj"
-	pacman_install "-S unace"
-	pacman_install "-S python2-pytz"
-	pacman_install "-S python2-boto"
-	pacman_install "-S cabextract"
+	pacman_install '-S mc'
+	pacman_install '-S unarj'
+	pacman_install '-S unace'
+	pacman_install '-S python2-pytz'
+	pacman_install '-S python2-boto'
+	pacman_install '-S cabextract'
 
 	git_commit
 }
@@ -965,7 +965,7 @@ base_mc()
 base_sudo()
 {
 	#core
-	pacman_install "-S sudo"
+	pacman_install '-S sudo'
 
 	git_commit
 
@@ -989,18 +989,18 @@ base_sudo()
 base_hd()
 {
 	#core
-	pacman_install "-S hdparm"
+	pacman_install '-S hdparm'
 	#extra
-	pacman_install "-S smartmontools"
-	pacman_install "-S parted"
-	pacman_install "-S gptfdisk"
-	pacman_install "-S fsarchiver"
-	pacman_install "-S testdisk"
-	pacman_install "-S ddrescue"
+	pacman_install '-S smartmontools'
+	pacman_install '-S parted'
+	pacman_install '-S gptfdisk'
+	pacman_install '-S fsarchiver'
+	pacman_install '-S testdisk'
+	pacman_install '-S ddrescue'
 	#community
-	pacman_install "-S partimage"
-	pacman_install "-S partclone"
-	pacman_install "-S clonezilla"
+	pacman_install '-S partimage'
+	pacman_install '-S partclone'
+	pacman_install '-S clonezilla'
 
 	git_commit
 
@@ -1011,17 +1011,17 @@ base_hd()
 base_fs()
 {
 	#core
-	pacman_install "-S mkinitcpio-nfs-utils"
-	pacman_install "-S nfs-utils"
-	pacman_install "-S nilfs-utils"
-	pacman_install "-S dmraid"
+	pacman_install '-S mkinitcpio-nfs-utils'
+	pacman_install '-S nfs-utils'
+	pacman_install '-S nilfs-utils'
+	pacman_install '-S dmraid'
 	#extra
-	pacman_install "-S dosfstools"
-	pacman_install "-S ntfs-3g"
-	pacman_install "-S f2fs-tools"
+	pacman_install '-S dosfstools'
+	pacman_install '-S ntfs-3g'
+	pacman_install '-S f2fs-tools'
 	#community
-	pacman_install "-S nbd"
-	pacman_install "-S exfat-utils"
+	pacman_install '-S nbd'
+	pacman_install '-S exfat-utils'
 
 	git_commit
 
@@ -1039,7 +1039,7 @@ base_fs()
 base_btrfs()
 {
 	#core
-	pacman_install "-S btrfs-progs"
+	pacman_install '-S btrfs-progs'
 
 	git_commit
 
@@ -1063,17 +1063,17 @@ base_btrfs()
 base_utils()
 {
 	#extra
-	pacman_install "-S lftp"
-	pacman_install "-S irssi"
-	pacman_install "-S rsync"
-	pacman_install "-S wget"
-	pacman_install "-S intel-ucode"
+	pacman_install '-S lftp'
+	pacman_install '-S irssi'
+	pacman_install '-S rsync'
+	pacman_install '-S wget'
+	pacman_install '-S intel-ucode'
 
 	#community
-	pacman_install "-S darkhttpd"
-	pacman_install "-S elinks"
-	pacman_install "-S js"
-	pacman_install "-S haveged"
+	pacman_install '-S darkhttpd'
+	pacman_install '-S elinks'
+	pacman_install '-S js'
+	pacman_install '-S haveged'
 
 	git_commit
 
@@ -1084,10 +1084,10 @@ base_utils()
 base_zsh()
 {
 	#extra
-	pacman_install "-S zsh"
-	pacman_install "-S grml-zsh-config"
+	pacman_install '-S zsh'
+	pacman_install '-S grml-zsh-config'
 	#community
-	pacman_install "-S zsh-syntax-highlighting"
+	pacman_install '-S zsh-syntax-highlighting'
 
 	git_commit
 
@@ -1106,7 +1106,7 @@ base_zsh()
 base_pkgfile()
 {
 	#community
-	pacman_install "-S pkgfile"
+	pacman_install '-S pkgfile'
 
 	git_commit
 

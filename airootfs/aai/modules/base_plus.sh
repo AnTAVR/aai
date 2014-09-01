@@ -252,7 +252,7 @@ base_plus_install()
 
 	set_global_var 'SET_LTS' "${SET_LTS}"
 
-	[[ "${SET_LTS}" ]] && pacman_install "-S linux-lts"
+	[[ "${SET_LTS}" ]] && pacman_install '-S linux-lts'
 #-------------------------------------------------------------------------------
 
 
@@ -435,7 +435,7 @@ base_plus_install()
 # Для монтирования не смонтированных дисков кликом мышки
 #===============================================================================
 	#extra
-	pacman_install "-S polkit"
+	pacman_install '-S polkit'
 
 	msg_log "$(gettext 'Настраиваю') /etc/polkit-1/rules.d/10-enable-mount.rules"
 #	mkdir -p "${NS_PATH}/etc/polkit-1/rules.d"
@@ -658,13 +658,13 @@ base_plus_install()
 base_plus_yaourt()
 {
 	#core
-	pacman_install "-S base-devel"
+	pacman_install '-S base-devel'
 	#extra
-	pacman_install "-S namcap"
-	pacman_install "-S ccache"
-	pacman_install "-S pkgstats"
+	pacman_install '-S namcap'
+	pacman_install '-S ccache'
+	pacman_install '-S pkgstats'
 	#community
-	pacman_install "-S upx"
+	pacman_install '-S upx'
 
 	git_commit
 
@@ -692,7 +692,7 @@ Server = http://repo.archlinux.fr/$arch
 	pacman_install '-Syy'
 
 	#aur
-	pacman_install "-S yaourt"
+	pacman_install '-S yaourt'
 
 	git_commit
 
@@ -728,10 +728,10 @@ Server = http://repo.archlinux.fr/$arch
 
 # aurvote Нужно зарегистрироваться https://aur.archlinux.org/account.php
 	#aur
-	pacman_install "-S aurvote" 'yaourt'
-	pacman_install "-S customizepkg" 'yaourt'
-	pacman_install "-S downgrade" 'yaourt'
-	pacman_install "-S pkgtools" 'yaourt'
+	pacman_install '-S aurvote' 'yaourt'
+	pacman_install '-S customizepkg' 'yaourt'
+	pacman_install '-S downgrade' 'yaourt'
+	pacman_install '-S pkgtools' 'yaourt'
 
 	git_commit
 #-------------------------------------------------------------------------------
@@ -740,7 +740,7 @@ Server = http://repo.archlinux.fr/$arch
 base_plus_aspell_loc()
 {
 	#extra
-	pacman_install "-S aspell-en"
+	pacman_install '-S aspell-en'
 	pacman_install "-S aspell-${SET_LOCAL%_*}" 'yaourt'
 
 	git_commit
@@ -749,15 +749,15 @@ base_plus_aspell_loc()
 base_plus_alsa()
 {
 	#extra
-	pacman_install "-S alsa-utils"
-	pacman_install "-S alsa-firmware"
-	pacman_install "-S alsa-plugins"
-	pacman_install "-S alsa-tools"
-#	pacman_install "-S fltk"
+	pacman_install '-S alsa-utils'
+	pacman_install '-S alsa-firmware'
+	pacman_install '-S alsa-plugins'
+	pacman_install '-S alsa-tools'
+#	pacman_install '-S fltk'
 	#community
-	pacman_install "-S ladspa-plugins"
+	pacman_install '-S ladspa-plugins'
 	#multilib
-	pacman_install "-S lib32-alsa-plugins" 'yaourt'
+	pacman_install '-S lib32-alsa-plugins' 'yaourt'
 
 	git_commit
 
@@ -767,9 +767,9 @@ base_plus_alsa()
 base_plus_alsa_timidity()
 {
 	#extra
-	pacman_install "-S timidity++"
+	pacman_install '-S timidity++'
 	#community
-	pacman_install "-S timidity-freepats"
+	pacman_install '-S timidity-freepats'
 
 	git_commit
 
@@ -785,9 +785,9 @@ base_plus_alsa_timidity()
 base_plus_alsa_jack2()
 {
 	#community
-	pacman_install "-S jack2"
+	pacman_install '-S jack2'
 	#multilib
-	pacman_install "-S lib32-jack2" 'yaourt'
+	pacman_install '-S lib32-jack2' 'yaourt'
 
 	git_commit
 
@@ -802,9 +802,9 @@ base_plus_alsa_jack2()
 base_plus_alsa_oss()
 {
 	#extra
-	pacman_install "-S alsa-oss"
+	pacman_install '-S alsa-oss'
 	#multilib
-	pacman_install "-S lib32-alsa-oss" 'yaourt'
+	pacman_install '-S lib32-alsa-oss' 'yaourt'
 
 	git_commit
 
@@ -819,7 +819,7 @@ base_plus_alsa_oss()
 base_plus_squashfs()
 {
 	#community
-	pacman_install "-S squashfs-tools"
+	pacman_install '-S squashfs-tools'
 #     pacman_install '-U /aai/db/my_pkgs/mkinitcpio-squashfs-usr-file-1.0-1-any.pkg.tar.xz' 'nochroot' 'noexit'
 
 	git_commit
@@ -854,10 +854,10 @@ base_plus_squashfs()
 base_plus_archives()
 {
 	#extra
-	pacman_install "-S unzip"
-	pacman_install "-S cpio"
+	pacman_install '-S unzip'
+	pacman_install '-S cpio'
 	#community
-	pacman_install "-S unshield"
+	pacman_install '-S unshield'
 
 	git_commit
 }
@@ -865,9 +865,9 @@ base_plus_archives()
 base_plus_fs()
 {
 	#extra
-	pacman_install "-S avfs"
+	pacman_install '-S avfs'
 	#community
-	pacman_install "-S fuse-exfat"
+	pacman_install '-S fuse-exfat'
 
 	git_commit
 }
@@ -875,8 +875,8 @@ base_plus_fs()
 base_plus_crypt()
 {
 	#community
-	pacman_install "-S encfs"
-	pacman_install "-S ecryptfs-utils"
+	pacman_install '-S encfs'
+	pacman_install '-S ecryptfs-utils'
 
 	git_commit
 
@@ -905,7 +905,7 @@ i session   required  pam_ecryptfs.so unwrap # eCryptfs
 base_plus_cdemu()
 {
 	#community
-	pacman_install "-S cdemu-client"
+	pacman_install '-S cdemu-client'
 
 	git_commit
 
@@ -917,12 +917,12 @@ base_plus_cdemu()
 base_plus_hd()
 {
 	#core
-	pacman_install "-S sdparm"
+	pacman_install '-S sdparm'
 	#extra
-	pacman_install "-S gpart"
+	pacman_install '-S gpart'
 	#community
-	pacman_install "-S extundelete"
-	pacman_install "-S anyfs-tools"
+	pacman_install '-S extundelete'
+	pacman_install '-S anyfs-tools'
 
 	git_commit
 }
@@ -943,15 +943,15 @@ base_plus_man_pages_loc()
 base_plus_laptop()
 {
 	#extra
-	pacman_install "-S upower"
-#	pacman_install "-S bluez"
-#	pacman_install "-S bluez-firmware"
+	pacman_install '-S upower'
+#	pacman_install '-S bluez'
+#	pacman_install '-S bluez-firmware'
 	#community
-#	pacman_install "-S laptop-mode-tools" #Переехало в AUR замена может быть tlp-rdw
-	pacman_install "-S apcupsd"
-	pacman_install "-S powertop"
-#	pacman_install "-S acpi"
-#	pacman_install "-S acpid"
+#	pacman_install '-S laptop-mode-tools' #Переехало в AUR замена может быть tlp-rdw
+	pacman_install '-S apcupsd'
+	pacman_install '-S powertop'
+#	pacman_install '-S acpi'
+#	pacman_install '-S acpid'
 
 	git_commit
 
@@ -964,25 +964,25 @@ base_plus_laptop()
 base_plus_utils()
 {
 	#extra
-	pacman_install "-S beep"
-	pacman_install "-S whois"
-	pacman_install "-S rtkit"
-	pacman_install "-S irqbalance"
-	pacman_install "-S fbset"
-	pacman_install "-S htop"
-	pacman_install "-S lsof"
-	pacman_install "-S strace"
-	pacman_install "-S bc"
+	pacman_install '-S beep'
+	pacman_install '-S whois'
+	pacman_install '-S rtkit'
+	pacman_install '-S irqbalance'
+	pacman_install '-S fbset'
+	pacman_install '-S htop'
+	pacman_install '-S lsof'
+	pacman_install '-S strace'
+	pacman_install '-S bc'
 	#community
-	pacman_install "-S collectd"
-	pacman_install "-S audit"
-	pacman_install "-S lshw"
-	pacman_install "-S hwinfo"
-	pacman_install "-S flashrom"
-	pacman_install "-S grc"
-	pacman_install "-S chrony"
-	pacman_install "-S mcelog"
-	pacman_install "-S iotop"
+	pacman_install '-S collectd'
+	pacman_install '-S audit'
+	pacman_install '-S lshw'
+	pacman_install '-S hwinfo'
+	pacman_install '-S flashrom'
+	pacman_install '-S grc'
+	pacman_install '-S chrony'
+	pacman_install '-S mcelog'
+	pacman_install '-S iotop'
 
 	git_commit
 
@@ -999,12 +999,12 @@ base_plus_utils()
 base_plus_linux_tools()
 {
 	#community
-#	pacman_install "-S linux-tools"
-	pacman_install "-S cpupower"
-	pacman_install "-S libtraceevent"
-	pacman_install "-S perf"
-	pacman_install "-S usbip"
-	pacman_install "-S x86_energy_perf_policy"
+#	pacman_install '-S linux-tools'
+	pacman_install '-S cpupower'
+	pacman_install '-S libtraceevent'
+	pacman_install '-S perf'
+	pacman_install '-S usbip'
+	pacman_install '-S x86_energy_perf_policy'
 
 	git_commit
 
@@ -1015,8 +1015,8 @@ base_plus_linux_tools()
 base_plus_lirc()
 {
 	#extra
-	pacman_install "-S lirc"
-#	pacman_install "-S lirc-utils"
+	pacman_install '-S lirc'
+#	pacman_install '-S lirc-utils'
 
 	git_commit
 #http://lirc.org/html/table.html
@@ -1032,9 +1032,9 @@ base_plus_postfix()
 {
 #  http://www.hypexr.org/linux_mail_server.php#postfix_install
 	#extra
-	pacman_install "-S postfix"
-	pacman_install "-S dovecot"
-#	pacman_install "-S cyrus-sasl"
+	pacman_install '-S postfix'
+	pacman_install '-S dovecot'
+#	pacman_install '-S cyrus-sasl'
 
 	git_commit
 
@@ -1050,7 +1050,7 @@ base_plus_postfix()
 base_plus_vsftpd()
 {
 	#community
-	pacman_install "-S vsftpd"
+	pacman_install '-S vsftpd'
 
 	git_commit
 
@@ -1069,7 +1069,7 @@ base_plus_vsftpd()
 base_plus_mlocate()
 {
 	#core
-	pacman_install "-S mlocate"
+	pacman_install '-S mlocate'
 
 	git_commit
 
@@ -1081,11 +1081,11 @@ base_plus_mlocate()
 base_plus_sensors()
 {
 	#extra
-	pacman_install "-S lm_sensors"
-	pacman_install "-S dmidecode"
+	pacman_install '-S lm_sensors'
+	pacman_install '-S dmidecode'
 	#community
-	pacman_install "-S i2c-tools"
-	pacman_install "-S read-edid"
+	pacman_install '-S i2c-tools'
+	pacman_install '-S read-edid'
 
 	git_commit
 
@@ -1103,7 +1103,7 @@ base_plus_sensors()
 # base_plus_preload()
 # {
 # 	#community
-# 	pacman_install "-S preload"
+# 	pacman_install '-S preload'
 # 
 # 	git_commit
 # 
@@ -1113,7 +1113,7 @@ base_plus_sensors()
 base_plus_aria2()
 {
 	#community
-	pacman_install "-S aria2"
+	pacman_install '-S aria2'
 
 	git_commit
 
@@ -1135,22 +1135,22 @@ base_plus_aria2()
 base_plus_net()
 {
 	#core
-	pacman_install "-S net-tools"
-	pacman_install "-S isdn4k-utils"
-	pacman_install "-S iw"
-	pacman_install "-S wireless-regdb"
-	pacman_install "-S avahi"
+	pacman_install '-S net-tools'
+	pacman_install '-S isdn4k-utils'
+	pacman_install '-S iw'
+	pacman_install '-S wireless-regdb'
+	pacman_install '-S avahi'
 	#extra
-	pacman_install "-S modemmanager"
-	pacman_install "-S nss-mdns"
-	pacman_install "-S mtr"
-#	pacman_install "-S samba"
+	pacman_install '-S modemmanager'
+	pacman_install '-S nss-mdns'
+	pacman_install '-S mtr'
+#	pacman_install '-S samba'
 	#community
-	pacman_install "-S openresolv"
-	pacman_install "-S arp-scan"
-	pacman_install "-S dsniff"
-	pacman_install "-S tor"
-#	pacman_install "-S ntop"# убрал потому что тянет графику
+	pacman_install '-S openresolv'
+	pacman_install '-S arp-scan'
+	pacman_install '-S dsniff'
+	pacman_install '-S tor'
+#	pacman_install '-S ntop' # убрал потому что тянет графику
  
 	git_commit
 
@@ -1164,7 +1164,7 @@ base_plus_net()
 base_plus_iptables()
 {
 	#core
-	pacman_install "-S iptables"
+	pacman_install '-S iptables'
 
 	git_commit
 
@@ -1184,8 +1184,8 @@ base_plus_iptables()
 base_plus_ufw()
 {
 	#community
-	pacman_install "-S ufw"
-	pacman_install "-S ufw-extras"
+	pacman_install '-S ufw'
+	pacman_install '-S ufw-extras'
 
 	git_commit
 
@@ -1215,7 +1215,7 @@ base_plus_ufw()
 # base_plus_timestamp()
 # {
 # 	#extra
-# 	pacman_install "-S python2-gobject"
+# 	pacman_install '-S python2-gobject'
 # 
 # 	git_commit
 # 
@@ -1239,10 +1239,10 @@ base_plus_ufw()
 base_plus_dkms()
 {
 	#core
-	pacman_install "-S linux-headers"
-	[[ "${SET_LTS}" ]] && pacman_install "-S linux-lts-headers"
+	pacman_install '-S linux-headers'
+	[[ "${SET_LTS}" ]] && pacman_install '-S linux-lts-headers'
 	#community
-	pacman_install "-S dkms"
+	pacman_install '-S dkms'
 
 	git_commit
 

@@ -131,13 +131,13 @@ de_openbox()
 # Устанавливаем openbox
 #===============================================================================
 	#community
-	pacman_install "-S obconf"
-	pacman_install "-S obmenu"
-	pacman_install "-S openbox"
-	pacman_install "-S openbox-themes"
+	pacman_install '-S obconf'
+	pacman_install '-S obmenu'
+	pacman_install '-S openbox'
+	pacman_install '-S openbox-themes'
 	#aur
-	pacman_install "-S obkey-git" 'yaourt'
-#	pacman_install "-S 3ddesktop" 'yaourt'
+	pacman_install '-S obkey-git' 'yaourt'
+#	pacman_install '-S 3ddesktop' 'yaourt'
 
 	git_commit
 
@@ -173,7 +173,7 @@ s/<name>Clearlooks<\/name>/<name>Simple-Aubergine<\/name>/;
 	git_commit
 
 	#aur
-	pacman_install "-S archlinux-artwork" 'yaourt'
+	pacman_install '-S archlinux-artwork' 'yaourt'
 
 	git_commit
 
@@ -181,10 +181,10 @@ s/<name>Clearlooks<\/name>/<name>Simple-Aubergine<\/name>/;
 # Устанавливаем archlinux-xdg-menu
 #===============================================================================
 	#community
-	pacman_install "-S archlinux-xdg-menu"
+	pacman_install '-S archlinux-xdg-menu'
 	#aur
-#	pacman_install "-S arch-bubble-icons" 'yaourt'
-#	pacman_install "-S 3ddesktop" 'yaourt'
+#	pacman_install '-S arch-bubble-icons' 'yaourt'
+#	pacman_install '-S 3ddesktop' 'yaourt'
 
 	git_commit
 
@@ -210,9 +210,9 @@ s/<name>Clearlooks<\/name>/<name>Simple-Aubergine<\/name>/;
 # Устанавливаем oblogout
 #===============================================================================
 	#community
-	pacman_install "-S oblogout"
+	pacman_install '-S oblogout'
 	#aur
-#	pacman_install "-S obsession" 'yaourt'
+#	pacman_install '-S obsession' 'yaourt'
 
 	git_commit
 #-------------------------------------------------------------------------------
@@ -222,7 +222,7 @@ s/<name>Clearlooks<\/name>/<name>Simple-Aubergine<\/name>/;
 # Устанавливаем compton
 #===============================================================================
 	#aur
-	pacman_install "-S compton-git" 'yaourt'
+	pacman_install '-S compton-git' 'yaourt'
 
 	git_commit
 
@@ -245,9 +245,9 @@ s/<name>Clearlooks<\/name>/<name>Simple-Aubergine<\/name>/;
 # Устанавливаем notify-osd
 #===============================================================================
 	#extra
-#	pacman_install "-S xfce4-notifyd"
+#	pacman_install '-S xfce4-notifyd'
 	#community
-	pacman_install "-S notify-osd"
+	pacman_install '-S notify-osd'
 
 	git_commit
 
@@ -261,9 +261,9 @@ s/<name>Clearlooks<\/name>/<name>Simple-Aubergine<\/name>/;
 # Устанавливаем nitrogen
 #===============================================================================
 	#extra
-	pacman_install "-S nitrogen"
+	pacman_install '-S nitrogen'
 	#community
-	pacman_install "-S archlinux-wallpaper"
+	pacman_install '-S archlinux-wallpaper'
 
 	git_commit
 
@@ -284,9 +284,9 @@ s/<name>Clearlooks<\/name>/<name>Simple-Aubergine<\/name>/;
 # Устанавливаем tint2
 #===============================================================================
 	#community
-	pacman_install "-S tint2"
+	pacman_install '-S tint2'
 	#aur
-#	pacman_install "-S tintwizard" 'yaourt'
+#	pacman_install '-S tintwizard' 'yaourt'
 
 	git_commit
 
@@ -306,7 +306,7 @@ s/<name>Clearlooks<\/name>/<name>Simple-Aubergine<\/name>/;
 # Устанавливаем stalonetray
 #===============================================================================
 	#community
-	pacman_install "-S stalonetray"
+	pacman_install '-S stalonetray'
 
 	git_commit
 
@@ -331,7 +331,7 @@ s/<noStrut>no<\/noStrut>/<noStrut>yes<\/noStrut>/;
 # Устанавливаем orage
 #===============================================================================
 	#extra
-	pacman_install "-S orage"
+	pacman_install '-S orage'
 
 
 #-------------------------------------------------------------------------------
@@ -341,7 +341,7 @@ s/<noStrut>no<\/noStrut>/<noStrut>yes<\/noStrut>/;
 # Устанавливаем volumeicon
 #===============================================================================
 	#community
-	pacman_install "-S volumeicon"
+	pacman_install '-S volumeicon'
 
 	git_commit
 
@@ -361,7 +361,7 @@ s/<noStrut>no<\/noStrut>/<noStrut>yes<\/noStrut>/;
 # Устанавливаем numlockx
 #===============================================================================
 	#community
-	pacman_install "-S numlockx"
+	pacman_install '-S numlockx'
 
 	git_commit
 
@@ -376,7 +376,7 @@ s/<noStrut>no<\/noStrut>/<noStrut>yes<\/noStrut>/;
 # Устанавливаем gmrun
 #===============================================================================
 	#community
-	pacman_install "-S gmrun"
+	pacman_install '-S gmrun'
 
 	git_commit
 
@@ -397,7 +397,7 @@ s/<noStrut>no<\/noStrut>/<noStrut>yes<\/noStrut>/;
 # Устанавливаем conky
 #===============================================================================
 	#extra
-	pacman_install "-S conky"
+	pacman_install '-S conky'
 
 	git_commit
 
@@ -430,7 +430,7 @@ s/<noStrut>no<\/noStrut>/<noStrut>yes<\/noStrut>/;
 # Устанавливаем sbxkb
 #===============================================================================
 	#community
-	pacman_install "-S sbxkb"
+	pacman_install '-S sbxkb'
 
 	git_commit
 
@@ -456,7 +456,7 @@ s/<noStrut>no<\/noStrut>/<noStrut>yes<\/noStrut>/;
 de_lxde()
 {
 	#community
-	pacman_install "-S lxde"
+	pacman_install '-S lxde'
 
 	git_commit
 
@@ -476,8 +476,8 @@ de_lxde()
 de_xfce4()
 {
 	#extra
-	pacman_install "-S xfce4"
-	pacman_install "-S xfce4-goodies"
+	pacman_install '-S xfce4'
+	pacman_install '-S xfce4-goodies'
 
 	git_commit
 
@@ -498,7 +498,7 @@ de_xfce4()
 de_e17()
 {
 	#extra
-	pacman_install "-S enlightenment17"
+	pacman_install '-S enlightenment17'
 
 	git_commit
 
@@ -519,14 +519,14 @@ de_e17()
 de_kde()
 {
 	#extra
-	pacman_install "-S kde"
-#	pacman_install "-S kdebase-plasma"
-#	pacman_install "-S kde-wallpapers"
-#	pacman_install "-S kdeartwork"
-	pacman_install "-S oxygen-gtk2"
-	pacman_install "-S oxygen-gtk3"
+	pacman_install '-S kde'
+#	pacman_install '-S kdebase-plasma'
+#	pacman_install '-S kde-wallpapers'
+#	pacman_install '-S kdeartwork'
+	pacman_install '-S oxygen-gtk2'
+	pacman_install '-S oxygen-gtk3'
 	#community
-	pacman_install "-S kde-gtk-config"
+	pacman_install '-S kde-gtk-config'
 	#extra
 	pacman_install "-S kde-l10n-${SET_LOCAL%_*}" 'yaourt'
 
@@ -553,9 +553,9 @@ de_kde()
 	git_commit
 
 #	#extra
-#	pacman_install "-S archlinux-themes-kdm"
+#	pacman_install '-S archlinux-themes-kdm'
 #	#aur
-#	pacman_install "-S ksplash-archpaint2" 'yaourt'
+#	pacman_install '-S ksplash-archpaint2' 'yaourt'
 
 #	git_commit
 
@@ -584,26 +584,26 @@ de_kde()
 de_kde_mini()
 {
 	#extra
-	pacman_install "-S kdebase-workspace"
-	pacman_install "-S kde-wallpapers"
-	pacman_install "-S appmenu-qt"
+	pacman_install '-S kdebase-workspace'
+	pacman_install '-S kde-wallpapers'
+	pacman_install '-S appmenu-qt'
 # @todo а нужны ли эти strigi?
-#	pacman_install "-S kdegraphics-strigi-analyzer"
-#	pacman_install "-S kdenetwork-strigi-analyzers"
-#	pacman_install "-S kdesdk-strigi-analyzers"
-	pacman_install "-S kdebase-plasma"
-	pacman_install "-S kdemultimedia-kmix"
-	pacman_install "-S oxygen-gtk2"
-	pacman_install "-S oxygen-gtk3"
-	pacman_install "-S kdeutils-kcalc"
-	pacman_install "-S kdeutils-kgpg"
-	pacman_install "-S kdeadmin"
-	pacman_install "-S kdeadmin-kcron"
-	pacman_install "-S kdeadmin-ksystemlog"
-	pacman_install "-S kdeadmin-kuser"
-	pacman_install "-S kdebase-kdepasswd"
+#	pacman_install '-S kdegraphics-strigi-analyzer'
+#	pacman_install '-S kdenetwork-strigi-analyzers'
+#	pacman_install '-S kdesdk-strigi-analyzers'
+	pacman_install '-S kdebase-plasma'
+	pacman_install '-S kdemultimedia-kmix'
+	pacman_install '-S oxygen-gtk2'
+	pacman_install '-S oxygen-gtk3'
+	pacman_install '-S kdeutils-kcalc'
+	pacman_install '-S kdeutils-kgpg'
+	pacman_install '-S kdeadmin'
+	pacman_install '-S kdeadmin-kcron'
+	pacman_install '-S kdeadmin-ksystemlog'
+	pacman_install '-S kdeadmin-kuser'
+	pacman_install '-S kdebase-kdepasswd'
 	#community
-	pacman_install "-S kde-gtk-config"
+	pacman_install '-S kde-gtk-config'
 	#extra
 	pacman_install "-S kde-l10n-${SET_LOCAL%_*}" 'yaourt'
 
@@ -647,12 +647,12 @@ de_kde_mini()
 # Устанавливаем gnome
 de_gnome()
 {
-# 	pacman_install "-Rnsc bluez" 'noneeded' 'noexit'
+# 	pacman_install '-Rnsc bluez' 'noneeded' 'noexit'
 
 	#extra
-	pacman_install "-S gnome"
-	pacman_install "-S gnome-extra"
-	pacman_install "-S gnome-tweak-tool"
+	pacman_install '-S gnome'
+	pacman_install '-S gnome-extra'
+	pacman_install '-S gnome-tweak-tool'
 
 	git_commit
 
@@ -671,7 +671,7 @@ de_gnome()
 # Устанавливаем mate
 de_mate()
 {
-# 	pacman_install "-Rnsc bluez" 'noneeded' 'noexit'
+# 	pacman_install '-Rnsc bluez' 'noneeded' 'noexit'
 
 # 	msg_log "$(gettext 'Добавляю') mate > /etc/pacman.conf"
 # 	grep 'mate' "${NS_PATH}/etc/pacman.conf" > /dev/null && echo '' || echo '
@@ -684,8 +684,8 @@ de_mate()
 # 	pacman_install '-Syy'
 
 	#community
-	pacman_install "-S mate"
-	pacman_install "-S mate-extra"
+	pacman_install '-S mate'
+	pacman_install '-S mate-extra'
 
 	git_commit
 
@@ -705,13 +705,13 @@ de_mate()
 # Устанавливаем cinnamon
 de_cinnamon()
 {
-# 	pacman_install "-Rnsc bluez" 'noneeded' 'noexit'
+# 	pacman_install '-Rnsc bluez' 'noneeded' 'noexit'
 
 	#community
-	pacman_install "-S cinnamon"
-	pacman_install "-S cinnamon-control-center"
-	pacman_install "-S cinnamon-screensaver"
-	pacman_install "-S nemo"
+	pacman_install '-S cinnamon'
+	pacman_install '-S cinnamon-control-center'
+	pacman_install '-S cinnamon-screensaver'
+	pacman_install '-S nemo'
 
 	git_commit
 
@@ -733,7 +733,7 @@ de_cinnamon()
 de_awesome()
 {
 	#community
-	pacman_install "-S awesome"
+	pacman_install '-S awesome'
 
 	git_commit
 
@@ -754,8 +754,8 @@ de_awesome()
 # pkgs_kdesdk()
 # {
 # 	#extra
-# 	pacman_install "-S jre7-openjdk"
-# 	pacman_install "-S kdesdk"
+# 	pacman_install '-S jre7-openjdk'
+# 	pacman_install '-S kdesdk'
 # 	#extra
 # 	pacman_install "-S kde-l10n-${SET_LOCAL%_*}" 'yaourt'
 

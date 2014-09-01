@@ -246,11 +246,11 @@ bootloader_grub_bios()
 # Устанавливаем grub
 #===============================================================================
 	#core
-	pacman_install "-S grub"
+	pacman_install '-S grub'
 	#extra
-	pacman_install "-S memtest86+"
+	pacman_install '-S memtest86+'
 	#community
-	pacman_install "-S os-prober"
+	pacman_install '-S os-prober'
 
 	git_commit
 
@@ -381,7 +381,7 @@ bootloader_grub_bios()
 		case "${?}" in
 			'0') #Yes
 				#aur
-				pacman_install "-S grub2-theme-archxion" 'yaourt'
+				pacman_install '-S grub2-theme-archxion' 'yaourt'
 
 				git_commit
 
@@ -429,22 +429,22 @@ bootloader_grub_efi()
 	CONSOLE_V_XxYxD="${DEF_CONSOLE_V_XxYxD}"
 
 	#core
-	pacman_install "-S grub"
-	pacman_install "-S efibootmgr"
-	pacman_install "-S gummiboot"
+	pacman_install '-S grub'
+	pacman_install '-S efibootmgr'
+	pacman_install '-S gummiboot'
 	#extra
-	pacman_install "-S refind-efi"
-	pacman_install "-S prebootloader"
-	pacman_install "-S memtest86+"
+	pacman_install '-S refind-efi'
+	pacman_install '-S prebootloader'
+	pacman_install '-S memtest86+'
 	#community
-	pacman_install "-S os-prober"
+	pacman_install '-S os-prober'
 
 	git_commit
 
 	if [[ "${RUN_BASE_PLUS}" ]]
 	then
 		#aur
-		pacman_install "-S grub2-theme-archxion" 'yaourt'
+		pacman_install '-S grub2-theme-archxion' 'yaourt'
 
 		git_commit
 
@@ -496,9 +496,9 @@ bootloader_syslinux()
 	CONSOLE_V_XxYxD="${DEF_CONSOLE_V_XxYxD}"
 
 	#core
-	pacman_install "-S syslinux"
+	pacman_install '-S syslinux'
 	#extra
-	pacman_install "-S mksyslinux"
+	pacman_install '-S mksyslinux'
 
 	git_commit
 
@@ -523,7 +523,7 @@ bootloader_syslinux()
 # 	CONSOLE_V_XxYxD="${DEF_CONSOLE_V_XxYxD}"
 # 
 # 	#core
-# 	pacman_install "-S lilo"
+# 	pacman_install '-S lilo'
 # 
 # 	git_commit
 # 

@@ -121,7 +121,7 @@ print_scan()
 	fi
 
 	#extra
-	pacman_install "-S xsane"
+	pacman_install '-S xsane'
 
 	git_commit
 
@@ -146,7 +146,7 @@ print_print()
 	fi
 
 # 	#extra
-# 	pacman_install "-S xsane"
+# 	pacman_install '-S xsane'
 
 # 	git_commit
 

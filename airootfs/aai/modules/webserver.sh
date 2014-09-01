@@ -133,7 +133,7 @@ webserver_lampp()
 webserver_nginx()
 {
 	#community
-	pacman_install "-S nginx"
+	pacman_install '-S nginx'
 
 	git_commit
 
@@ -168,19 +168,19 @@ webserver_nginx()
 webserver_php()
 {
 	#extra
-	pacman_install "-S php"
-	pacman_install "-S php-sqlite"
-	pacman_install "-S php-apc"
-	pacman_install "-S php-gd"
-	pacman_install "-S php-mcrypt"
-	pacman_install "-S php-pear"
-	pacman_install "-S php-pspell"
-	pacman_install "-S php-snmp"
-	pacman_install "-S php-tidy"
-	pacman_install "-S php-xsl"
-	pacman_install "-S php-intl"
-	pacman_install "-S php-fpm"
-#	pacman_install "-S php-apache"
+	pacman_install '-S php'
+	pacman_install '-S php-sqlite'
+	pacman_install '-S php-apc'
+	pacman_install '-S php-gd'
+	pacman_install '-S php-mcrypt'
+	pacman_install '-S php-pear'
+	pacman_install '-S php-pspell'
+	pacman_install '-S php-snmp'
+	pacman_install '-S php-tidy'
+	pacman_install '-S php-xsl'
+	pacman_install '-S php-intl'
+	pacman_install '-S php-fpm'
+#	pacman_install '-S php-apache'
 
 	git_commit
 
@@ -194,9 +194,9 @@ webserver_php()
 webserver_mariadb()
 {
 	#extra
-	pacman_install "-S mariadb"
+	pacman_install '-S mariadb'
 	#community
-	pacman_install "-S phpmyadmin"
+	pacman_install '-S phpmyadmin'
 
 	git_commit
 
@@ -211,11 +211,11 @@ webserver_mariadb()
 webserver_postgresql()
 {
 	#extra
-	pacman_install "-S php-pgsql"
+	pacman_install '-S php-pgsql'
 	#community
-	pacman_install "-S postgresql"
-	pacman_install "-S pgadmin3"
-#	pacman_install "-S phppgadmin"
+	pacman_install '-S postgresql'
+	pacman_install '-S pgadmin3'
+#	pacman_install '-S phppgadmin'
 
 	git_commit
 
@@ -240,7 +240,7 @@ webserver_postgresql()
 webserver_apache()
 {
 	#extra
-	pacman_install "-S apache"
+	pacman_install '-S apache'
 
 	git_commit
 
