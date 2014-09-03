@@ -32,7 +32,7 @@ MAIN_CASE+=('base')
 RUN_BASE=
 TXT_BASE_MAIN="$(gettext 'Базовая система')"
 
-DEFAULT_COUNTRY='UA'
+DEFAULT_COUNTRY='RU'
 
 # Домен страны
 SET_COUNTRY=

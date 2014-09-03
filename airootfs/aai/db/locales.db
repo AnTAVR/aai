@@ -335,8 +335,8 @@ LU	fr_LU ISO-8859-1	fr
 LU	fr_LU.UTF-8 UTF-8	fr	
 LU	fr_LU@euro ISO-8859-15	fr	
 LU	lb_LU UTF-8		
-LV	lv_LV ISO-8859-13		
-LV	lv_LV.UTF-8 UTF-8		
+LV	lv_LV ISO-8859-13	lv	
+LV	lv_LV.UTF-8 UTF-8	lv	
 LY	ar_LY ISO-8859-6		
 LY	ar_LY.UTF-8 UTF-8		
 MA	ar_MA ISO-8859-6		

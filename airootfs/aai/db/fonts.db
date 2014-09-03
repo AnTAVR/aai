@@ -34,6 +34,7 @@ psfu	drdos8x14
 psfu	drdos8x16		
 psfu	drdos8x6		
 psfu	drdos8x8		
+psfu	eurlatgr		
 psfu	Goha-12		
 psfu	Goha-14		
 psfu	Goha-16		
@@ -125,6 +126,7 @@ psfu	LatArCyrHeb-19
 psfu	LatGrkCyr-12x22		
 psfu	LatGrkCyr-8x16		
 psfu	LatKaCyrHeb-14		
+psfu	pancyrillic.f16		
 psfu	ruscii_8x16		
 psfu	ruscii_8x8		
 psfu	sun12x22		

@@ -70,8 +70,6 @@ i386/qwerty	es-cp850
 i386/qwerty	et	ee	pc105	-	terminate:ctrl_alt_bksp
 i386/qwerty	et-nodeadkeys				
 i386/qwerty	fi	fi	pc105	-	terminate:ctrl_alt_bksp
-i386/qwerty	fi-latin1	fi	pc105	-	terminate:ctrl_alt_bksp
-i386/qwerty	fi-latin9				
 i386/qwerty	gr	us,gr	pc105	-	terminate:ctrl_alt_bksp,grp:alt_shift_toggle,grp_led:scroll
 i386/qwerty	gr-pc				
 i386/qwerty	hu101	hu	pc105	qwerty	terminate:ctrl_alt_bksp
@@ -91,6 +89,8 @@ i386/qwerty	la-latin1	latam	pc105	-	terminate:ctrl_alt_bksp
 i386/qwerty	lt	lt	pc105	-	terminate:ctrl_alt_bksp
 i386/qwerty	lt.baltic				
 i386/qwerty	lt.l4				
+i386/qwerty	lv				
+i386/qwerty	lv-tilde				
 i386/qwerty	mk				
 i386/qwerty	mk-cp1251				
 i386/qwerty	mk-utf	us,mk	pc105	-	terminate:ctrl_alt_bksp,grp:alt_shift_toggle,grp_led:scroll
