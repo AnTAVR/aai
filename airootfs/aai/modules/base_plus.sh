@@ -975,7 +975,7 @@ base_plus_utils()
 	pacman_install '-S bc'
 	#community
 	pacman_install '-S collectd'
-	pacman_install '-S audit'
+#	pacman_install '-S audit'
 	pacman_install '-S lshw'
 	pacman_install '-S hwinfo'
 	pacman_install '-S flashrom'
@@ -990,7 +990,7 @@ base_plus_utils()
 	SERVICES+=" 'irqbalance.service' '-' 'off'"
 
 	SERVICES+=" 'collectd.service' '-' 'off'"
-	SERVICES+=" 'auditd.service' '-' 'off'"
+#	SERVICES+=" 'auditd.service' '-' 'off'"
 	SERVICES+=" 'chronyd.service' '-' 'off'"
 
 	SERVICES+=" 'mcelog.service' '-' 'off'"
