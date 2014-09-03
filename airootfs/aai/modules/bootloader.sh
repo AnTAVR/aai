@@ -170,25 +170,11 @@ bootloader_dialog_console()
 	msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
 }
 
-bootloader_dialog_dev_part()
+bootloader_dev_part()
 {
-	msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for ((TEMP=1; TEMP<=${#}; TEMP++)); do echo -n " \$${TEMP}='$(eval "echo \"\${${TEMP}}\"")'"; done)\"" 'noecho'
-
-	local RETURN
-
-	local TITLE="${TXT_BOOTLOADER_MAIN}"
-	local HELP_TXT="$(gettext 'Символом * помечены загрузочные разделы')\n"
-	HELP_TXT+="\n$(gettext 'Выберите раздел для установки загрузчика')\n"
-	HELP_TXT+="$(gettext 'По умолчанию'):"
-
-	local DEV="${SET_DEV_BOOT[0]}"
-	[[ ! -n "${DEV}" ]] && DEV="${SET_DEV_ROOT[0]}"
-
-	local DEFAULT_ITEM="${DEV:0:8}"
-
 	local NAME
 
-	local ITEMS="$(lsblk -nro NAME | tr ' ' '\r' |
+	lsblk -nro NAME | tr ' ' '\r' |
 	while IFS=$'\r' read -r NAME
 	do
 		local TEMP="$(get_part_info "/dev/${NAME}")"
@@ -212,12 +198,26 @@ bootloader_dialog_dev_part()
 
 			echo -e "'${DEVNAME}' '${BOOTM}\"${PART_TABLE_TYPE_NAME}\" ${SIZE} ${ID_FS_TYPE} \"${ID_FS_LABEL}\"'"
 		fi
-	done)"
-#	local ITEMS="$(get_part_info | sed '1,1d' | awk '
-#$1 ~ /\/dev\/[hs]d[a-z]/{
-#if ($7 != "0x82" && $7 != "0x5")
-#	print sq $1 sq " " sq $2 " " $6 "\t" $4 " " $5 "\t" $8 sq
-#}' sq=\')"
+	done
+}
+
+bootloader_dialog_dev_part()
+{
+	msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for ((TEMP=1; TEMP<=${#}; TEMP++)); do echo -n " \$${TEMP}='$(eval "echo \"\${${TEMP}}\"")'"; done)\"" 'noecho'
+
+	local RETURN
+
+	local TITLE="${TXT_BOOTLOADER_MAIN}"
+	local HELP_TXT="$(gettext 'Символом * помечены загрузочные разделы')\n"
+	HELP_TXT+="\n$(gettext 'Выберите раздел для установки загрузчика')\n"
+	HELP_TXT+="$(gettext 'По умолчанию'):"
+
+	local DEV="${SET_DEV_BOOT[0]}"
+	[[ ! -n "${DEV}" ]] && DEV="${SET_DEV_ROOT[0]}"
+
+	local DEFAULT_ITEM="${DEV:0:8}"
+
+	local ITEMS="$(bootloader_dev_part)"
 
 	if [[ ! -n "${ITEMS}" ]]
 	then
