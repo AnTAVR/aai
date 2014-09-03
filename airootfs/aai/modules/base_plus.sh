@@ -218,8 +218,8 @@ base_plus_dialog_service()
 	local HELP_TXT="\n$(gettext 'Включение сервисов')\n"
 
 	local ITEMS="${SERVICES}"
-#     ITEMS+=" 'systemd-readahead-collect' '-' 'off'"
-#     ITEMS+=" 'systemd-readahead-replay' '-' 'off'"
+	ITEMS+=" 'systemd-readahead-collect' '-' 'off'"
+	ITEMS+=" 'systemd-readahead-replay' '-' 'off'"
 
 	RETURN="$(dialog_checklist "${TITLE}" "${HELP_TXT}" "${ITEMS}" '--no-cancel')"
 
