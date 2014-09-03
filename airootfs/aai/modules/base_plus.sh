@@ -441,7 +441,7 @@ base_plus_install()
 #	mkdir -p "${NS_PATH}/etc/polkit-1/rules.d"
 	cat "${DBDIR}modules/etc/polkit-1/rules.d/10-enable-mount.rules" > "${NS_PATH}/etc/polkit-1/rules.d/10-enable-mount.rules"
 
-	chroot_run groupadd storage-mount
+	chroot_run groupadd udisks-mount
 	SET_USER_GRUPS+=',udisks-mount' # aai
 
 #	SET_USER_GRUPS+=',storage' # Pre-systemd group
