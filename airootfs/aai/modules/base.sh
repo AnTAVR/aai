@@ -614,7 +614,7 @@ d;
 	#core
 	pacman_install '-S base' 'nochroot'
 
-	SERVICES+=" 'cronie.service' '-' 'on'"
+#	SERVICES+=" 'cronie.service' '-' 'on'"
 	SERVICES+=" 'dmeventd.service' '-' 'off'"
 	SERVICES+=" 'nscd.service' '-' 'off'"
 	SERVICES+=" 'ftpd.service' '-' 'off'"
