@@ -1,0 +1,16 @@
+[Unit]
+Description=Mount /tmp as zram. Mask tmp.mount if you use this
+DefaultDependencies=no
+Conflicts=umount.target
+Before=local-fs.target umount.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+
+ExecStart=/usr/bin/zramctl zram0 7G lz4 2
+ExecStart=/usr/bin/mkfs.ext4 -m 0 -O ^has_journal -E discard /dev/zram0
+ExecStart=/usr/bin/mount -o defaults,relatime,discard /dev/zram0 /tmp
+
+[Install]
+WantedBy=local-fs-pre.target
