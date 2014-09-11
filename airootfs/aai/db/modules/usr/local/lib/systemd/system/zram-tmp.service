@@ -8,9 +8,12 @@ Before=local-fs.target umount.target
 Type=oneshot
 RemainAfterExit=true
 
-ExecStart=/usr/bin/zramctl zram0 7G lz4 2
-ExecStart=/usr/bin/mkfs.ext4 -m 0 -O ^has_journal -E discard /dev/zram0
-ExecStart=/usr/bin/mount -o defaults,relatime,discard /dev/zram0 /tmp
+Environment='DEV=0' 'SIZE=4G'
+
+ExecStart=/usr/bin/zramctl zram${DEV} ${SIZE} lz4 2
+ExecStart=/usr/bin/mkfs.ext4 -m 0 -O ^huge_file,sparse_super,extent,^uninit_bg,dir_nlink,extra_isize,^has_journal -E discard /dev/zram${DEV}
+ExecStart=/usr/bin/tune2fs -c 0 -i 0 -m 0 /dev/zram${DEV}
+ExecStart=/usr/bin/mount -o discard /dev/zram${DEV} /tmp
 
 [Install]
 WantedBy=local-fs-pre.target
