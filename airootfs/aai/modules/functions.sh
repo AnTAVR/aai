@@ -212,12 +212,12 @@ set_global_var()
 
 get_part_txt()
 {
+	local P_TYPE="$(tr '[:upper:]' '[:lower:]' <<< "${1}")"
+
+	case "${P_TYPE}" in
 # https://github.com/karelzak/util-linux/blob/cbebd20d26b8d06e28e67a07050967668af7ce08/include/pt-mbr-partnames.h
 # http://git.kernel.org/cgit/utils/util-linux/util-linux.git/tree/include/pt-mbr-partnames.h
-# https://github.com/karelzak/util-linux/blob/cbebd20d26b8d06e28e67a07050967668af7ce08/libfdisk/src/gpt.c
-# http://git.kernel.org/cgit/utils/util-linux/util-linux.git/tree/libfdisk/src/gpt.c
-	case "${1}" in
-		'0x00' | '0x0')
+		'0x00' | '0x0' | '00000000-0000-0000-0000-000000000000')
 			echo 'Empty'
 			;;
 		'0x01' | '0x1')
@@ -511,108 +511,100 @@ get_part_txt()
 		'0xff')
 			echo 'BBT'							# Xenix Bad Block Table
 			;;
-		# Start with the "unused entry," which should normally appear only
-		# on empty partition table entries....
-		'00000000-0000-0000-0000-000000000000')
-			echo 'Unused entry'
+
+# https://github.com/karelzak/util-linux/blob/cbebd20d26b8d06e28e67a07050967668af7ce08/libfdisk/src/gpt.c
+# http://git.kernel.org/cgit/utils/util-linux/util-linux.git/tree/libfdisk/src/gpt.c
+		# Generic OS
+		'c12a7328-f81f-11d2-ba4b-00a0c93ec93b') # EFI system and related partitions
+			echo 'EFI System'					# Parted identifies these as having the "boot flag" set
+			;;
+		'024dee41-33e7-11d3-9d69-0008c781f39f')
+			echo 'MBR partition scheme'			# Used to nest MBR in GPT
+			;;
+		'd3bfe2de-3daf-11df-ba40-e3a556d89593')
+			echo 'Intel Fast Flash'
+			;;
+		'f4019732-066e-4e12-8273-346c5641494f')
+			echo 'Sony boot partition'
 			;;
 
-		# DOS/Windows partition types, which confusingly Linux also uses in GPT
-		'ebd0a0a2-b9e5-4433-87c0-68b6b72699c7')
-			echo 'Microsoft basic data'			# FAT-12
+		# Hah!IdontneedEFI
+		'21686148-6449-6e6f-744e-656564454649')
+			echo 'BIOS boot'					# Boot loader
 			;;
-		'ebd0a0a2-b9e5-4433-87c0-68b6b72699c7')
-			echo 'Microsoft basic data'			# FAT-16 < 32M
-			;;
-		'ebd0a0a2-b9e5-4433-87c0-68b6b72699c7')
-			echo 'Microsoft basic data'			# FAT-16
-			;;
-		'ebd0a0a2-b9e5-4433-87c0-68b6b72699c7')
-			echo 'Microsoft basic data'			# NTFS (or HPFS)
-			;;
-		'ebd0a0a2-b9e5-4433-87c0-68b6b72699c7')
-			echo 'Microsoft basic data'			# FAT-32
-			;;
-		'ebd0a0a2-b9e5-4433-87c0-68b6b72699c7')
-			echo 'Microsoft basic data'			# FAT-32 LBA
-			;;
+
+		# Windows
 		'e3c9e316-0b5c-4db8-817d-f92df00215ae')
 			echo 'Microsoft reserved'
 			;;
 		'ebd0a0a2-b9e5-4433-87c0-68b6b72699c7')
-			echo 'Microsoft basic data'			# FAT-16 LBA
-			;;
-		'ebd0a0a2-b9e5-4433-87c0-68b6b72699c7')
-			echo 'Microsoft basic data'			# Hidden FAT-12
-			;;
-		'ebd0a0a2-b9e5-4433-87c0-68b6b72699c7')
-			echo 'Microsoft basic data'			# Hidden FAT-16 < 32M
-			;;
-		'ebd0a0a2-b9e5-4433-87c0-68b6b72699c7')
-			echo 'Microsoft basic data'			# Hidden FAT-16
-			;;
-		'ebd0a0a2-b9e5-4433-87c0-68b6b72699c7')
-			echo 'Microsoft basic data'			# Hidden NTFS (or HPFS)
-			;;
-		'ebd0a0a2-b9e5-4433-87c0-68b6b72699c7')
-			echo 'Microsoft basic data'			# Hidden FAT-32
-			;;
-		'ebd0a0a2-b9e5-4433-87c0-68b6b72699c7')
-			echo 'Microsoft basic data'			# Hidden FAT-32 LBA
-			;;
-		'ebd0a0a2-b9e5-4433-87c0-68b6b72699c7')
-			echo 'Microsoft basic data'			# Hidden FAT-16 LBA
-			;;
-		'de94bba4-06d1-4d40-a16a-bfd50179d6ac')
-			echo 'Windows RE'
-			;;
-		'af9b60a0-1431-4f62-bc68-3311714a69ad')
-			echo 'Windows LDM data'				# Logical disk manager
+			echo 'Microsoft basic data'
 			;;
 		'5808c8aa-7e8f-42e0-85d2-e1e90434cfb3')
-			echo 'Windows LDM metadata'			# Logical disk manager
+			echo 'Microsoft LDM metadata'		# Logical disk manager
+			;;
+		'af9b60a0-1431-4f62-bc68-3311714a69ad')
+			echo 'Microsoft LDM data'			# Logical disk manager
+			;;
+		'de94bba4-06d1-4d40-a16a-bfd50179d6ac')
+			echo 'Windows recovery environment'
+			;;
+		'37affc90-ef7d-4e96-91c3-2d7ae055b174') # An oddball IBM filesystem....
+			echo 'IBM General Parallel Fs'		# General Parallel File System (GPFS)
+			;;
+		'e75caf8f-f680-4cee-afa3-b001e56efc2d')
+			echo 'Microsoft Storage Spaces'
 			;;
 
-		# An oddball IBM filesystem....
-		'37affc90-ef7d-4e96-91c3-2d7ae055b174')
-			echo 'IBM GPFS'						# General Parallel File System (GPFS)
+		# HP-UX
+		'75894c1e-3aeb-11d3-b7c1-7b03a0000000') # I can find no MBR equivalents for these, but they're on the
+			echo 'HP-UX data'					# Wikipedia page for GPT, so here we go....
+			;;
+		'e2a1e728-32e3-11d6-a682-7b03a0000000')
+			echo 'HP-UX service'
 			;;
 
-		# ChromeOS-specific partition types...
-		# Values taken from vboot_reference/firmware/lib/cgptlib/include/gpt.h in
-		# ChromeOS source code, retrieved 12/23/2010. They're also at
-		# http://www.chromium.org/chromium-os/chromiumos-design-docs/disk-format.
-		# These have no MBR equivalents, AFAIK, so I'm using 0x7Fxx values, since they're close
-		# to the Linux values.
-		'fe3a2a5d-4f32-41a7-b725-accc3285a309')
-			echo 'ChromeOS kernel'
-			;;
-		'3cb8e202-3b7e-47dd-8a3c-7ff2a13cfcec')
-			echo 'ChromeOS root'
-			;;
-		'2e0a753d-9e48-43b0-8337-b15192cb1b5e')
-			echo 'ChromeOS reserved'
-			;;
-
-		# Linux-specific partition types....
+		# Linux (http://www.freedesktop.org/wiki/Specifications/DiscoverablePartitionsSpec)
 		'0657fd6d-a4ab-43c4-84e5-0933c84b4f4f')
 			echo 'Linux swap'					# Linux swap (or Solaris)
 			;;
 		'0fc63daf-8483-4772-8e79-3d69d8477de4')
 			echo 'Linux filesystem'				# Linux native
 			;;
+		'3b8f8425-20e0-4f3b-907f-1a25a76f98e8')
+			echo 'Linux server data'
+			;;
+		'44479540-f297-41b2-9af7-d131d5f0458a')
+			echo 'Linux root (x86)'
+			;;
+		'4f68bce3-e8cd-4db1-96e7-fbcaf984b709')
+			echo 'Linux root (x86-64)'
+			;;
 		'8da63339-0007-60c0-c436-083ac8230908')
 			echo 'Linux reserved'
+			;;
+		'933ac7e1-2eb4-4f13-b844-0e14e2aef915')
+			echo 'Linux home'
+			;;
+		'a19d880f-05fc-4d3b-a006-743f0f84911e') # A straggler Linux partition type....
+			echo 'Linux RAID'
+			;;
+		'bc13c2ff-59e6-4262-a352-b275fd6f7172')
+			echo 'Linux extended boot'
 			;;
 		'e6d6d379-f507-44c2-a23c-238f2a3df928')
 			echo 'Linux LVM'
 			;;
+		'7ffec5c9-2d00-49b7-8941-3ea10a5586b7')
+			echo 'Linux Plain dm-crypt partition'
+			;;
+		'ca7d7ccb-63ed-4c53-861c-1742536059cc')
+			echo 'Linux LUKS partition'
+			;;
 
-		# FreeBSD partition types....
-		# Note: Rather than extract FreeBSD disklabel data, convert FreeBSD
-		# partitions in-place, and let FreeBSD sort out the details....
+		# FreeBSD
 		'516e7cb4-6ecf-11d6-8ff8-00022d09712b')
-			echo 'FreeBSD disklabel'
+			echo 'FreeBSD data'
 			;;
 		'83bd6b9d-7f41-11dc-be0b-001560b84f0f')
 			echo 'FreeBSD boot'
@@ -627,44 +619,15 @@ get_part_txt()
 			echo 'FreeBSD ZFS'
 			;;
 		'516e7cb8-6ecf-11d6-8ff8-00022d09712b')
-			echo 'FreeBSD Vinum/RAID'
+			echo 'FreeBSD Vinum'
 			;;
 
-		# A MacOS partition type, separated from others by NetBSD partition types...
-		'55465300-0000-11aa-aa11-00306543ecac')
-			echo 'Apple UFS'					# Mac OS X
-			;;
-
-		# NetBSD partition types. Note that the main entry sets it up as a
-		# FreeBSD disklabel. I'm not 100% certain this is the correct behavior.
-		'516e7cb4-6ecf-11d6-8ff8-00022d09712b')
-			echo 'FreeBSD disklabel'			# NetBSD disklabel
-			;;
-		'49f48d32-b10e-11dc-b99b-0019d1879648')
-			echo 'NetBSD swap'
-			;;
-		'49f48d5a-b10e-11dc-b99b-0019d1879648')
-			echo 'NetBSD FFS'
-			;;
-		'49f48d82-b10e-11dc-b99b-0019d1879648')
-			echo 'NetBSD LFS'
-			;;
-		'2db519c4-b10f-11dc-b99b-0019d1879648')
-			echo 'NetBSD concatenated'
-			;;
-		'2db519ec-b10f-11dc-b99b-0019d1879648')
-			echo 'NetBSD encrypted'
-			;;
-		'49f48daa-b10e-11dc-b99b-0019d1879648')
-			echo 'NetBSD RAID'
-			;;
-
-		# Mac OS partition types (See also 0xa800, above)....
-		'426f6f74-0000-11aa-aa11-00306543ecac')
-			echo 'Apple boot'
-			;;
+		# Apple OSX
 		'48465300-0000-11aa-aa11-00306543ecac')
 			echo 'Apple HFS/HFS+'
+			;;
+		'55465300-0000-11aa-aa11-00306543ecac')
+			echo 'Apple UFS'
 			;;
 		'52414944-0000-11aa-aa11-00306543ecac')
 			echo 'Apple RAID'
@@ -672,17 +635,20 @@ get_part_txt()
 		'52414944-5f4f-11aa-aa11-00306543ecac')
 			echo 'Apple RAID offline'
 			;;
+		'426f6f74-0000-11aa-aa11-00306543ecac')
+			echo 'Apple boot'					# Mac OS partition types (See also 0xa800, above)....
+			;;
 		'4c616265-6c00-11aa-aa11-00306543ecac')
 			echo 'Apple label'
 			;;
 		'5265636f-7665-11aa-aa11-00306543ecac')
-			echo 'AppleTV recovery'
+			echo 'Apple TV recovery'
 			;;
 		'53746f72-6167-11aa-aa11-00306543ecac')
-			echo 'Apple Core Storage'
+			echo 'Apple Core storage'
 			;;
 
-		# Solaris partition types (one of which is shared with MacOS)
+		# Solaris
 		'6a82cb45-1dd2-11b2-99a6-080020736631')
 			echo 'Solaris boot'
 			;;
@@ -690,7 +656,7 @@ get_part_txt()
 			echo 'Solaris root'
 			;;
 		'6a898cc3-1dd2-11b2-99a6-080020736631')
-			echo 'Solaris /usr & Mac ZFS'		# Solaris/MacOS
+			echo 'Solaris /usr & Apple ZFS'		# same as Apple ZFS
 			;;
 		'6a87c46f-1dd2-11b2-99a6-080020736631')
 			echo 'Solaris swap'
@@ -708,44 +674,109 @@ get_part_txt()
 			echo 'Solaris alternate sector'
 			;;
 		'6a945a3b-1dd2-11b2-99a6-080020736631')
-			echo 'Solaris Reserved 1'
+			echo 'Solaris reserved 1'
 			;;
 		'6a9630d1-1dd2-11b2-99a6-080020736631')
-			echo 'Solaris Reserved 2'
+			echo 'Solaris reserved 2'
 			;;
 		'6a980767-1dd2-11b2-99a6-080020736631')
-			echo 'Solaris Reserved 3'
+			echo 'Solaris reserved 3'
 			;;
 		'6a96237f-1dd2-11b2-99a6-080020736631')
-			echo 'Solaris Reserved 4'
+			echo 'Solaris reserved 4'
 			;;
 		'6a8d2ac7-1dd2-11b2-99a6-080020736631')
-			echo 'Solaris Reserved 5'
+			echo 'Solaris reserved 5'
 			;;
 
-		# I can find no MBR equivalents for these, but they're on the
-		# Wikipedia page for GPT, so here we go....
-		'75894c1e-3aeb-11d3-b7c1-7b03a0000000')
-			echo 'HP-UX data'
+		# NetBSD
+		'49f48d32-b10e-11dc-b99b-0019d1879648')
+			echo 'NetBSD swap'
 			;;
-		'e2a1e728-32e3-11d6-a682-7b03a0000000')
-			echo 'HP-UX service'
+		'49f48d5a-b10e-11dc-b99b-0019d1879648')
+			echo 'NetBSD FFS'
+			;;
+		'49f48d82-b10e-11dc-b99b-0019d1879648')
+			echo 'NetBSD LFS'
+			;;
+		'2db519c4-b10e-11dc-b99b-0019d1879648')
+			echo 'NetBSD concatenated'
+			;;
+		'2db519c4-b10f-11dc-b99b-0019d1879648')
+			echo 'NetBSD concatenated'
+			;;
+		'2db519ec-b10e-11dc-b99b-0019d1879648')
+			echo 'NetBSD encrypted'
+			;;
+		'2db519ec-b10f-11dc-b99b-0019d1879648')
+			echo 'NetBSD encrypted'
+			;;
+		'49f48daa-b10e-11dc-b99b-0019d1879648')
+			echo 'NetBSD RAID'
 			;;
 
-		# EFI system and related partitions
-		'c12a7328-f81f-11d2-ba4b-00a0c93ec93b')
-			echo 'EFI System'					# Parted identifies these as having the "boot flag" set
+		# ChromeOS
+		# Values taken from vboot_reference/firmware/lib/cgptlib/include/gpt.h in
+		# ChromeOS source code, retrieved 12/23/2010. They're also at
+		# http://www.chromium.org/chromium-os/chromiumos-design-docs/disk-format.
+		# These have no MBR equivalents, AFAIK, so I'm using 0x7Fxx values, since they're close
+		# to the Linux values.
+		'fe3a2a5d-4f32-41a7-b725-accc3285a309')
+			echo 'ChromeOS kernel'
 			;;
-		'024dee41-33e7-11d3-9d69-0008c781f39f')
-			echo 'MBR partition scheme'			# Used to nest MBR in GPT
+		'3cb8e202-3b7e-47dd-8a3c-7ff2a13cfcec')
+			echo 'ChromeOS root fs'
 			;;
-		'21686148-6449-6e6f-744e-656564454649')
-			echo 'BIOS boot partition'			# Boot loader
+		'2e0a753d-9e48-43b0-8337-b15192cb1b5e')
+			echo 'ChromeOS reserved'
 			;;
 
-		# A straggler Linux partition type....
-		'a19d880f-05fc-4d3b-a006-743f0f84911e')
-			echo 'Linux RAID'
+		# Haiku
+		'42465331-3ba3-10f1-802a-4861696b7521')
+			echo 'Haiku BFS'
+			;;
+
+		# MidnightBSD
+		'85d5e45a-237c-11e1-b4b3-e89a8f7fc3a7')
+			echo 'MidnightBSD data'
+			;;
+		'85d5e45e-237c-11e1-b4b3-e89a8f7fc3a7')
+			echo 'MidnightBSD boot'
+			;;
+		'85d5e45b-237c-11e1-b4b3-e89a8f7fc3a7')
+			echo 'MidnightBSD swap'
+			;;
+		'0394ef8b-237c-11e1-b4b3-e89a8f7fc3a7')
+			echo 'MidnightBSD UFS'
+			;;
+		'0394ef8b-237e-11e1-b4b3-e89a8f7fc3a7')
+			echo 'MidnightBSD UFS'
+			;;
+		'85d5e45d-237c-11e1-b4b3-e89a8f7fc3a7')
+			echo 'MidnightBSD ZFS'
+			;;
+		'85d5e45c-237c-11e1-b4b3-e89a8f7fc3a7')
+			echo 'MidnightBSD Vinum'
+			;;
+
+		# Ceph
+		'bfbfafe7-a34f-448a-9a5b-6213eb736c22')
+			echo 'Ceph Journal'
+			;;
+		'45b0969e-9b03-4f30-b4c6-5ec00ceff106')
+			echo 'Ceph dm-crypt Encrypted Journal'
+			;;
+		'4fbd7e29-9d25-41b8-afd0-062c0ceff05d')
+			echo 'Ceph OSD'
+			;;
+		'4fbd7e29-9d25-41b8-afd0-5ec00ceff05d')
+			echo 'Ceph dm-crypt OSD'
+			;;
+		'89c57f98-2fe5-4dc0-89c1-f3ad0ceff2be')
+			echo 'Ceph disk in creation'
+			;;
+		'89c57f98-2fe5-4dc0-89c1-5ec00ceff2be')
+			echo 'Ceph dm-crypt disk in creation'
 			;;
 		*)
 		# Note: DO NOT use the 0xffff code; that's reserved to indicate an
