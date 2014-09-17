@@ -413,32 +413,79 @@ part_format_dialog_mkf()
 	local ITEMS="'mkfs.ext4' '-'"
 	ITEMS+=" 'mkfs.ext2' '-'"
 	ITEMS+=" 'mkfs.ext3' '-'"
-#  ITEMS+=" 'mkfs.ext4dev' '-'"
+#	ITEMS+=" 'mkfs.ext4dev' '-'"
 	ITEMS+=" 'mkfs.f2fs' '-'"
 	ITEMS+=" 'mkfs.btrfs' '-'"
 	ITEMS+=" 'mkfs.reiserfs' '-'"
 	ITEMS+=" 'mkfs.jfs' '-'"
 	ITEMS+=" 'mkfs.xfs' '-'"
 	ITEMS+=" 'mkfs.nilfs2' '-'"
-#  ITEMS+=" 'mkfs.ntfs' '-'"
-#  ITEMS+=" 'mkfs.exfat' '-'"
+	ITEMS+=" 'mkfs.ntfs' '-'"
+#	ITEMS+=" 'mkfs.exfat' '-'" # не включен в инсталятор!
 	ITEMS+=" 'mkfs.vfat' '-'"
-#  ITEMS+=" 'mkfs.msdos' '-'"
+#	ITEMS+=" 'mkfs.fat' '-'"
+	ITEMS+=" 'mkfs.msdos' '-'"
+	ITEMS+=" 'mkfs.minix' '-'"
+#	ITEMS+=" 'mkfs.bfs' '-'"
+#	ITEMS+=" 'mkfs.cramfs' '-'"
 	ITEMS+=" 'mkswap' '-'"
 
-	case "$(fdisk -l | awk "/^$(sed 's/\//\\\//g' <<< "${P_PART}")/ {if (\$2 == \"*\") { print \$6 } else { print \$5 }}")" in
-		'7')
+	local TEMP="$(get_part_info "${P_PART}")"
+
+	local ID_PART_ENTRY_TYPE="$(get_part_param 'ID_PART_ENTRY_TYPE' <<< "${TEMP}")"
+
+	case "${ID_PART_ENTRY_TYPE}" in
+		'0x01' | '0x1') # FAT12
+			DEFAULT_ITEM='mkfs.msdos'
+			;;
+		'0x04' | '0x4') # FAT16 <32M
+			DEFAULT_ITEM='mkfs.msdos'
+			;;
+		'0x06' | '0x6') # FAT16 >=32M
+			DEFAULT_ITEM='mkfs.msdos'
+			;;
+		'0x07' | '0x7') # HPFS/NTFS/exFAT
 			DEFAULT_ITEM='mkfs.ntfs'
 			is_ssd "${P_PART}" && DEFAULT_ITEM='mkfs.exfat'
 			;;
-		'b')
+		'0x0b' | '0xb') # W95 FAT32
 			DEFAULT_ITEM='mkfs.vfat'
 			;;
-		'83')
+		'0x81') # Minix / old Linux
+			DEFAULT_ITEM='mkfs.minix'
+			;;
+		'0x82') # Linux swap / Solaris
+			DEFAULT_ITEM='mkswap'
+			;;
+		'0x83') # Linux
 			DEFAULT_ITEM='mkfs.ext4'
 			;;
-		'82')
+		'0xef') # EFI (FAT-12/16/32)
+			DEFAULT_ITEM='mkfs.vfat'
+			;;
+		'c12a7328-f81f-11d2-ba4b-00a0c93ec93b') # EFI System
+			DEFAULT_ITEM='mkfs.vfat'
+			;;
+		'21686148-6449-6e6f-744e-656564454649') # BIOS boot
+			DEFAULT_ITEM='mkfs.ext4'
+			;;
+		'ebd0a0a2-b9e5-4433-87c0-68b6b72699c7') # Microsoft basic data
+			DEFAULT_ITEM='mkfs.ntfs'
+			;;
+		'0657fd6d-a4ab-43c4-84e5-0933c84b4f4f') # Linux swap (or Solaris)
 			DEFAULT_ITEM='mkswap'
+			;;
+		'0fc63daf-8483-4772-8e79-3d69d8477de4') # Linux filesystem
+			DEFAULT_ITEM='mkfs.ext4'
+			;;
+		'3b8f8425-20e0-4f3b-907f-1a25a76f98e8') # Linux server data
+			DEFAULT_ITEM='mkfs.ext4'
+			;;
+		'44479540-f297-41b2-9af7-d131d5f0458a') # Linux root (x86-64)
+			DEFAULT_ITEM='mkfs.ext4'
+			;;
+		'4f68bce3-e8cd-4db1-96e7-fbcaf984b709') # Linux root (x86-64)
+			DEFAULT_ITEM='mkfs.ext4'
 			;;
 	esac
 
