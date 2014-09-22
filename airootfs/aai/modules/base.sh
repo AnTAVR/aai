@@ -681,7 +681,7 @@ s/^/#/;
 #===============================================================================
 	msg_log "$(gettext 'Настраиваю') /etc/locale.conf"
 	echo "LANG=$(awk '{print $1}' <<< "${SET_LOCAL}")" > "${NS_PATH}/etc/locale.conf"
-	echo '#LC_COLLATE=C' >> "${NS_PATH}/etc/locale.conf"
+#	echo '#LC_COLLATE=C' >> "${NS_PATH}/etc/locale.conf"
 #  chroot_run localectl set-locale "LANG=${LANG}" "LC_COLLATE=C"
 
 	msg_log "$(gettext 'Настраиваю') /etc/locale.gen"
