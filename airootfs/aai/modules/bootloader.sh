@@ -327,7 +327,7 @@ bootloader_grub_bios()
 /^GRUB_CMDLINE_LINUX+=\" *acpi_backlight/s/^/#/;
 0,/^GRUB_CMDLINE_LINUX=/{
 //{
-	a GRUB_CMDLINE_LINUX+=\" acpi_backlight=vendor\"
+	a GRUB_CMDLINE_LINUX+=\" acpi_backlight=vendor acpi_osi=Linux\"
 };
 };
 # Добавляем параметр resume
