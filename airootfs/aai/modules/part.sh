@@ -638,7 +638,7 @@ part_mount_root()
 	if [[ -n "${SET_DEV_ROOT[0]}" ]]
 	then
 		dialog_warn \
-			"\Zb\Z1$(gettext 'Раздел для') \"${POINT}\" $(gettext 'уже выбран и премонтирован!!!')\Zn"
+			"\Zb\Z1$(gettext 'Раздел для') \"${POINT}\" $(gettext 'уже выбран и примонтирован!!!')\Zn"
 		return 1
 	fi
 
@@ -1027,13 +1027,13 @@ part_mount_test()
 	if [[ ! -n "${SET_DEV_ROOT[0]}" ]]
 	then
 		dialog_warn \
-			"\Zb\Z1$(gettext 'Раздел "/ (root)" не премонтирован!!!')\Zn"
+			"\Zb\Z1$(gettext 'Раздел "/ (root)" не примонтирован!!!')\Zn"
 		return 1
 	fi
 	if [[ -n "${SET_DEV[0]}" ]]
 	then
 		dialog_warn \
-			"\Zb\Z1$(gettext 'Раздел для') \"${P_POINT}\" $(gettext 'уже премонтирован!!!')\Zn"
+			"\Zb\Z1$(gettext 'Раздел для') \"${P_POINT}\" $(gettext 'уже примонтирован!!!')\Zn"
 		return 1
 	fi
 	return 0
