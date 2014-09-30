@@ -579,7 +579,7 @@ base_install()
 	[[ ! -f /etc/pacman.d/mirrorlist.bak ]] && cp -Pb /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
 	cp -Pb /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.new
 	sed -i '
-# Раскомментируем все строки начинающиеся с 
+# Раскомментируем все строки начинающиеся с
 /^#Server/{
 s/#//;
 };
@@ -646,6 +646,14 @@ s/^/#/;
 0,/^#Color/{
 //{
 	a Color
+};
+};
+# Включаем вывод списка изменений и пасхалку
+/^VerbosePkgLists$/s/^/#/;
+0,/^#VerbosePkgLists/{
+//{
+	a VerbosePkgLists
+	a ILoveCandy
 };
 };
 ' "${NS_PATH}/etc/pacman.conf"
@@ -1056,7 +1064,7 @@ base_btrfs()
 #     };
 # };
 # ' "${NS_PATH}/etc/mkinitcpio.conf"
-# 
+#
 #     git_commit
 }
 
