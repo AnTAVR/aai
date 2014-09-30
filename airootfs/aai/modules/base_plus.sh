@@ -108,7 +108,7 @@ run_base_plus()
 				get_sounds \
 				| while read CARDS
 				do
-					global CARD_IND
+#					global CARD_IND
 					eval "$(awk -F ',' '{print "CARD="$1"; CARD_ID="$2"; MODULE="$3";"}' <<< "${CARDS}")"
 					[[ "${CARD}" != "${TEMP}" ]] && continue
 					echo ''
