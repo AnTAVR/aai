@@ -134,9 +134,10 @@ part_part()
 		DEV="$(part_part_dialog_dev "${DEV}")"
 		[[ ! -n "${DEV}" ]] && return 1
 
-		TEMP="$(part_part_dialog_fdisk "${FDISK}")"
-		[[ ! -n "${TEMP}" ]] && continue
-		FDISK="${TEMP}"
+# @todo убрал данное меню так как fdisk все умеет
+#		TEMP="$(part_part_dialog_fdisk "${FDISK}")"
+#		[[ ! -n "${TEMP}" ]] && continue
+#		FDISK="${TEMP}"
 
 		msg_log "${FDISK} ${DEV}"
 
