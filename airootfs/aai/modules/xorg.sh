@@ -568,11 +568,15 @@ xorg_video()
 		'optimus')
 			#extra
 			pacman_install '-S xf86-video-intel'
-			pacman_install '-S lib32-intel-dri' 'yaourt'
+			#multilib
+			pacman_install '-S lib32-mesa-dri' 'yaourt'
 
 			#community
 			pacman_install '-S bumblebee'
+			pacman_install '-S bbswitch'
+
 			#aur
+#			pacman_install '-S bbswitch-dkms' 'yaourt'
 #			pacman_install '-S nvidia-dkms' 'yaourt'
 			#extra
 			pacman_install '-S nvidia'
@@ -628,7 +632,7 @@ xorg_video()
 
 			pacman_install '-Syy'
 
-			#aur
+			#catalyst
 			pacman_install '-S catalyst-utils' 'yaourt'
 			pacman_install '-S catalyst-libgl' 'yaourt'
 #			pacman_install '-S opencl-catalyst' 'yaourt'
@@ -638,6 +642,8 @@ xorg_video()
 #			pacman_install '-S lib32-opencl-catalyst' 'yaourt'
 
 			pacman_install '-S catalyst-hook' 'yaourt'
+
+			#community
 			pacman_install '-S acpid'
 
 			git_commit
@@ -695,7 +701,7 @@ xorg_video()
 
 			pacman_install '-Syy'
 
-			#aur
+			#catalyst
 			pacman_install '-S catalyst-utils-pxp' 'yaourt'
 			pacman_install '-S catalyst-libgl' 'yaourt'
 #			pacman_install '-S opencl-catalyst' 'yaourt'
@@ -705,6 +711,8 @@ xorg_video()
 #			pacman_install '-S lib32-opencl-catalyst' 'yaourt'
 
 			pacman_install '-S catalyst-hook' 'yaourt'
+
+			#community
 			pacman_install '-S acpid'
 
 			git_commit
@@ -718,9 +726,13 @@ xorg_video()
 		'innotek')
 			#community
 			pacman_install '-S virtualbox-guest-modules'
+#			pacman_install '-S virtualbox-guest-dkms'
+
 			pacman_install '-S virtualbox-guest-utils'
 			[[ "${SET_LTS}" ]] && pacman_install '-S virtualbox-host-modules-lts'
 
+			#multilib
+			pacman_install '-S lib32-mesa-dri' 'yaourt'
 			#extra
 			pacman_install '-S mesa-libgl'
 			#multilib
@@ -728,7 +740,8 @@ xorg_video()
 			;;
 		'xf86-video-ati')
 			pacman_install '-S xf86-video-ati'
-			pacman_install '-S lib32-ati-dri' 'yaourt'
+			#multilib
+			pacman_install '-S lib32-mesa-dri' 'yaourt'
 
 			#extra
 			pacman_install '-S mesa-libgl'
@@ -737,7 +750,8 @@ xorg_video()
 			;;
 		'xf86-video-intel')
 			pacman_install '-S xf86-video-intel'
-			pacman_install '-S lib32-intel-dri' 'yaourt'
+			#multilib
+			pacman_install '-S lib32-mesa-dri' 'yaourt'
 
 			#extra
 			pacman_install '-S mesa-libgl'
@@ -748,7 +762,8 @@ xorg_video()
 			;;
 		'xf86-video-nouveau')
 			pacman_install '-S xf86-video-nouveau'
-			pacman_install '-S lib32-nouveau-dri' 'yaourt'
+			#multilib
+			pacman_install '-S lib32-mesa-dri' 'yaourt'
 
 			#extra
 			pacman_install '-S mesa-libgl'
@@ -757,10 +772,9 @@ xorg_video()
 			;;
 		'xf86-video-nouveau xf86-video-intel')
 			pacman_install '-S xf86-video-nouveau'
-			pacman_install '-S lib32-nouveau-dri' 'yaourt'
-
 			pacman_install '-S xf86-video-intel'
-			pacman_install '-S lib32-intel-dri' 'yaourt'
+			#multilib
+			pacman_install '-S lib32-mesa-dri' 'yaourt'
 
 			#extra
 			pacman_install '-S mesa-libgl'
@@ -872,6 +886,10 @@ EndSection
 " > "${NS_PATH}/etc/X11/xorg.conf.d/00-monitor.conf"
 	git_commit
 }
+
+#lspci
+#00:02.0 VGA compatible controller: Intel Corporation 3rd Gen Core processor Graphics Controller (rev 09)
+#01:00.0 3D controller: NVIDIA Corporation GK208M [GeForce GT 720M] (rev ff)
 
 xorg_video_drv()
 {
