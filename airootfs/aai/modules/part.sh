@@ -31,6 +31,7 @@ TXT_PART_MAIN="$(gettext 'Разделы')"
 #  dev opt
 SET_DEV_ROOT=('' "")
 SET_DEV_BOOT=('' '')
+SET_DEV_EFI=('' '')
 SET_DEV_HOME=('' '')
 SET_DEV_SWAP=('' '')
 #===============================================================================
@@ -97,7 +98,6 @@ part_dialog_def_menu()
 
 	TEMP="\Zb\Z1($(gettext 'ОБЯЗАТЕЛЬНО!!!'))\Zn"
 	[[ "${RUN_PART}" ]] && TEMP="\Zb\Z2($(gettext 'ВЫПОЛНЕНО'))\Zn"
-
 	ITEMS+=" 'mount' '$(gettext 'Монтирование разделов') ${TEMP}'"
 
 	RETURN="$(dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}" "--cancel-label '${TXT_MAIN_MENU}'")"
@@ -177,16 +177,34 @@ part_part_dialog_dev()
 
 	local P_DEV="${1}"
 
+	local TEMP
+
 	local TITLE="${TXT_PART_MAIN}"
-	local HELP_TXT="\Zb\Z7/boot\Zn - 32MB-500MB \Zb\Z6(100MB)\Zn, $(gettext 'код') \Zb\Z683 Linux\Zn \Zb\Z3($(gettext 'Рекомендуется'))\Zn\n"
-	HELP_TXT+="  FLASH DRIVE \Zb\Z6(32MB)\Zn, $(gettext 'код') \Zb\Z607 HPFS/NTFS/exFAT\Zn | $(gettext 'код') \Zb\Z60B W95 FAT32\Zn\n"
-	HELP_TXT+="  $(gettext 'Нужно сделать загрузочным!!!')\n"
-	HELP_TXT+="\Zb\Z7/ (root)\Zn - 4GB-32GB \Zb\Z6(20GB)\Zn, $(gettext 'код') \Zb\Z683 Linux\Zn \Zb\Z1($(gettext 'ОБЯЗАТЕЛЬНО!!!'))\Zn\n"
-	HELP_TXT+="\Zb\Z7/home\Zn - \Zb\Z6($(gettext 'все остальное место'))\Zn, $(gettext 'код') \Zb\Z683 Linux\Zn \Zb\Z3($(gettext 'Рекомендуется'))\Zn\n"
-	HELP_TXT+="  $(gettext '10G на одного пользователя и 5G на бэкапы и кеш системы')\n"
-	HELP_TXT+="  $(gettext 'Если установка на FLASH DRIVE, то можно не использовать отдельный раздел')\n"
-	HELP_TXT+="\Zb\Z7swap\Zn - RAM*2 \Zb\Z6($(free -m | awk '/Mem:/{ print $2*2 }')MB)\Zn, $(gettext 'код') \Zb\Z682 Linux swap / Solaris\Zn\n"
-	HELP_TXT+="  $(gettext 'Можно не создавать, а потом сделать swap в файл, если') \Zb\Z6/ (root) ext4\Zn\n"
+	local HELP_TXT=
+
+	if [[ $UEFI ]]
+	then
+		HELP_TXT+="\Zb\Z7/boot/efi\Zn - 128M-512M \Zb\Z6(128M)\Zn, $(gettext 'тип') \Zb\Z6EFI System\Zn \Zb\Z1($(gettext 'ОБЯЗАТЕЛЬНО!!!'))\Zn\n"
+		HELP_TXT+="\Zb\Z7/boot\Zn - 32M-512M \Zb\Z6(96M)\Zn, $(gettext 'тип') \Zb\Z6BIOS boot\Zn\n"
+		HELP_TXT+="  FLASH DRIVE \Zb\Z6(32M)\Zn, $(gettext 'тип') \Zb\Z6HPFS/NTFS/exFAT\Zn | \Zb\Z6W95 FAT32\Zn\n"
+		HELP_TXT+="\Zb\Z7/ (root)\Zn - 4G-32G \Zb\Z6(20G)\Zn, $(gettext 'тип') \Zb\Z6Linux root ($(uname -m))\Zn \Zb\Z1($(gettext 'ОБЯЗАТЕЛЬНО!!!'))\Zn\n"
+		HELP_TXT+="\Zb\Z7/home\Zn - \Zb\Z6($(gettext 'все остальное место'))\Zn, $(gettext 'тип') \Zb\Z6Linux home\Zn \Zb\Z3($(gettext 'Рекомендуется'))\Zn\n"
+		HELP_TXT+="  $(gettext '10G на одного пользователя и 5G на бэкапы и кеш системы')\n"
+		HELP_TXT+="  $(gettext 'Если установка на FLASH DRIVE, то можно не использовать отдельный раздел')\n"
+		HELP_TXT+="\Zb\Z7swap\Zn - RAM*2 \Zb\Z6($(free -m | awk '/Mem:/{ print $2*2 }')M)\Zn, $(gettext 'тип') \Zb\Z6Linux swap\Zn\n"
+		HELP_TXT+="  $(gettext 'Можно потом сделать swap в файл, если фс') \Zb\Z6/ (root) ext4\Zn\n"
+	else
+		HELP_TXT+="\Zb\Z7/boot\Zn - 32M-512M \Zb\Z6(96M)\Zn, $(gettext 'тип') \Zb\Z6Linux\Zn\n"
+		HELP_TXT+="  FLASH DRIVE \Zb\Z6(32M)\Zn, $(gettext 'тип') \Zb\Z6HPFS/NTFS/exFAT\Zn | \Zb\Z6W95 FAT32\Zn\n"
+		HELP_TXT+="  $(gettext 'Нужно сделать загрузочным!!!')\n"
+		HELP_TXT+="\Zb\Z7/ (root)\Zn - 4G-32G \Zb\Z6(20G)\Zn, $(gettext 'тип') \Zb\Z6Linux\Zn \Zb\Z1($(gettext 'ОБЯЗАТЕЛЬНО!!!'))\Zn\n"
+		HELP_TXT+="\Zb\Z7/home\Zn - \Zb\Z6($(gettext 'все остальное место'))\Zn, $(gettext 'тип') \Zb\Z6Linux\Zn \Zb\Z3($(gettext 'Рекомендуется'))\Zn\n"
+		HELP_TXT+="  $(gettext '10G на одного пользователя и 5G на бэкапы и кеш системы')\n"
+		HELP_TXT+="  $(gettext 'Если установка на FLASH DRIVE, то можно не использовать отдельный раздел')\n"
+		HELP_TXT+="\Zb\Z7swap\Zn - RAM*2 \Zb\Z6($(free -m | awk '/Mem:/{ print $2*2 }')M)\Zn, $(gettext 'тип') \Zb\Z6Linux swap / Solaris\Zn\n"
+		HELP_TXT+="  $(gettext 'Можно потом сделать swap в файл, если фс') \Zb\Z6/ (root) ext4\Zn\n"
+	fi
+
 	HELP_TXT+="\n$(gettext 'Выберите устройство для разметки')\n"
 
 	local DEFAULT_ITEM="${P_DEV}"
@@ -196,7 +214,7 @@ part_part_dialog_dev()
 	ITEMS="$(lsblk -nro NAME | tr ' ' '\r' |
 	while IFS=$'\r' read -r NAME
 	do
-		local TEMP="$(get_part_info "/dev/${NAME}")"
+		TEMP="$(get_part_info "/dev/${NAME}")"
 
 		local DEVTYPE="$(get_part_param 'DEVTYPE' <<< "${TEMP}")"
 		local ID_TYPE="$(get_part_param 'ID_TYPE' <<< "${TEMP}")"
@@ -233,17 +251,20 @@ part_mount()
 				part_unmount
 				continue
 				;;
-			'/ (root)')
-				part_mount_root || continue
+			'/')
+				part_mount_point '/' 'SET_DEV_ROOT' || continue
+				;;
+			'/boot')
+				part_mount_point '/boot' 'SET_DEV_BOOT' || continue
+				;;
+			'/boot/efi')
+				part_mount_point '/boot/efi' 'SET_DEV_EFI' || continue
+				;;
+			'/home')
+				part_mount_point '/home' 'SET_DEV_HOME' || continue
 				;;
 			'swap')
 				part_mount_swap || continue
-				;;
-			'/boot')
-				part_mount_boot || continue
-				;;
-			'/home')
-				part_mount_home || continue
 				;;
 			*)
 				return 1
@@ -270,11 +291,18 @@ part_mount_dialog_point()
 
 	TEMP="\Zb\Z1($(gettext 'ОБЯЗАТЕЛЬНО!!!'))\Zn"
 	[[ -n "${SET_DEV_ROOT[0]}" ]] && TEMP="\Zb\Z2($(gettext 'ВЫПОЛНЕНО'))\Zn"
-	ITEMS+=" '/ (root)' '\"${SET_DEV_ROOT[0]}\" \"$(mount | grep "^${SET_DEV_ROOT[0]} " | awk '{print $5}')\" ${TEMP}'"
+	ITEMS+=" '/' '(root) \"${SET_DEV_ROOT[0]}\" \"$(mount | grep "^${SET_DEV_ROOT[0]} " | awk '{print $5}')\" ${TEMP}'"
 
-	TEMP="\Zb\Z3($(gettext 'Рекомендуется'))\Zn"
+	TEMP=
 	[[ -n "${SET_DEV_BOOT[0]}" ]] && TEMP="\Zb\Z2($(gettext 'ВЫПОЛНЕНО'))\Zn"
 	ITEMS+=" '/boot' '\"${SET_DEV_BOOT[0]}\" \"$(mount | grep "^${SET_DEV_BOOT[0]} " | awk '{print $5}')\" ${TEMP}'"
+
+	if [[ $UEFI ]]
+	then
+		TEMP="\Zb\Z1($(gettext 'ОБЯЗАТЕЛЬНО!!!'))\Zn"
+		[[ -n "${SET_DEV_EFI[0]}" ]] && TEMP="\Zb\Z2($(gettext 'ВЫПОЛНЕНО'))\Zn"
+		ITEMS+=" '/boot/efi' '\"${SET_DEV_EFI[0]}\" \"$(mount | grep "^${SET_DEV_EFI[0]} " | awk '{print $5}')\" ${TEMP}'"
+	fi
 
 	TEMP="\Zb\Z3($(gettext 'Рекомендуется'))\Zn"
 	[[ -n "${SET_DEV_HOME[0]}" ]] && TEMP="\Zb\Z2($(gettext 'ВЫПОЛНЕНО'))\Zn"
@@ -289,58 +317,6 @@ part_mount_dialog_point()
 	echo "${RETURN}"
 	msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
 }
-
-part_mount_boot()
-{
-	local POINT='/boot'
-
-	local PART
-	local OPT
-
-	local TEMP
-
-	part_mount_test "${POINT}" 'SET_DEV_BOOT' || return 1
-
-	PART="$(part_mount_dialog_dev_part "${POINT}")"
-	[[ ! -n "${PART}" ]] && return 1
-
-	dialog_yesno \
-		"${TXT_PART_MAIN}" \
-		"$(gettext 'Форматировать раздел')\n \Zb\Z6${PART}\Zn ?" \
-		'--defaultno'
-
-	case "${?}" in
-		'0') #Yes
-			part_format "${PART}" "${POINT}" || return 1
-			;;
-# 	'1') #No
-# 	    ;;
-		'255') #ESC
-			return 1
-			;;
-	esac
-
-	part_mount_test_fs "${PART}" || return 1
-
-	TEMP="$(part_mount_dialog_dev_opt "${PART}" "${POINT}")"
-	case "${?}" in
-		'0') #Yes
-			OPT="${TEMP}"
-			;;
-		'1') #No
-			return 1
-			;;
-		'255') #ESC
-			return 1
-			;;
-	esac
-
-	SET_DEV_BOOT[0]="${PART}"
-	SET_DEV_BOOT[1]="${OPT}"
-
-	part_mount_all "${POINT}" 'SET_DEV_BOOT'
-}
-
 
 # Функция форматирования разделов
 part_format()
@@ -521,11 +497,14 @@ part_format_dialog_mkf_opt()
 
 	local LABEL
 	case "${P_POINT}" in
-		'/ (root)')
+		'/')
 			LABEL="${FLASH}Root"
 			;;
 		'/boot')
 			LABEL="${FLASH}Boot"
+			;;
+		'/boot/efi')
+			LABEL="${FLASH}EFI"
 			;;
 		'/home')
 			LABEL="${FLASH}Home"
@@ -548,7 +527,7 @@ part_format_dialog_mkf_opt()
 		'mkfs.ext4' | 'mkfs.ext4dev')
 			[[ "${FLASH}" ]] && FLASH=' -E discard'
 			case "${P_POINT}" in
-				'/ (root)')
+				'/')
 					TEXT="-m 1 -L ${LABEL}${FLASH}"
 					;;
 				'/home')
@@ -576,18 +555,19 @@ part_format_dialog_mkf_opt()
 	msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
 }
 
-part_mount_home()
+part_mount_point()
 {
-	local POINT='/home'
+	local P_POINT="${1}"
+	local P_P="${2}"
 
 	local PART
 	local OPT
 
 	local TEMP
 
-	part_mount_test "${POINT}" 'SET_DEV_HOME' || return 1
+	part_mount_test "${P_POINT}" "${P_P}" || return 1
 
-	PART="$(part_mount_dialog_dev_part "${POINT}")"
+	PART="$(part_mount_dialog_dev_part "${P_POINT}")"
 	[[ ! -n "${PART}" ]] && return 1
 
 	dialog_yesno \
@@ -597,10 +577,10 @@ part_mount_home()
 
 	case "${?}" in
 		'0') #Yes
-			part_format "${PART}" "${POINT}" || return 1
+			part_format "${PART}" "${P_POINT}" || return 1
 			;;
-#    '1') #No
-#      ;;
+# 	'1') #No
+# 	    ;;
 		'255') #ESC
 			return 1
 			;;
@@ -608,7 +588,7 @@ part_mount_home()
 
 	part_mount_test_fs "${PART}" || return 1
 
-	TEMP="$(part_mount_dialog_dev_opt "${PART}" "${POINT}")"
+	TEMP="$(part_mount_dialog_dev_opt "${PART}" "${P_POINT}")"
 	case "${?}" in
 		'0') #Yes
 			OPT="${TEMP}"
@@ -621,71 +601,53 @@ part_mount_home()
 			;;
 	esac
 
-	SET_DEV_HOME[0]="${PART}"
-	SET_DEV_HOME[1]="${OPT}"
+	mkdir -m 755 -p "${NS_PATH}${P_POINT}"
 
-	part_mount_all "${POINT}" 'SET_DEV_HOME'
+	[[ -n "${OPT}" ]] && ${OPT}="-o ${OPT}"
+	msg_log "mount ${OPT} ${PART} ${P_POINT}"
+	mount ${OPT} "${PART}" "${NS_PATH}${P_POINT}"
+
+	[[ "${?}" != '0' ]] && return 1
+
+	eval "${P_P}[0]=\"\${PART}\""
+	eval "${P_P}[1]=\"\${OPT}\""
+
+	set_global_var "${P_P}" "'${PART}' '${OPT}'"
+
+	RUN_PART=1
+
+	return 0
 }
 
-part_mount_root()
+part_mount_test()
 {
-	local POINT='/ (root)'
-	local PART
-	local OPT
+	local P_POINT="${1}"
+	local P_P="${2}"
 
-	local TEMP
+	local SET_DEV
+	eval "SET_DEV[0]=\${${P_P}[0]}"
 
-	if [[ -n "${SET_DEV_ROOT[0]}" ]]
+	if [[ "${P_POINT}" != '/' ]] && [[ ! -n "${SET_DEV_ROOT[0]}" ]]
 	then
 		dialog_warn \
-			"\Zb\Z1$(gettext 'Раздел для') \"${POINT}\" $(gettext 'уже выбран и примонтирован!!!')\Zn"
+			"\Zb\Z1$(gettext 'Раздел') \"/\" (root) $(gettext 'не примонтирован!!!')\Zn"
 		return 1
 	fi
 
-	PART="$(part_mount_dialog_dev_part "${POINT}")"
-	[[ ! -n "${PART}" ]] && return 1
+	if [[ "${P_POINT}" == '/boot' ]] && [[ -n "${SET_DEV_EFI[0]}" ]]
+	then
+		dialog_warn \
+			"\Zb\Z1$(gettext 'Невозможно примонтировать') \"${P_POINT}\"!!!\n $(gettext 'Раздел') \"/boot/efi\" $(gettext 'уже примонтирован!!!')\Zn"
+		return 1
+	fi
 
-	dialog_yesno \
-		"${TXT_PART_MAIN}" \
-		"$(gettext 'Форматировать раздел')\n \Zb\Z6${PART}\Zn ?" \
-		'--defaultno'
-
-	case "${?}" in
-		'0') #Yes
-			part_format "${PART}" "${POINT}" || return 1
-			;;
-#    '1') #No
-#      ;;
-		'255') #ESC
-			return 1
-			;;
-	esac
-
-	part_mount_test_fs "${PART}" || return 1
-
-	TEMP="$(part_mount_dialog_dev_opt "${PART}" "${POINT}")"
-	case "${?}" in
-		'0') #Yes
-			OPT="${TEMP}"
-			;;
-		'1') #No
-			return 1
-			;;
-		'255') #ESC
-			return 1
-			;;
-	esac
-
-	SET_DEV_ROOT[0]="${PART}"
-	SET_DEV_ROOT[1]="${OPT}"
-
-	mkdir -p "${NS_PATH}/"
-	local MOUNT_OPT
-	[[ -n "${SET_DEV_ROOT[1]}" ]] && MOUNT_OPT="-o ${SET_DEV_ROOT[1]}"
-	msg_log "mount ${MOUNT_OPT} ${SET_DEV_ROOT[0]} /"
-	mount ${MOUNT_OPT} "${SET_DEV_ROOT[0]}" "${NS_PATH}/"
-
-	RUN_PART=1
+	if [[ -n "${SET_DEV[0]}" ]]
+	then
+		dialog_warn \
+			"\Zb\Z1$(gettext 'Раздел для') \"${P_POINT}\" $(gettext 'уже примонтирован!!!')\Zn"
+		return 1
+	fi
+	return 0
 }
 
 part_mount_test_fs()
@@ -703,6 +665,8 @@ part_mount_test_fs()
 
 part_dev_part()
 {
+	local P_POINT="${1}"
+
 	local NAME
 
 	lsblk -nro NAME | tr ' ' '\r' |
@@ -717,19 +681,28 @@ part_dev_part()
 			if [[ -n "${ID_PART_ENTRY_TYPE}" ]]
 			then
 				case "${ID_PART_ENTRY_TYPE}" in
-					'0x00' | '0x0' | '0x05' | '0x5' | '0x82') # список типов разделов которые нельзя использовать
+					'0x00' | '0x0' | '0x05' | '0x5') # список типов разделов которые нельзя использовать
 						;;
 					*)
+						local BOOTM=
+
+						case "${ID_PART_ENTRY_TYPE}" in
+							'0x82' | '0657fd6d-a4ab-43c4-84e5-0933c84b4f4f')
+								[[ "${P_POINT}" != 'swap' ]] && continue
+								;;
+							*)
+								[[ "${P_POINT}" == 'swap' ]] && continue
+								local ID_PART_ENTRY_FLAGS="$(get_part_param 'ID_PART_ENTRY_FLAGS' <<< "${TEMP}")"
+								[[ "${ID_PART_ENTRY_FLAGS}" == '0x8000000000000000' ]] || [[ "${ID_PART_ENTRY_FLAGS}" == '0x80' ]] && BOOTM='* '
+#								[[ "${ID_PART_ENTRY_TYPE}" == '21686148-6449-6e6f-744e-656564454649' ]] && BOOTM='* '
+
+								;;
+						esac
 						local DEVNAME="$(get_part_param 'DEVNAME' <<< "${TEMP}")"
 						local ID_FS_TYPE="$(get_part_param 'ID_FS_TYPE' <<< "${TEMP}")"
 						local PART_TABLE_TYPE_NAME="$(get_part_param 'PART_TABLE_TYPE_NAME' <<< "${TEMP}")"
 						local SIZE="$(get_part_param 'SIZE' <<< "${TEMP}")"
 						local ID_FS_LABEL="$(get_part_param 'ID_FS_LABEL' <<< "${TEMP}")"
-
-						local ID_PART_ENTRY_FLAGS="$(get_part_param 'ID_PART_ENTRY_FLAGS' <<< "${TEMP}")"
-
-						local BOOTM=
-						[[ "${ID_PART_ENTRY_FLAGS}" == '0x8000000000000000' ]] || [[ "${ID_PART_ENTRY_FLAGS}" == '0x80' ]] && BOOTM='* '
 
 						echo -e "'${DEVNAME}' '${BOOTM}\"${PART_TABLE_TYPE_NAME}\" ${SIZE} ${ID_FS_TYPE} \"${ID_FS_LABEL}\"'"
 						;;
@@ -755,7 +728,7 @@ part_mount_dialog_dev_part()
 
 	local DEFAULT_ITEM=' '
 
-	local ITEMS="$(part_dev_part)"
+	local ITEMS="$(part_dev_part "${P_POINT}")"
 
 	if [[ ! -n "${ITEMS}" ]]
 	then
@@ -808,27 +781,6 @@ part_mount_dialog_dev_opt()
 	msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
 }
 
-
-part_mount_all()
-{
-	local P_POINT="${1}"
-	local P_P="${2}"
-
-	local SET_DEV
-	eval "SET_DEV[0]=\${${P_P}[0]}"
-	eval "SET_DEV[1]=\${${P_P}[1]}"
-
-	mkdir -p "${NS_PATH}${P_POINT}"
-	chmod 755 "${NS_PATH}${P_POINT}"
-	[[ -n "${SET_DEV[1]}" ]] && SET_DEV[1]="-o ${SET_DEV[1]}"
-	msg_log "mount ${SET_DEV[1]} ${SET_DEV[0]} ${P_POINT}"
-	mount ${SET_DEV[1]} "${SET_DEV[0]}" "${NS_PATH}${P_POINT}"
-	[[ "${?}" == '0' ]] && return 0
-	eval "${P_P}[0]=''"
-	eval "${P_P}[1]=''"
-	return 1
-}
-
 part_mount_swap()
 {
 	local POINT='swap'
@@ -843,7 +795,7 @@ part_mount_swap()
 # Диалог выбора раздела, для монтирования
 	case "$(part_mount_dialog_swap_type "${POINT}")" in
 		'dev')
-			PART="$(part_mount_dialog_swap_dev "${POINT}")"
+			PART="$(part_mount_dialog_dev_part "${POINT}")"
 			[[ ! -n "${PART}" ]] && return 1
 
 			dialog_yesno \
@@ -869,6 +821,8 @@ part_mount_swap()
 			SET_DEV_SWAP[0]="${PART}"
 			SET_DEV_SWAP[1]="${OPT}"
 
+			set_global_var 'SET_DEV_SWAP' "${SET_DEV_SWAP}"
+
 			msg_log " swapon ${SET_DEV_SWAP[0]}"
 			swapon "${SET_DEV_SWAP[0]}"
 			;;
@@ -880,6 +834,8 @@ part_mount_swap()
 
 			SET_DEV_SWAP[0]="${PART}"
 			SET_DEV_SWAP[1]="${OPT}"
+
+			set_global_var 'SET_DEV_SWAP' "${SET_DEV_SWAP}"
 
 			msg_log "$(gettext 'Создается') /swapfile"
 			fallocate -l "${SET_DEV_SWAP[1]}M" "${NS_PATH}${SET_DEV_SWAP[0]}"
@@ -932,67 +888,6 @@ part_mount_dialog_swap_type()
 	msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
 }
 
-part_swap_dev()
-{
-	local NAME
-
-	lsblk -nro NAME | tr ' ' '\r' |
-	while IFS=$'\r' read -r NAME
-	do
-		local TEMP="$(get_part_info "/dev/${NAME}")"
-
-		local MOUNTPOINT="$(get_part_param 'MOUNTPOINT' <<< "${TEMP}")"
-		if [[ ! -n "${MOUNTPOINT}" ]]
-		then
-			local ID_PART_ENTRY_TYPE="$(get_part_param 'ID_PART_ENTRY_TYPE' <<< "${TEMP}")"
-			if [[ -n "${ID_PART_ENTRY_TYPE}" ]]
-			then
-				case "${ID_PART_ENTRY_TYPE}" in
-					# типы свап разделов
-					'0x82' | '0657fd6d-a4ab-43c4-84e5-0933c84b4f4f')
-						local DEVNAME="$(get_part_param 'DEVNAME' <<< "${TEMP}")"
-
-						local PART_TABLE_TYPE_NAME="$(get_part_param 'PART_TABLE_TYPE_NAME' <<< "${TEMP}")"
-						local SIZE="$(get_part_param 'SIZE' <<< "${TEMP}")"
-						local ID_FS_LABEL="$(get_part_param 'ID_FS_LABEL' <<< "${TEMP}")"
-
-						echo -e "'${DEVNAME}' '\"${PART_TABLE_TYPE_NAME}\" ${SIZE} \"${ID_FS_LABEL}\"'"
-						;;
-				esac
-			fi
-		fi
-	done
-}
-
-part_mount_dialog_swap_dev()
-{
-	msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for ((TEMP=1; TEMP<=${#}; TEMP++)); do echo -n " \$${TEMP}='$(eval "echo \"\${${TEMP}}\"")'"; done)\"" 'noecho'
-
-	local RETURN
-
-	local P_POINT="${1}"
-
-	local TITLE="${TXT_PART_MAIN}"
-	local HELP_TXT="$(gettext 'Точка монтирования'): \Zb\Z2\"${P_POINT}\"\Zn\n"
-	HELP_TXT+="\n$(gettext 'Выберите раздел для монтирования')\n"
-
-	local DEFAULT_ITEM=' '
-
-	local ITEMS="$(part_swap_dev)"
-
-	if [[ ! -n "${ITEMS}" ]]
-	then
-		dialog_warn \
-			"\Zb\Z1$(gettext 'Свободных разделов не найдено!!!')\Zn"
-		return 1
-	fi
-
-	RETURN="$(dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}")"
-
-	echo "${RETURN}"
-	msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
-}
-
 part_mount_dialog_swap_file()
 {
 	msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for ((TEMP=1; TEMP<=${#}; TEMP++)); do echo -n " \$${TEMP}='$(eval "echo \"\${${TEMP}}\"")'"; done)\"" 'noecho'
@@ -1014,29 +909,6 @@ part_mount_dialog_swap_file()
 
 	echo "${RETURN}"
 	msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
-}
-
-part_mount_test()
-{
-	local P_POINT="${1}"
-	local P_P="${2}"
-
-	local SET_DEV
-	eval "SET_DEV[0]=\${${P_P}[0]}"
-
-	if [[ ! -n "${SET_DEV_ROOT[0]}" ]]
-	then
-		dialog_warn \
-			"\Zb\Z1$(gettext 'Раздел "/ (root)" не примонтирован!!!')\Zn"
-		return 1
-	fi
-	if [[ -n "${SET_DEV[0]}" ]]
-	then
-		dialog_warn \
-			"\Zb\Z1$(gettext 'Раздел для') \"${P_POINT}\" $(gettext 'уже примонтирован!!!')\Zn"
-		return 1
-	fi
-	return 0
 }
 
 part_mount_set_fstab_str()
@@ -1089,6 +961,11 @@ part_unmount()
 			msg_log "umount ${SET_DEV_HOME[0]}"
 			umount "${SET_DEV_HOME[0]}"
 		fi
+		if [[ -n "${SET_DEV_EFI[0]}" ]]
+		then
+ 			msg_log "umount ${SET_DEV_EFI[0]}"
+			umount "${SET_DEV_EFI[0]}"
+		fi
 		if [[ -n "${SET_DEV_BOOT[0]}" ]]
 		then
 			msg_log "umount ${SET_DEV_BOOT[0]}"
@@ -1104,6 +981,7 @@ part_unmount()
 
 	SET_DEV_SWAP=('' '')
 
+	SET_DEV_EFI=('' '')
 	SET_DEV_BOOT=('' '')
 	SET_DEV_HOME=('' '')
 
