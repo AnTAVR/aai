@@ -29,11 +29,11 @@ RUN_PART=
 TXT_PART_MAIN="$(gettext 'Разделы')"
 
 #  dev opt
-SET_DEV_ROOT=('' "")
-SET_DEV_BOOT=('' '')
-SET_DEV_EFI=('' '')
-SET_DEV_HOME=('' '')
-SET_DEV_SWAP=('' '')
+SET_DEV_ROOT=
+SET_DEV_BOOT=
+SET_DEV_EFI=
+SET_DEV_HOME=
+SET_DEV_SWAP=
 #===============================================================================
 
 # Выводим строку пункта главного меню
@@ -152,7 +152,10 @@ part_part_dialog_fdisk()
 	local P_FDISK="${1}"
 
 	local TITLE="${TXT_PART_MAIN}"
-	local HELP_TXT="\n$(gettext 'Выберите программу для разметки')\n"
+	local HELP_TXT
+
+	[[ $UEFI ]] && HELP_TXT+="\Z1$(gettext 'C UEFI рекомендуется использовать GPT тип разметки!!!')\Zn\n"
+	HELP_TXT+="\n$(gettext 'Выберите программу для разметки')\n"
 
 	local DEFAULT_ITEM="${P_FDISK}"
 	local ITEMS="'cfdisk' 'MBR'"
@@ -184,24 +187,25 @@ part_part_dialog_dev()
 
 	if [[ $UEFI ]]
 	then
-		HELP_TXT+="\Zb\Z7/boot/efi\Zn - 128M-512M \Zb\Z6(128M)\Zn, $(gettext 'тип') \Zb\Z6EFI System\Zn \Zb\Z1($(gettext 'ОБЯЗАТЕЛЬНО!!!'))\Zn\n"
-		HELP_TXT+="\Zb\Z7/boot\Zn - 32M-512M \Zb\Z6(96M)\Zn, $(gettext 'тип') \Zb\Z6BIOS boot\Zn\n"
-		HELP_TXT+="  FLASH DRIVE \Zb\Z6(32M)\Zn, $(gettext 'тип') \Zb\Z6HPFS/NTFS/exFAT\Zn | \Zb\Z6W95 FAT32\Zn\n"
-		HELP_TXT+="\Zb\Z7/ (root)\Zn - 4G-32G \Zb\Z6(20G)\Zn, $(gettext 'тип') \Zb\Z6Linux root ($(uname -m))\Zn \Zb\Z1($(gettext 'ОБЯЗАТЕЛЬНО!!!'))\Zn\n"
-		HELP_TXT+="\Zb\Z7/home\Zn - \Zb\Z6($(gettext 'все остальное место'))\Zn, $(gettext 'тип') \Zb\Z6Linux home\Zn \Zb\Z3($(gettext 'Рекомендуется'))\Zn\n"
+		HELP_TXT+="\Zb\Z7/boot/efi\Zn - 128M-512M \Zb\Z2(128M)\Zn, $(gettext 'тип') \Zb\Z6EFI System\Zn \Zb\Z1($(gettext 'ОБЯЗАТЕЛЬНО!!!'))\Zn\n"
+		HELP_TXT+="  FLASH DRIVE \Zb\Z2(32M)\Zn\n"
+		HELP_TXT+="\Zb\Z7/boot\Zn - 32M-512M \Zb\Z2(96M)\Zn, $(gettext 'тип') \Zb\Z6BIOS boot\Zn\n"
+		HELP_TXT+="  FLASH DRIVE \Zb\Z2(32M)\Zn\n"
+		HELP_TXT+="\Zb\Z7/ (root)\Zn - 4G-32G \Zb\Z2(20G)\Zn, $(gettext 'тип') \Zb\Z6Linux root ($(uname -m))\Zn \Zb\Z1($(gettext 'ОБЯЗАТЕЛЬНО!!!'))\Zn\n"
+		HELP_TXT+="\Zb\Z7/home\Zn - \Zb\Z2($(gettext 'все остальное место'))\Zn, $(gettext 'тип') \Zb\Z6Linux home\Zn \Zb\Z3($(gettext 'Рекомендуется'))\Zn\n"
 		HELP_TXT+="  $(gettext '10G на одного пользователя и 5G на бэкапы и кеш системы')\n"
 		HELP_TXT+="  $(gettext 'Если установка на FLASH DRIVE, то можно не использовать отдельный раздел')\n"
-		HELP_TXT+="\Zb\Z7swap\Zn - RAM*2 \Zb\Z6($(free -m | awk '/Mem:/{ print $2*2 }')M)\Zn, $(gettext 'тип') \Zb\Z6Linux swap\Zn\n"
+		HELP_TXT+="\Zb\Z7swap\Zn - RAM*2 \Zb\Z2($(free -m | awk '/Mem:/{ print $2*2 }')M)\Zn, $(gettext 'тип') \Zb\Z6Linux swap\Zn\n"
 		HELP_TXT+="  $(gettext 'Можно потом сделать swap в файл, если фс') \Zb\Z6/ (root) ext4\Zn\n"
 	else
-		HELP_TXT+="\Zb\Z7/boot\Zn - 32M-512M \Zb\Z6(96M)\Zn, $(gettext 'тип') \Zb\Z6Linux\Zn\n"
-		HELP_TXT+="  FLASH DRIVE \Zb\Z6(32M)\Zn, $(gettext 'тип') \Zb\Z6HPFS/NTFS/exFAT\Zn | \Zb\Z6W95 FAT32\Zn\n"
+		HELP_TXT+="\Zb\Z7/boot\Zn - 32M-512M \Zb\Z2(96M)\Zn, $(gettext 'тип') \Zb\Z6Linux\Zn\n"
+		HELP_TXT+="  FLASH DRIVE \Zb\Z2(32M)\Zn, $(gettext 'тип') \Zb\Z6HPFS/NTFS/exFAT\Zn | \Zb\Z6W95 FAT32\Zn\n"
 		HELP_TXT+="  $(gettext 'Нужно сделать загрузочным!!!')\n"
-		HELP_TXT+="\Zb\Z7/ (root)\Zn - 4G-32G \Zb\Z6(20G)\Zn, $(gettext 'тип') \Zb\Z6Linux\Zn \Zb\Z1($(gettext 'ОБЯЗАТЕЛЬНО!!!'))\Zn\n"
-		HELP_TXT+="\Zb\Z7/home\Zn - \Zb\Z6($(gettext 'все остальное место'))\Zn, $(gettext 'тип') \Zb\Z6Linux\Zn \Zb\Z3($(gettext 'Рекомендуется'))\Zn\n"
+		HELP_TXT+="\Zb\Z7/ (root)\Zn - 4G-32G \Zb\Z2(20G)\Zn, $(gettext 'тип') \Zb\Z6Linux\Zn \Zb\Z1($(gettext 'ОБЯЗАТЕЛЬНО!!!'))\Zn\n"
+		HELP_TXT+="\Zb\Z7/home\Zn - \Zb\Z2($(gettext 'все остальное место'))\Zn, $(gettext 'тип') \Zb\Z6Linux\Zn \Zb\Z3($(gettext 'Рекомендуется'))\Zn\n"
 		HELP_TXT+="  $(gettext '10G на одного пользователя и 5G на бэкапы и кеш системы')\n"
 		HELP_TXT+="  $(gettext 'Если установка на FLASH DRIVE, то можно не использовать отдельный раздел')\n"
-		HELP_TXT+="\Zb\Z7swap\Zn - RAM*2 \Zb\Z6($(free -m | awk '/Mem:/{ print $2*2 }')M)\Zn, $(gettext 'тип') \Zb\Z6Linux swap / Solaris\Zn\n"
+		HELP_TXT+="\Zb\Z7swap\Zn - RAM*2 \Zb\Z2($(free -m | awk '/Mem:/{ print $2*2 }')M)\Zn, $(gettext 'тип') \Zb\Z6Linux swap / Solaris\Zn\n"
 		HELP_TXT+="  $(gettext 'Можно потом сделать swap в файл, если фс') \Zb\Z6/ (root) ext4\Zn\n"
 	fi
 
@@ -308,7 +312,7 @@ part_mount_dialog_point()
 	[[ -n "${SET_DEV_HOME[0]}" ]] && TEMP="\Zb\Z2($(gettext 'ВЫПОЛНЕНО'))\Zn"
 	ITEMS+=" '/home' '\"${SET_DEV_HOME[0]}\" \"$(mount | grep "^${SET_DEV_HOME[0]} " | awk '{print $5}')\" ${TEMP}'"
 
-	TEMP="\Zb\Z3($(gettext 'Рекомендуется'))\Zn"
+	TEMP=
 	[[ -n "${SET_DEV_SWAP[0]}" ]] && TEMP="\Zb\Z2($(gettext 'ВЫПОЛНЕНО'))\Zn"
 	ITEMS+=" 'swap' '\"${SET_DEV_SWAP[0]}\" \"$(swapon --show | grep "^${SET_DEV_SWAP[0]} " | awk '{print $2}')\" ${TEMP}'"
 
@@ -378,9 +382,14 @@ part_format_dialog_mkf()
 	local P_PART="${1}"
 	local P_POINT="${2}"
 
+	local TEMP="$(get_part_info "${P_PART}")"
+
+	local PART_TABLE_TYPE_NAME="$(get_part_param 'PART_TABLE_TYPE_NAME' <<< "${TEMP}")"
+
 	local TITLE="${TXT_PART_MAIN}"
 	local HELP_TXT="$(gettext 'Точка монтирования'): \Zb\Z2\"${P_POINT}\"\Zn\n"
 	HELP_TXT+="$(gettext 'Раздел'): \Zb\Z2\"${P_PART}\"\Zn\n"
+	HELP_TXT+="$(gettext 'Тип'): \Zb\Z2\"${PART_TABLE_TYPE_NAME}\"\Zn\n"
 	HELP_TXT+="\n$(gettext 'Выберите файловую систему')\n"
 	HELP_TXT+="$(gettext 'По умолчанию'):"
 
@@ -405,8 +414,6 @@ part_format_dialog_mkf()
 #	ITEMS+=" 'mkfs.bfs' '-'"
 #	ITEMS+=" 'mkfs.cramfs' '-'"
 	ITEMS+=" 'mkswap' '-'"
-
-	local TEMP="$(get_part_info "${P_PART}")"
 
 	local ID_PART_ENTRY_TYPE="$(get_part_param 'ID_PART_ENTRY_TYPE' <<< "${TEMP}")"
 
@@ -603,16 +610,15 @@ part_mount_point()
 
 	mkdir -m 755 -p "${NS_PATH}${P_POINT}"
 
-	[[ -n "${OPT}" ]] && ${OPT}="-o ${OPT}"
-	msg_log "mount ${OPT} ${PART} ${P_POINT}"
-	mount ${OPT} "${PART}" "${NS_PATH}${P_POINT}"
+	TEMP=
+	[[ -n "${OPT}" ]] && TEMP="-o ${OPT}"
+
+	msg_log "mount ${TEMP} ${PART} ${P_POINT}"
+	mount ${TEMP} "${PART}" "${NS_PATH}${P_POINT}"
 
 	[[ "${?}" != '0' ]] && return 1
 
-	eval "${P_P}[0]=\"\${PART}\""
-	eval "${P_P}[1]=\"\${OPT}\""
-
-	set_global_var "${P_P}" "'${PART}' '${OPT}'"
+	set_global_var "${P_P}" "${PART}" "${OPT}"
 
 	RUN_PART=1
 
@@ -818,10 +824,7 @@ part_mount_swap()
 
 			OPT='defaults'
 
-			SET_DEV_SWAP[0]="${PART}"
-			SET_DEV_SWAP[1]="${OPT}"
-
-			set_global_var 'SET_DEV_SWAP' "${SET_DEV_SWAP}"
+			set_global_var 'SET_DEV_SWAP' "${PART}" "${OPT}"
 
 			msg_log " swapon ${SET_DEV_SWAP[0]}"
 			swapon "${SET_DEV_SWAP[0]}"
@@ -832,10 +835,7 @@ part_mount_swap()
 			OPT="${OPT}"
 			PART='/swapfile'
 
-			SET_DEV_SWAP[0]="${PART}"
-			SET_DEV_SWAP[1]="${OPT}"
-
-			set_global_var 'SET_DEV_SWAP' "${SET_DEV_SWAP}"
+			set_global_var 'SET_DEV_SWAP' "${PART}" "${OPT}"
 
 			msg_log "$(gettext 'Создается') /swapfile"
 			fallocate -l "${SET_DEV_SWAP[1]}M" "${NS_PATH}${SET_DEV_SWAP[0]}"
@@ -979,13 +979,13 @@ part_unmount()
 		rmdir "${NS_PATH}/"
 	fi
 
-	SET_DEV_SWAP=('' '')
+	SET_DEV_SWAP=
 
-	SET_DEV_EFI=('' '')
-	SET_DEV_BOOT=('' '')
-	SET_DEV_HOME=('' '')
+	SET_DEV_EFI=
+	SET_DEV_BOOT=
+	SET_DEV_HOME=
 
-	SET_DEV_ROOT=('' '')
+	SET_DEV_ROOT=
 
 	RUN_PART=
 }
