@@ -276,7 +276,7 @@ xorg_dialog_video_free()
 			DEFAULT_ITEM='xf86-video-nouveau'
 			ITEMS+=" 'xf86-video-nouveau' 'NVIDIA' 'on'"
 		else
-			if [[ "${DEFAULT_ITEM}" == 'nvidia304' ]]
+			if [[ "${DEFAULT_ITEM}" == 'nvidia304' ]] || [[ "${DEFAULT_ITEM}" == 'nvidia340' ]]
 			then
 				DEFAULT_ITEM='xf86-video-nouveau'
 				ITEMS+=" 'xf86-video-nouveau' 'NVIDIA' 'on'"
@@ -339,6 +339,7 @@ xorg_dialog_video()
 	local ITEMS="'free' '$(gettext 'Установить свободный драйвер')'"
 	ITEMS+=" 'nvidia' 'NVIDIA'"
 	ITEMS+=" 'nvidia304' 'NVIDIA 304xx'"
+	ITEMS+=" 'nvidia340' 'NVIDIA 340xx'"
 	ITEMS+=" 'optimus' 'Bumblebee NVIDIA Optimus'"
 #	ITEMS+=" 'nvidia173' 'NVIDIA 173xx \Zb\Z3($(gettext 'Пока не поддерживается'))\Zn'"
 #	ITEMS+=" 'nvidia96' 'NVIDIA 96xx \Zb\Z3($(gettext 'Пока не поддерживается'))\Zn'"
@@ -548,6 +549,22 @@ xorg_video()
 
 #			DRIVER='nvidia'
 			;;
+		'nvidia340')
+			#extra
+			pacman_install '-S nvidia-340xx'
+			[[ "${SET_LTS}" ]] && pacman_install '-S nvidia-340xx-lts'
+			pacman_install '-S nvidia-340xx-utils'
+			pacman_install '-S nvidia-340xx-libgl'
+#			pacman_install '-S opencl-nvidia-304xx'
+			#multilib
+			pacman_install '-S lib32-nvidia-340xx-utils' 'yaourt'
+			pacman_install '-S lib32-nvidia-340xx-libgl' 'yaourt'
+#			pacman_install '-S lib32-opencl-nvidia-304xx' 'yaourt'
+
+			#nvidia-xconfig
+
+#			DRIVER='nvidia'
+			;;
 		'optimus')
 			#extra
 			pacman_install '-S xf86-video-intel'
@@ -583,8 +600,8 @@ xorg_video()
 			;;
 		'catalyst')
 			msg_log "$(gettext 'Добавляю') catalyst > /etc/pacman.conf"
-			
-			
+
+
 			grep 'catalyst' "${NS_PATH}/etc/pacman.conf" > /dev/null && echo '' || sed -i '
 0,/^#\[testing\]/{
 //{
