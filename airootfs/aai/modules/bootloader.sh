@@ -75,11 +75,11 @@ run_bootloader()
 		fi
 	fi
 
-	local DEF_MENU='grub_bios'
+	local DEF_MENU=
 
 	while true
 	do
-		DEF_MENU="$(bootloader_dialog_menu "${DEF_MENU}")"
+		DEF_MENU="$(bootloader_dialog_menu)"
 		case "${DEF_MENU}" in
 			'none')
 				set_global_var 'SET_BOOTLOADER' ''
@@ -94,22 +94,22 @@ run_bootloader()
 				;;
 			'grub_efi')
 				bootloader_grub_efi || continue
-#	set_global_var 'SET_BOOTLOADER' "${DEF_MENU}"
-#	RUN_BOOTLOADER=1
+#				set_global_var 'SET_BOOTLOADER' "${DEF_MENU}"
+#				RUN_BOOTLOADER=1
 				return 0
 				;;
 			'syslinux')
 				bootloader_syslinux || continue
-#	set_global_var 'SET_BOOTLOADER' "${DEF_MENU}"
-#	RUN_BOOTLOADER=1
+#				set_global_var 'SET_BOOTLOADER' "${DEF_MENU}"
+#				RUN_BOOTLOADER=1
 				return 0
 				;;
 # 			'lilo')
 # 				bootloader_lilo || continue
-# #	set_global_var 'SET_BOOTLOADER' "${DEF_MENU}"
-# #	RUN_BOOTLOADER=1
-# 				return 0
-# 				;;
+#				set_global_var 'SET_BOOTLOADER' "${DEF_MENU}"
+#				RUN_BOOTLOADER=1
+#				return 0
+#				;;
 			*)
 				return 1
 				;;
@@ -123,13 +123,13 @@ bootloader_dialog_menu()
 
 	local RETURN
 
-	local P_DEF_MENU="${1}"
-
 	local TITLE="${TXT_BOOTLOADER_MAIN}"
 	local HELP_TXT="\n$(gettext 'Выберите загрузчик')\n"
 	HELP_TXT+="$(gettext 'По умолчанию'):"
 
-	local DEFAULT_ITEM="${P_DEF_MENU}"
+	local DEFAULT_ITEM='grub_bios'
+	[[ "${UEFI}" ]] && DEFAULT_ITEM='grub_efi'
+
 #  local ITEMS="'none' '$(gettext 'Не устанавливать загрузчик')'"
 	local ITEMS="'grub_bios' 'GRUB BIOS'"
 	ITEMS+=" 'grub_efi' 'GRUB EFI \Zb\Z3($(gettext 'Пока не поддерживается'))\Zn'"
@@ -431,10 +431,10 @@ bootloader_grub_efi()
 	#core
 	pacman_install '-S grub'
 	pacman_install '-S efibootmgr'
-	pacman_install '-S gummiboot'
+#	pacman_install '-S gummiboot'
 	#extra
-	pacman_install '-S refind-efi'
-	pacman_install '-S prebootloader'
+#	pacman_install '-S refind-efi'
+#	pacman_install '-S prebootloader'
 	pacman_install '-S memtest86+'
 	#community
 	pacman_install '-S os-prober'
@@ -511,22 +511,22 @@ bootloader_syslinux()
 # bootloader_lilo()
 # {
 # 	local CONSOLE_V_XxYxD
-# 
+#
 # 	dialog_warn \
 # 		"\Zb\Z1\"LILO\" $(gettext 'пока не поддерживается, помогите проекту, допишите данный функционал')\Zn"
 # 	return 1
-# 
+#
 # # @todo Закомментировано потому что темы могут не поддерживать выбранные режимы
 # #  TEMP="$(bootloader_dialog_console)"
 # #  [[ ! -n "${TEMP}" ]] && return 1
 # #  CONSOLE_V_XxYxD="${TEMP}"
 # 	CONSOLE_V_XxYxD="${DEF_CONSOLE_V_XxYxD}"
-# 
+#
 # 	#core
 # 	pacman_install '-S lilo'
-# 
+#
 # 	git_commit
-# 
+#
 # # Настраиваем lilo
 # #  "${NS_PATH}/etc/lilo.conf"
 # #  chroot_run lilo
