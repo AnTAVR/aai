@@ -1,5 +1,5 @@
 [Unit]
-Description=Create cache in /tmp/%u
+Description=Create ~/.cache in /tmp/%u/.cache
 
 [Service]
 Type=oneshot

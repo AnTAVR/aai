@@ -1,0 +1,15 @@
+[Unit]
+Description=Create ~/.thumbnails in /tmp/%u/.thumbnails
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+
+ExecStart=-/usr/bin/mkdir -m 0700 -p /tmp/%u
+ExecStart=-/usr/bin/mkdir /tmp/%u/.thumbnails
+ExecStart=-/usr/bin/rm -r %h/.thumbnails
+ExecStart=-/usr/bin/ln -s /tmp/%u/.thumbnails %h/.thumbnails
+
+ExecStop=-/usr/bin/rm -r %h/.thumbnails
+ExecStop=-/usr/bin/rm -r /tmp/%u
+ExecStop=-/usr/bin/mkdir %h/.thumbnails
