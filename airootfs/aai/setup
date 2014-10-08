@@ -65,6 +65,9 @@ source "${LIBDIR}/dialogs.sh"
 echo -e "${BLDGRN}${AAI_VER}${TXTRST}"
 echo ''
 
+UEFI=
+efivar -l > /dev/null && UEFI=1
+
 echo_help()
 {
 	echo -e "${BLDYLW}$(gettext "Использование: ${SCRNAME} <опции> [...]")${TXTRST}"
