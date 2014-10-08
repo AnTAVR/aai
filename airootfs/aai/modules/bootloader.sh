@@ -98,12 +98,12 @@ run_bootloader()
 #				RUN_BOOTLOADER=1
 				return 0
 				;;
-			'syslinux')
-				bootloader_syslinux || continue
+#			'syslinux')
+#				bootloader_syslinux || continue
 #				set_global_var 'SET_BOOTLOADER' "${DEF_MENU}"
 #				RUN_BOOTLOADER=1
-				return 0
-				;;
+#				return 0
+#				;;
 # 			'lilo')
 # 				bootloader_lilo || continue
 #				set_global_var 'SET_BOOTLOADER' "${DEF_MENU}"
