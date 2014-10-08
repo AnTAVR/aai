@@ -755,9 +755,9 @@ s/^/#/;
 	echo '# <file system>	<dir>	<type>	<options>	<dump>	<pass>' >> "${NS_PATH}/etc/fstab"
 	echo '' >> "${NS_PATH}/etc/fstab"
 	echo "$(part_mount_set_fstab_str '/' 'SET_DEV_ROOT' '1' '1')" >> "${NS_PATH}/etc/fstab"
-	echo "$(part_mount_set_fstab_str '/boot' 'SET_DEV_BOOT' '1' '2')" >> "${NS_PATH}/etc/fstab"
-	echo "$(part_mount_set_fstab_str '/boot/efi' 'SET_DEV_EFI' '1' '2')" >> "${NS_PATH}/etc/fstab"
-	echo "$(part_mount_set_fstab_str '/home' 'SET_DEV_HOME' '1' '2')" >> "${NS_PATH}/etc/fstab"
+	echo "$(part_mount_set_fstab_str '/boot' 'SET_DEV_BOOT' '0' '2')" >> "${NS_PATH}/etc/fstab"
+	echo "$(part_mount_set_fstab_str '/boot/efi' 'SET_DEV_EFI' '0' '2')" >> "${NS_PATH}/etc/fstab"
+	echo "$(part_mount_set_fstab_str '/home' 'SET_DEV_HOME' '0' '2')" >> "${NS_PATH}/etc/fstab"
 	echo "$(part_mount_set_fstab_str 'none' 'SET_DEV_SWAP' '0' '0')" >> "${NS_PATH}/etc/fstab"
 #-------------------------------------------------------------------------------
 
