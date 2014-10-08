@@ -171,7 +171,7 @@ pacman_install_err()
 
 	if [[ "${P_RET}" != '0' ]]
 	then
-		
+
 		if [[ ! ${P_NO_EXIT} ]]
 		then
 			dialog_yesno \
@@ -202,12 +202,31 @@ git_commit()
 
 set_global_var()
 {
+# все одинарные кавычки преобразуются в двойные, нужно быть внимательным!!!
 	local P_NAME="${1}"
-	local P_VALUE="${2}"
+	shift
 
-	eval "${P_NAME}='${P_VALUE}'"
+	local TEMP=
+	local VALUE=
 
-	echo "${P_NAME}='${P_VALUE}'" >> "${VAR_FILE}"
+	[[ ${#} < 1 ]] && return 1
+
+	if [[ ${#} < 2 ]]
+	then
+		VALUE="${1}"
+		TEMP="${P_NAME}='${VALUE//\'/\"}'"
+	else
+		TEMP="${P_NAME}=("
+		for VALUE in "${@}"
+		do
+			TEMP+=" '${VALUE//\'/\"}'"
+		done
+		TEMP+=")"
+	fi
+
+	eval "${TEMP}"
+	echo "${TEMP}" >> "${VAR_FILE}"
+	return 0
 }
 
 get_part_txt()
