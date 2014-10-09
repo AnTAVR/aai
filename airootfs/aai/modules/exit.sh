@@ -63,6 +63,7 @@ run_exit()
 	net_off
 	part_unmount
 	[[ ! "${P_RUN_EXIT}" ]] && clear
+	set_global_var 'STOP' 'EXIT'
 	msg_log "${TXT_EXIT_MAIN}"
 	exit ${P_RUN_EXIT}
 }
