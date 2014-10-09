@@ -286,11 +286,18 @@ bootloader_grub_bios()
 		FILE_TXT='GRUB_CMDLINE_LINUX+=\" '
 		if [[ "$(grep '^/dev/' <<< "${SET_DEV_SWAP[0]}")" ]]
 		then
-			FILE_TXT+="resume=UUID=$(blkid -c /dev/null "${SET_DEV_SWAP[0]}" | grep ' UUID="' | sed -r 's/.* UUID="//; s/" .*//')"
+			local PART_INFO="$(get_part_info "${SET_DEV_SWAP[0]}")"
+			local ID_FS_UUID="$(get_part_param 'ID_FS_UUID' <<< "${PART_INFO}")"
+
+			FILE_TXT+="resume=UUID=${ID_FS_UUID}"
 		else
 			TEMP="$(filefrag -v "${NS_PATH}${SET_DEV_SWAP[0]}" | sed -n '4p' | awk '{print $3}')"
-			FILE_TXT+="resume=UUID=$(blkid -c /dev/null "${SET_DEV_ROOT[0]}" | grep ' UUID="' | sed -r 's/.* UUID="//; s/" .*//') "
-			FILE_TXT+="resume_offset=${TEMP/:/}"
+
+			local PART_INFO="$(get_part_info "${SET_DEV_ROOT[0]}")"
+			local ID_FS_UUID="$(get_part_param 'ID_FS_UUID' <<< "${PART_INFO}")"
+
+			FILE_TXT+="resume=UUID=${ID_FS_UUID}"
+			FILE_TXT+=" resume_offset=${TEMP/:/}"
 		fi
 		FILE_TXT+='\"'
 	fi
