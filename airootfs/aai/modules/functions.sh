@@ -827,6 +827,9 @@ get_part_info()
 	local ID_PART_ENTRY_NAME
 	local ID_FS_LABEL
 
+	local DEVTYPE
+	local ID_USB_DRIVER
+
 	lsblk -ndaro NAME,MOUNTPOINT,RM,SIZE,ROTA,TRAN "${1}" | tr ' ' '\r' |
 	while IFS=$'\r' read -r NAME MOUNTPOINT RM SIZE ROTA TRAN
 	do
@@ -847,6 +850,16 @@ s/[ \t]*$//;
 		ID_PART_ENTRY_TYPE="$(get_part_param 'ID_PART_ENTRY_TYPE' <<< "${TEMP}")"
 		PART_TABLE_TYPE_NAME="$(get_part_txt "${ID_PART_ENTRY_TYPE}")"
 		[[ -n "${PART_TABLE_TYPE_NAME}" ]] && echo "PART_TABLE_TYPE_NAME='${PART_TABLE_TYPE_NAME}'"
+
+		DEVTYPE="$(get_part_param 'DEVTYPE' <<< "${TEMP}")"
+		ID_USB_DRIVER="$(get_part_param 'ID_USB_DRIVER' <<< "${TEMP}")"
+		if [[ "${ROTA}" == '0' ]]
+		then
+			echo "IS_SSD='1'"
+		elif [[ "${RM}" == '1' ]] && [[ "${ID_USB_DRIVER}" == 'usb-storage' ]]
+		then
+			echo "IS_SSD='1'"
+		fi
 
 #		ID_FS_LABEL="$(get_part_param 'ID_FS_LABEL' <<< "${TEMP}")"
 #		if [[ ! -n "${ID_FS_LABEL}" ]]

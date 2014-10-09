@@ -417,6 +417,7 @@ part_format_dialog_mkf()
 	ITEMS+=" 'mkswap' '-'"
 
 	local ID_PART_ENTRY_TYPE="$(get_part_param 'ID_PART_ENTRY_TYPE' <<< "${TEMP}")"
+	local IS_SSD="$(get_part_param 'IS_SSD' <<< "${TEMP}")"
 
 	case "${ID_PART_ENTRY_TYPE}" in
 		'0x01' | '0x1') # FAT12
@@ -430,7 +431,7 @@ part_format_dialog_mkf()
 			;;
 		'0x07' | '0x7') # HPFS/NTFS/exFAT
 			DEFAULT_ITEM='mkfs.ntfs'
-			is_ssd "${P_PART}" && DEFAULT_ITEM='mkfs.exfat'
+			[[ "${IS_SSD}" == '1' ]] && DEFAULT_ITEM='mkfs.exfat'
 			;;
 		'0x0b' | '0xb') # W95 FAT32
 			DEFAULT_ITEM='mkfs.vfat'
@@ -501,7 +502,11 @@ part_format_dialog_mkf_opt()
 	local TEXT
 
 	local FLASH
-	is_ssd "${P_PART}" && FLASH='Flash'
+
+	local TEMP="$(get_part_info "${P_PART}")"
+	local IS_SSD="$(get_part_param 'IS_SSD' <<< "${TEMP}")"
+
+	[[ "${IS_SSD}" == '1' ]] && FLASH='Flash'
 
 	local LABEL
 	case "${P_POINT}" in
@@ -770,13 +775,16 @@ part_mount_dialog_dev_opt()
 
 	local TEXT='defaults,noauto,x-systemd.automount'
 
+	local TEMP="$(get_part_info "${P_PART}")"
+	local IS_SSD="$(get_part_param 'IS_SSD' <<< "${TEMP}")"
+
 	case "${TYPE}" in
 		'ext4' | 'ext4dev')
-			is_ssd "${P_PART}" && TEXT+=',discard'
+			[[ "${IS_SSD}" == '1' ]] && TEXT+=',discard'
 			;;
 		'btrfs')
 			TEXT+=',compress=lzo'
-			is_ssd "${P_PART}" && TEXT+=',discard,ssd'
+			[[ "${IS_SSD}" == '1' ]] && TEXT+=',discard,ssd'
 			;;
 	esac
 
@@ -989,20 +997,6 @@ part_unmount()
 	SET_DEV_ROOT=
 
 	RUN_PART=
-}
-
-is_ssd()
-{
-	local SDX="${1}"
-
-	SDX="${SDX/\/dev\//}"
-	SDX="${SDX:0:3}"
-
-	[[ "$(cat "/sys/block/${SDX}/queue/rotational")" == '0' ]] && return 0
-	[[ "$(cat "/sys/block/${SDX}/removable")" == '1' ]] && return 0
-#  [[ "$(udevadm info --query=property --name="${SDX}" | grep 'ID_BUS=' | sed 's/ID_BUS=//')" == 'usb' ]] && return 0
-
-	return 1
 }
 
 #chroot /mnt/newSystem nano /etc/fstab
