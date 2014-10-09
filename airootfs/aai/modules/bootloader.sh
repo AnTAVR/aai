@@ -281,23 +281,13 @@ bootloader_grub_bios()
 	done
 
 # Добавляем параметр resume если выбран свап
-	if [[ "${SET_DEV_SWAP[0]}" ]]
+	if [[ -n "${SET_DEV_SWAP[0]}" ]]
 	then
-		FILE_TXT='GRUB_CMDLINE_LINUX+=\" '
-		if [[ "$(grep '^/dev/' <<< "${SET_DEV_SWAP[0]}")" ]]
+		FILE_TXT='GRUB_CMDLINE_LINUX+=\"'
+		FILE_TXT+="resume=UUID=${SET_DEV_SWAP[3]}"
+		if [[ ! -n "$(grep '^/dev/' <<< "${SET_DEV_SWAP[0]}")" ]] # [[ "${SET_DEV_SWAP[0]}" == '/swapfile' ]] &&
 		then
-			local PART_INFO="$(get_part_info "${SET_DEV_SWAP[0]}")"
-			local ID_FS_UUID="$(get_part_param 'ID_FS_UUID' <<< "${PART_INFO}")"
-
-			FILE_TXT+="resume=UUID=${ID_FS_UUID}"
-		else
-			TEMP="$(filefrag -v "${NS_PATH}${SET_DEV_SWAP[0]}" | sed -n '4p' | awk '{print $3}')"
-
-			local PART_INFO="$(get_part_info "${SET_DEV_ROOT[0]}")"
-			local ID_FS_UUID="$(get_part_param 'ID_FS_UUID' <<< "${PART_INFO}")"
-
-			FILE_TXT+="resume=UUID=${ID_FS_UUID}"
-			FILE_TXT+=" resume_offset=${TEMP/:/}"
+			FILE_TXT+=" resume_offset=${SET_DEV_SWAP[2]}"
 		fi
 		FILE_TXT+='\"'
 	fi
