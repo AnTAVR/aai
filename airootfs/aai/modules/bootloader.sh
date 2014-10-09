@@ -177,21 +177,21 @@ bootloader_dev_part()
 	lsblk -nro NAME | tr ' ' '\r' |
 	while IFS=$'\r' read -r NAME
 	do
-		local TEMP="$(get_part_info "/dev/${NAME}")"
+		local PART_INFO="$(get_part_info "/dev/${NAME}")"
 
-		local ID_PART_ENTRY_TYPE="$(get_part_param 'ID_PART_ENTRY_TYPE' <<< "${TEMP}")"
-		local ID_TYPE="$(get_part_param 'ID_TYPE' <<< "${TEMP}")"
+		local ID_PART_ENTRY_TYPE="$(get_part_param 'ID_PART_ENTRY_TYPE' <<< "${PART_INFO}")"
+		local ID_TYPE="$(get_part_param 'ID_TYPE' <<< "${PART_INFO}")"
 
 		if [[ "${ID_TYPE}" == 'disk' ]] && [[ "${ID_PART_ENTRY_TYPE}" != "0x82" ]] && [[ "${ID_PART_ENTRY_TYPE}" != "0x5" ]]
 		then
-			local DEVNAME="$(get_part_param 'DEVNAME' <<< "${TEMP}")"
+			local DEVNAME="$(get_part_param 'DEVNAME' <<< "${PART_INFO}")"
 
-			local PART_TABLE_TYPE_NAME="$(get_part_param 'PART_TABLE_TYPE_NAME' <<< "${TEMP}")"
-			local SIZE="$(get_part_param 'SIZE' <<< "${TEMP}")"
-			local ID_FS_TYPE="$(get_part_param 'ID_FS_TYPE' <<< "${TEMP}")"
-			local ID_FS_LABEL="$(get_part_param 'ID_FS_LABEL' <<< "${TEMP}")"
+			local PART_TABLE_TYPE_NAME="$(get_part_param 'PART_TABLE_TYPE_NAME' <<< "${PART_INFO}")"
+			local SIZE="$(get_part_param 'SIZE' <<< "${PART_INFO}")"
+			local ID_FS_TYPE="$(get_part_param 'ID_FS_TYPE' <<< "${PART_INFO}")"
+			local ID_FS_LABEL="$(get_part_param 'ID_FS_LABEL' <<< "${PART_INFO}")"
 
-			local ID_PART_ENTRY_FLAGS="$(get_part_param 'ID_PART_ENTRY_FLAGS' <<< "${TEMP}")"
+			local ID_PART_ENTRY_FLAGS="$(get_part_param 'ID_PART_ENTRY_FLAGS' <<< "${PART_INFO}")"
 
 			local BOOTM=
 			[[ "${ID_PART_ENTRY_FLAGS}" == '0x8000000000000000' ]] || [[ "${ID_PART_ENTRY_FLAGS}" == '0x80' ]] && BOOTM='* '

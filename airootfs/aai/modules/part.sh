@@ -181,7 +181,7 @@ part_part_dialog_dev()
 
 	local P_DEV="${1}"
 
-	local TEMP
+	local PART_INFO
 
 	local TITLE="${TXT_PART_MAIN}"
 	local HELP_TXT=
@@ -219,17 +219,17 @@ part_part_dialog_dev()
 	ITEMS="$(lsblk -nro NAME | tr ' ' '\r' |
 	while IFS=$'\r' read -r NAME
 	do
-		TEMP="$(get_part_info "/dev/${NAME}")"
+		PART_INFO="$(get_part_info "/dev/${NAME}")"
 
-		local DEVTYPE="$(get_part_param 'DEVTYPE' <<< "${TEMP}")"
-		local ID_TYPE="$(get_part_param 'ID_TYPE' <<< "${TEMP}")"
+		local DEVTYPE="$(get_part_param 'DEVTYPE' <<< "${PART_INFO}")"
+		local ID_TYPE="$(get_part_param 'ID_TYPE' <<< "${PART_INFO}")"
 		if [[ "${DEVTYPE}" == 'disk' ]] && [[ "${ID_TYPE}" == 'disk' ]]
 		then
-			local DEVNAME="$(get_part_param 'DEVNAME' <<< "${TEMP}")"
-			local ID_BUS="$(get_part_param 'ID_BUS' <<< "${TEMP}")"
-			local ID_PART_TABLE_TYPE="$(get_part_param 'ID_PART_TABLE_TYPE' <<< "${TEMP}")"
-			local SIZE="$(get_part_param 'SIZE' <<< "${TEMP}")"
-			local ID_SERIAL="$(get_part_param 'ID_SERIAL' <<< "${TEMP}")"
+			local DEVNAME="$(get_part_param 'DEVNAME' <<< "${PART_INFO}")"
+			local ID_BUS="$(get_part_param 'ID_BUS' <<< "${PART_INFO}")"
+			local ID_PART_TABLE_TYPE="$(get_part_param 'ID_PART_TABLE_TYPE' <<< "${PART_INFO}")"
+			local SIZE="$(get_part_param 'SIZE' <<< "${PART_INFO}")"
+			local ID_SERIAL="$(get_part_param 'ID_SERIAL' <<< "${PART_INFO}")"
 
 			echo -e "'${DEVNAME}' '${ID_BUS} ${ID_PART_TABLE_TYPE} ${SIZE} ${ID_SERIAL}'"
 		fi
@@ -383,9 +383,9 @@ part_format_dialog_mkf()
 	local P_PART="${1}"
 	local P_POINT="${2}"
 
-	local TEMP="$(get_part_info "${P_PART}")"
+	local PART_INFO="$(get_part_info "${P_PART}")"
 
-	local PART_TABLE_TYPE_NAME="$(get_part_param 'PART_TABLE_TYPE_NAME' <<< "${TEMP}")"
+	local PART_TABLE_TYPE_NAME="$(get_part_param 'PART_TABLE_TYPE_NAME' <<< "${PART_INFO}")"
 
 	local TITLE="${TXT_PART_MAIN}"
 	local HELP_TXT="$(gettext 'Точка монтирования'): \Zb\Z2\"${P_POINT}\"\Zn\n"
@@ -416,8 +416,8 @@ part_format_dialog_mkf()
 #	ITEMS+=" 'mkfs.cramfs' '-'"
 	ITEMS+=" 'mkswap' '-'"
 
-	local ID_PART_ENTRY_TYPE="$(get_part_param 'ID_PART_ENTRY_TYPE' <<< "${TEMP}")"
-	local IS_SSD="$(get_part_param 'IS_SSD' <<< "${TEMP}")"
+	local ID_PART_ENTRY_TYPE="$(get_part_param 'ID_PART_ENTRY_TYPE' <<< "${PART_INFO}")"
+	local IS_SSD="$(get_part_param 'IS_SSD' <<< "${PART_INFO}")"
 
 	case "${ID_PART_ENTRY_TYPE}" in
 		'0x01' | '0x1') # FAT12
@@ -503,8 +503,8 @@ part_format_dialog_mkf_opt()
 
 	local FLASH
 
-	local TEMP="$(get_part_info "${P_PART}")"
-	local IS_SSD="$(get_part_param 'IS_SSD' <<< "${TEMP}")"
+	local PART_INFO="$(get_part_info "${P_PART}")"
+	local IS_SSD="$(get_part_param 'IS_SSD' <<< "${PART_INFO}")"
 
 	[[ "${IS_SSD}" == '1' ]] && FLASH='Flash'
 
@@ -684,12 +684,12 @@ part_dev_part()
 	lsblk -nro NAME | tr ' ' '\r' |
 	while IFS=$'\r' read -r NAME
 	do
-		local TEMP="$(get_part_info "/dev/${NAME}")"
+		local PART_INFO="$(get_part_info "/dev/${NAME}")"
 
-		local MOUNTPOINT="$(get_part_param 'MOUNTPOINT' <<< "${TEMP}")"
+		local MOUNTPOINT="$(get_part_param 'MOUNTPOINT' <<< "${PART_INFO}")"
 		if [[ ! -n "${MOUNTPOINT}" ]]
 		then
-			local ID_PART_ENTRY_TYPE="$(get_part_param 'ID_PART_ENTRY_TYPE' <<< "${TEMP}")"
+			local ID_PART_ENTRY_TYPE="$(get_part_param 'ID_PART_ENTRY_TYPE' <<< "${PART_INFO}")"
 			if [[ -n "${ID_PART_ENTRY_TYPE}" ]]
 			then
 				case "${ID_PART_ENTRY_TYPE}" in
@@ -704,17 +704,17 @@ part_dev_part()
 								;;
 							*)
 								[[ "${P_POINT}" == 'swap' ]] && continue
-								local ID_PART_ENTRY_FLAGS="$(get_part_param 'ID_PART_ENTRY_FLAGS' <<< "${TEMP}")"
+								local ID_PART_ENTRY_FLAGS="$(get_part_param 'ID_PART_ENTRY_FLAGS' <<< "${PART_INFO}")"
 								[[ "${ID_PART_ENTRY_FLAGS}" == '0x8000000000000000' ]] || [[ "${ID_PART_ENTRY_FLAGS}" == '0x80' ]] && BOOTM='* '
 #								[[ "${ID_PART_ENTRY_TYPE}" == '21686148-6449-6e6f-744e-656564454649' ]] && BOOTM='* '
 
 								;;
 						esac
-						local DEVNAME="$(get_part_param 'DEVNAME' <<< "${TEMP}")"
-						local ID_FS_TYPE="$(get_part_param 'ID_FS_TYPE' <<< "${TEMP}")"
-						local PART_TABLE_TYPE_NAME="$(get_part_param 'PART_TABLE_TYPE_NAME' <<< "${TEMP}")"
-						local SIZE="$(get_part_param 'SIZE' <<< "${TEMP}")"
-						local ID_FS_LABEL="$(get_part_param 'ID_FS_LABEL' <<< "${TEMP}")"
+						local DEVNAME="$(get_part_param 'DEVNAME' <<< "${PART_INFO}")"
+						local ID_FS_TYPE="$(get_part_param 'ID_FS_TYPE' <<< "${PART_INFO}")"
+						local PART_TABLE_TYPE_NAME="$(get_part_param 'PART_TABLE_TYPE_NAME' <<< "${PART_INFO}")"
+						local SIZE="$(get_part_param 'SIZE' <<< "${PART_INFO}")"
+						local ID_FS_LABEL="$(get_part_param 'ID_FS_LABEL' <<< "${PART_INFO}")"
 
 						echo -e "'${DEVNAME}' '${BOOTM}\"${PART_TABLE_TYPE_NAME}\" ${SIZE} ${ID_FS_TYPE} \"${ID_FS_LABEL}\"'"
 						;;
@@ -775,8 +775,8 @@ part_mount_dialog_dev_opt()
 
 	local TEXT='defaults,noauto,x-systemd.automount'
 
-	local TEMP="$(get_part_info "${P_PART}")"
-	local IS_SSD="$(get_part_param 'IS_SSD' <<< "${TEMP}")"
+	local PART_INFO="$(get_part_info "${P_PART}")"
+	local IS_SSD="$(get_part_param 'IS_SSD' <<< "${PART_INFO}")"
 
 	case "${TYPE}" in
 		'ext4' | 'ext4dev')

@@ -840,19 +840,20 @@ get_part_info()
 		[[ -n "${ROTA}" ]] && echo -e "ROTA='${ROTA}'"
 		[[ -n "${TRAN}" ]] && echo -e "TRAN='${TRAN}'"
 
-		TEMP="$(udevadm info --query=property -x --name="${NAME}")"
-		TEMP="$(echo -e "${TEMP}" | sed '
+#		PART_INFO="$(udevadm info --query=property -x --name="${NAME}")"
+#		PART_INFO="$(echo -e "${PART_INFO}" | sed '
+		PART_INFO="$(udevadm info --query=property -x --name="${NAME}" | sed '
 s/ \{1,\}/ /g;
 s/^[ \t]*//;
 s/[ \t]*$//;
 ')"
 
-		ID_PART_ENTRY_TYPE="$(get_part_param 'ID_PART_ENTRY_TYPE' <<< "${TEMP}")"
+		ID_PART_ENTRY_TYPE="$(get_part_param 'ID_PART_ENTRY_TYPE' <<< "${PART_INFO}")"
 		PART_TABLE_TYPE_NAME="$(get_part_txt "${ID_PART_ENTRY_TYPE}")"
 		[[ -n "${PART_TABLE_TYPE_NAME}" ]] && echo "PART_TABLE_TYPE_NAME='${PART_TABLE_TYPE_NAME}'"
 
-		DEVTYPE="$(get_part_param 'DEVTYPE' <<< "${TEMP}")"
-		ID_USB_DRIVER="$(get_part_param 'ID_USB_DRIVER' <<< "${TEMP}")"
+		DEVTYPE="$(get_part_param 'DEVTYPE' <<< "${PART_INFO}")"
+		ID_USB_DRIVER="$(get_part_param 'ID_USB_DRIVER' <<< "${PART_INFO}")"
 		if [[ "${ROTA}" == '0' ]]
 		then
 			echo "IS_SSD='1'"
@@ -861,14 +862,14 @@ s/[ \t]*$//;
 			echo "IS_SSD='1'"
 		fi
 
-#		ID_FS_LABEL="$(get_part_param 'ID_FS_LABEL' <<< "${TEMP}")"
+#		ID_FS_LABEL="$(get_part_param 'ID_FS_LABEL' <<< "${PART_INFO}")"
 #		if [[ ! -n "${ID_FS_LABEL}" ]]
 #		then
-#			ID_PART_ENTRY_NAME="$(get_part_param 'ID_PART_ENTRY_NAME' <<< "${TEMP}")"
+#			ID_PART_ENTRY_NAME="$(get_part_param 'ID_PART_ENTRY_NAME' <<< "${PART_INFO}")"
 #			ID_FS_LABEL="${ID_PART_ENTRY_NAME}"
 #			[[ -n "${ID_FS_LABEL}" ]] && echo "ID_FS_LABEL='${ID_PART_ENTRY_NAME}'"
 #		fi
 
-		echo "${TEMP}"
+		echo "${PART_INFO}"
 	done
 }
