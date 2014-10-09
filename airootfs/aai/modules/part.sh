@@ -28,11 +28,12 @@ MAIN_CASE+=('part')
 RUN_PART=
 TXT_PART_MAIN="$(gettext 'Разделы')"
 
-#  dev opt fs uuid
+# dev opt ID_FS_TYPE ID_FS_UUID
 SET_DEV_ROOT=
 SET_DEV_BOOT=
 SET_DEV_EFI=
 SET_DEV_HOME=
+# dev opt ID_FS_TYPE ID_FS_UUID | file size offset ID_FS_UUID
 SET_DEV_SWAP=
 #===============================================================================
 
@@ -251,7 +252,15 @@ part_mount()
 
 		case "${POINT}" in
 			'unmount')
-				part_unmount
+				part_unmount 'noexit'
+
+				SET_DEV_SWAP=()
+				SET_DEV_EFI=()
+				SET_DEV_BOOT=()
+				SET_DEV_HOME=()
+				SET_DEV_ROOT=()
+				RUN_PART=
+
 				continue
 				;;
 			'/')
@@ -294,26 +303,26 @@ part_mount_dialog_point()
 
 	TEMP="\Zb\Z1($(gettext 'ОБЯЗАТЕЛЬНО!!!'))\Zn"
 	[[ -n "${SET_DEV_ROOT[0]}" ]] && TEMP="\Zb\Z2($(gettext 'ВЫПОЛНЕНО'))\Zn"
-	ITEMS+=" '/' '(root) \"${SET_DEV_ROOT[0]}\" \"$(mount | grep "^${SET_DEV_ROOT[0]} " | awk '{print $5}')\" ${TEMP}'"
+	ITEMS+=" '/' '(root) \"${SET_DEV_ROOT[0]}\" \"${SET_DEV_ROOT[2]}\" ${TEMP}'"
 
 	TEMP=
 	[[ -n "${SET_DEV_BOOT[0]}" ]] && TEMP="\Zb\Z2($(gettext 'ВЫПОЛНЕНО'))\Zn"
-	ITEMS+=" '/boot' '\"${SET_DEV_BOOT[0]}\" \"$(mount | grep "^${SET_DEV_BOOT[0]} " | awk '{print $5}')\" ${TEMP}'"
+	ITEMS+=" '/boot' '\"${SET_DEV_BOOT[0]}\" \"${SET_DEV_BOOT[2]}\" ${TEMP}'"
 
 	if [[ $UEFI ]]
 	then
 		TEMP="\Zb\Z1($(gettext 'ОБЯЗАТЕЛЬНО!!!'))\Zn"
 		[[ -n "${SET_DEV_EFI[0]}" ]] && TEMP="\Zb\Z2($(gettext 'ВЫПОЛНЕНО'))\Zn"
-		ITEMS+=" '/boot/efi' '\"${SET_DEV_EFI[0]}\" \"$(mount | grep "^${SET_DEV_EFI[0]} " | awk '{print $5}')\" ${TEMP}'"
+		ITEMS+=" '/boot/efi' '\"${SET_DEV_EFI[0]}\" \"${SET_DEV_EFI[2]}\" ${TEMP}'"
 	fi
 
 	TEMP="\Zb\Z3($(gettext 'Рекомендуется'))\Zn"
 	[[ -n "${SET_DEV_HOME[0]}" ]] && TEMP="\Zb\Z2($(gettext 'ВЫПОЛНЕНО'))\Zn"
-	ITEMS+=" '/home' '\"${SET_DEV_HOME[0]}\" \"$(mount | grep "^${SET_DEV_HOME[0]} " | awk '{print $5}')\" ${TEMP}'"
+	ITEMS+=" '/home' '\"${SET_DEV_HOME[0]}\" \"${SET_DEV_HOME[2]}\" ${TEMP}'"
 
 	TEMP=
 	[[ -n "${SET_DEV_SWAP[0]}" ]] && TEMP="\Zb\Z2($(gettext 'ВЫПОЛНЕНО'))\Zn"
-	ITEMS+=" 'swap' '\"${SET_DEV_SWAP[0]}\" \"$(swapon --show | grep "^${SET_DEV_SWAP[0]} " | awk '{print $2}')\" ${TEMP}'"
+	ITEMS+=" 'swap' '\"${SET_DEV_SWAP[0]}\" \"${SET_DEV_SWAP[2]}\" ${TEMP}'"
 
 	RETURN="$(dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}" "--cancel-label '${TXT_MAIN_MENU}'")"
 
@@ -333,43 +342,83 @@ part_format()
 
 	local TEMP
 
-	while true
-	do
-		MKF="$(part_format_dialog_mkf "${P_PART}" "${P_POINT}")"
-		[[ ! -n "${MKF}" ]] && return 1
+	local PART_INFO
+	local ID_FS_TYPE
 
-		TEMP="$(part_format_dialog_mkf_opt "${MKF}" "${P_POINT}" "${P_PART}")"
-		case "${?}" in
-			'0') #Yes
-				MKF_OPT="${TEMP}"
-				;;
-			'1') #No
-				continue
-				;;
-			'255') #ESC
-				return 1
-				;;
-		esac
+	dialog_yesno \
+		"${TXT_PART_MAIN}" \
+		"$(gettext 'Форматировать раздел')\n \Zb\Z6${P_PART}\Zn ?" \
+		'--defaultno'
+
+	case "${?}" in
+		'0') #Yes
+			PART_INFO="$(get_part_info "${P_PART}")"
+			local PART_TABLE_TYPE_NAME="$(get_part_param 'PART_TABLE_TYPE_NAME' <<< "${PART_INFO}")"
+			local ID_PART_ENTRY_TYPE="$(get_part_param 'ID_PART_ENTRY_TYPE' <<< "${PART_INFO}")"
+			local IS_SSD="$(get_part_param 'IS_SSD' <<< "${PART_INFO}")"
+
+			while true
+			do
+				MKF="$(part_format_dialog_mkf "${P_PART}" "${P_POINT}" "${PART_TABLE_TYPE_NAME}" "${ID_PART_ENTRY_TYPE}" "${IS_SSD}")"
+				[[ ! -n "${MKF}" ]] && return 1
+
+				TEMP="$(part_format_dialog_mkf_opt "${MKF}" "${P_POINT}" "${P_PART}" "${IS_SSD}")"
+				case "${?}" in
+					'0') #Yes
+						MKF_OPT="${TEMP}"
+						;;
+					'1') #No
+						continue
+						;;
+					'255') #ESC
+						return 1
+						;;
+				esac
 
 # Проверяем правильность ввода параметров, если не правильно введено,
 # то повторяем выбор, если отмена то выход
-		dialog_yesno \
-			"${TXT_PART_MAIN}" \
-			"$(gettext 'Подтвердите свой выбор')\n\n
+				dialog_yesno \
+					"${TXT_PART_MAIN}" \
+					"$(gettext 'Подтвердите свой выбор')\n\n
 \Zb\Z7${MKF} ${MKF_OPT} ${P_PART}\Zn\n
 \Zb\Z1$(gettext 'Изменение происходит сразу! Будьте внимательны!!!')\Zn" \
-			'--defaultno'
+					'--defaultno'
 
-		case "${?}" in
-			'0') #Yes
-				umount "${P_PART}" 2> /dev/null
-				msg_log "${MKF} ${MKF_OPT} ${P_PART}"
-				${MKF} ${MKF_OPT} "${P_PART}" 2>&1
-				partprobe "${P_PART}"
-				return 0
-				;;
-		esac
-	done
+				case "${?}" in
+					'0') #Yes
+						umount "${P_PART}" 2> /dev/null
+						msg_log "${MKF} ${MKF_OPT} ${P_PART}"
+						${MKF} ${MKF_OPT} "${P_PART}" 2>&1
+						partprobe "${P_PART}"
+						sleep 2s
+						break
+						;;
+					'1') #No
+						continue
+						;;
+					'255') #ESC
+						return 1
+						;;
+				esac
+			done
+			;;
+#		'1') #No
+#			;;
+		'255') #ESC
+			return 1
+			;;
+	esac
+
+	PART_INFO="$(get_part_info "${P_PART}")"
+	ID_FS_TYPE="$(get_part_param 'ID_FS_TYPE' <<< "${PART_INFO}")"
+
+	if [[ ! -n "${ID_FS_TYPE}" ]]
+	then
+		dialog_warn \
+			"\Zb\Z1$(gettext 'Раздел не отформатирован')\Zn"
+		return 1
+	fi
+	return 0
 }
 
 part_format_dialog_mkf()
@@ -380,15 +429,14 @@ part_format_dialog_mkf()
 
 	local P_PART="${1}"
 	local P_POINT="${2}"
-
-	local PART_INFO="$(get_part_info "${P_PART}")"
-
-	local PART_TABLE_TYPE_NAME="$(get_part_param 'PART_TABLE_TYPE_NAME' <<< "${PART_INFO}")"
+	local P_PART_TABLE_TYPE_NAME="${3}"
+	local P_ID_PART_ENTRY_TYPE="${4}"
+	local P_IS_SSD="${5}"
 
 	local TITLE="${TXT_PART_MAIN}"
 	local HELP_TXT="$(gettext 'Точка монтирования'): \Zb\Z2\"${P_POINT}\"\Zn\n"
 	HELP_TXT+="$(gettext 'Раздел'): \Zb\Z2\"${P_PART}\"\Zn\n"
-	HELP_TXT+="$(gettext 'Тип'): \Zb\Z2\"${PART_TABLE_TYPE_NAME}\"\Zn\n"
+	HELP_TXT+="$(gettext 'Тип'): \Zb\Z2\"${P_PART_TABLE_TYPE_NAME}\"\Zn\n"
 	HELP_TXT+="\n$(gettext 'Выберите файловую систему')\n"
 	HELP_TXT+="$(gettext 'По умолчанию'):"
 
@@ -414,10 +462,7 @@ part_format_dialog_mkf()
 #	ITEMS+=" 'mkfs.cramfs' '-'"
 	ITEMS+=" 'mkswap' '-'"
 
-	local ID_PART_ENTRY_TYPE="$(get_part_param 'ID_PART_ENTRY_TYPE' <<< "${PART_INFO}")"
-	local IS_SSD="$(get_part_param 'IS_SSD' <<< "${PART_INFO}")"
-
-	case "${ID_PART_ENTRY_TYPE}" in
+	case "${P_ID_PART_ENTRY_TYPE}" in
 		'0x01' | '0x1') # FAT12
 			DEFAULT_ITEM='mkfs.msdos'
 			;;
@@ -429,7 +474,7 @@ part_format_dialog_mkf()
 			;;
 		'0x07' | '0x7') # HPFS/NTFS/exFAT
 			DEFAULT_ITEM='mkfs.ntfs'
-			[[ "${IS_SSD}" == '1' ]] && DEFAULT_ITEM='mkfs.exfat'
+			[[ "${P_IS_SSD}" == '1' ]] && DEFAULT_ITEM='mkfs.exfat'
 			;;
 		'0x0b' | '0xb') # W95 FAT32
 			DEFAULT_ITEM='mkfs.vfat'
@@ -489,6 +534,7 @@ part_format_dialog_mkf_opt()
 	local P_MKF="${1}"
 	local P_POINT="${2}"
 	local P_PART="${3}"
+	local P_IS_SSD="${4}"
 
 	local TITLE="${TXT_PART_MAIN}"
 	local HELP_TXT="$(gettext 'Точка монтирования'): \Zb\Z2\"${P_POINT}\"\Zn\n"
@@ -500,11 +546,7 @@ part_format_dialog_mkf_opt()
 	local TEXT
 
 	local FLASH
-
-	local PART_INFO="$(get_part_info "${P_PART}")"
-	local IS_SSD="$(get_part_param 'IS_SSD' <<< "${PART_INFO}")"
-
-	[[ "${IS_SSD}" == '1' ]] && FLASH='Flash'
+	[[ "${P_IS_SSD}" == '1' ]] && FLASH='Flash'
 
 	local LABEL
 	case "${P_POINT}" in
@@ -536,7 +578,8 @@ part_format_dialog_mkf_opt()
 			TEXT="-l ${LABEL}"
 			;;
 		'mkfs.ext4' | 'mkfs.ext4dev')
-			[[ "${FLASH}" ]] && FLASH=' -E discard'
+			FLASH=
+			[[ "${P_IS_SSD}" == '1' ]] && FLASH=' -E discard'
 			case "${P_POINT}" in
 				'/')
 					TEXT="-m 1 -L ${LABEL}${FLASH}"
@@ -581,25 +624,14 @@ part_mount_point()
 	PART="$(part_mount_dialog_dev_part "${P_POINT}")"
 	[[ ! -n "${PART}" ]] && return 1
 
-	dialog_yesno \
-		"${TXT_PART_MAIN}" \
-		"$(gettext 'Форматировать раздел')\n \Zb\Z6${PART}\Zn ?" \
-		'--defaultno'
+	part_format "${PART}" "${P_POINT}" || return 1
 
-	case "${?}" in
-		'0') #Yes
-			part_format "${PART}" "${P_POINT}" || return 1
-			;;
-# 	'1') #No
-# 	    ;;
-		'255') #ESC
-			return 1
-			;;
-	esac
+	local PART_INFO="$(get_part_info "${PART}")"
+	local ID_FS_TYPE="$(get_part_param 'ID_FS_TYPE' <<< "${PART_INFO}")"
+	local IS_SSD="$(get_part_param 'IS_SSD' <<< "${PART_INFO}")"
+	local ID_FS_UUID="$(get_part_param 'ID_FS_UUID' <<< "${PART_INFO}")"
 
-	part_mount_test_fs "${PART}" || return 1
-
-	TEMP="$(part_mount_dialog_dev_opt "${PART}" "${P_POINT}")"
+	TEMP="$(part_mount_dialog_dev_opt "${PART}" "${P_POINT}" "${ID_FS_TYPE}" "${IS_SSD}")"
 	case "${?}" in
 		'0') #Yes
 			OPT="${TEMP}"
@@ -620,11 +652,21 @@ part_mount_point()
 	msg_log "mount ${TEMP} ${PART} ${P_POINT}"
 	mount ${TEMP} "${PART}" "${NS_PATH}${P_POINT}"
 
-	[[ "${?}" != '0' ]] && return 1
+	if [[ "${?}" != '0' ]]
+	then
+		dialog_warn \
+			"\Zb\Z1$(gettext 'Не удалось примонтировать')\Zn\n${PART} -> ${P_POINT}"
+		return 1
+	fi
 
-	set_global_var "${P_P}" "${PART}" "${OPT}"
+	set_global_var "${P_P}" "${PART}" "${OPT}" "${ID_FS_TYPE}" "${ID_FS_UUID}"
 
-	RUN_PART=1
+	if [[ $UEFI ]]
+	then
+		[[ -n "${SET_DEV_ROOT[0]}" ]] && [[ -n "${SET_DEV_EFI[0]}" ]] && RUN_PART=1
+	else
+		[[ -n "${SET_DEV_ROOT[0]}" ]] && RUN_PART=1
+	fi
 
 	return 0
 }
@@ -655,22 +697,6 @@ part_mount_test()
 	then
 		dialog_warn \
 			"\Zb\Z1$(gettext 'Раздел для') \"${P_POINT}\" $(gettext 'уже примонтирован!!!')\Zn"
-		return 1
-	fi
-	return 0
-}
-
-part_mount_test_fs()
-{
-	local P_PART="${1}"
-
-	local PART_INFO="$(get_part_info "${P_PART}")"
-	local ID_FS_TYPE="$(get_part_param 'ID_FS_TYPE' <<< "${PART_INFO}")"
-
-	if [[ ! -n "${ID_FS_TYPE}" ]]
-	then
-		dialog_warn \
-			"\Zb\Z1$(gettext 'Раздел не отформатирован')\Zn"
 		return 1
 	fi
 	return 0
@@ -764,30 +790,25 @@ part_mount_dialog_dev_opt()
 
 	local P_PART="${1}"
 	local P_POINT="${2}"
-
-	local PART_INFO="$(get_part_info "${P_PART}")"
-	local ID_FS_TYPE="$(get_part_param 'ID_FS_TYPE' <<< "${PART_INFO}")"
-	local IS_SSD="$(get_part_param 'IS_SSD' <<< "${PART_INFO}")"
+	local P_ID_FS_TYPE="${3}"
+	local P_IS_SSD="${4}"
 
 	local TITLE="${TXT_PART_MAIN}"
 	local HELP_TXT="$(gettext 'Точка монтирования'): \Zb\Z2\"${P_POINT}\"\Zn\n"
 	HELP_TXT+="$(gettext 'Раздел'): \Zb\Z2\"${P_PART}\"\Zn\n"
-	HELP_TXT+="$(gettext 'Файловая система'): \Zb\Z2\"${ID_FS_TYPE}\"\Zn\n"
-	HELP_TXT+="$(gettext 'SSD?'): \Zb\Z2\""
-	[[ "${IS_SSD}" == '1' ]] && HELP_TXT+="$(gettext 'ДА')" || HELP_TXT+="$(gettext 'HET')"
-	HELP_TXT+="\"\Zn\n"
+	HELP_TXT+="$(gettext 'Файловая система'): \Zb\Z2\"${P_ID_FS_TYPE}\"\Zn\n"
 	HELP_TXT+="\n$(gettext 'Введите дополнительные опции монтирования')\n"
 	HELP_TXT+="$(gettext 'По умолчанию'):"
 
 	local TEXT='defaults,noauto,x-systemd.automount'
 
-	case "${ID_FS_TYPE}" in
+	case "${P_ID_FS_TYPE}" in
 		'ext4' | 'ext4dev')
-			[[ "${IS_SSD}" == '1' ]] && TEXT+=',discard'
+			[[ "${P_IS_SSD}" == '1' ]] && TEXT+=',discard'
 			;;
 		'btrfs')
 			TEXT+=',compress=lzo'
-			[[ "${IS_SSD}" == '1' ]] && TEXT+=',discard,ssd'
+			[[ "${P_IS_SSD}" == '1' ]] && TEXT+=',discard,ssd'
 			;;
 	esac
 
@@ -804,9 +825,6 @@ part_mount_swap()
 	local POINT='swap'
 
 	local PART
-	local OPT
-
-	local TEMP
 
 	part_mount_test "${POINT}" 'SET_DEV_SWAP' || return 1
 
@@ -816,49 +834,48 @@ part_mount_swap()
 			PART="$(part_mount_dialog_dev_part "${POINT}")"
 			[[ ! -n "${PART}" ]] && return 1
 
-			dialog_yesno \
-				"${TXT_PART_MAIN}" \
-				"$(gettext 'Форматировать раздел')\n \Zb\Z6${PART}\Zn ?" \
-				'--defaultno'
+			part_format "${PART}" "${POINT}" || return 1
 
-			case "${?}" in
-				'0') #Yes
-					part_format "${PART}" "${POINT}" || return 1
-					;;
-#   	'1') #No
-#     	  ;;
-				'255') #ESC
-					return 1
-					;;
-			esac
+			local PART_INFO="$(get_part_info "${PART}")"
+			local ID_FS_TYPE="$(get_part_param 'ID_FS_TYPE' <<< "${PART_INFO}")"
+			local ID_FS_UUID="$(get_part_param 'ID_FS_UUID' <<< "${PART_INFO}")"
 
-			part_mount_test_fs "${PART}" || return 1
+			set_global_var 'SET_DEV_SWAP' "${PART}" 'defaults' "${ID_FS_TYPE}" "${ID_FS_UUID}"
 
-			OPT='defaults'
-
-			set_global_var 'SET_DEV_SWAP' "${PART}" "${OPT}"
-
-			msg_log " swapon ${SET_DEV_SWAP[0]}"
-			swapon "${SET_DEV_SWAP[0]}"
+			msg_log "swapon ${PART}"
+			swapon "${PART}"
 			;;
 		'file')
-			OPT="$(part_mount_dialog_swap_file "${POINT}")"
-			[[ ! -n "${OPT}" ]] && return 1
-			OPT="${OPT}"
+			local SIZE="$(part_mount_dialog_swap_file "${POINT}")"
+			[[ ! -n "${SIZE}" ]] && return 1
+
 			PART='/swapfile'
 
-			set_global_var 'SET_DEV_SWAP' "${PART}" "${OPT}"
+			local FPART="${NS_PATH}${PART}"
 
-			msg_log "$(gettext 'Создается') /swapfile"
-			fallocate -l "${SET_DEV_SWAP[1]}M" "${NS_PATH}${SET_DEV_SWAP[0]}"
-			msg_log "dd if='/dev/zero' of=${NS_PATH}${SET_DEV_SWAP[0]} bs='1M' count=${SET_DEV_SWAP[1]}"
-# 			msg_log "dd if='/dev/urandom' of=${NS_PATH}${SET_DEV_SWAP[0]} bs='1M' count=${SET_DEV_SWAP[1]}"
+			msg_log "$(gettext 'Создается') ${PART}"
+
+			msg_log "fallocate -l '${SIZE}M' '${PART}'"
+			fallocate -l "${SIZE}M" "${FPART}"
+
 			msg_info "$(gettext 'Пожалуйста, подождите')..."
-			dd if='/dev/zero' of="${NS_PATH}${SET_DEV_SWAP[0]}" bs='1M' count="${SET_DEV_SWAP[1]}"
-# 			dd if='/dev/urandom' of="${NS_PATH}${SET_DEV_SWAP[0]}" bs='1M' count="${SET_DEV_SWAP[1]}"
-			mkswap -L SwapFile "${NS_PATH}${SET_DEV_SWAP[0]}"
-			msg_log " swapon ${NS_PATH}${SET_DEV_SWAP[0]}"
-			swapon "${NS_PATH}${SET_DEV_SWAP[0]}"
+
+			local FROM_SWAP='/dev/zero' # '/dev/urandom'
+			msg_log "dd if='${FROM_SWAP}' of='${PART}' bs='1M' count=${SIZE}"
+			dd if="${FROM_SWAP}" of="${FPART}" bs='1M' count="${SIZE}"
+
+			mkswap -L SwapFile "${FPART}"
+
+			local OFFSET="$(filefrag -v "${FPART}" | sed -n '4p' | awk '{print $3}')"
+			OFFSET="${OFFSET/:/}"
+
+			local PART_INFO="$(get_part_info "${SET_DEV_ROOT[0]}")"
+			local ID_FS_UUID="$(get_part_param 'ID_FS_UUID' <<< "${PART_INFO}")"
+
+			set_global_var 'SET_DEV_SWAP' "${PART}" "${SIZE}" "${OFFSET}" "${ID_FS_UUID}"
+
+			msg_log "swapon ${PART}"
+			swapon "${FPART}"
 			;;
 		*)
 			return 1
@@ -892,7 +909,7 @@ part_mount_dialog_swap_type()
 		*)
 			dialog_warn \
 				"\Zb\Z1$(gettext 'Раздел / (root) не отформатирован в ext2 | ext3 | ext4!!!')\Zn\n
-				$(gettext 'SWAP можно создать только на разделе.')"
+\n$(gettext 'SWAP можно создать только на разделе.')"
 			RETURN='dev'
 			;;
 	esac
@@ -939,12 +956,8 @@ part_mount_set_fstab_str()
 
 	if [[ "$(grep '^/dev/' <<< "${SET_DEV[0]}")" ]]
 	then
-		local PART_INFO="$(get_part_info "${SET_DEV[0]}")"
-		local ID_FS_TYPE="$(get_part_param 'ID_FS_TYPE' <<< "${PART_INFO}")"
-		local ID_FS_UUID="$(get_part_param 'ID_FS_UUID' <<< "${PART_INFO}")"
-
-		msg_log "UUID=${ID_FS_UUID}	${P_POINT}	${ID_FS_TYPE}	${SET_DEV[1]}	${P_DUMP}	${P_PASS}" '1'
-		echo -e "UUID=${ID_FS_UUID}\t${P_POINT}\t${ID_FS_TYPE}\t${SET_DEV[1]}\t${P_DUMP}\t${P_PASS}"
+		msg_log "UUID=${SET_DEV[3]}	${P_POINT}	${SET_DEV[2]}	${SET_DEV[1]}	${P_DUMP}	${P_PASS}" '1'
+		echo -e "UUID=${SET_DEV[3]}\t${P_POINT}\t${SET_DEV[2]}\t${SET_DEV[1]}\t${P_DUMP}\t${P_PASS}"
 	else
 		msg_log "${SET_DEV[0]}	${P_POINT}	swap	defaults	${P_DUMP}	${P_PASS}" '1'
 		echo -e "${SET_DEV[0]}\t${P_POINT}\tswap\tdefaults\t${P_DUMP}\t${P_PASS}"
@@ -953,8 +966,10 @@ part_mount_set_fstab_str()
 
 part_unmount()
 {
-	if [[ "${RUN_PART}" ]]
-	then
+	local P_P="${1}"
+
+#	if [[ "${RUN_PART}" ]]
+#	then
 # Размонтируем
 		if [[ -n "${SET_DEV_SWAP[0]}" ]]
 		then
@@ -964,6 +979,7 @@ part_unmount()
 				swapoff "${SET_DEV_SWAP[0]}"
 			else
 				swapoff "${NS_PATH}${SET_DEV_SWAP[0]}"
+				[[ -n "${P_P}" ]] && rm "${NS_PATH}${SET_DEV_SWAP[0]}"
 			fi
 		fi
 
@@ -988,17 +1004,7 @@ part_unmount()
 		umount "${SET_DEV_ROOT[0]}"
 		msg_log "rmdir ${NS_PATH}/"
 		rmdir "${NS_PATH}/"
-	fi
-
-	SET_DEV_SWAP=
-
-	SET_DEV_EFI=
-	SET_DEV_BOOT=
-	SET_DEV_HOME=
-
-	SET_DEV_ROOT=
-
-	RUN_PART=
+#	fi
 }
 
 #chroot /mnt/newSystem nano /etc/fstab
