@@ -63,7 +63,8 @@ UEFI=
 efivar -l 2> /dev/null 1> /dev/null && UEFI=1
 
 AAI_VER+=' << '
-[[ $UEFI ]] && AAI_VER+='UEFI' || AAI_VER+='BIOS'
+AAI_VER+="$(uname -m)"
+[[ $UEFI ]] && AAI_VER+=' UEFI' || AAI_VER+=' BIOS'
 AAI_VER+=' >>'
 
 source "${LIBDIR}/functions.sh"
