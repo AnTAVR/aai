@@ -322,7 +322,12 @@ part_mount_dialog_point()
 
 	TEMP=
 	[[ -n "${SET_DEV_SWAP[0]}" ]] && TEMP="\Zb\Z2($(gettext 'ВЫПОЛНЕНО'))\Zn"
-	ITEMS+=" 'swap' '\"${SET_DEV_SWAP[0]}\" \"${SET_DEV_SWAP[2]}\" ${TEMP}'"
+	if [[ "$(grep '^/dev/' <<< "${SET_DEV_SWAP[0]}")" ]]
+	then
+		ITEMS+=" 'swap' '\"${SET_DEV_SWAP[0]}\" \"${SET_DEV_SWAP[2]}\" ${TEMP}'"
+	else
+		ITEMS+=" 'swap' '\"${SET_DEV_SWAP[0]}\" \"${SET_DEV_SWAP[1]}M\" ${TEMP}'"
+	fi
 
 	RETURN="$(dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}" "--cancel-label '${TXT_MAIN_MENU}'")"
 
