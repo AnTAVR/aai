@@ -37,7 +37,7 @@ DEF_CONSOLE_V_XxYxD='0x0317_1024x768x16'
 # Выводим строку пункта главного меню
 str_bootloader()
 {
-	local TEMP="\Zb\Z1($(gettext 'ОБЯЗАТЕЛЬНО!!!'))\Zn"
+	local TEMP="\Zb\Z3($(gettext 'Рекомендуется'))\Zn"
 
 	[[ "${RUN_BOOTLOADER}" ]] && TEMP="\Zb\Z2($(gettext 'ВЫПОЛНЕНО'))\Zn"
 	echo "${TXT_BOOTLOADER_MAIN} (~45M) ${TEMP}"
@@ -75,6 +75,10 @@ run_bootloader()
 		fi
 	fi
 
+	bootloader_grub || return 1
+	set_global_var 'SET_BOOTLOADER' 'grub'
+	RUN_BOOTLOADER=1
+	return 0
 	local DEF_MENU=
 
 	while true
@@ -86,18 +90,18 @@ run_bootloader()
 				RUN_BOOTLOADER=1
 				return 0
 				;;
-			'grub_bios')
-				bootloader_grub_bios || continue
+			'grub')
+				bootloader_grub || continue
 				set_global_var 'SET_BOOTLOADER' "${DEF_MENU}"
 				RUN_BOOTLOADER=1
 				return 0
 				;;
-			'grub_efi')
-				bootloader_grub_efi || continue
+#			'grub_efi')
+#				bootloader_grub_efi || continue
 #				set_global_var 'SET_BOOTLOADER' "${DEF_MENU}"
 #				RUN_BOOTLOADER=1
-				return 0
-				;;
+#				return 0
+#				;;
 #			'syslinux')
 #				bootloader_syslinux || continue
 #				set_global_var 'SET_BOOTLOADER' "${DEF_MENU}"
@@ -127,13 +131,13 @@ bootloader_dialog_menu()
 	local HELP_TXT="\n$(gettext 'Выберите загрузчик')\n"
 	HELP_TXT+="$(gettext 'По умолчанию'):"
 
-	local DEFAULT_ITEM='grub_bios'
-	[[ "${UEFI}" ]] && DEFAULT_ITEM='grub_efi'
+	local DEFAULT_ITEM='grub'
+#	[[ "${UEFI}" ]] && DEFAULT_ITEM='grub_efi'
 
 #  local ITEMS="'none' '$(gettext 'Не устанавливать загрузчик')'"
-	local ITEMS="'grub_bios' 'GRUB BIOS'"
-	ITEMS+=" 'grub_efi' 'GRUB EFI \Zb\Z3($(gettext 'Пока не поддерживается'))\Zn'"
-	ITEMS+=" 'syslinux' 'SYSLINUX \Zb\Z3($(gettext 'Пока не поддерживается'))\Zn'"
+	local ITEMS="'grub' 'GRUB BIOS | UEFI'"
+#	ITEMS+=" 'grub_efi' 'GRUB EFI \Zb\Z3($(gettext 'Пока не поддерживается'))\Zn'"
+#	ITEMS+=" 'syslinux' 'SYSLINUX \Zb\Z3($(gettext 'Пока не поддерживается'))\Zn'"
 # 	ITEMS+=" 'lilo' 'LILO \Zb\Z3($(gettext 'Пока не поддерживается'))\Zn'"
 
 	HELP_TXT+=" \Zb\Z7\"${DEFAULT_ITEM}\"\Zn\n"
@@ -234,7 +238,7 @@ bootloader_dialog_dev_part()
 	msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
 }
 
-bootloader_grub_bios()
+bootloader_grub()
 {
 	local CONSOLE_V_XxYxD
 	local PART
@@ -247,6 +251,7 @@ bootloader_grub_bios()
 #===============================================================================
 	#core
 	pacman_install '-S grub'
+	pacman_install '-S efibootmgr'
 	#extra
 	pacman_install '-S memtest86+'
 	#community
@@ -284,11 +289,8 @@ bootloader_grub_bios()
 	if [[ -n "${SET_DEV_SWAP[0]}" ]]
 	then
 		FILE_TXT='GRUB_CMDLINE_LINUX+=\"'
-		FILE_TXT+="resume=UUID=${SET_DEV_SWAP[3]}"
-		if [[ ! -n "$(grep '^/dev/' <<< "${SET_DEV_SWAP[0]}")" ]] # [[ "${SET_DEV_SWAP[0]}" == '/swapfile' ]] &&
-		then
-			FILE_TXT+=" resume_offset=${SET_DEV_SWAP[2]}"
-		fi
+		FILE_TXT+=" resume=UUID=${SET_DEV_SWAP[3]}"
+		[[ "${SET_DEV_SWAP[0]}" == "${SWAPFILE}" ]] && FILE_TXT+=" resume_offset=${SET_DEV_SWAP[2]}"
 		FILE_TXT+='\"'
 	fi
 #fastboot splash=verbose
