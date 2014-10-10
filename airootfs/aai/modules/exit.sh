@@ -41,8 +41,11 @@ run_exit()
 	local P_RUN_EXIT="${1}"
 
 	local TEMP
-	[[ ! "${P_RUN_EXIT}" ]] && [[ "${RUN_BASE}" ]] && [[ ! "${SET_BOOTLOADER}" ]] && TEMP+="\Zb\Z1$(gettext 'Пункт') \"${TXT_BOOTLOADER_MAIN}\" $(gettext 'не выполнен')\Zn\n"
-	[[ ! "${P_RUN_EXIT}" ]] && [[ "${RUN_BASE_PLUS}" ]] && [[ ! "${RUN_USER}" ]] && TEMP+="\Zb\Z1$(gettext 'Пункт') \"${TXT_USER_MAIN}\" $(gettext 'не выполнен')\Zn\n"
+	if [[ ! -n "${P_RUN_EXIT}" ]]
+	then
+		[[ ! "${SET_BOOTLOADER}" ]] && TEMP+="\Zb\Z1$(gettext 'Пункт') \"${TXT_BOOTLOADER_MAIN}\" $(gettext 'не выполнен')\Zn\n"
+		[[ ! "${RUN_USER}" ]] && TEMP+="\Zb\Z1$(gettext 'Пункт') \"${TXT_USER_MAIN}\" $(gettext 'не выполнен')\Zn\n"
+	fi
 
 	if [[ "${TEMP}" ]]
 	then

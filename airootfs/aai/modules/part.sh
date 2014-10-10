@@ -28,13 +28,14 @@ MAIN_CASE+=('part')
 RUN_PART=
 TXT_PART_MAIN="$(gettext 'Разделы')"
 
+SWAPFILE='/swapfile'
 # dev opt ID_FS_TYPE ID_FS_UUID
-SET_DEV_ROOT=
-SET_DEV_BOOT=
-SET_DEV_EFI=
-SET_DEV_HOME=
+SET_DEV_ROOT=()
+SET_DEV_BOOT=()
+SET_DEV_EFI=()
+SET_DEV_HOME=()
 # dev opt ID_FS_TYPE ID_FS_UUID | file size offset ID_FS_UUID
-SET_DEV_SWAP=
+SET_DEV_SWAP=()
 #===============================================================================
 
 # Выводим строку пункта главного меню
@@ -322,11 +323,11 @@ part_mount_dialog_point()
 
 	TEMP=
 	[[ -n "${SET_DEV_SWAP[0]}" ]] && TEMP="\Zb\Z2($(gettext 'ВЫПОЛНЕНО'))\Zn"
-	if [[ "$(grep '^/dev/' <<< "${SET_DEV_SWAP[0]}")" ]]
+	if [[ "${SET_DEV_SWAP[0]}" == "${SWAPFILE}" ]]
 	then
-		ITEMS+=" 'swap' '\"${SET_DEV_SWAP[0]}\" \"${SET_DEV_SWAP[2]}\" ${TEMP}'"
-	else
 		ITEMS+=" 'swap' '\"${SET_DEV_SWAP[0]}\" \"${SET_DEV_SWAP[1]}M\" ${TEMP}'"
+	else
+		ITEMS+=" 'swap' '\"${SET_DEV_SWAP[0]}\" \"${SET_DEV_SWAP[2]}\" ${TEMP}'"
 	fi
 
 	RETURN="$(dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}" "--cancel-label '${TXT_MAIN_MENU}'")"
@@ -854,7 +855,7 @@ part_mount_swap()
 			local SIZE="$(part_mount_dialog_swap_file "${POINT}")"
 			[[ ! -n "${SIZE}" ]] && return 1
 
-			PART='/swapfile'
+			PART="${SWAPFILE}"
 
 			local FPART="${NS_PATH}${PART}"
 
@@ -956,6 +957,8 @@ part_mount_set_fstab_str()
 	local SET_DEV
 	eval "SET_DEV[0]=\${${P_P}[0]}"
 	eval "SET_DEV[1]=\${${P_P}[1]}"
+	eval "SET_DEV[2]=\${${P_P}[2]}"
+	eval "SET_DEV[3]=\${${P_P}[3]}"
 
 	[[ ! -n "${SET_DEV[0]}" ]] && return 1
 
@@ -963,10 +966,15 @@ part_mount_set_fstab_str()
 	then
 		msg_log "UUID=${SET_DEV[3]}	${P_POINT}	${SET_DEV[2]}	${SET_DEV[1]}	${P_DUMP}	${P_PASS}" '1'
 		echo -e "UUID=${SET_DEV[3]}\t${P_POINT}\t${SET_DEV[2]}\t${SET_DEV[1]}\t${P_DUMP}\t${P_PASS}"
-	else
+	elif [[ "${SET_DEV[0]}" == "${SWAPFILE}" ]]
+	then
 		msg_log "${SET_DEV[0]}	${P_POINT}	swap	defaults	${P_DUMP}	${P_PASS}" '1'
 		echo -e "${SET_DEV[0]}\t${P_POINT}\tswap\tdefaults\t${P_DUMP}\t${P_PASS}"
+	else
+		return 1
 	fi
+
+	return 0
 }
 
 part_unmount()
