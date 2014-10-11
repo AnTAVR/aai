@@ -777,7 +777,7 @@ part_mount_dialog_dev_part()
 	if [[ ! -n "${ITEMS}" ]]
 	then
 		dialog_warn \
-			"\Zb\Z1$(gettext 'Свободных разделов не найдено!!!')\Zn"
+			"\Zb\Z1$(gettext 'Свободные разделы не найдены!!!')\Zn"
 		return 1
 	fi
 
