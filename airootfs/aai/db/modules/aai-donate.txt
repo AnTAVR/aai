@@ -30,7 +30,7 @@ R171264279844
 1. John Doe			20	WME
 2. John Doe			27	WMR
 3. MaXiM			15	WMZ
-4. Alex				1	WMZ
+4. Alex			1	WMZ
 5. John Doe			345	WMR
 6. uO}I{bIk			5	WMZ
 7. vasek			1	WMZ
