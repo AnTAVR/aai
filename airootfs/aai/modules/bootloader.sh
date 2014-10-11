@@ -265,25 +265,59 @@ bootloader_grub()
 	CONSOLE_V_XxYxD="${TEMP}"
 #	CONSOLE_V_XxYxD="${DEF_CONSOLE_V_XxYxD}"
 
-	while true
-	do
+#	while true
+#	do
 		PART="$(bootloader_dialog_dev_part)"
 		[[ ! -n "${PART}" ]] && return 1
 
-		chroot_run grub-install --force "${PART}"
-
-		if [[ "${?}" != '0' ]]
+		TARGET='i386-pc'
+		# Boot loader
+		if [[ "${UEFI}" ]]
 		then
-			dialog_warn \
-				"\Zb\Z1$(gettext 'Grub не установлен на раздел')\Zn\n${PART}"
-			continue
+			if [[ -n "${SET_DEV_BOOT[0]}" ]]
+			then
+				local PART_INFO="$(get_part_info "${SET_DEV_BOOT[0]}")"
+				local ID_PART_ENTRY_TYPE="$(get_part_param 'ID_PART_ENTRY_TYPE' <<< "${PART_INFO}")"
+				if [[ "${ID_PART_ENTRY_TYPE}" == '21686148-6449-6e6f-744e-656564454649' ]]
+				then
+					chroot_run grub-install --target="${TARGET}" --force "${PART}"
+				fi
+			fi
+
+			TARGET='i386-efi'
+			[[ "${UNAME}" == 'x86_64' ]] && TARGET='x86_64-efi'
+			chroot_run grub-install --target="${TARGET}" --force "${PART}"
+
+			if [[ "${?}" != '0' ]]
+			then
+				dialog_warn \
+					"\Zb\Z1$(gettext 'Из за возникших ошибок GRUB EFI не был установлен на раздел')\Zn\n${PART}"
+				return 1
+			fi
+
+			mkdir -p "${NS_PATH}/boot/efi/EFI/boot"
+			if [[ "${UNAME}" == 'x86_64' ]]
+			then
+				cp -b "${NS_PATH}/boot/efi/EFI/arch/grubx64.efi" "${NS_PATH}/boot/efi/EFI/boot/bootx64.efi"
+			else
+				cp -b "${NS_PATH}/boot/efi/EFI/arch/grubx32.efi" "${NS_PATH}/boot/efi/EFI/boot/bootx32.efi"
+			fi
+		else
+			chroot_run grub-install --target="${TARGET}" --force "${PART}"
+
+			if [[ "${?}" != '0' ]]
+			then
+				dialog_warn \
+					"\Zb\Z1$(gettext 'Из за возникших ошибок GRUB BIOS не был установлен на раздел')\Zn\n${PART}"
+				return 1
+			fi
 		fi
 
 		mkdir -p "${NS_PATH}/boot/grub/locale"
 		cp "${NS_PATH}/usr/share/locale/en@quot/LC_MESSAGES/grub.mo" "${NS_PATH}/boot/grub/locale/en.mo"
 
-		break
-	done
+#		break
+#	done
 
 # Добавляем параметр resume если выбран свап
 	if [[ -n "${SET_DEV_SWAP[0]}" ]]
