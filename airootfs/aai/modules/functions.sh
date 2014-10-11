@@ -830,6 +830,8 @@ get_part_info()
 	local DEVTYPE
 	local ID_USB_DRIVER
 
+	local ID_PART_ENTRY_FLAGS
+
 	lsblk -ndaro NAME,MOUNTPOINT,RM,SIZE,ROTA,TRAN "${1}" | tr ' ' '\r' |
 	while IFS=$'\r' read -r NAME MOUNTPOINT RM SIZE ROTA TRAN
 	do
@@ -852,7 +854,6 @@ s/[ \t]*$//;
 		PART_TABLE_TYPE_NAME="$(get_part_txt "${ID_PART_ENTRY_TYPE}")"
 		[[ -n "${PART_TABLE_TYPE_NAME}" ]] && echo "PART_TABLE_TYPE_NAME='${PART_TABLE_TYPE_NAME}'"
 
-		DEVTYPE="$(get_part_param 'DEVTYPE' <<< "${PART_INFO}")"
 		ID_USB_DRIVER="$(get_part_param 'ID_USB_DRIVER' <<< "${PART_INFO}")"
 		if [[ "${ROTA}" == '0' ]]
 		then
@@ -861,6 +862,19 @@ s/[ \t]*$//;
 		then
 			echo "IS_SSD='1'"
 		fi
+
+		local BOOTM
+		ID_PART_ENTRY_FLAGS="$(get_part_param 'ID_PART_ENTRY_FLAGS' <<< "${PART_INFO}")"
+		if [[ "${ID_PART_ENTRY_FLAGS}" == '0x8000000000000000' ]] || [[ "${ID_PART_ENTRY_FLAGS}" == '0x80' ]]
+		then
+			BOOTM+='*b'
+		fi
+		if [[ "${ID_PART_ENTRY_TYPE}" == '21686148-6449-6e6f-744e-656564454649' ]] || [[ "${ID_PART_ENTRY_TYPE}" == '0xef' ]]
+		then
+			BOOTM+='*e'
+		fi
+		[[ -n "${BOOTM}" ]] && echo "BOOTM='${BOOTM}'"
+
 
 #		ID_FS_LABEL="$(get_part_param 'ID_FS_LABEL' <<< "${PART_INFO}")"
 #		if [[ ! -n "${ID_FS_LABEL}" ]]

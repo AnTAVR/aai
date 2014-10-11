@@ -30,12 +30,12 @@ TXT_PART_MAIN="$(gettext 'Разделы')"
 
 SWAPFILE='/swapfile'
 # dev opt ID_FS_TYPE ID_FS_UUID
-SET_DEV_ROOT=()
-SET_DEV_BOOT=()
-SET_DEV_EFI=()
-SET_DEV_HOME=()
+declare -a SET_DEV_ROOT=()
+declare -a SET_DEV_BOOT=()
+declare -a SET_DEV_EFI=()
+declare -a SET_DEV_HOME=()
 # dev opt ID_FS_TYPE ID_FS_UUID | file size offset ID_FS_UUID
-SET_DEV_SWAP=()
+declare -a SET_DEV_SWAP=()
 #===============================================================================
 
 # Выводим строку пункта главного меню
