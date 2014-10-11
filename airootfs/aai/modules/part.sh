@@ -190,10 +190,14 @@ part_part_dialog_dev()
 		HELP_TXT+="\Zb\Z7/boot/efi\Zn - 128M-512M \Zb\Z2(128M)\Zn, $(gettext 'тип') \Zb\Z61 - EFI System\Zn \Zb\Z1($(gettext 'ОБЯЗАТЕЛЬНО!!!'))\Zn\n"
 		HELP_TXT+="  FLASH DRIVE \Zb\Z2(32M)\Zn\n"
 
-		HELP_TXT+="\Zb\Z7/boot\Zn - 32M-512M \Zb\Z2(96M)\Zn, $(gettext 'тип') \Zb\Z6Linux filesystem\Zn \Zb\Z3($(gettext 'Рекомендуется'))\Zn\n"
+		HELP_TXT+="\Zb\Z7/boot\Zn - 32M-512M \Zb\Z2(96M)\Zn, $(gettext 'тип') \Zb\Z615 - Linux filesystem\Zn \Zb\Z3($(gettext 'Рекомендуется'))\Zn\n"
 		HELP_TXT+="  FLASH DRIVE \Zb\Z2(32M)\Zn\n"
-
-		HELP_TXT+="\Zb\Z7/ (root)\Zn - 4G-32G \Zb\Z2(20G)\Zn, $(gettext 'тип') \Zb\Z618 - Linux root (${UNAME})\Zn \Zb\Z1($(gettext 'ОБЯЗАТЕЛЬНО!!!'))\Zn\n"
+		if [[ "${UNAME}" = 'x86_64' ]]
+		then
+			HELP_TXT+="\Zb\Z7/ (root)\Zn - 4G-32G \Zb\Z2(20G)\Zn, $(gettext 'тип') \Zb\Z618 - Linux root (x86-64)\Zn \Zb\Z1($(gettext 'ОБЯЗАТЕЛЬНО!!!'))\Zn\n"
+		else
+			HELP_TXT+="\Zb\Z7/ (root)\Zn - 4G-32G \Zb\Z2(20G)\Zn, $(gettext 'тип') \Zb\Z617 - Linux root (x86)\Zn \Zb\Z1($(gettext 'ОБЯЗАТЕЛЬНО!!!'))\Zn\n"
+		fi
 
 		HELP_TXT+="\Zb\Z7/home\Zn - \Zb\Z2($(gettext 'все остальное место'))\Zn, $(gettext 'тип') \Zb\Z620 - Linux home\Zn \Zb\Z3($(gettext 'Рекомендуется'))\Zn\n"
 		HELP_TXT+="  $(gettext '10G на одного пользователя и 5G на бэкапы и кеш системы')\n"
@@ -506,15 +510,29 @@ part_format_dialog_mkf()
 			;;
 		'0x83') # Linux
 			DEFAULT_ITEM='mkfs.ext4'
+			case "${P_POINT}" in
+				'/boot')
+					DEFAULT_ITEM='mkfs.ext2'
+					;;
+			esac
 			;;
 		'0xef') # EFI (FAT-12/16/32)
 			DEFAULT_ITEM='mkfs.vfat'
 			;;
-		'c12a7328-f81f-11d2-ba4b-00a0c93ec93b') # EFI System
-			DEFAULT_ITEM='mkfs.vfat'
+		'0xee') # GPT
+			DEFAULT_ITEM='none'
+			;;
+		'0x05' | '0x5') # Extended
+			DEFAULT_ITEM='none'
+			;;
+		'024dee41-33e7-11d3-9d69-0008c781f39f') # MBR partition scheme
+			DEFAULT_ITEM='none'
 			;;
 		'21686148-6449-6e6f-744e-656564454649') # BIOS boot
-			DEFAULT_ITEM='mkfs.ext4'
+			DEFAULT_ITEM='none'
+			;;
+		'c12a7328-f81f-11d2-ba4b-00a0c93ec93b') # EFI System
+			DEFAULT_ITEM='mkfs.vfat'
 			;;
 		'ebd0a0a2-b9e5-4433-87c0-68b6b72699c7') # Microsoft basic data
 			DEFAULT_ITEM='mkfs.ntfs'
@@ -524,11 +542,19 @@ part_format_dialog_mkf()
 			;;
 		'0fc63daf-8483-4772-8e79-3d69d8477de4') # Linux filesystem
 			DEFAULT_ITEM='mkfs.ext4'
+			case "${P_POINT}" in
+				'/boot')
+					DEFAULT_ITEM='mkfs.ext2'
+					;;
+			esac
+			;;
+		'933ac7e1-2eb4-4f13-b844-0e14e2aef915') # Linux home
+			DEFAULT_ITEM='mkfs.ext4'
 			;;
 		'3b8f8425-20e0-4f3b-907f-1a25a76f98e8') # Linux server data
 			DEFAULT_ITEM='mkfs.ext4'
 			;;
-		'44479540-f297-41b2-9af7-d131d5f0458a') # Linux root (x86-64)
+		'44479540-f297-41b2-9af7-d131d5f0458a') # Linux root (x86)
 			DEFAULT_ITEM='mkfs.ext4'
 			;;
 		'4f68bce3-e8cd-4db1-96e7-fbcaf984b709') # Linux root (x86-64)
