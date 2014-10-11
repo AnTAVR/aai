@@ -75,10 +75,6 @@ run_bootloader()
 		fi
 	fi
 
-	bootloader_grub || return 1
-	set_global_var 'SET_BOOTLOADER' 'grub'
-	RUN_BOOTLOADER=1
-	return 0
 	local DEF_MENU=
 
 	while true
@@ -96,24 +92,18 @@ run_bootloader()
 				RUN_BOOTLOADER=1
 				return 0
 				;;
-#			'grub_efi')
-#				bootloader_grub_efi || continue
-#				set_global_var 'SET_BOOTLOADER' "${DEF_MENU}"
-#				RUN_BOOTLOADER=1
-#				return 0
-#				;;
-#			'syslinux')
-#				bootloader_syslinux || continue
-#				set_global_var 'SET_BOOTLOADER' "${DEF_MENU}"
-#				RUN_BOOTLOADER=1
-#				return 0
-#				;;
-# 			'lilo')
-# 				bootloader_lilo || continue
-#				set_global_var 'SET_BOOTLOADER' "${DEF_MENU}"
-#				RUN_BOOTLOADER=1
-#				return 0
-#				;;
+			'syslinux')
+				bootloader_syslinux || continue
+				set_global_var 'SET_BOOTLOADER' "${DEF_MENU}"
+				RUN_BOOTLOADER=1
+				return 0
+				;;
+ 			'lilo')
+ 				bootloader_lilo || continue
+				set_global_var 'SET_BOOTLOADER' "${DEF_MENU}"
+				RUN_BOOTLOADER=1
+				return 0
+				;;
 			*)
 				return 1
 				;;
@@ -132,13 +122,11 @@ bootloader_dialog_menu()
 	HELP_TXT+="$(gettext 'По умолчанию'):"
 
 	local DEFAULT_ITEM='grub'
-#	[[ "${UEFI}" ]] && DEFAULT_ITEM='grub_efi'
 
-#  local ITEMS="'none' '$(gettext 'Не устанавливать загрузчик')'"
-	local ITEMS="'grub' 'GRUB BIOS | UEFI'"
-#	ITEMS+=" 'grub_efi' 'GRUB EFI \Zb\Z3($(gettext 'Пока не поддерживается'))\Zn'"
-#	ITEMS+=" 'syslinux' 'SYSLINUX \Zb\Z3($(gettext 'Пока не поддерживается'))\Zn'"
-# 	ITEMS+=" 'lilo' 'LILO \Zb\Z3($(gettext 'Пока не поддерживается'))\Zn'"
+	local ITEMS= # "'none' '$(gettext 'Не устанавливать загрузчик')'"
+	ITEMS+=" 'grub' 'GRUB BIOS | UEFI'"
+	ITEMS+=" 'syslinux' 'SYSLINUX \Zb\Z3($(gettext 'Пока не поддерживается'))\Zn'"
+ 	ITEMS+=" 'lilo' 'LILO \Zb\Z3($(gettext 'Пока не поддерживается'))\Zn'"
 
 	HELP_TXT+=" \Zb\Z7\"${DEFAULT_ITEM}\"\Zn\n"
 
@@ -194,11 +182,7 @@ bootloader_dev_part()
 			local SIZE="$(get_part_param 'SIZE' <<< "${PART_INFO}")"
 			local ID_FS_TYPE="$(get_part_param 'ID_FS_TYPE' <<< "${PART_INFO}")"
 			local ID_FS_LABEL="$(get_part_param 'ID_FS_LABEL' <<< "${PART_INFO}")"
-
-			local ID_PART_ENTRY_FLAGS="$(get_part_param 'ID_PART_ENTRY_FLAGS' <<< "${PART_INFO}")"
-
-			local BOOTM=
-			[[ "${ID_PART_ENTRY_FLAGS}" == '0x8000000000000000' ]] || [[ "${ID_PART_ENTRY_FLAGS}" == '0x80' ]] && BOOTM='* '
+			local BOOTM="$(get_part_param 'BOOTM' <<< "${PART_INFO}")"
 
 			echo -e "'${DEVNAME}' '${BOOTM}\"${PART_TABLE_TYPE_NAME}\" ${SIZE} ${ID_FS_TYPE} \"${ID_FS_LABEL}\"'"
 		fi
@@ -226,7 +210,7 @@ bootloader_dialog_dev_part()
 	if [[ ! -n "${ITEMS}" ]]
 	then
 		dialog_warn \
-			"\Zb\Z1$(gettext 'Разделов не найдено!!!')\Zn"
+			"\Zb\Z1$(gettext 'Разделы не найдены!!!')\Zn"
 		return 1
 	fi
 
@@ -445,74 +429,6 @@ bootloader_grub()
 #-------------------------------------------------------------------------------
 }
 
-# Устанавливаем grub-efi
-bootloader_grub_efi()
-{
-	local CONSOLE_V_XxYxD
-
-	dialog_warn \
-		"\Zb\Z1\"GRUB EFI\" $(gettext 'пока не поддерживается, помогите проекту, допишите данный функционал')\Zn"
-	return 1
-
-
-# @todo Закомментировано потому что темы могут не поддерживать выбранные режимы
-#  TEMP="$(bootloader_dialog_console)"
-#  [[ ! -n "${TEMP}" ]] && return 1
-#  CONSOLE_V_XxYxD="${TEMP}"
-	CONSOLE_V_XxYxD="${DEF_CONSOLE_V_XxYxD}"
-
-	#core
-	pacman_install '-S grub'
-	pacman_install '-S efibootmgr'
-#	pacman_install '-S gummiboot'
-	#extra
-#	pacman_install '-S refind-efi'
-#	pacman_install '-S prebootloader'
-	pacman_install '-S memtest86+'
-	#community
-	pacman_install '-S os-prober'
-
-	git_commit
-
-	if [[ "${RUN_BASE_PLUS}" ]]
-	then
-		#aur
-		pacman_install '-S grub2-theme-archxion' 'yaourt'
-
-		git_commit
-
-#    cp -Pbr "${NS_PATH}/usr/share/grub/themes/Archxion" "${NS_PATH}/boot/grub/themes/Archxion"
-		msg_log "$(gettext 'Настраиваю') /usr/local/bin/update-grub"
-		mkdir -p "${NS_PATH}/usr/local/bin"
-		cat "${DBDIR}modules/usr/local/bin/update-grub" > "${NS_PATH}/usr/local/bin/update-grub"
-		chmod +x "${NS_PATH}/usr/local/bin/update-grub"
-
-# mkdir -p /boot/efi
-# mount -t vfat /dev/sdXY /boot/efi
-# modprobe dm-mod
-# grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=arch_grub --recheck --debug
-# mkdir -p /boot/grub/locale
-# cp /usr/share/locale/en@quot/LC_MESSAGES/grub.mo /boot/grub/locale/en.mo
-
-		msg_log "$(gettext 'Настраиваю') /etc/default/grub"
-		sed -i "
-# Добавляем скин
-/^GRUB_THEME=/s/^/#/;
-0,/^#GRUB_THEME=/{
-//{
-	a GRUB_THEME=\"/boot/grub/themes/Archxion/theme.txt\"
-};
-};
-" "${NS_PATH}/etc/default/grub"
-	fi
-
-	msg_info "$(gettext 'Пожалуйста, подождите')..."
-	chroot_run grub-mkconfig -o /boot/grub/grub.cfg
-
-	git_commit
-#-------------------------------------------------------------------------------
-}
-
 # Устанавливаем syslinux
 bootloader_syslinux()
 {
@@ -540,27 +456,27 @@ bootloader_syslinux()
 #  chroot_run syslinux-install_update -i -a -m
 }
 
-# # Устанавливаем lilo
-# bootloader_lilo()
-# {
-# 	local CONSOLE_V_XxYxD
-#
-# 	dialog_warn \
-# 		"\Zb\Z1\"LILO\" $(gettext 'пока не поддерживается, помогите проекту, допишите данный функционал')\Zn"
-# 	return 1
-#
-# # @todo Закомментировано потому что темы могут не поддерживать выбранные режимы
-# #  TEMP="$(bootloader_dialog_console)"
-# #  [[ ! -n "${TEMP}" ]] && return 1
-# #  CONSOLE_V_XxYxD="${TEMP}"
-# 	CONSOLE_V_XxYxD="${DEF_CONSOLE_V_XxYxD}"
-#
-# 	#core
-# 	pacman_install '-S lilo'
-#
-# 	git_commit
-#
-# # Настраиваем lilo
-# #  "${NS_PATH}/etc/lilo.conf"
-# #  chroot_run lilo
-# }
+# Устанавливаем lilo
+bootloader_lilo()
+{
+	local CONSOLE_V_XxYxD
+
+	dialog_warn \
+		"\Zb\Z1\"LILO\" $(gettext 'пока не поддерживается, помогите проекту, допишите данный функционал')\Zn"
+	return 1
+
+# @todo Закомментировано потому что темы могут не поддерживать выбранные режимы
+#  TEMP="$(bootloader_dialog_console)"
+#  [[ ! -n "${TEMP}" ]] && return 1
+#  CONSOLE_V_XxYxD="${TEMP}"
+	CONSOLE_V_XxYxD="${DEF_CONSOLE_V_XxYxD}"
+
+	#core
+	pacman_install '-S lilo'
+
+	git_commit
+
+# Настраиваем lilo
+#  "${NS_PATH}/etc/lilo.conf"
+#  chroot_run lilo
+}
