@@ -458,10 +458,10 @@ part_format_dialog_mkf()
 	ITEMS+=" 'mkfs.xfs' '-'"
 	ITEMS+=" 'mkfs.nilfs2' '-'"
 	ITEMS+=" 'mkfs.ntfs' '-'"
-#	ITEMS+=" 'mkfs.exfat' '-'" # не включен в инсталятор!
+	ITEMS+=" 'mkfs.exfat' '-'"
 	ITEMS+=" 'mkfs.vfat' '-'"
 #	ITEMS+=" 'mkfs.fat' '-'"
-	ITEMS+=" 'mkfs.msdos' '-'"
+#	ITEMS+=" 'mkfs.msdos' '-'"
 	ITEMS+=" 'mkfs.minix' '-'"
 #	ITEMS+=" 'mkfs.bfs' '-'"
 #	ITEMS+=" 'mkfs.cramfs' '-'"
@@ -469,13 +469,13 @@ part_format_dialog_mkf()
 
 	case "${P_ID_PART_ENTRY_TYPE}" in
 		'0x01' | '0x1') # FAT12
-			DEFAULT_ITEM='mkfs.msdos'
+			DEFAULT_ITEM='mkfs.vfat'
 			;;
 		'0x04' | '0x4') # FAT16 <32M
-			DEFAULT_ITEM='mkfs.msdos'
+			DEFAULT_ITEM='mkfs.vfat'
 			;;
 		'0x06' | '0x6') # FAT16 >=32M
-			DEFAULT_ITEM='mkfs.msdos'
+			DEFAULT_ITEM='mkfs.vfat'
 			;;
 		'0x07' | '0x7') # HPFS/NTFS/exFAT
 			DEFAULT_ITEM='mkfs.ntfs'
@@ -576,7 +576,7 @@ part_format_dialog_mkf_opt()
 		'mkfs.ntfs')
 			TEXT="-C -L ${LABEL}"
 			;;
-		'mkfs.exfat' | 'mkfs.vfat' | 'mkfs.msdos')
+		'mkfs.exfat' | 'mkfs.vfat')
 			TEXT="-n ${LABEL}"
 			;;
 		'mkfs.reiserfs' | 'mkfs.f2fs')
