@@ -154,9 +154,9 @@ part_part_dialog_fdisk()
 	local P_FDISK="${1}"
 
 	local TITLE="${TXT_PART_MAIN}"
-	local HELP_TXT
+	local HELP_TXT="\Z1$(gettext 'C BIOS рекомендуется использовать MBR тип разметки!!!')\Zn\n"
 
-	[[ $UEFI ]] && HELP_TXT+="\Z1$(gettext 'C UEFI рекомендуется использовать GPT тип разметки!!!')\Zn\n"
+	[[ $UEFI ]] && HELP_TXT="\Z1$(gettext 'C EFI рекомендуется использовать GPT тип разметки!!!')\Zn\n"
 	HELP_TXT+="\n$(gettext 'Выберите программу для разметки')\n"
 
 	local DEFAULT_ITEM="${P_FDISK}"
@@ -189,22 +189,29 @@ part_part_dialog_dev()
 	then
 		HELP_TXT+="\Zb\Z7/boot/efi\Zn - 128M-512M \Zb\Z2(128M)\Zn, $(gettext 'тип') \Zb\Z61 - EFI System\Zn \Zb\Z1($(gettext 'ОБЯЗАТЕЛЬНО!!!'))\Zn\n"
 		HELP_TXT+="  FLASH DRIVE \Zb\Z2(32M)\Zn\n"
-		HELP_TXT+="\Zb\Z7/boot\Zn - 32M-512M \Zb\Z2(96M)\Zn, $(gettext 'тип') \Zb\Z64 - BIOS boot\Zn \Zb\Z3($(gettext 'Рекомендуется'))\Zn\n"
+
+		HELP_TXT+="\Zb\Z7/boot\Zn - 32M-512M \Zb\Z2(96M)\Zn, $(gettext 'тип') \Zb\Z6Linux filesystem\Zn \Zb\Z3($(gettext 'Рекомендуется'))\Zn\n"
 		HELP_TXT+="  FLASH DRIVE \Zb\Z2(32M)\Zn\n"
+
 		HELP_TXT+="\Zb\Z7/ (root)\Zn - 4G-32G \Zb\Z2(20G)\Zn, $(gettext 'тип') \Zb\Z618 - Linux root (${UNAME})\Zn \Zb\Z1($(gettext 'ОБЯЗАТЕЛЬНО!!!'))\Zn\n"
+
 		HELP_TXT+="\Zb\Z7/home\Zn - \Zb\Z2($(gettext 'все остальное место'))\Zn, $(gettext 'тип') \Zb\Z620 - Linux home\Zn \Zb\Z3($(gettext 'Рекомендуется'))\Zn\n"
 		HELP_TXT+="  $(gettext '10G на одного пользователя и 5G на бэкапы и кеш системы')\n"
 		HELP_TXT+="  $(gettext 'Если установка на FLASH DRIVE, то можно не использовать отдельный раздел')\n"
+
 		HELP_TXT+="\Zb\Z7swap\Zn - RAM*2 \Zb\Z2($(free -m | awk '/Mem:/{ print $2*2 }')M)\Zn, $(gettext 'тип') \Zb\Z614 - Linux swap\Zn\n"
 		HELP_TXT+="  $(gettext 'Можно потом сделать swap в файл, если фс') \Zb\Z6/ (root) ext4\Zn\n"
 	else
 		HELP_TXT+="\Zb\Z7/boot\Zn - 32M-512M \Zb\Z2(96M)\Zn, $(gettext 'тип') \Zb\Z683 - Linux\Zn \Zb\Z3($(gettext 'Рекомендуется'))\Zn\n"
 		HELP_TXT+="  FLASH DRIVE \Zb\Z2(32M)\Zn, $(gettext 'тип') \Zb\Z607 - HPFS/NTFS/exFAT\Zn | \Zb\Z60B - W95 FAT32\Zn\n"
 		HELP_TXT+="  $(gettext 'Нужно сделать загрузочным!!!')\n"
+
 		HELP_TXT+="\Zb\Z7/ (root)\Zn - 4G-32G \Zb\Z2(20G)\Zn, $(gettext 'тип') \Zb\Z683 - Linux\Zn \Zb\Z1($(gettext 'ОБЯЗАТЕЛЬНО!!!'))\Zn\n"
+
 		HELP_TXT+="\Zb\Z7/home\Zn - \Zb\Z2($(gettext 'все остальное место'))\Zn, $(gettext 'тип') \Zb\Z683 - Linux\Zn \Zb\Z3($(gettext 'Рекомендуется'))\Zn\n"
 		HELP_TXT+="  $(gettext '10G на одного пользователя и 5G на бэкапы и кеш системы')\n"
 		HELP_TXT+="  $(gettext 'Если установка на FLASH DRIVE, то можно не использовать отдельный раздел')\n"
+
 		HELP_TXT+="\Zb\Z7swap\Zn - RAM*2 \Zb\Z2($(free -m | awk '/Mem:/{ print $2*2 }')M)\Zn, $(gettext 'тип') \Zb\Z682 - Linux swap / Solaris\Zn\n"
 		HELP_TXT+="  $(gettext 'Можно потом сделать swap в файл, если фс') \Zb\Z6/ (root) ext2 | ext3 | ext4\Zn\n"
 	fi
@@ -213,31 +220,38 @@ part_part_dialog_dev()
 
 	local DEFAULT_ITEM="${P_DEV}"
 
+	ITEMS="$(part_part_dev)"
+
+	RETURN="$(dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}" "--cancel-label '$(gettext 'Назад')'")"
+
+	echo "${RETURN}"
+	msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
+}
+
+part_part_dev()
+{
 	local NAME
 
-	ITEMS="$(lsblk -nro NAME | tr ' ' '\r' |
+	lsblk -nro NAME | tr ' ' '\r' |
 	while IFS=$'\r' read -r NAME
 	do
 		local PART_INFO="$(get_part_info "/dev/${NAME}")"
 
 		local DEVTYPE="$(get_part_param 'DEVTYPE' <<< "${PART_INFO}")"
 		local ID_TYPE="$(get_part_param 'ID_TYPE' <<< "${PART_INFO}")"
+
 		if [[ "${DEVTYPE}" == 'disk' ]] && [[ "${ID_TYPE}" == 'disk' ]]
 		then
 			local DEVNAME="$(get_part_param 'DEVNAME' <<< "${PART_INFO}")"
-			local ID_BUS="$(get_part_param 'ID_BUS' <<< "${PART_INFO}")"
+
 			local ID_PART_TABLE_TYPE="$(get_part_param 'ID_PART_TABLE_TYPE' <<< "${PART_INFO}")"
 			local SIZE="$(get_part_param 'SIZE' <<< "${PART_INFO}")"
+			local ID_BUS="$(get_part_param 'ID_BUS' <<< "${PART_INFO}")"
 			local ID_SERIAL="$(get_part_param 'ID_SERIAL' <<< "${PART_INFO}")"
 
 			echo -e "'${DEVNAME}' '${ID_BUS} ${ID_PART_TABLE_TYPE} ${SIZE} ${ID_SERIAL}'"
 		fi
-	done)"
-
-	RETURN="$(dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}" "--cancel-label '$(gettext 'Назад')'")"
-
-	echo "${RETURN}"
-	msg_log "$(gettext 'Выход из диалога'): \"${FUNCNAME} return='${RETURN}'\"" 'noecho'
+	done
 }
 
 # Функция монтирования разделов
@@ -728,17 +742,16 @@ part_dev_part()
 					'0x00' | '0x0' | '0x05' | '0x5') # список типов разделов которые нельзя использовать
 						;;
 					*)
-						local BOOTM=
-
+						local BOOT_BIOS=
+						local BOOT_EFI=
 						case "${ID_PART_ENTRY_TYPE}" in
 							'0x82' | '0657fd6d-a4ab-43c4-84e5-0933c84b4f4f')
 								[[ "${P_POINT}" != 'swap' ]] && continue
 								;;
 							*)
 								[[ "${P_POINT}" == 'swap' ]] && continue
-								local ID_PART_ENTRY_FLAGS="$(get_part_param 'ID_PART_ENTRY_FLAGS' <<< "${PART_INFO}")"
-								[[ "${ID_PART_ENTRY_FLAGS}" == '0x8000000000000000' ]] || [[ "${ID_PART_ENTRY_FLAGS}" == '0x80' ]] && BOOTM='* '
-#								[[ "${ID_PART_ENTRY_TYPE}" == '21686148-6449-6e6f-744e-656564454649' ]] && BOOTM='* '
+								BOOT_BIOS="$(get_part_param 'BOOT_BIOS' <<< "${PART_INFO}")"
+								BOOT_EFI="$(get_part_param 'BOOT_EFI' <<< "${PART_INFO}")"
 
 								;;
 						esac
@@ -748,7 +761,7 @@ part_dev_part()
 						local SIZE="$(get_part_param 'SIZE' <<< "${PART_INFO}")"
 						local ID_FS_LABEL="$(get_part_param 'ID_FS_LABEL' <<< "${PART_INFO}")"
 
-						echo -e "'${DEVNAME}' '${BOOTM}\"${PART_TABLE_TYPE_NAME}\" ${SIZE} ${ID_FS_TYPE} \"${ID_FS_LABEL}\"'"
+						echo -e "'${DEVNAME}' '${BOOT_BIOS}${BOOT_EFI} \"${PART_TABLE_TYPE_NAME}\" ${SIZE} ${ID_FS_TYPE} \"${ID_FS_LABEL}\"'"
 						;;
 				esac
 			fi
