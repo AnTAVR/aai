@@ -863,17 +863,15 @@ s/[ \t]*$//;
 			echo "IS_SSD='1'"
 		fi
 
-		local BOOTM
 		ID_PART_ENTRY_FLAGS="$(get_part_param 'ID_PART_ENTRY_FLAGS' <<< "${PART_INFO}")"
 		if [[ "${ID_PART_ENTRY_FLAGS}" == '0x8000000000000000' ]] || [[ "${ID_PART_ENTRY_FLAGS}" == '0x80' ]] || [[ "${ID_PART_ENTRY_TYPE}" == '21686148-6449-6e6f-744e-656564454649' ]]
 		then
-			BOOTM+='*b'
+			echo "BOOT_BIOS='*b'"
 		fi
 		if [[ "${ID_PART_ENTRY_TYPE}" == 'c12a7328-f81f-11d2-ba4b-00a0c93ec93b' ]] || [[ "${ID_PART_ENTRY_TYPE}" == '0xef' ]]
 		then
-			BOOTM+='*e'
+			echo "BOOT_EFI='*e'"
 		fi
-		[[ -n "${BOOTM}" ]] && echo "BOOTM='${BOOTM}'"
 
 
 #		ID_FS_LABEL="$(get_part_param 'ID_FS_LABEL' <<< "${PART_INFO}")"
