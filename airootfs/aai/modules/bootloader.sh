@@ -124,7 +124,7 @@ bootloader_dialog_menu()
 	local DEFAULT_ITEM='grub'
 
 	local ITEMS= # "'none' '$(gettext 'Не устанавливать загрузчик')'"
-	ITEMS+=" 'grub' 'GRUB BIOS | UEFI'"
+	ITEMS+=" 'grub' 'GRUB ${BIOS_SYS}'"
 	ITEMS+=" 'syslinux' 'SYSLINUX \Zb\Z3($(gettext 'Пока не поддерживается'))\Zn'"
  	ITEMS+=" 'lilo' 'LILO \Zb\Z3($(gettext 'Пока не поддерживается'))\Zn'"
 
@@ -258,7 +258,7 @@ bootloader_grub()
 		[[ ! -n "${PART}" ]] && return 1
 
 		# Boot loader
-		if [[ "${UEFI}" ]]
+		if [[ "${BIOS_SYS}" == 'EFI' ]]
 		then
 # 			if [[ -n "${SET_DEV_BOOT[0]}" ]]
 # 			then

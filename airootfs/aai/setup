@@ -29,9 +29,13 @@ VAR_FILE='/aai-var.log'
 NO_DEBUG=1
 NO_MINI=1
 
+BIOS_SYS='BIOS'
+efivar -l 2> /dev/null 1> /dev/null && BIOS_SYS='EFI'
+UNAME="$(uname -m)"
+
 # Для локализации
 # @todo Нужно доделать!!!
-AAI_VER='Arch AnTAVR Installer ver. 3.8.2'
+AAI_VER="Arch AnTAVR Installer ver. 3.8.2 << ${UNAME} ${BIOS_SYS} >>"
 setfont 'cyr-sun16'
 systemctl start gpm
 
@@ -58,15 +62,6 @@ DBDIR="${SCRDIR}/db/"
 
 export TEXTDOMAIN="${SCRNAME}"
 export TEXTDOMAINDIR="${LOCALEDIR}"
-
-UEFI=
-efivar -l 2> /dev/null 1> /dev/null && UEFI=1
-
-UNAME="$(uname -m)"
-AAI_VER+=' << '
-AAI_VER+="${UNAME}"
-[[ $UEFI ]] && AAI_VER+=' UEFI' || AAI_VER+=' BIOS'
-AAI_VER+=' >>'
 
 source "${LIBDIR}/functions.sh"
 source "${LIBDIR}/dialogs.sh"

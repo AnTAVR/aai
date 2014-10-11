@@ -133,10 +133,10 @@ part_part()
 
 	while true
 	do
-		DEV="$(part_part_dialog_dev "${DEV}")"
+		DEV="$(part_part_dialog_dev)"
 		[[ ! -n "${DEV}" ]] && return 1
 
-		TEMP="$(part_part_dialog_fdisk "${FDISK}")"
+		TEMP="$(part_part_dialog_fdisk "${FDISK}" "${DEV}")"
 		[[ ! -n "${TEMP}" ]] && continue
 		FDISK="${TEMP}"
 
@@ -152,14 +152,20 @@ part_part_dialog_fdisk()
 	msg_log "$(gettext 'Запуск диалога'): \"${FUNCNAME}$(for ((TEMP=1; TEMP<=${#}; TEMP++)); do echo -n " \$${TEMP}='$(eval "echo \"\${${TEMP}}\"")'"; done)\"" 'noecho'
 
 	local P_FDISK="${1}"
+	local P_DEV="${2}"
 
 	local TITLE="${TXT_PART_MAIN}"
-	local HELP_TXT="\Z1$(gettext 'C BIOS рекомендуется использовать MBR тип разметки!!!')\Zn\n"
 
-	[[ $UEFI ]] && HELP_TXT="\Z1$(gettext 'C EFI рекомендуется использовать GPT тип разметки!!!')\Zn\n"
+	local HELP_TXT+="$(gettext 'Устройство'): \Zb\Z2\"${P_DEV}\"\Zn\n\n"
+
+	HELP_TXT="\Z1$(gettext 'C BIOS рекомендуется использовать MBR тип разметки!!!')\Zn\n"
+
+	[[ "$BIOS_SYS" == 'EFI' ]] && HELP_TXT="\Z1$(gettext 'C EFI рекомендуется использовать GPT тип разметки!!!')\Zn\n"
 	HELP_TXT+="\n$(gettext 'Выберите программу для разметки')\n"
+	HELP_TXT+="$(gettext 'По умолчанию'):"
 
 	local DEFAULT_ITEM="${P_FDISK}"
+
 	local ITEMS="'cfdisk' 'MBR'"
 	ITEMS+=" 'fdisk' 'MBR & GPT \Zb\Z3($(gettext 'Рекомендуется'))\Zn'"
 	ITEMS+=" 'sfdisk' 'MBR'"
@@ -167,6 +173,8 @@ part_part_dialog_fdisk()
 	ITEMS+=" 'cgdisk' 'GPT'"
 	ITEMS+=" 'gdisk' 'GPT'"
 	ITEMS+=" 'sgdisk' 'GPT'"
+
+	HELP_TXT+=" \Zb\Z7\"${DEFAULT_ITEM}\"\Zn\n"
 
 	RETURN="$(dialog_menu "${TITLE}" "${DEFAULT_ITEM}" "${HELP_TXT}" "${ITEMS}")"
 
@@ -180,12 +188,10 @@ part_part_dialog_dev()
 
 	local RETURN
 
-	local P_DEV="${1}"
-
 	local TITLE="${TXT_PART_MAIN}"
 	local HELP_TXT=
 
-	if [[ $UEFI ]]
+	if [[ "$BIOS_SYS" == 'EFI' ]]
 	then
 		HELP_TXT+="\Zb\Z7/boot/efi\Zn - 128M-512M \Zb\Z2(128M)\Zn, $(gettext 'тип') \Zb\Z61 - EFI System\Zn \Zb\Z1($(gettext 'ОБЯЗАТЕЛЬНО!!!'))\Zn\n"
 		HELP_TXT+="  FLASH DRIVE \Zb\Z2(32M)\Zn\n"
@@ -221,8 +227,6 @@ part_part_dialog_dev()
 	fi
 
 	HELP_TXT+="\n$(gettext 'Выберите устройство для разметки')\n"
-
-	local DEFAULT_ITEM="${P_DEV}"
 
 	ITEMS="$(part_part_dev)"
 
@@ -327,7 +331,7 @@ part_mount_dialog_point()
 	[[ -n "${SET_DEV_BOOT[0]}" ]] && TEMP="\Zb\Z2($(gettext 'ВЫПОЛНЕНО'))\Zn"
 	ITEMS+=" '/boot' '\"${SET_DEV_BOOT[0]}\" \"${SET_DEV_BOOT[2]}\" ${TEMP}'"
 
-	if [[ $UEFI ]]
+	if [[ "$BIOS_SYS" == 'EFI' ]]
 	then
 		TEMP="\Zb\Z1($(gettext 'ОБЯЗАТЕЛЬНО!!!'))\Zn"
 		[[ -n "${SET_DEV_EFI[0]}" ]] && TEMP="\Zb\Z2($(gettext 'ВЫПОЛНЕНО'))\Zn"
@@ -706,7 +710,7 @@ part_mount_point()
 
 	set_global_var "${P_P}" "${PART}" "${OPT}" "${ID_FS_TYPE}" "${ID_FS_UUID}"
 
-	if [[ $UEFI ]]
+	if [[ "$BIOS_SYS" == 'EFI' ]]
 	then
 		[[ -n "${SET_DEV_ROOT[0]}" ]] && [[ -n "${SET_DEV_EFI[0]}" ]] && RUN_PART=1
 	else
