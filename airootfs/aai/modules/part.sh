@@ -156,23 +156,23 @@ part_part_dialog_fdisk()
 
 	local TITLE="${TXT_PART_MAIN}"
 
-	local HELP_TXT+="$(gettext 'Устройство'): \Zb\Z2\"${P_DEV}\"\Zn\n\n"
+	local HELP_TXT="\Z1$(gettext 'C BIOS рекомендуется использовать MBR тип разметки!!!')\Zn\n"
+	[[ "${BIOS_SYS}" == 'EFI' ]] && HELP_TXT="\Z1$(gettext 'C EFI рекомендуется использовать GPT тип разметки!!!')\Zn\n\n"
 
-	HELP_TXT="\Z1$(gettext 'C BIOS рекомендуется использовать MBR тип разметки!!!')\Zn\n"
-
-	[[ "$BIOS_SYS" == 'EFI' ]] && HELP_TXT="\Z1$(gettext 'C EFI рекомендуется использовать GPT тип разметки!!!')\Zn\n"
+	HELP_TXT+="$(gettext 'Устройство'): \Zb\Z2\"${P_DEV}\"\Zn\n"
 	HELP_TXT+="\n$(gettext 'Выберите программу для разметки')\n"
 	HELP_TXT+="$(gettext 'По умолчанию'):"
 
 	local DEFAULT_ITEM="${P_FDISK}"
 
-	local ITEMS="'cfdisk' 'MBR'"
+	local ITEMS
+#	ITEMS+="'cfdisk' 'MBR'"
 	ITEMS+=" 'fdisk' 'MBR & GPT \Zb\Z3($(gettext 'Рекомендуется'))\Zn'"
-	ITEMS+=" 'sfdisk' 'MBR'"
+#	ITEMS+=" 'sfdisk' 'MBR'"
 	ITEMS+=" 'parted' '-'"
-	ITEMS+=" 'cgdisk' 'GPT'"
-	ITEMS+=" 'gdisk' 'GPT'"
-	ITEMS+=" 'sgdisk' 'GPT'"
+#	ITEMS+=" 'cgdisk' 'GPT'"
+#	ITEMS+=" 'gdisk' 'GPT'"
+#	ITEMS+=" 'sgdisk' 'GPT'"
 
 	HELP_TXT+=" \Zb\Z7\"${DEFAULT_ITEM}\"\Zn\n"
 
@@ -188,22 +188,24 @@ part_part_dialog_dev()
 
 	local RETURN
 
+	local TEMP
+
 	local TITLE="${TXT_PART_MAIN}"
 	local HELP_TXT=
 
-	if [[ "$BIOS_SYS" == 'EFI' ]]
+	if [[ "${BIOS_SYS}" == 'EFI' ]]
 	then
+		HELP_TXT+="\Zb\Z7$(gettext 'Алтернативная загрузка') BIOS\Zn - 2M, $(gettext 'тип') \Zb\Z64 - BIOS boot\Zn\n"
+
 		HELP_TXT+="\Zb\Z7/boot/efi\Zn - 128M-512M \Zb\Z2(128M)\Zn, $(gettext 'тип') \Zb\Z61 - EFI System\Zn \Zb\Z1($(gettext 'ОБЯЗАТЕЛЬНО!!!'))\Zn\n"
 		HELP_TXT+="  FLASH DRIVE \Zb\Z2(32M)\Zn\n"
 
 		HELP_TXT+="\Zb\Z7/boot\Zn - 32M-512M \Zb\Z2(96M)\Zn, $(gettext 'тип') \Zb\Z615 - Linux filesystem\Zn \Zb\Z3($(gettext 'Рекомендуется'))\Zn\n"
 		HELP_TXT+="  FLASH DRIVE \Zb\Z2(32M)\Zn\n"
-		if [[ "${UNAME}" = 'x86_64' ]]
-		then
-			HELP_TXT+="\Zb\Z7/ (root)\Zn - 4G-32G \Zb\Z2(20G)\Zn, $(gettext 'тип') \Zb\Z618 - Linux root (x86-64)\Zn \Zb\Z1($(gettext 'ОБЯЗАТЕЛЬНО!!!'))\Zn\n"
-		else
-			HELP_TXT+="\Zb\Z7/ (root)\Zn - 4G-32G \Zb\Z2(20G)\Zn, $(gettext 'тип') \Zb\Z617 - Linux root (x86)\Zn \Zb\Z1($(gettext 'ОБЯЗАТЕЛЬНО!!!'))\Zn\n"
-		fi
+
+		TEMP='17 - Linux root (x86)'
+		[[ "${UNAME}" = 'x86_64' ]] && TEMP='18 - Linux root (x86-64)'
+		HELP_TXT+="\Zb\Z7/ (root)\Zn - 4G-32G \Zb\Z2(20G)\Zn, $(gettext 'тип') \Zb\Z6${TEMP}\Zn \Zb\Z1($(gettext 'ОБЯЗАТЕЛЬНО!!!'))\Zn\n"
 
 		HELP_TXT+="\Zb\Z7/home\Zn - \Zb\Z2($(gettext 'все остальное место'))\Zn, $(gettext 'тип') \Zb\Z620 - Linux home\Zn \Zb\Z3($(gettext 'Рекомендуется'))\Zn\n"
 		HELP_TXT+="  $(gettext '10G на одного пользователя и 5G на бэкапы и кеш системы')\n"
@@ -331,7 +333,7 @@ part_mount_dialog_point()
 	[[ -n "${SET_DEV_BOOT[0]}" ]] && TEMP="\Zb\Z2($(gettext 'ВЫПОЛНЕНО'))\Zn"
 	ITEMS+=" '/boot' '\"${SET_DEV_BOOT[0]}\" \"${SET_DEV_BOOT[2]}\" ${TEMP}'"
 
-	if [[ "$BIOS_SYS" == 'EFI' ]]
+	if [[ "${BIOS_SYS}" == 'EFI' ]]
 	then
 		TEMP="\Zb\Z1($(gettext 'ОБЯЗАТЕЛЬНО!!!'))\Zn"
 		[[ -n "${SET_DEV_EFI[0]}" ]] && TEMP="\Zb\Z2($(gettext 'ВЫПОЛНЕНО'))\Zn"
@@ -710,7 +712,7 @@ part_mount_point()
 
 	set_global_var "${P_P}" "${PART}" "${OPT}" "${ID_FS_TYPE}" "${ID_FS_UUID}"
 
-	if [[ "$BIOS_SYS" == 'EFI' ]]
+	if [[ "${BIOS_SYS}" == 'EFI' ]]
 	then
 		[[ -n "${SET_DEV_ROOT[0]}" ]] && [[ -n "${SET_DEV_EFI[0]}" ]] && RUN_PART=1
 	else
@@ -769,22 +771,20 @@ part_dev_part()
 			if [[ -n "${ID_PART_ENTRY_TYPE}" ]]
 			then
 				case "${ID_PART_ENTRY_TYPE}" in
-					'0x00' | '0x0' | '0x05' | '0x5') # список типов разделов которые нельзя использовать
+					'0x00' | '0x0' | '00000000-0000-0000-0000-000000000000' | '0x05' | '0x5' | '21686148-6449-6e6f-744e-656564454649' | '024dee41-33e7-11d3-9d69-0008c781f39f' | '0xee') # список типов разделов которые нельзя использовать
 						;;
 					*)
-						local BOOT_BIOS=
-						local BOOT_EFI=
 						case "${ID_PART_ENTRY_TYPE}" in
 							'0x82' | '0657fd6d-a4ab-43c4-84e5-0933c84b4f4f')
 								[[ "${P_POINT}" != 'swap' ]] && continue
 								;;
 							*)
 								[[ "${P_POINT}" == 'swap' ]] && continue
-								BOOT_BIOS="$(get_part_param 'BOOT_BIOS' <<< "${PART_INFO}")"
-								BOOT_EFI="$(get_part_param 'BOOT_EFI' <<< "${PART_INFO}")"
 
 								;;
 						esac
+						local BOOT_BIOS="$(get_part_param 'BOOT_BIOS' <<< "${PART_INFO}")"
+						local BOOT_EFI="$(get_part_param 'BOOT_EFI' <<< "${PART_INFO}")"
 						local DEVNAME="$(get_part_param 'DEVNAME' <<< "${PART_INFO}")"
 						local ID_FS_TYPE="$(get_part_param 'ID_FS_TYPE' <<< "${PART_INFO}")"
 						local PART_TABLE_TYPE_NAME="$(get_part_param 'PART_TABLE_TYPE_NAME' <<< "${PART_INFO}")"
