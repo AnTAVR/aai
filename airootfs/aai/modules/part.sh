@@ -156,8 +156,8 @@ part_part_dialog_fdisk()
 
 	local TITLE="${TXT_PART_MAIN}"
 
-	local HELP_TXT="\Z1$(gettext 'C BIOS рекомендуется использовать MBR тип разметки!!!')\Zn\n"
-	[[ "${BIOS_SYS}" == 'EFI' ]] && HELP_TXT="\Z1$(gettext 'C EFI рекомендуется использовать GPT тип разметки!!!')\Zn\n\n"
+	local HELP_TXT="\Zb\Z1$(gettext 'C BIOS рекомендуется использовать MBR тип разметки!!!')\Zn\n"
+	[[ "${BIOS_SYS}" == 'EFI' ]] && HELP_TXT="\Zb\Z1$(gettext 'C EFI рекомендуется использовать GPT тип разметки!!!')\Zn\n\n"
 
 	HELP_TXT+="$(gettext 'Устройство'): \Zb\Z2\"${P_DEV}\"\Zn\n"
 	HELP_TXT+="\n$(gettext 'Выберите программу для разметки')\n"
@@ -191,44 +191,35 @@ part_part_dialog_dev()
 	local TEMP
 
 	local TITLE="${TXT_PART_MAIN}"
-	local HELP_TXT=
+	local HELP_TXT="$(gettext 'Цветом отмечены форматы таблицы разделов') \Zb\Z6MBR\Zn \Z5GPT\Zn\n\n"
 
-	if [[ "${BIOS_SYS}" == 'EFI' ]]
-	then
-		HELP_TXT+="\Zb\Z7$(gettext 'Алтернативная загрузка') BIOS\Zn - 2M, $(gettext 'тип') \Zb\Z64 - BIOS boot\Zn\n"
+	HELP_TXT+="\Zb\Z7$(gettext 'Загрузка') BIOS GPT\Zn - 2M, $(gettext 'тип') \Z5(4) BIOS boot\Zn\n"
+#	HELP_TXT+="\Zb\Z7MBR GPT\Zn - 2M, $(gettext 'тип') \Zb\Z6(ee) GPT\Zn\n"
+#	HELP_TXT+="\Zb\Z7GPT MBR\Zn - 2M, $(gettext 'тип') \Z5(2) MBR partition scheme\Zn\n"
 
-		HELP_TXT+="\Zb\Z7/boot/efi\Zn - 128M-512M \Zb\Z2(128M)\Zn, $(gettext 'тип') \Zb\Z61 - EFI System\Zn \Zb\Z1($(gettext 'ОБЯЗАТЕЛЬНО!!!'))\Zn\n"
-		HELP_TXT+="  FLASH DRIVE \Zb\Z2(32M)\Zn\n"
+	TEMP=''
+	[[ "${BIOS_SYS}" == 'EFI' ]] && TEMP="\Zb\Z1($(gettext 'ОБЯЗАТЕЛЬНО!!!'))\Zn"
+	HELP_TXT+="\Zb\Z7/boot/efi\Zn - 128M-512M \Zb\Z2(128M)\Zn, $(gettext 'тип') \Zb\Z6(ef) EFI (FAT-12/16/32)\Zn | \Z5(1) EFI System\Zn ${TEMP}\n"
+	HELP_TXT+="  FLASH DRIVE \Zb\Z2(32M)\Zn\n"
 
-		HELP_TXT+="\Zb\Z7/boot\Zn - 32M-512M \Zb\Z2(96M)\Zn, $(gettext 'тип') \Zb\Z615 - Linux filesystem\Zn \Zb\Z3($(gettext 'Рекомендуется'))\Zn\n"
-		HELP_TXT+="  FLASH DRIVE \Zb\Z2(32M)\Zn\n"
+	HELP_TXT+="\Zb\Z7/boot\Zn - 32M-512M \Zb\Z2(96M)\Zn, $(gettext 'тип') \Zb\Z6(83) Linux\Zn | \Z5(15) Linux filesystem\Zn \Zb\Z3($(gettext 'Рекомендуется'))\Zn\n"
+	HELP_TXT+="  FLASH DRIVE \Zb\Z2(32M)\Zn, $(gettext 'тип') \Zb\Z6(07) HPFS/NTFS/exFAT | (0B) W95 FAT32\Zn | \Z5(6) Microsoft basic data\Zn\n"
+	HELP_TXT+="  \Zb\Z6$(gettext 'Нужно сделать загрузочным!!!')\Zn\n"
 
-		TEMP='17 - Linux root (x86)'
-		[[ "${UNAME}" = 'x86_64' ]] && TEMP='18 - Linux root (x86-64)'
-		HELP_TXT+="\Zb\Z7/ (root)\Zn - 4G-32G \Zb\Z2(20G)\Zn, $(gettext 'тип') \Zb\Z6${TEMP}\Zn \Zb\Z1($(gettext 'ОБЯЗАТЕЛЬНО!!!'))\Zn\n"
+	TEMP='(17) Linux root (x86)'
+	[[ "${UNAME}" = 'x86_64' ]] && TEMP='(18) Linux root (x86-64)'
+	HELP_TXT+="\Zb\Z7/ (root)\Zn - 4G-32G \Zb\Z2(20G)\Zn, $(gettext 'тип') \Zb\Z6(83) Linux\Zn | \Z5${TEMP}\Zn \Zb\Z1($(gettext 'ОБЯЗАТЕЛЬНО!!!'))\Zn\n"
 
-		HELP_TXT+="\Zb\Z7/home\Zn - \Zb\Z2($(gettext 'все остальное место'))\Zn, $(gettext 'тип') \Zb\Z620 - Linux home\Zn \Zb\Z3($(gettext 'Рекомендуется'))\Zn\n"
-		HELP_TXT+="  $(gettext '10G на одного пользователя и 5G на бэкапы и кеш системы')\n"
-		HELP_TXT+="  $(gettext 'Если установка на FLASH DRIVE, то можно не использовать отдельный раздел')\n"
+	HELP_TXT+="\Zb\Z7/home\Zn - \Zb\Z2($(gettext 'все остальное место'))\Zn, $(gettext 'тип') \Zb\Z6(83) Linux\Zn | \Z5(20) Linux home\Zn \Zb\Z3($(gettext 'Рекомендуется'))\Zn\n"
+	HELP_TXT+="  $(gettext '10G на одного пользователя и 5G на бэкапы и кеш системы')\n"
+	HELP_TXT+="  $(gettext 'Если установка на FLASH DRIVE, то можно не использовать отдельный раздел')\n"
 
-		HELP_TXT+="\Zb\Z7swap\Zn - RAM*2 \Zb\Z2($(free -m | awk '/Mem:/{ print $2*2 }')M)\Zn, $(gettext 'тип') \Zb\Z614 - Linux swap\Zn\n"
-		HELP_TXT+="  $(gettext 'Можно потом сделать swap в файл, если фс') \Zb\Z6/ (root) ext4\Zn\n"
-	else
-		HELP_TXT+="\Zb\Z7/boot\Zn - 32M-512M \Zb\Z2(96M)\Zn, $(gettext 'тип') \Zb\Z683 - Linux\Zn \Zb\Z3($(gettext 'Рекомендуется'))\Zn\n"
-		HELP_TXT+="  FLASH DRIVE \Zb\Z2(32M)\Zn, $(gettext 'тип') \Zb\Z607 - HPFS/NTFS/exFAT\Zn | \Zb\Z60B - W95 FAT32\Zn\n"
-		HELP_TXT+="  $(gettext 'Нужно сделать загрузочным!!!')\n"
-
-		HELP_TXT+="\Zb\Z7/ (root)\Zn - 4G-32G \Zb\Z2(20G)\Zn, $(gettext 'тип') \Zb\Z683 - Linux\Zn \Zb\Z1($(gettext 'ОБЯЗАТЕЛЬНО!!!'))\Zn\n"
-
-		HELP_TXT+="\Zb\Z7/home\Zn - \Zb\Z2($(gettext 'все остальное место'))\Zn, $(gettext 'тип') \Zb\Z683 - Linux\Zn \Zb\Z3($(gettext 'Рекомендуется'))\Zn\n"
-		HELP_TXT+="  $(gettext '10G на одного пользователя и 5G на бэкапы и кеш системы')\n"
-		HELP_TXT+="  $(gettext 'Если установка на FLASH DRIVE, то можно не использовать отдельный раздел')\n"
-
-		HELP_TXT+="\Zb\Z7swap\Zn - RAM*2 \Zb\Z2($(free -m | awk '/Mem:/{ print $2*2 }')M)\Zn, $(gettext 'тип') \Zb\Z682 - Linux swap / Solaris\Zn\n"
-		HELP_TXT+="  $(gettext 'Можно потом сделать swap в файл, если фс') \Zb\Z6/ (root) ext2 | ext3 | ext4\Zn\n"
-	fi
+	HELP_TXT+="\Zb\Z7swap\Zn - RAM*2 \Zb\Z2($(free -m | awk '/Mem:/{ print $2*2 }')M)\Zn, $(gettext 'тип') \Zb\Z6(82) Linux swap / Solaris\Zn \Z5(14) Linux swap\Zn\n"
+	HELP_TXT+="  $(gettext 'Можно потом сделать swap в файл, если фс') \Zb/ (root) ext2 | ext3 | ext4\Zn\n"
 
 	HELP_TXT+="\n$(gettext 'Выберите устройство для разметки')\n"
+
+	local DEFAULT_ITEM
 
 	ITEMS="$(part_part_dev)"
 
