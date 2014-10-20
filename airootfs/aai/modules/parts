@@ -1,0 +1,16 @@
+#!/bin/sh
+
+. ./functions.sh
+
+
+lsblk -naro NAME | tr ' ' '\r' |
+while IFS=$'\r' read -r NAME
+do
+	PART_INFO="$(get_part_info "/dev/${NAME}")"
+	echo "${PART_INFO}"
+#	echo "NAME=$(get_part_param 'NAME' <<< "${PART_INFO}")"
+#	echo "ID_PART_ENTRY_NAME=$(get_part_param 'ID_PART_ENTRY_NAME' <<< "${PART_INFO}")"
+#	echo "ID_FS_LABEL=$(get_part_param 'ID_FS_LABEL' <<< "${PART_INFO}")"
+#
+	echo '-----------------'
+done
