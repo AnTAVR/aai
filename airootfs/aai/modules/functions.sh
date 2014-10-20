@@ -144,6 +144,7 @@ pacman_install()
 			chroot_run yaourt --noconfirm --needed ${P_PACS}
 			RET=${?}
 			msg_error "$(gettext 'Предупреждение yaourt! Смотрите подробнее в') ${LOG_FILE}" ${RET} 1
+			# Очищаем /tmp
 			rm -rf "${NS_PATH}/tmp/yaourt-tmp-root"
 			;;
 		'noneeded')

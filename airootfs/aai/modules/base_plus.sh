@@ -385,7 +385,7 @@ base_plus_install()
 	cat "${DBDIR}modules/etc/profile.d/less.sh" > "${NS_PATH}/etc/profile.d/less.sh"
 	chmod +x "${NS_PATH}/etc/profile.d/less.sh"
 
-# 
+#
 	msg_log "$(gettext 'Настраиваю') /etc/profile.d/path.sh"
 	cat "${DBDIR}modules/etc/profile.d/path.sh" > "${NS_PATH}/etc/profile.d/path.sh"
 	chmod +x "${NS_PATH}/etc/profile.d/path.sh"
@@ -564,10 +564,10 @@ base_plus_install()
 # 	local P_KEYNAME_S="${1}"
 # 	local P_KEYNAME_A="${2}"
 # 	local P_KEYMAP_FILE="${3}"
-# 
+#
 # 	local KEYCODE
 # 	local STR
-# 
+#
 # 	grep "${P_KEYNAME_S}$" "${P_KEYMAP_FILE}" \
 # 	| while read STR
 # 	do
@@ -575,31 +575,31 @@ base_plus_install()
 # 		sed -i "/${STR}/ a${P_KEYNAME_A} keycode ${KEYCODE[1]} = AltGr_Lock\naltgr ${P_KEYNAME_A} keycode ${KEYCODE[1]} = AltGr_Lock" "${P_KEYMAP_FILE}"
 # 	done
 # }
-# 
+#
 # conv_keymap__conv_alt_sh()
 # {
 # 	local P_KEYMAP="${1}"
-# 
+#
 # 	local KEYMAPSDIR='/etc/kbd/keymaps/'
 # 	mkdir -p "${NS_PATH}${KEYMAPSDIR}"
-# 
+#
 # 	local KEYMAP_FILE="$(find "${NS_PATH}/usr/share/kbd/keymaps/" -iname "${P_KEYMAP}.map.gz")"
 # 	[[ ! "${KEYMAP_FILE}" ]] && msg_error "$(gettext 'Файл раскладки клавиатуры не найден!!!')" 0 && return
-# 
+#
 # 	KEYMAPSDIR+="${P_KEYMAP}.map"
 # 	local KEYMAP_FILE_NEW="${NS_PATH}${KEYMAPSDIR}"
-# 
+#
 # 	gzip -dc "${KEYMAP_FILE}" | grep -v 'AltGr_Lock' | sed 's/#\(.*\)//;s/^[ \t]*//;s/[ \t]*$//;s/ \{1,\}/ /g' | sed '/^ *$/d' > "${KEYMAP_FILE_NEW}"
-# 
+#
 # 	conv_keymap__add_strs 'Alt' 'shift' "${KEYMAP_FILE_NEW}"
 # 	conv_keymap__add_strs 'Shift' 'alt' "${KEYMAP_FILE_NEW}"
 # 	sed -i "1i # Gen `date '+%Y-%m-%d %H:%M'`. From ${P_KEYMAP}.map.gz. Mode is switched by the Alt+Shift" "${KEYMAP_FILE_NEW}"
-# 
+#
 # 	gzip -9f "${KEYMAP_FILE_NEW}"
-# 
+#
 # 	echo "${KEYMAPSDIR}.gz"
 # }
-# 
+#
 # conv_keymap()
 # {
 # 	local KEYMAP_FILE_NEW
@@ -608,9 +608,9 @@ base_plus_install()
 # 	local FONT
 # 	local FONT_MAP
 # 	local FONT_UNIMAPMAP
-# 
+#
 # 	source "${NS_PATH}/etc/vconsole.conf"
-# 
+#
 # 	if [[ "${KEYMAP}" ]] && [[ ! -f "${NS_PATH}${KEYMAP}" ]]
 # 	then
 # 		msg_log "$(gettext 'Изменяю раскладку') KEYMAP=${KEYMAP}"
@@ -624,7 +624,7 @@ base_plus_install()
 # };
 # " "${NS_PATH}/etc/vconsole.conf"
 # 	fi
-# 
+#
 # 	if [[ "${KEYMAP_TOGGLE}" ]] && [[ ! -f "${NS_PATH}${KEYMAP_TOGGLE}" ]]
 # 	then
 # 		msg_log "$(gettext 'Изменяю раскладку') KEYMAP_TOGGLE=${KEYMAP_TOGGLE}"
@@ -644,7 +644,7 @@ base_plus_install()
 # {
 # 	local IFACE
 # 	local IFACE_NAME
-# 
+#
 # 	for IFACE in /sys/class/net/*
 # 	do
 # 		IFACE_NAME="${IFACE/\/sys\/class\/net\//}"
@@ -847,7 +847,7 @@ base_plus_squashfs()
 #     };
 # };
 # ' "${NS_PATH}/etc/mkinitcpio.conf"
-# 
+#
 #     git_commit
 }
 
@@ -904,8 +904,10 @@ i session   required  pam_ecryptfs.so unwrap # eCryptfs
 
 base_plus_cdemu()
 {
+#	pacman_install '-S vhba-module-dkms' 'yaourt'
 	#community
 	pacman_install '-S cdemu-client'
+#	[[ "${SET_LTS}" ]] && pacman_install '-S vhba-module-lts' 'yaourt'
 
 	git_commit
 
@@ -936,7 +938,7 @@ base_plus_man_pages_loc()
 # Закомментировал потому что очень долго выполняется!!!
 #   msg_info "$(gettext 'Пожалуйста, подождите')..."
 #   chroot_run bash -c "'LANG=$(awk '{print $1}' <<< "${SET_LOCAL}") mandb --quiet'"
-# 
+#
 #   git_commit
 }
 
@@ -1104,9 +1106,9 @@ base_plus_sensors()
 # {
 # 	#community
 # 	pacman_install '-S preload'
-# 
+#
 # 	git_commit
-# 
+#
 # 	SERVICES+=" 'preload.service' '-' 'off'"
 # }
 
@@ -1151,7 +1153,7 @@ base_plus_net()
 	pacman_install '-S dsniff'
 	pacman_install '-S tor'
 #	pacman_install '-S ntop' # убрал потому что тянет графику
- 
+
 	git_commit
 
 	SERVICES+=" 'avahi-daemon.service' '-' 'off'"
@@ -1216,9 +1218,9 @@ base_plus_ufw()
 # {
 # 	#extra
 # 	pacman_install '-S python2-gobject'
-# 
+#
 # 	git_commit
-# 
+#
 # 	msg_log "$(gettext 'Добавляю') timestamp > /etc/mkinitcpio.conf"
 # 	sed -i '
 # # Добавляем хук timestamp
@@ -1232,7 +1234,7 @@ base_plus_ufw()
 # 	};
 # };
 # ' "${NS_PATH}/etc/mkinitcpio.conf"
-# 
+#
 # 	git_commit
 # }
 
