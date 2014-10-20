@@ -275,9 +275,9 @@ bootloader_grub()
 	if [[ "${BIOS_SYS}" == 'EFI' ]]
 	then
 		mkdir -p "${NS_PATH}/boot/efi/EFI/boot"
-		TARGET='32'
-		[[ "${UNAME}" == 'x86_64' ]] && TARGET='64'
-		cp -b "${NS_PATH}/boot/efi/EFI/arch/grubx${TARGET}.efi" "${NS_PATH}/boot/efi/EFI/boot/bootx${TARGET}.efi"
+		TARGET='ia32'
+		[[ "${UNAME}" == 'x86_64' ]] && TARGET='x64'
+		cp -b "${NS_PATH}/boot/efi/EFI/arch/grub${TARGET}.efi" "${NS_PATH}/boot/efi/EFI/boot/boot${TARGET}.efi"
 	fi
 
 	mkdir -p "${NS_PATH}/boot/grub/locale"
