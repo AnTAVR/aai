@@ -382,7 +382,7 @@ part_format()
 				MKF="$(part_format_dialog_mkf "${P_PART}" "${P_POINT}" "${PART_TABLE_TYPE_NAME}" "${ID_PART_ENTRY_TYPE}" "${IS_SSD}")"
 				[[ ! -n "${MKF}" ]] && return 1
 
-				TEMP="$(part_format_dialog_mkf_opt "${MKF}" "${P_POINT}" "${P_PART}" "${IS_SSD}")"
+				TEMP="$(part_format_dialog_mkf_opt "${MKF}" "${P_POINT}" "${P_PART}" "${IS_SSD}" "${PART_TABLE_TYPE_NAME}")"
 				case "${?}" in
 					'0') #Yes
 						MKF_OPT="${TEMP}"
@@ -577,10 +577,12 @@ part_format_dialog_mkf_opt()
 	local P_POINT="${2}"
 	local P_PART="${3}"
 	local P_IS_SSD="${4}"
+	local P_PART_TABLE_TYPE_NAME="${5}"
 
 	local TITLE="${TXT_PART_MAIN}"
 	local HELP_TXT="$(gettext 'Точка монтирования'): \Zb\Z2\"${P_POINT}\"\Zn\n"
 	HELP_TXT+="$(gettext 'Раздел'): \Zb\Z2\"${P_PART}\"\Zn\n"
+	HELP_TXT+="$(gettext 'Тип'): \Zb\Z2\"${P_PART_TABLE_TYPE_NAME}\"\Zn\n"
 	HELP_TXT+="$(gettext 'Файловая система'): \Zb\Z2\"${P_MKF}\"\Zn\n"
 	HELP_TXT+="\n$(gettext 'Введите дополнительные опции форматирования')\n"
 	HELP_TXT+="$(gettext 'По умолчанию'):"
