@@ -30,6 +30,7 @@ TXT_BASE_PLUS_MAIN="$(gettext 'Расширенная базовая систе�
 
 # Устанавливать ли lts
 SET_LTS=
+SET_YAOURT=
 
 SERVICES=''
 SERVICES_USER=''
@@ -734,6 +735,7 @@ Server = http://repo.archlinux.fr/$arch
 	pacman_install '-S pkgtools' 'yaourt'
 
 	git_commit
+	SET_YAOURT=1
 #-------------------------------------------------------------------------------
 }
 
@@ -757,7 +759,7 @@ base_plus_alsa()
 	#community
 	pacman_install '-S ladspa-plugins'
 	#multilib
-	pacman_install '-S lib32-alsa-plugins' 'yaourt'
+	pacman_install '-S lib32-alsa-plugins' 'multilib'
 
 	git_commit
 
@@ -787,7 +789,7 @@ base_plus_alsa_jack2()
 	#community
 	pacman_install '-S jack2'
 	#multilib
-	pacman_install '-S lib32-jack2' 'yaourt'
+	pacman_install '-S lib32-jack2' 'multilib'
 
 	git_commit
 
@@ -804,7 +806,7 @@ base_plus_alsa_oss()
 	#extra
 	pacman_install '-S alsa-oss'
 	#multilib
-	pacman_install '-S lib32-alsa-oss' 'yaourt'
+	pacman_install '-S lib32-alsa-oss' 'multilib'
 
 	git_commit
 

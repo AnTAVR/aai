@@ -628,8 +628,30 @@ d;
 # Копируем список уже выбранных быстрых зеркал в новую систему
 	cp -PbS .orig '/etc/pacman.d/mirrorlist' "${NS_PATH}/etc/pacman.d/"
 
-	msg_log "$(gettext 'Добавляю репозиторий multilib')"
+	msg_log "$(gettext 'Включаю color, вывод списка изменений и пасхалку')"
 	sed -i '
+# Включаем color
+/^Color$/s/^/#/;
+0,/^#Color/{
+//{
+	a Color
+};
+};
+
+# Включаем вывод списка изменений и пасхалку
+/^VerbosePkgLists$/s/^/#/;
+0,/^#VerbosePkgLists/{
+//{
+	a VerbosePkgLists
+	a ILoveCandy
+};
+};
+' "${NS_PATH}/etc/pacman.conf"
+
+	if [[ "${UNAME}" == 'x86_64' ]]
+	then
+		msg_log "$(gettext 'Добавляю репозиторий multilib')"
+		sed -i '
 # Добавляем репозиторий multilib
 /^\[multilib\]/,+1{
 s/^/#/;
@@ -641,22 +663,8 @@ s/^/#/;
 	a Include = /etc/pacman.d/mirrorlist
 };
 };
-# Включаем color
-/^Color$/s/^/#/;
-0,/^#Color/{
-//{
-	a Color
-};
-};
-# Включаем вывод списка изменений и пасхалку
-/^VerbosePkgLists$/s/^/#/;
-0,/^#VerbosePkgLists/{
-//{
-	a VerbosePkgLists
-	a ILoveCandy
-};
-};
 ' "${NS_PATH}/etc/pacman.conf"
+	fi
 #-------------------------------------------------------------------------------
 
 

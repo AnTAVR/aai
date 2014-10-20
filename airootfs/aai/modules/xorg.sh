@@ -525,9 +525,9 @@ xorg_video()
 			pacman_install '-S nvidia-libgl'
 #			pacman_install '-S opencl-nvidia'
 			#multilib
-			pacman_install '-S lib32-nvidia-utils' 'yaourt'
-			pacman_install '-S lib32-nvidia-libgl' 'yaourt'
-#			pacman_install '-S lib32-opencl-nvidia' 'yaourt'
+			pacman_install '-S lib32-nvidia-utils' 'multilib'
+			pacman_install '-S lib32-nvidia-libgl' 'multilib'
+#			pacman_install '-S lib32-opencl-nvidia' 'multilib'
 
 			#nvidia-xconfig
 
@@ -541,9 +541,9 @@ xorg_video()
 			pacman_install '-S nvidia-304xx-libgl'
 #			pacman_install '-S opencl-nvidia-304xx'
 			#multilib
-			pacman_install '-S lib32-nvidia-304xx-utils' 'yaourt'
-			pacman_install '-S lib32-nvidia-304xx-libgl' 'yaourt'
-#			pacman_install '-S lib32-opencl-nvidia-304xx' 'yaourt'
+			pacman_install '-S lib32-nvidia-304xx-utils' 'multilib'
+			pacman_install '-S lib32-nvidia-304xx-libgl' 'multilib'
+#			pacman_install '-S lib32-opencl-nvidia-304xx' 'multilib'
 
 			#nvidia-xconfig
 
@@ -557,9 +557,9 @@ xorg_video()
 			pacman_install '-S nvidia-340xx-libgl'
 #			pacman_install '-S opencl-nvidia-304xx'
 			#multilib
-			pacman_install '-S lib32-nvidia-340xx-utils' 'yaourt'
-			pacman_install '-S lib32-nvidia-340xx-libgl' 'yaourt'
-#			pacman_install '-S lib32-opencl-nvidia-304xx' 'yaourt'
+			pacman_install '-S lib32-nvidia-340xx-utils' 'multilib'
+			pacman_install '-S lib32-nvidia-340xx-libgl' 'multilib'
+#			pacman_install '-S lib32-opencl-nvidia-304xx' 'multilib'
 
 			#nvidia-xconfig
 
@@ -569,7 +569,7 @@ xorg_video()
 			#extra
 			pacman_install '-S xf86-video-intel'
 			#multilib
-			pacman_install '-S lib32-mesa-dri' 'yaourt'
+			pacman_install '-S lib32-mesa-dri' 'multilib'
 
 			#community
 			pacman_install '-S bumblebee'
@@ -585,16 +585,16 @@ xorg_video()
 			pacman_install '-S nvidia-libgl'
 #			pacman_install '-S opencl-nvidia'
 			#multilib
-			pacman_install '-S lib32-nvidia-utils' 'yaourt'
-			pacman_install '-S lib32-nvidia-libgl' 'yaourt'
-#			pacman_install '-S lib32-opencl-nvidia' 'yaourt'
+			pacman_install '-S lib32-nvidia-utils' 'multilib'
+			pacman_install '-S lib32-nvidia-libgl' 'multilib'
+#			pacman_install '-S lib32-opencl-nvidia' 'multilib'
 
 			#community
 			pacman_install '-S virtualgl'
 			pacman_install '-S primus'
 			#multilib
-			pacman_install '-S lib32-virtualgl' 'yaourt'
-			pacman_install '-S lib32-primus' 'yaourt'
+			pacman_install '-S lib32-virtualgl' 'multilib'
+			pacman_install '-S lib32-primus' 'multilib'
 
 			git_commit
 
@@ -732,54 +732,54 @@ xorg_video()
 			[[ "${SET_LTS}" ]] && pacman_install '-S virtualbox-host-modules-lts'
 
 			#multilib
-			pacman_install '-S lib32-mesa-dri' 'yaourt'
+			pacman_install '-S lib32-mesa-dri' 'multilib'
 			#extra
 			pacman_install '-S mesa-libgl'
 			#multilib
-			pacman_install '-S lib32-mesa-libgl' 'yaourt'
+			pacman_install '-S lib32-mesa-libgl' 'multilib'
 			;;
 		'xf86-video-ati')
 			pacman_install '-S xf86-video-ati'
 			#multilib
-			pacman_install '-S lib32-mesa-dri' 'yaourt'
+			pacman_install '-S lib32-mesa-dri' 'multilib'
 
 			#extra
 			pacman_install '-S mesa-libgl'
 			#multilib
-			pacman_install '-S lib32-mesa-libgl' 'yaourt'
+			pacman_install '-S lib32-mesa-libgl' 'multilib'
 			;;
 		'xf86-video-intel')
 			pacman_install '-S xf86-video-intel'
 			#multilib
-			pacman_install '-S lib32-mesa-dri' 'yaourt'
+			pacman_install '-S lib32-mesa-dri' 'multilib'
 
 			#extra
 			pacman_install '-S mesa-libgl'
 			#multilib
-			pacman_install '-S lib32-mesa-libgl' 'yaourt'
+			pacman_install '-S lib32-mesa-libgl' 'multilib'
 
 #			DRIVER='intel'
 			;;
 		'xf86-video-nouveau')
 			pacman_install '-S xf86-video-nouveau'
 			#multilib
-			pacman_install '-S lib32-mesa-dri' 'yaourt'
+			pacman_install '-S lib32-mesa-dri' 'multilib'
 
 			#extra
 			pacman_install '-S mesa-libgl'
 			#multilib
-			pacman_install '-S lib32-mesa-libgl' 'yaourt'
+			pacman_install '-S lib32-mesa-libgl' 'multilib'
 			;;
 		'xf86-video-nouveau xf86-video-intel')
 			pacman_install '-S xf86-video-nouveau'
 			pacman_install '-S xf86-video-intel'
 			#multilib
-			pacman_install '-S lib32-mesa-dri' 'yaourt'
+			pacman_install '-S lib32-mesa-dri' 'multilib'
 
 			#extra
 			pacman_install '-S mesa-libgl'
 			#multilib
-			pacman_install '-S lib32-mesa-libgl' 'yaourt'
+			pacman_install '-S lib32-mesa-libgl' 'multilib'
 			;;
 		*)
 			for PKG in ${SET_VIDEO_DRV}
@@ -790,7 +790,7 @@ xorg_video()
 			#extra
 			pacman_install '-S mesa-libgl'
 			#multilib
-			pacman_install '-S lib32-mesa-libgl' 'yaourt'
+			pacman_install '-S lib32-mesa-libgl' 'multilib'
 			;;
 	esac
 
@@ -799,7 +799,7 @@ xorg_video()
 	#extra
 	pacman_install '-S mesa-demos'
 	#multilib
-	pacman_install '-S lib32-mesa-demos' 'yaourt'
+	pacman_install '-S lib32-mesa-demos' 'multilib'
 
 	git_commit
 

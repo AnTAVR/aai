@@ -629,9 +629,9 @@ pkgs_skype()
 	pacman_install '-S skype-call-recorder'
 	#multilib
 	pacman_install '-S skype'
-#	pacman_install '-S lib32-libcanberra-pulse' 'yaourt'
-#	pacman_install '-S lib32-libcanberra' 'yaourt'
-#	pacman_install '-S lib32-libpulse' 'yaourt'
+#	pacman_install '-S lib32-libcanberra-pulse' 'multilib'
+#	pacman_install '-S lib32-libcanberra' 'multilib'
+#	pacman_install '-S lib32-libpulse' 'multilib'
 
 	git_commit
 }
@@ -818,7 +818,7 @@ pkgs_hydrogen()
 {
 	#extra
 	pacman_install '-S hydrogen'
-	
+
 	git_commit
 }
 APPS+=" 'hydrogen' '$(gettext 'Драм-машина')' 'off'"
@@ -827,7 +827,7 @@ pkgs_drumkits()
 {
 	#aur
 	pacman_install '-S hydrogen-drumkits' 'yaourt'
-	
+
 	git_commit
 }
 APPS+=" 'drumkits' '$(gettext 'drumkits для hydrogen') (AUR)' 'off'"
