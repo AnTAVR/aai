@@ -403,7 +403,7 @@ xorg_xorg()
 	pacman_install '-S xorg-xset'
 	pacman_install '-S xorg-xsetroot'
 #xorg-fonts
-	pacman_install '-S font-misc-ethiopic'
+#	pacman_install '-S font-misc-ethiopic'
 	pacman_install '-S xorg-font-util'
 	pacman_install '-S xorg-fonts-encodings'
 
