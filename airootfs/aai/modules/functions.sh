@@ -832,6 +832,8 @@ get_part_param()
 
 get_part_info()
 {
+	local P_NAME="${1}"
+
 	local TEMP
 
 	local NAME
@@ -852,7 +854,7 @@ get_part_info()
 
 	local ID_PART_ENTRY_FLAGS
 
-	lsblk -ndaro NAME,MOUNTPOINT,RM,SIZE,ROTA,TRAN "${1}" | tr ' ' '\r' |
+	lsblk -ndaro NAME,MOUNTPOINT,RM,SIZE,ROTA,TRAN "${P_NAME}" | tr ' ' '\r' |
 	while IFS=$'\r' read -r NAME MOUNTPOINT RM SIZE ROTA TRAN
 	do
 		[[ -n "${NAME}" ]] && echo -e "NAME='${NAME}'"
@@ -904,4 +906,41 @@ s/[ \t]*$//;
 
 		echo "${PART_INFO}"
 	done
+}
+
+get_sound_info()
+{
+	local P_CARD="${1}"
+
+	local CARD="$(udevadm info -q path -n ${P_CARD})"
+	CARD="$(dirname "${CARD}")"
+	get_info_1 "${CARD}" 'CARD_'
+
+	CARD="$(dirname "${CARD}")"
+	CARD="$(dirname "${CARD}")"
+	get_info_1 "${CARD}" 'PCI_'
+}
+
+get_info_1()
+{
+	local P_CARD="${1}"
+	local P_PREF="${2}"
+
+	local CARD_INFO="$(udevadm info -q property -x --path=${CARD})"
+	local CARD_INFO_A="$(udevadm info -q property -xa --path=${CARD})"
+	CARD_INFO_A="$(sed -n -e '/KERNEL=/,/^$/p' <<< "${CARD_INFO_A}")"
+	CARD_INFO_A="$(sed "
+s/ATTRS{/ATTRS_/;
+s/ATTR{/ATTR_/;
+s/}=/=/;
+s/==\"/='/;
+s/ \{1,\}/ /g;
+s/^[ \t]*//;
+s/[ \t]*$//;
+s/\"$/'/;
+/''/d;
+" <<< "${CARD_INFO_A}")"
+	CARD_INFO_A="$(sed 's/^/_/g' <<< "${CARD_INFO_A}")"
+
+	sed "s/^/${P_PREF}/g" <<< "$(echo "${CARD_INFO}" && echo "${CARD_INFO_A}")" | awk -F '=' '{print toupper($1) "=" $2}'
 }
