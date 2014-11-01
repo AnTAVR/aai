@@ -1,16 +1,42 @@
 #!/bin/sh
 
-. ./functions.sh
+. "$(dirname ${0})/functions.sh"
 
 
-lsblk -naro NAME | tr ' ' '\r' |
-while IFS=$'\r' read -r NAME
-do
-	PART_INFO="$(get_part_info "/dev/${NAME}")"
-	echo "${PART_INFO}"
+#lsblk -naro NAME | tr ' ' '\r' |
+#while IFS=$'\r' read -r NAME
+#do
+#	PART_INFO="$(get_part_info "/dev/${NAME}")"
+#	echo "${PART_INFO}"
 #	echo "NAME=$(get_part_param 'NAME' <<< "${PART_INFO}")"
 #	echo "ID_PART_ENTRY_NAME=$(get_part_param 'ID_PART_ENTRY_NAME' <<< "${PART_INFO}")"
 #	echo "ID_FS_LABEL=$(get_part_param 'ID_FS_LABEL' <<< "${PART_INFO}")"
 #
-	echo '-----------------'
+#	echo '-----------------'
+#done
+
+for CARD in $(ls -1 --indicator-style=none /dev/snd/by-path/)
+do
+	PART_INFO="$(get_sound_info "/dev/snd/by-path/${CARD}")"
+
+	DRIVER="$(get_part_param 'PCI_DRIVER' <<< "${PART_INFO}")"
+	NUMBER="$(get_part_param 'CARD__ATTR_NUMBER' <<< "${PART_INFO}")"
+	ID="$(get_part_param 'CARD__ATTR_ID' <<< "${PART_INFO}")"
+	MODEL="$(get_part_param 'CARD_ID_MODEL_FROM_DATABASE' <<< "${PART_INFO}")"
+	VENDOR="$(get_part_param 'CARD_ID_VENDOR_FROM_DATABASE' <<< "${PART_INFO}")"
+	ID_BUS="$(get_part_param 'CARD_ID_BUS' <<< "${PART_INFO}")"
+	PCI_ID="$(get_part_param 'PCI_PCI_ID' <<< "${PART_INFO}")"
+
+	echo ''
+	echo "## --- ${ID_BUS} ---"
+	echo "## ${VENDOR}"
+	echo "## ${MODEL}"
+	echo "## PCI_ID ${PCI_ID}"
+	echo "alias snd-card-${NUMBER} ${DRIVER}"
+#	echo "alias snd-slot-${NUMBER} ${DRIVER}"
+	echo -n "options ${DRIVER} index=${NUMBER}"
+#	echo -n "options ${DRIVER} index=${NUMBER} id=${ID} enable=1 snoop=0 model=auto"
+	#[[ "${ID_BUS}" == "usb" ]] &&
+	echo -n " vid=${PCI_ID%:*} pid=${PCI_ID#*:}"
+	echo ''
 done
