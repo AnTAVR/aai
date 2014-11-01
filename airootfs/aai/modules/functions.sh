@@ -141,7 +141,7 @@ pacman_install()
 			pacman_install_err "${RET}" "${P_PACS}" "${P_NO_EXIT}"
 			;;
 		'yaourt')
-			if [[ -n "${SET_YAOURT}" ]]
+			if [[ ! -n "${SET_YAOURT}" ]]
 			then
 				RET=-1
 				msg_log "$(gettext 'Пропускаю') yaourt ${P_PACS}"
