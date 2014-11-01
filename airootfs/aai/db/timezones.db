@@ -286,7 +286,8 @@ PE	America/Lima	ayc_PE UTF-8
 PF	Pacific/Gambier		-2308-13457	Gambier Islands
 PF	Pacific/Marquesas		-0900-13930	Marquesas Islands
 PF	Pacific/Tahiti		-1732-14934	Society Islands
-PG	Pacific/Port_Moresby			
+PG	Pacific/Bougainville		-0613+15534	Bougainville
+PG	Pacific/Port_Moresby		-0930+14710	most locations
 PH	Asia/Manila	fil_PH UTF-8		
 PK	Asia/Karachi	ur_PK UTF-8		
 PL	Europe/Warsaw	pl_PL.UTF-8 UTF-8		
@@ -400,8 +401,8 @@ US	America/Sitka	en_US.UTF-8 UTF-8	+571035-1351807	Alaska Time - southeast Alask
 US	America/Yakutat	en_US.UTF-8 UTF-8	+593249-1394338	Alaska Time - Alaska panhandle neck
 US	Pacific/Honolulu	en_US.UTF-8 UTF-8	+211825-1575130	Hawaii
 UY	America/Montevideo	es_UY.UTF-8 UTF-8		
-UZ	Asia/Samarkand	uz_UZ@cyrillic UTF-8	+3940+06648	west Uzbekistan
-UZ	Asia/Tashkent	uz_UZ@cyrillic UTF-8	+4120+06918	east Uzbekistan
+UZ	Asia/Samarkand	uz_UZ.UTF-8 UTF-8	+3940+06648	west Uzbekistan
+UZ	Asia/Tashkent	uz_UZ.UTF-8 UTF-8	+4120+06918	east Uzbekistan
 VA	Europe/Vatican			
 VC	America/St_Vincent			
 VE	America/Caracas	es_VE.UTF-8 UTF-8		
