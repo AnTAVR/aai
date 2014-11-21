@@ -1,10 +1,17 @@
+client_max_body_size 128M;
+
 location / {
-	index			index.php;
-	try_files		$uri $uri/ /index.php?$args;
+    index index.php;
+    # Redirect everything that isn't a real file to index.php
+    try_files $uri $uri/ /index.php?$args;
+
+}
+
+# uncomment to avoid processing of calls to non-existing static files by Yii
+location ~ \.(js|css|png|jpg|gif|swf|ico|pdf|mov|fla|zip|rar)$ {
+    try_files $uri =404;
 }
 
 location ~ ^/(protected|framework|themes/\w+/views) {
-	deny			all;
+    deny all;
 }
-
-include				templates/php;

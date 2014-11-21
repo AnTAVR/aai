@@ -1,23 +1,27 @@
 rewrite ^/app\.php/?(.*)$ /$1 permanent;
 
 location / {
-	index			app.php;
-	try_files		$uri @rewriteapp;
+    index app.php;
+    try_files $uri @rewriteapp;
 }
 
 location @rewriteapp {
-	rewrite ^(.*)$	/app.php/$1 last;
+    rewrite ^(.*)$ /app.php/$1 last;
 }
 
 # pass the PHP scripts to FastCGI server from upstream phpfcgi
 location ~ ^/(app|app_dev|config)\.php(/|$) {
-	fastcgi_pass	unix:/var/run/php-fpm/php-fpm.sock;
-	fastcgi_split_path_info	^(.+\.php)(/.*)$;
-	include			fastcgi_params;
-	fastcgi_param	SCRIPT_FILENAME $document_root$fastcgi_script_name;
-	fastcgi_param	HTTPS off;
+    fastcgi_pass	unix:/var/run/php-fpm/php-fpm.sock;
+    fastcgi_split_path_info	^(.+\.php)(/.*)$;
+    include		fastcgi_params;
+    fastcgi_param	SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    fastcgi_param	 HTTPS off;
+
+    fastcgi_buffer_size 256k;
+    fastcgi_buffers 16 256k;
+    fastcgi_busy_buffers_size 256k;
 }
 
 location ~ ^/(protected/) {
-	deny			all;
+    deny		all;
 }
