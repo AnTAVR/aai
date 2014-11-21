@@ -595,19 +595,19 @@ part_format_dialog_mkf_opt()
 	local LABEL
 	case "${P_POINT}" in
 		'/')
-			LABEL="${FLASH}Root"
+			LABEL="Arch${FLASH}Root"
 			;;
 		'/boot')
-			LABEL="${FLASH}Boot"
+			LABEL="Arch${FLASH}Boot"
 			;;
 		'/boot/efi')
 			LABEL="${FLASH}EFI"
 			;;
 		'/home')
-			LABEL="${FLASH}Home"
+			LABEL="Arch${FLASH}Home"
 			;;
 		'swap')
-			LABEL="${FLASH}Swap"
+			LABEL="Arch${FLASH}Swap"
 			;;
 	esac
 
