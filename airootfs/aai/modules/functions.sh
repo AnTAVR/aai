@@ -141,18 +141,17 @@ pacman_install()
 			pacman_install_err "${RET}" "${P_PACS}" "${P_NO_EXIT}"
 			;;
 		'yaourt')
-			if [[ ! -n "${SET_YAOURT}" ]]
+			if [[ -n "${SET_YAOURT}" ]]
 			then
+				chroot_run yaourt --noconfirm --needed ${P_PACS}
+				RET=${?}
+				msg_error "$(gettext 'Предупреждение yaourt! Смотрите подробнее в') ${LOG_FILE}" ${RET} 1
+				# Очищаем /tmp
+				rm -rf "${NS_PATH}/tmp/yaourt-tmp-root"
+			else
 				RET=-1
 				msg_log "$(gettext 'Пропускаю') yaourt ${P_PACS}"
-				break
 			fi
-
-			chroot_run yaourt --noconfirm --needed ${P_PACS}
-			RET=${?}
-			msg_error "$(gettext 'Предупреждение yaourt! Смотрите подробнее в') ${LOG_FILE}" ${RET} 1
-			# Очищаем /tmp
-			rm -rf "${NS_PATH}/tmp/yaourt-tmp-root"
 			;;
 		'noneeded')
 			chroot_run pacman --noconfirm ${P_PACS}
@@ -160,16 +159,15 @@ pacman_install()
 			pacman_install_err "${RET}" "${P_PACS}" "${P_NO_EXIT}"
 			;;
 		'multilib')
-			if [[ "${UNAME}" == 'i686' ]]
+			if [[ "${UNAME}" == 'x86_64' ]]
 			then
+				chroot_run pacman --noconfirm --needed ${P_PACS}
+				RET=${?}
+				pacman_install_err "${RET}" "${P_PACS}" "${P_NO_EXIT}"
+			else
 				RET=-1
 				msg_log "$(gettext 'Пропускаю') pacman ${P_PACS}"
-				break
 			fi
-
-			chroot_run pacman --noconfirm --needed ${P_PACS}
-			RET=${?}
-			pacman_install_err "${RET}" "${P_PACS}" "${P_NO_EXIT}"
 			;;
 		*)
 			chroot_run pacman --noconfirm --needed ${P_PACS}
