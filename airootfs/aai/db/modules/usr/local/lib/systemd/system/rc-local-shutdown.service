@@ -1,0 +1,13 @@
+[Unit]
+Description=/etc/rc.local.shutdown Compatibility
+ConditionFileIsExecutable=/etc/rc.local.shutdown
+Before=shutdown.target
+
+[Service]
+Type=oneshot
+ExecStart=/etc/rc.local.shutdown
+StandardInput=tty
+RemainAfterExit=yes
+
+[Install]
+WantedBy=shutdown.target

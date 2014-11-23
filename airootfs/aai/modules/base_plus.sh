@@ -297,23 +297,29 @@ base_plus_install()
 
 
 #===============================================================================
-# Добавляем сервис и rc.local для быстрого добавления своих команд в процесс загрузки
+# Добавляем сервис и rc.local и rc.local.shutdown для быстрого добавления своих команд в процесс загрузки
 #===============================================================================
 #Включаем Nul Lock в консоле
-	msg_log "$(gettext 'Настраиваю') /etc/rc.local"
-	cat "${DBDIR}modules/etc/rc.local" > "${NS_PATH}/etc/rc.local"
-	chmod +x "${NS_PATH}/etc/rc.local"
+        msg_log "$(gettext 'Настраиваю') /etc/rc.local"
+        cat "${DBDIR}modules/etc/rc.local" > "${NS_PATH}/etc/rc.local"
+        chmod +x "${NS_PATH}/etc/rc.local"
+        msg_log "$(gettext 'Настраиваю') /etc/rc.local"
+        cat "${DBDIR}modules/etc/rc.local.shutdown" > "${NS_PATH}/etc/rc.local.shutdown"
+        chmod +x "${NS_PATH}/etc/rc.local.shutdown"
 
-# Создаем и включаем rc-local.service
+# Создаем и включаем rc-local.service и rc.local.shutdown.service
 	msg_log "$(gettext 'Настраиваю') /usr/local/lib/systemd/system/rc-local.service"
 	mkdir -p "${NS_PATH}/usr/local/lib/systemd/system"
 	mkdir -p "${NS_PATH}/usr/local/lib/systemd/user"
-	cat "${DBDIR}modules/usr/local/lib/systemd/system/rc-local.service" > "${NS_PATH}/usr/local/lib/systemd/system/rc-local.service"
+        cat "${DBDIR}modules/usr/local/lib/systemd/system/rc-local.service" > "${NS_PATH}/usr/local/lib/systemd/system/rc-local.service"
+        cat "${DBDIR}modules/usr/local/lib/systemd/system/rc-local.shutdown.service" > "${NS_PATH}/usr/local/lib/systemd/system/rc-local.shutdown.service"
+
 	cat "${DBDIR}modules/usr/local/lib/systemd/system/autologin@.service" > "${NS_PATH}/usr/local/lib/systemd/system/autologin@.service"
 
 	git_commit
 
-	SERVICES+=" 'rc-local.service' '-' 'on'"
+        SERVICES+=" 'rc-local.service' '-' 'on'"
+        SERVICES+=" 'rc-local.shutdown.service' '-' 'on'"
 #-------------------------------------------------------------------------------
 
 
