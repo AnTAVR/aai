@@ -175,16 +175,16 @@ pkgs_acestream()
 }
 APPS+=" 'acestream' '$(gettext 'Медиа-платформа нового поколения') (AUR)' 'off'"
 
-pkgs_xbmc()
+pkgs_kodi()
 {
 	#community
-	pacman_install '-S xbmc'
-	pacman_install '-S xbmc-pvr-addons'
+	pacman_install '-S kodi'
+	pacman_install '-S kodi-addons'
 	pacman_install '-S mythtv'
 
 	git_commit
 }
-APPS+=" 'xbmc' '$(gettext 'Медиа Центр')' 'off'"
+APPS+=" 'kodi' '$(gettext 'Медиа Центр')' 'off'"
 
 pkgs_smplayer()
 {
