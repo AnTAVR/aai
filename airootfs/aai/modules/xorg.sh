@@ -613,15 +613,16 @@ xorg_video()
 	i # pacman-key --lsign-key Key-ID
 	i
 	i # Key-ID: 653C3094
-	i [xorg115]
-	i Server = http://catalyst.wirephire.com/repo/xorg115/$arch
+	i [xorg116]
+	i #Server = http://catalyst.wirephire.com/repo/xorg116/$arch
 	i ## Mirrors, if the primary server does not work or is too slow:
-	i #Server = http://mirror.rts-informatique.fr/archlinux-catalyst/repo/xorg115/$arch
-	i #Server = http://mirror.hactar.bz/Vi0L0/xorg115/$arch
+	i Server = http://mirror.rts-informatique.fr/archlinux-catalyst/repo/xorg116/$arch
+	i #Server = http://mirror.hactar.bz/Vi0L0/xorg116/$arch
 	i
 	i # Key-ID: 653C3094
 	i [catalyst]
-	i Server = http://catalyst.wirephire.com/repo/catalyst/$arch
+	i #Server = http://catalyst.wirephire.com/repo/catalyst/$arch
+	i Server = http://mirror.rts-informatique.fr/archlinux-catalyst/repo/catalyst/$arch
 	i
 };
 };
@@ -642,7 +643,9 @@ xorg_video()
 #			pacman_install '-S lib32-opencl-catalyst' 'yaourt'
 
 			pacman_install '-S catalyst-hook' 'yaourt'
-
+#			pacman_install '-S catalyst-generator' 'yaourt' catalyst_build_module all
+			pacman_install '-S libva-xvba-driver' 'yaourt'
+#			pacman_install '-S xvba-video' 'yaourt'
 			#community
 			pacman_install '-S acpid'
 
@@ -682,15 +685,16 @@ xorg_video()
 	i # pacman-key --lsign-key Key-ID
 	i
 	i # Key-ID: 653C3094
-	i [xorg115]
-	i Server = http://catalyst.wirephire.com/repo/xorg115/$arch
+	i [xorg116]
+	i #Server = http://catalyst.wirephire.com/repo/xorg116/$arch
 	i ## Mirrors, if the primary server does not work or is too slow:
-	i #Server = http://mirror.rts-informatique.fr/archlinux-catalyst/repo/xorg115/$arch
-	i #Server = http://mirror.hactar.bz/Vi0L0/xorg115/$arch
+	i Server = http://mirror.rts-informatique.fr/archlinux-catalyst/repo/xorg116/$arch
+	i #Server = http://mirror.hactar.bz/Vi0L0/xorg116/$arch
 	i
 	i # Key-ID: 653C3094
 	i [catalyst]
-	i Server = http://catalyst.wirephire.com/repo/catalyst/$arch
+	i #Server = http://catalyst.wirephire.com/repo/catalyst/$arch
+	i Server = http://mirror.rts-informatique.fr/archlinux-catalyst/repo/catalyst/$arch
 	i
 };
 };
@@ -711,6 +715,9 @@ xorg_video()
 #			pacman_install '-S lib32-opencl-catalyst' 'yaourt'
 
 			pacman_install '-S catalyst-hook' 'yaourt'
+#			pacman_install '-S catalyst-generator' 'yaourt' catalyst_build_module all
+			pacman_install '-S libva-xvba-driver' 'yaourt'
+#			pacman_install '-S xvba-video' 'yaourt'
 
 			#community
 			pacman_install '-S acpid'
@@ -798,9 +805,18 @@ xorg_video()
 
 	#extra
 	pacman_install '-S mesa-demos'
+	pacman_install '-S mesa-vdpau'
+
+	pacman_install '-S libva'
+	pacman_install '-S libva-mesa-driver'
+	pacman_install '-S libva-intel-driver'
+	pacman_install '-S libva-vdpau-driver'
+	#community
+	pacman_install '-S libvdpau-va-gl'
+	pacman_install '-S vdpauinfo'
 	#multilib
 	pacman_install '-S lib32-mesa-demos' 'multilib'
-
+	pacman_install '-S lib32-mesa-vdpau' 'multilib'
 	git_commit
 
 #gtf 1280 1024 85 получить соответствующий Modeline
