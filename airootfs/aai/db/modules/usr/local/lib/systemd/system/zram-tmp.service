@@ -3,6 +3,7 @@ Description=Mount /tmp as zram. Mask tmp.mount if you use this
 DefaultDependencies=no
 Conflicts=umount.target
 Before=local-fs.target umount.target
+After=systemd-modules-load.service
 
 [Service]
 Type=oneshot
@@ -10,7 +11,7 @@ RemainAfterExit=true
 
 Environment='DEV=0' 'SIZE=4G'
 
-ExecStart=/usr/bin/zramctl zram${DEV} ${SIZE} lz4 2
+ExecStart=/usr/bin/zramctl zram${DEV} --size ${SIZE} --algorithm lz4 --streams 2
 ExecStart=/usr/bin/mkfs.ext4 -m 0 -O ^huge_file,sparse_super,extent,^uninit_bg,dir_nlink,extra_isize,^has_journal -E discard /dev/zram${DEV}
 ExecStart=/usr/bin/tune2fs -c 0 -i 0 -m 0 /dev/zram${DEV}
 ExecStart=/usr/bin/mount -o discard /dev/zram${DEV} /tmp
